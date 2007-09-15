@@ -1,0 +1,3 @@
+desc=Virtualmin Domain Registration
+category=net
+depends=virtual-server

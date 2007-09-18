@@ -51,6 +51,30 @@ else {
 	}
 }
 
+# type_rcom_check_domain(&account, domain)
+# Checks if some domain name is available for registration, returns undef if
+# yes, or an error message if not.
+sub type_rcom_check_domain
+{
+local ($account, $dname) = @_;
+$dname =~ /^([^\.]+)\.(\S+)$/ || return 0;
+local ($sld, $tld) = ($1, $2);
+local ($ok, $out, $resp) = &call_rcom_api($account, "Check",
+				{ 'SLD' => $sld, 'TLD' => $tld });
+if (!$ok) {
+	return $out;
+	}
+elsif ($resp->{'RRPCode1'} == 210) {
+	return undef;
+	}
+elsif ($resp->{'RRPCode1'} == 211) {
+	return $text{'rcom_taken'};
+	}
+else {
+	return $resp->{'RRPText1'} || "Unknown error";
+	}
+}
+
 # call_rcom_api(&account, command, &args)
 # Calls a register.com API method, and returns a status code (1 for success, 0
 # for error), the response text, and the response hash

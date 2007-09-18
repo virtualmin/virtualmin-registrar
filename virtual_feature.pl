@@ -43,7 +43,13 @@ return "label";
 # or an error message if not
 sub feature_depends
 {
-# XXX registrar
+local ($d) = @_;
+# Is DNS enabled?
+$d->{'dns'} || return $text{'feat_edns'};
+# Can we find an account for the domain?
+local $account = &find_registrar_account($d->{'dom'});
+return $text{'feat_edepend'} if (!$account);
+$d->{'dom'} =~ /\./ || $text{'feat_edepend2'};
 }
 
 # feature_clash(&domain)
@@ -51,7 +57,18 @@ sub feature_depends
 # an error message if so
 sub feature_clash
 {
-# XXX already registered?
+# Is this domain already registered?
+local ($d) = @_;
+local $account = &find_registrar_account($d->{'dom'});
+return $text{'feat_edepend'} if (!$account);
+local $cfunc = "type_".$account->{'registrar'}."_check_domain";
+if (defined(&$cfunc)) {
+	local $cerr = &$cfunc($account, $d->{'dom'});
+	if ($cerr) {
+		return &text('feat_eclash', $d->{'dom'}, $cerr);
+		}
+	}
+return undef;
 }
 
 # feature_suitable([&parentdom], [&aliasdom], [&subdom])
@@ -59,7 +76,9 @@ sub feature_clash
 # parent and sub domains
 sub feature_suitable
 {
-# Cannot use anywhere if no accounts have been setup
+# Cannot use anywhere except subdoms if no accounts have been setup
+local ($parentdom, $aliasdom, $subdom) = @_;
+return 0 if ($subdom);
 local @accounts = grep { $_->{'enabled'} } &list_registrar_accounts();
 return scalar(@accounts) ? 1 : 0;
 }
@@ -68,8 +87,21 @@ return scalar(@accounts) ? 1 : 0;
 # Called when this feature is added, with the domain object as a parameter
 sub feature_setup
 {
-# XXX call the API
-# XXX save registrar in domain object
+# Call the account type's register function
+local ($d) = @_;
+local $account = &find_registrar_account($d->{'dom'});
+local $reg = $account->{'registrar'};
+local $dfunc = "type_".$reg."_desc";
+&$virtual_server::first_print(&text('feat_setup', &$dfunc($account)));
+local $rfunc = "type_".$reg."_create_domain";
+local $err = &$rfunc($account, $d);
+if ($err) {
+	&$virtual_server::second_print(&text('feat_failed', $err));
+	return 0;
+	}
+$d->{'registrar_account'} = $account->{'id'};
+&$virtual_server::second_print($virtual_server::text{'setup_done'});
+return 1;
 }
 
 # feature_modify(&domain, &olddomain)

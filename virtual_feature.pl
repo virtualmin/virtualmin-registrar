@@ -50,6 +50,7 @@ $d->{'dns'} || return $text{'feat_edns'};
 local $account = &find_registrar_account($d->{'dom'});
 return $text{'feat_edepend'} if (!$account);
 $d->{'dom'} =~ /\./ || $text{'feat_edepend2'};
+return undef;
 }
 
 # feature_clash(&domain)
@@ -94,13 +95,14 @@ local $reg = $account->{'registrar'};
 local $dfunc = "type_".$reg."_desc";
 &$virtual_server::first_print(&text('feat_setup', &$dfunc($account)));
 local $rfunc = "type_".$reg."_create_domain";
-local $err = &$rfunc($account, $d);
-if ($err) {
-	&$virtual_server::second_print(&text('feat_failed', $err));
+local ($ok, $msg) = &$rfunc($account, $d);
+if (!$ok) {
+	&$virtual_server::second_print(&text('feat_failed', $msg));
 	return 0;
 	}
 $d->{'registrar_account'} = $account->{'id'};
-&$virtual_server::second_print($virtual_server::text{'setup_done'});
+$d->{'registrar_id'} = $msg;
+&$virtual_server::second_print(&text('feat_setupdone', $msg));
 return 1;
 }
 
@@ -115,7 +117,22 @@ sub feature_modify
 # Called when this feature is disabled, or when the domain is being deleted
 sub feature_delete
 {
-# XXX call the API
+local ($d) = @_;
+local ($account) = grep { $_->{'id'} eq $d->{'registrar_account'} }
+			&list_registrar_accounts();
+local $reg = $account->{'registrar'};
+local $dfunc = "type_".$reg."_desc";
+&$virtual_server::first_print(&text('feat_delete', &$dfunc($account)));
+local $ufunc = "type_".$reg."_delete_domain";
+local ($ok, $msg) = &$ufunc($account, $d);
+if (!$ok) {
+	&$virtual_server::second_print(&text('feat_failed', $msg));
+        return 0;
+	}
+delete($d->{'registrar_account'});
+delete($d->{'registrar_id'});
+&$virtual_server::second_print($virtual_server::text{'setup_done'});
+return 1;
 }
 
 # feature_disable(&domain)
@@ -134,11 +151,52 @@ sub feature_enable
 # XXX call the API
 }
 
-# feature_links(&domain)
-# Returns an array of link objects for webmin modules for this feature
-sub feature_links
+# feature_always_links(&domain)
+# Returns an array of link objects for webmin modules, regardless of whether
+# this feature is enabled or not
+sub feature_always_links
 {
-# XXX whois info?
+# Return links to edit domain contact details and import/de-import
+local ($d) = @_;
+local @rv;
+if ($d->{$module_name}) {
+	# Can edit contact details and de-import (master admin only)
+	push(@rv, { 'mod' => $module_name,
+		    'desc' => $text{'links_contact'},
+		    'page' => 'edit_contact.cgi?dom='.$d->{'dom'},
+		    'cat' => 'admin' });
+	if ($access{'registrar'}) {
+		push(@rv, { 'mod' => $module_name,
+			    'desc' => $text{'links_rereg'},
+			    'page' => 'edit_dereg.cgi?dom='.$d->{'dom'},
+			    'cat' => 'admin' });
+		}
+	}
+else {
+	# Can import existing registration (master admin only)
+	if ($access{'registrar'}) {
+		push(@rv, { 'mod' => $module_name,
+			    'desc' => $text{'links_import'},
+			    'page' => 'edit_import.cgi?dom='.$d->{'dom'},
+			    'cat' => 'admin' });
+		}
+	}
+return @rv;
+}
+
+# feature_webmin(&main-domain, &all-domains)
+# Returns a list of webmin module names and ACL hash references to be set for
+# the Webmin user when this feature is enabled
+sub feature_webmin
+{
+local ($d, $doms) = @_;
+local @rdoms = grep { $_->{$module_name} } @$doms;
+if ($any) {
+	return ( [ $module_name,
+		   { 'registrar' => 0,
+		     'doms' => join(' ', map { $_->{'dom'} } @rdoms) } ] );
+	}
+return ( );
 }
 
 # feature_validate(&domain)

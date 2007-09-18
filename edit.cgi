@@ -2,6 +2,7 @@
 # Show a form for adding or editing an existing registrar account
 
 require './virtualmin-registrar-lib.pl';
+$access{'registrar'} || &error($text{'edit_ecannot'});
 &ReadParse();
 &ui_print_header(undef, $in{'registrar'} ? $text{'edit_title1'}
 					 : $text{'edit_title2'}, "");

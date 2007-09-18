@@ -2,6 +2,7 @@
 # Create, update or delete a registrar account
 
 require './virtualmin-registrar-lib.pl';
+$access{'registrar'} || &error($text{'edit_ecannot'});
 &ReadParse();
 &error_setup($text{'save_err'});
 

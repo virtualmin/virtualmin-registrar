@@ -2,6 +2,12 @@
 # Show a list of accounts, and a menu to add a new one
 
 require 'virtualmin-registrar-lib.pl';
+if (!$access{'registrar'}) {
+	# Non-admin users who access this page should be shown a list
+	# of their registered domains instead
+	&redirect("list.cgi");
+	exit;
+	}
 &ui_print_header(undef, $text{'index_title'}, "", "intro", 0, 1);
 
 # Table of existing accounts

@@ -5,12 +5,16 @@
 # XXX need to be able to 'de-import' an account, so that it doesn't get
 #     deleted whem the domain is
 # XXX register.com account creation
+#	XXX CreateAccount
+# XXX how to send contact details?
+# XXX finish list.cgi
 
 do '../web-lib.pl';
 &init_config();
 do '../ui-lib.pl';
 &foreign_require("virtual-server", "virtual-server-lib.pl");
 $registrar_accounts_dir = "$module_config_directory/accounts";
+%access = &get_module_acl();
 
 # Bring in all register-type specific libraries
 @registrar_types = (

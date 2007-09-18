@@ -2,6 +2,7 @@
 # Enable, disable or delete a bunch of accounts
 
 require './virtualmin-registrar-lib.pl';
+$access{'registrar'} || &error($text{'edit_ecannot'});
 &ReadParse();
 
 # Get the accountS

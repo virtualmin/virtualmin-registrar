@@ -31,6 +31,7 @@ if (@accounts) {
 				 : $text{'index_all'}
 		    ], \@tds, "d", $a->{'id'});
 		}
+	print &ui_columns_end();
 	print &ui_links_row(\@links);
 	print &ui_form_end([
 		[ "disable", $text{'index_disable'} ],

@@ -32,6 +32,11 @@ print &ui_table_row($text{'edit_enabled'},
 	&ui_yesno_radio("enabled",
 			$in{'registrar'} ? 1 : $account->{'enabled'}));
 
+# For top-level domains
+print &ui_table_row($text{'edit_doms'},
+	&ui_opt_textbox("doms", $account->{'doms'}, 50, $text{'edit_all'},
+			$text{'edit_suffixes'}));
+
 # Registrar-specific fields
 $efunc = "type_".$reg."_edit_inputs";
 print &$efunc($account, $in{'registrar'} ? 1 : 0);
@@ -58,7 +63,7 @@ if ($in{'registrar'}) {
 	}
 else {
 	print &ui_form_end([ [ undef, $text{'save'} ],
-			     [ "delete", $text{'delete'} ] ]);
+			     [ "delete", $text{'edit_delete'} ] ]);
 	}
 
 &ui_print_footer("", $text{'index_return'});

@@ -59,7 +59,9 @@ sub feature_clash
 # parent and sub domains
 sub feature_suitable
 {
-return 1;
+# Cannot use anywhere if no accounts have been setup
+local @accounts = grep { $_->{'enabled'} } &list_registrar_accounts();
+return scalar(@accounts) ? 1 : 0;
 }
 
 # feature_setup(&domain)

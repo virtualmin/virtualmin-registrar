@@ -1,6 +1,10 @@
 # Common functions for domain registration
 # XXX don't allow deletion of accounts that have domains
 # XXX accounts have enabled flag to control use
+# XXX how do rcom accounts get any money in them?
+# XXX need to be able to 'de-import' an account, so that it doesn't get
+#     deleted whem the domain is
+# XXX register.com account creation
 
 do '../web-lib.pl';
 &init_config();
@@ -15,7 +19,7 @@ $registrar_accounts_dir = "$module_config_directory/accounts";
 	},
     );
 foreach my $t (@registrar_types) {
-	do $t.'-type-lib.pl';
+	do $t->{'name'}.'-type-lib.pl';
 	}
 
 # list_registrar_accounts
@@ -30,6 +34,7 @@ foreach my $f (readdir(DIR)) {
 	local %account;
 	&read_file("$registrar_accounts_dir/$f", \%account);
 	$account{'id'} = $f;
+	$account{'file'} = "$registrar_accounts_dir/$f";
 	push(@rv, \%account);
 	}
 closedir(DIR);
@@ -41,8 +46,12 @@ return @rv;
 sub save_registrar_account
 {
 local ($account) = @_;
+if (!-d $registrar_accounts_dir) {
+	&make_dir($registrar_accounts_dir, 0700);
+	}
 $account->{'id'} ||= time().$$;
-&write_file("$registrar_accounts_dir/$account->{'id'}", $account);
+$account->{'file'} = "$registrar_accounts_dir/$account->{'id'}";
+&write_file($account->{'file'}, $account);
 }
 
 # delete_registrar_account(&account)
@@ -57,7 +66,37 @@ local ($account) = @_;
 # Returns the best registrar account for some domain
 sub find_registrar_account
 {
-# XXX
+local ($dname) = @_;
+foreach my $a (grep { $_->{'enabled'} } &list_registrar_accounts()) {
+	# Does the registrar support this domain?
+	local $tfunc = "type_".$a->{'registrar'}."_domains";
+	if (defined(&$tfunc)) {
+		local @doms = &$tfunc($account);
+		if (@doms) {
+			next if (!&in_tld_list($dname, \@doms));
+			}
+		}
+	# Does the account want it?
+	local @doms = split(/\s+/, $a->{'doms'});
+	if (@doms) {
+		next if (!&in_tld_list($dname, \@doms));
+		}
+	return $a;
+	}
+return undef;
+}
+
+# in_tld_list(domain, &suffixes)
+# Checks if a domain ends with any of the given suffixes, like .com and .org.au
+sub in_tld_list
+{
+local ($dname, $doms) = @_;
+foreach my $d (@$doms) {
+	if ($dname =~ /\Q$d\E$/i) {
+		return 1;
+		}
+	}
+return 0;
 }
 
 # find_account_domains(&account)

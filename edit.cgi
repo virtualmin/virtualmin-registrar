@@ -54,7 +54,7 @@ if (!$in{'registrar'}) {
 			push(@links, $d->{'dom'});
 			}
 		}
-	print &ui_table_row($text{'edit_doms'},
+	print &ui_table_row($text{'edit_vdoms'},
 		@links ? &ui_links_row(\@links) : $text{'edit_none'});
 	}
 

@@ -7,7 +7,6 @@
 # XXX register.com account creation
 #	XXX CreateAccount
 # XXX how to send contact details?
-# XXX finish list.cgi
 
 do '../web-lib.pl';
 &init_config();

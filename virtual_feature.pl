@@ -110,7 +110,56 @@ return 1;
 # Called when a domain with this feature is modified
 sub feature_modify
 {
-# XXX call the API
+local ($d, $oldd) = @_;
+local ($account) = grep { $_->{'id'} eq $oldd->{'registrar_account'} }
+			&list_registrar_accounts();
+if (!$account) {
+	&$first_print($text{'feat_noaccount'});
+	return 0;
+	}
+local $reg = $account->{'registrar'};
+local $dfunc = "type_".$reg."_desc";
+local $mfunc = "type_".$reg."_rename_domain";
+if (defined(&$mfunc)) {
+	# Registrar provides a rename function
+	&$virtual_server::first_print(&text('feat_modify', $oldd->{'dom'},
+					    $d->{'dom'}, &$dfunc($account)));
+	local ($ok, $msg) = &$mfunc($account, $d, $oldd);
+	if (!$ok) {
+		&$virtual_server::second_print(&text('feat_failed', $msg));
+		return 0;
+		}
+	$d->{'registrar_account'} = $account->{'id'};
+	$d->{'registrar_id'} = $msg;
+	&$virtual_server::second_print(&text('feat_setupdone', $msg));
+	}
+else {
+	# Need to take down and re-create
+	&$virtual_server::first_print(&text('feat_modify1', $oldd->{'dom'},
+					    &$dfunc($account)));
+	local $ufunc = "type_".$reg."_delete_domain";
+	local ($ok, $msg) = &$ufunc($account, $oldd);
+	if (!$ok) {
+		&$virtual_server::second_print(&text('feat_failed', $msg));
+		return 0;
+		}
+	delete($d->{'registrar_account'});
+	delete($d->{'registrar_id'});
+	&$virtual_server::second_print($virtual_server::text{'setup_done'});
+
+	# Re-create .. hope this works!
+	&$virtual_server::first_print(&text('feat_modify2', $d->{'dom'},
+					    &$dfunc($account)));
+	local $rfunc = "type_".$reg."_create_domain";
+	local ($ok, $msg) = &$rfunc($account, $d);
+	if (!$ok) {
+		&$virtual_server::second_print(&text('feat_failed', $msg));
+		return 0;
+		}
+	$d->{'registrar_account'} = $account->{'id'};
+	$d->{'registrar_id'} = $msg;
+	&$virtual_server::second_print(&text('feat_setupdone', $msg));
+	}
 }
 
 # feature_delete(&domain)
@@ -120,6 +169,10 @@ sub feature_delete
 local ($d) = @_;
 local ($account) = grep { $_->{'id'} eq $d->{'registrar_account'} }
 			&list_registrar_accounts();
+if (!$account) {
+	&$first_print($text{'feat_noaccount'});
+	return 0;
+	}
 local $reg = $account->{'registrar'};
 local $dfunc = "type_".$reg."_desc";
 &$virtual_server::first_print(&text('feat_delete', &$dfunc($account)));

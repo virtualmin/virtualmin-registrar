@@ -110,6 +110,7 @@ if (!$z) {
 local $file = &bind8::find("file", $z->{'members'});
 local @recs = &bind8::read_zone_file($file->{'values'}->[0], $d->{'dom'});
 local $nscount = 0;
+local @ns;
 foreach my $r (@recs) {
 	if ($r->{'type'} eq 'NS' &&
 	    $r->{'name'} eq $d->{'dom'}.".") {
@@ -122,14 +123,34 @@ foreach my $r (@recs) {
 			}
 		$nscount++;
 		$args->{'NS'.$nscount} = $ns;
+		push(@ns, $ns);
 		}
 	}
 $nscount || return (0, $text{'rcom_ensrecords'});
+
+# Check the if the nameservers have been added
+foreach my $ns (&unique(@ns)) {
+	local ($ok, $out, $resp) = &call_rcom_api($account, "CheckNSStatus",
+					{ 'CheckNSName' => $ns });
+	next if ($ok);
+
+	# Need to add it
+	local $nsip = &to_ipaddress($ns);
+	$nsip || return (0, &text('rcom_elookupns', $ns));
+	local ($ok, $out, $resp) = &call_rcom_api($account,
+					"RegisterNameServer",
+					{ 'Add' => 'true',
+					  'NSName' => $ns,
+					  'IP' => $nsip });
+	if (!$ok) {
+		return (0, &text('rcom_eaddns', $ns, $out));
+		}
+	}
+
+# Call the API to create
 if ($account->{'rcom_years'}) {
 	$args->{'NumYears'} = $account->{'rcom_years'};
 	}
-
-# Call the API
 local ($ok, $out, $resp) = &call_rcom_api($account, "Purchase", $args);
 if (!$ok) {
 	return (0, $out);
@@ -156,12 +177,41 @@ local ($ok, $out, $resp) = &call_rcom_api($account, "DeleteRegistration",$args);
 if (!$ok) {
 	return (0, $out);
 	}
-elsif ($resp->{'DomainDeleted'} ne 'True') {
+elsif ($resp->{'domaindeleted'} ne 'True' &&
+       $resp->{'RRPCode'} != 200) {
 	return (0, $resp->{'RRPText'} || "Unknown error");
 	}
 else {
 	return (1, undef);
 	}
+}
+
+# type_rcom_get_contact(&account, &domain)
+# Returns a array containing hashes of domain contact information, or an error
+# message if it could not be found.
+sub type_rcom_get_contact
+{
+local ($account, $d) = @_;
+$d->{'dom'} =~ /^([^\.]+)\.(\S+)$/ || return $text{'rcom_etld'};
+local ($sld, $tld) = ($1, $2);
+local ($ok, $out, $resp) = &call_rcom_api($account, "GetContacts",
+				{ 'SLD' => $sld, 'TLD' => $tld });
+if (!$ok) {
+	return $out;
+	}
+local @rv;
+foreach my $ct ("Tech", "Admin") {
+	local %con;
+	foreach my $k (keys %$resp) {
+		next if ($k !~ /^\Q$ct\E(.*)$/);
+		$con{lc($1)} = $resp->{$k};
+		}
+	if (keys %con) {
+		$con{'type'} = lc($ct);
+		push(@rv, \%con);
+		}
+	}
+return \@rv;
 }
 
 # call_rcom_api(&account, command, &args)

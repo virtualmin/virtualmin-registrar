@@ -1,12 +1,12 @@
 # Common functions for domain registration
-# XXX don't allow deletion of accounts that have domains
-# XXX accounts have enabled flag to control use
 # XXX how do rcom accounts get any money in them?
 # XXX need to be able to 'de-import' an account, so that it doesn't get
 #     deleted whem the domain is
 # XXX register.com account creation
 #	XXX CreateAccount
 # XXX how to send contact details?
+# XXX preserve contact details when de-registering and re-registering
+# XXX copy default contact details for new domains under same user
 
 do '../web-lib.pl';
 &init_config();
@@ -112,6 +112,57 @@ foreach my $d (&virtual_server::list_domains()) {
 	push(@rv, $d) if ($d->{$module_name} &&
 			  $d->{'registrar_account'} eq $account->{'id'});
 	}
+return @rv;
+}
+
+# get_contact_schema(&account, &domain, type)
+# Returns a list of fields for domain contacts
+sub get_contact_schema
+{
+local @rv = (
+	      { 'name' => 'organizationname',
+		'size' => 60,
+		'opt' => 0 },
+	      { 'name' => 'firstname',
+		'size' => 40,
+		'opt' => 0 },
+	      { 'name' => 'lastname',
+		'size' => 40,
+		'opt' => 0 },
+	      { 'name' => 'jobtitle',
+		'size' => 60,
+		'opt' => 1 },
+	      { 'name' => 'address1',
+		'size' => 60,
+		'opt' => 0 },
+	      { 'name' => 'address2',
+		'size' => 60,
+		'opt' => 1 },
+	      { 'name' => 'city',
+		'size' => 40,
+		'opt' => 0 },
+	      { 'name' => 'stateprovincechoice',
+		'choices' => [ [ 'S', 'State' ], [ 'P', 'Province' ] ],
+		'opt' => 1 },
+	      { 'name' => 'stateprovince',
+		'size' => 40,
+		'opt' => 1 },
+	      { 'name' => 'postalcode',
+		'size' => 20,
+		'opt' => 1 },
+	      { 'name' => 'country',
+		'size' => 40,
+		'opt' => 0 },
+	      { 'name' => 'emailaddress',
+		'size' => 60,
+		'opt' => 0 },
+	      { 'name' => 'phone',
+		'size' => 40,
+		'opt' => 0 },
+	      { 'name' => 'fax',
+		'size' => 40,
+		'opt' => 1 },
+	);
 return @rv;
 }
 

@@ -200,11 +200,13 @@ if (!$ok) {
 	return $out;
 	}
 local @rv;
-foreach my $ct ("Tech", "Admin") {
+foreach my $ct ("Admin", "Tech") {
 	local %con;
 	foreach my $k (keys %$resp) {
 		next if ($k !~ /^\Q$ct\E(.*)$/);
+		next if ($1 eq "PartyID");	# Don't ever touch this
 		$con{lc($1)} = $resp->{$k};
+		$con{'lcmap'}->{lc($1)} = $1;
 		}
 	if (keys %con) {
 		$con{'type'} = lc($ct);
@@ -212,6 +214,32 @@ foreach my $ct ("Tech", "Admin") {
 		}
 	}
 return \@rv;
+}
+
+# type_rcom_save_contact(&account, &domain, &contacts)
+# Updates contacts from an array of hashes
+sub type_rcom_save_contact
+{
+local ($account, $d, $cons) = @_;
+$d->{'dom'} =~ /^([^\.]+)\.(\S+)$/ || return $text{'rcom_etld'};
+local ($sld, $tld) = ($1, $2);
+
+foreach my $ct ("Admin", "Tech") {
+	local ($con) = grep { $_->{'type'} eq lc($ct) } @$cons;
+	next if (!$con);
+	local $args = { 'SLD' => $sld, 'TLD' => $tld,
+			'ContactType' => $ ct };
+	foreach my $k (keys %$con) {
+		if ($k ne "type" && $k ne "lcmap") {
+			$args->{$ct.$con->{'lcmap'}->{$k}} = $con->{$k};
+			}
+		}
+	local ($ok, $out, $resp) = &call_rcom_api($account, "Contacts", $args);
+	if (!$ok) {
+		return $out;
+		}
+	}
+return undef;
 }
 
 # call_rcom_api(&account, command, &args)

@@ -3,7 +3,7 @@
 
 require './virtualmin-registrar-lib.pl';
 &ReadParse();
-&error_setup($text{'cointact_err'});
+&error_setup($text{'contact_err'});
 
 # Get the Virtualmin domain
 &can_domain($in{'dom'}) || &error($text{'contact_ecannot'});
@@ -28,11 +28,8 @@ foreach my $con (@$cons) {
 	# Is this the same as the first one?
 	$same = undef;
 	if ($con ne $cons->[0]) {
-		local @fk = sort { $a cmp $b } grep { $_ ne "type" } (keys %{$cons->[0]});
-		local @k = sort { $a cmp $b } grep { $_ ne "type" } (keys %$con);
-		local $fj = join(" ", map { $_."=".$cons->[0]->{$_} } @fk);
-		local $j = join(" ", map { $_."=".$con->{$_} } @fk);
-		$same = $fj eq $j ? 1 : 0;
+		$same = &hash_to_string($cons->[0]) eq
+			&hash_to_string($con) ? 1 : 0;
 		}
 
 	print &ui_hidden_table_start($text{'contact_header_'.$con->{'type'}},
@@ -40,7 +37,6 @@ foreach my $con (@$cons) {
 				     [ "width=30%" ]);
 	if (defined($same)) {
 		# Show option to make same as first
-		# XXX disable inputs?
 		print &ui_table_row($text{'contact_same'},
 			&ui_yesno_radio($con->{'type'}.'same', $same));
 		print &ui_table_hr();
@@ -78,3 +74,9 @@ print &ui_form_end([ [ "save", $text{'save'} ] ]);
 
 &ui_print_footer();
 
+sub hash_to_string
+{
+local ($h) = @_;
+local @k = sort { $a cmp $b } grep { $_ ne "type" && $_ ne "lcmap" } (keys %$h);
+return join(" ", map { $_."=".$h->{$_} } @k);
+}

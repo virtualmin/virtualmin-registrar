@@ -103,6 +103,33 @@ if (!$ok) {
 $d->{'registrar_account'} = $account->{'id'};
 $d->{'registrar_id'} = $msg;
 &$virtual_server::second_print(&text('feat_setupdone', $msg));
+
+# Copy contacts from the user's main domain to this new one
+if ($d->{'parent'} && ($parent = &virtual_server::get_domain($d->{'parent'})) &&
+    $parent->{$module_name} &&
+    $parent->{'registrar_account'} eq $account->{'id'}) {
+	&$virtual_server::first_print(&text('feat_copy', $parent->{'dom'}));
+	local $gcfunc = "type_".$reg."_get_contact";
+	local $cons = &$gcfunc($account, $parent);
+	if (!ref($cons)) {
+		&$virtual_server::second_print(&text('feat_ecopy', $cons));
+		}
+	elsif (!@$cons) {
+		&$virtual_server::second_print(&text('feat_nocopy'));
+		}
+	else {
+		local $scfunc = "type_".$reg."_save_contact";
+		local $err = &$scfunc($account, $d, $cons);
+		if ($err) {
+			&$virtual_server::second_print(
+				&text('feat_ecopy2', $err));
+			}
+		else {
+			&$virtual_server::second_print(
+				$virtual_server::text{'setup_done'});
+			}
+		}
+	}
 return 1;
 }
 
@@ -114,7 +141,7 @@ local ($d, $oldd) = @_;
 local ($account) = grep { $_->{'id'} eq $oldd->{'registrar_account'} }
 			&list_registrar_accounts();
 if (!$account) {
-	&$first_print($text{'feat_noaccount'});
+	&$virtual_server::second_print($text{'feat_noaccount'});
 	return 0;
 	}
 local $reg = $account->{'registrar'};
@@ -137,6 +164,8 @@ else {
 	# Need to take down and re-create
 	&$virtual_server::first_print(&text('feat_modify1', $oldd->{'dom'},
 					    &$dfunc($account)));
+	local $gcfunc = "type_".$reg."_get_contact";
+	local $cons = &$gcfunc($account, $oldd);
 	local $ufunc = "type_".$reg."_delete_domain";
 	local ($ok, $msg) = &$ufunc($account, $oldd);
 	if (!$ok) {
@@ -158,6 +187,10 @@ else {
 		}
 	$d->{'registrar_account'} = $account->{'id'};
 	$d->{'registrar_id'} = $msg;
+	if (ref($cons) && @$cons > 0) {
+		local $scfunc = "type_".$reg."_save_contact";
+		&$scfunc($account, $d, $cons);
+		}
 	&$virtual_server::second_print(&text('feat_setupdone', $msg));
 	}
 }
@@ -170,7 +203,7 @@ local ($d) = @_;
 local ($account) = grep { $_->{'id'} eq $d->{'registrar_account'} }
 			&list_registrar_accounts();
 if (!$account) {
-	&$first_print($text{'feat_noaccount'});
+	&$virtual_server::second_print($text{'feat_noaccount'});
 	return 0;
 	}
 local $reg = $account->{'registrar'};

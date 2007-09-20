@@ -4,9 +4,7 @@
 #     deleted whem the domain is
 # XXX register.com account creation
 #	XXX CreateAccount
-# XXX how to send contact details?
-# XXX preserve contact details when de-registering and re-registering
-# XXX copy default contact details for new domains under same user
+# XXX how to give domains different contacts?
 
 do '../web-lib.pl';
 &init_config();

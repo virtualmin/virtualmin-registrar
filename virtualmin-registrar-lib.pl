@@ -137,7 +137,7 @@ local @rv = (
 		'opt' => 0 },
 	      { 'name' => 'address2',
 		'size' => 60,
-		'opt' => 1 },
+		'opt' => 2 },
 	      { 'name' => 'city',
 		'size' => 40,
 		'opt' => 0 },
@@ -164,6 +164,14 @@ local @rv = (
 		'opt' => 1 },
 	);
 return @rv;
+}
+
+sub can_domain
+{
+local ($dname) = @_;
+return 1 if ($access{'registrar'});
+local @doms = split(/\s+/, $access{'doms'});
+return &indexof($dname, @doms) >= 0;
 }
 
 1;

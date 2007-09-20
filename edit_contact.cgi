@@ -25,23 +25,49 @@ print &ui_hidden("dom", $in{'dom'});
 
 # Show fields for each contact type
 foreach my $con (@$cons) {
+	# Is this the same as the first one?
+	$same = undef;
+	if ($con ne $cons->[0]) {
+		local @fk = sort { $a cmp $b } grep { $_ ne "type" } (keys %{$cons->[0]});
+		local @k = sort { $a cmp $b } grep { $_ ne "type" } (keys %$con);
+		local $fj = join(" ", map { $_."=".$cons->[0]->{$_} } @fk);
+		local $j = join(" ", map { $_."=".$con->{$_} } @fk);
+		$same = $fj eq $j ? 1 : 0;
+		}
+
 	print &ui_hidden_table_start($text{'contact_header_'.$con->{'type'}},
-				     "width=100%", 2, $con->{'type'}, 1,
+				     "width=100%", 2, $con->{'type'}, !$same,
 				     [ "width=30%" ]);
+	if (defined($same)) {
+		# Show option to make same as first
+		# XXX disable inputs?
+		print &ui_table_row($text{'contact_same'},
+			&ui_yesno_radio($con->{'type'}.'same', $same));
+		print &ui_table_hr();
+		}
 
 	@schema = &get_contact_schema($account, $d, $con->{'type'});
 	foreach my $s (@schema) {
-		if ($s->{'opt'}) {
-			$field = &ui_opt_textbox($s->{'name'},
+		$n = $con->{'type'}.$s->{'name'};
+		if ($s->{'choices'}) {
+			@choices = @{$s->{'choices'}};
+			if ($s->{'opt'}) {
+				unshift(@choices,
+					[ undef, $text{'contact_default'} ]);
+				}
+			$field = &ui_select($n, $con->{$s->{'name'}},
+					    \@choices);
+			}
+		elsif ($s->{'opt'} == 1) {
+			$field = &ui_opt_textbox($n,
 				$con->{$s->{'name'}}, $s->{'size'},
-				$text{'default'});
+				$text{'contact_default'});
 			}
 		else {
-			$field = &ui_textbox($s->{'name'},
+			$field = &ui_textbox($n,
 				$con->{$s->{'name'}}, $s->{'size'});
 			}
-		print &ui_table_row($text{'contact_'.$s->{'name'},
-			$field);
+		print &ui_table_row($text{'contact_'.$s->{'name'}}, $field);
 		}
 
 	print &ui_hidden_table_end();

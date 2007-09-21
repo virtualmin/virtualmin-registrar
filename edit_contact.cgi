@@ -18,7 +18,8 @@ $cfunc = "type_".$account->{'registrar'}."_get_contact";
 $cons = &$cfunc($account, $d);
 ref($cons) || &error($cons);
 
-&ui_print_header(&virtual_server::domain_in($d), $text{'contact_title'}, "");
+&ui_print_header(&virtual_server::domain_in($d), $text{'contact_title'}, "",
+		 "contact");
 
 print &ui_form_start("save_contact.cgi", "post");
 print &ui_hidden("dom", $in{'dom'});

@@ -92,6 +92,33 @@ else {
 	}
 }
 
+# type_rcom_owned_domain(&account, domain, [id])
+# Checks if some domain is owned by the given account. If so, returns the
+# 1 and the registrar's ID - if not, returns 1 and undef, on failure returns
+# 0 and an error message.
+sub type_rcom_owned_domain
+{
+local ($account, $dname, $id) = @_;
+$dname =~ /^([^\.]+)\.(\S+)$/ || return (0, $text{'rcom_etld'});
+local ($sld, $tld) = ($1, $2);
+local ($ok, $out, $resp) = &call_rcom_api($account, "GetDomainInfo",
+					  { 'SLD' => $sld, 'TLD' => $tld });
+if (!$ok) {
+	if ($out eq "Domain name not found") {
+		return (1, undef);
+		}
+	else {
+		return (0, $out || "Unknown error");
+		}
+	}
+elsif ($resp->{'domainnameid'}) {
+	return (1, $resp->{'domainnameid'});
+	}
+else {
+	return (1, undef);
+	}
+}
+
 # type_rcom_create_domain(&account, &domain)
 # Actually register a domain, if possible. Returns 0 and an error message if
 # it failed, or 1 and an ID for the domain on success.

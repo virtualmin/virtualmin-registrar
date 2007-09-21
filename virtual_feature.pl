@@ -245,6 +245,7 @@ sub feature_always_links
 # Return links to edit domain contact details and import/de-import
 local ($d) = @_;
 local @rv;
+local @accounts = &list_registrar_accounts();
 if ($d->{$module_name}) {
 	# Can edit contact details and de-import (master admin only)
 	push(@rv, { 'mod' => $module_name,
@@ -260,7 +261,7 @@ if ($d->{$module_name}) {
 	}
 else {
 	# Can import existing registration (master admin only)
-	if ($access{'registrar'}) {
+	if (scalar(@accounts) && !$d->{'subdom'} && $access{'registrar'}) {
 		push(@rv, { 'mod' => $module_name,
 			    'desc' => $text{'links_import'},
 			    'page' => 'edit_import.cgi?dom='.$d->{'dom'},

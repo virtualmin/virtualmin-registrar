@@ -1,0 +1,49 @@
+#!/usr/local/bin/perl
+# Try to associate a domain registration with this server
+
+require './virtualmin-registrar-lib.pl';
+&ReadParse();
+&error_setup($text{'import_err'});
+$access{'registrar'} || &error($text{'import_ecannot'});
+
+# Get the Virtualmin domain
+$d = &virtual_server::get_domain_by("dom", $in{'dom'});
+$d || &error(&text('contact_edom', $in{'dom'}));
+$d->{$module_name} && &error($text{'import_ealready'});
+($account) = grep { $_->{'id'} eq $in{'account'} }
+		  &list_registrar_accounts();
+$account || &error(&text('contact_eaccount', $in{'dom'}));
+$oldd = { %$d };
+
+# Show import progress
+&ui_print_unbuffered_header(&virtual_server::domain_in($d),
+			    $text{'import_title'}, "", "import");
+
+print &text('import_doing', "<tt>$d->{'dom'}</tt>",
+			    "<i>$account->{'desc'}</i>"),"<br>\n";
+$ifunc = "type_".$account->{'registrar'}."_owned_domain";
+($ok, $msg) = &$ifunc($account, $d->{'dom'},
+		      $in{'id_def'} ? undef : $in{'id'});
+if (!$ok) {
+	print &text('import_failed', $msg),"<p>\n";
+	}
+elsif (!$msg) {
+	print $text{'import_missing'},"<p>\n";
+	}
+else {
+	print &text('import_done', $msg),"<p>\n";
+
+	# Update the domain
+	$d->{$module_name} = 1;
+	$d->{'registrar_account'} = $account->{'id'};
+	$d->{'registrar_id'} = $msg;
+	&virtual_server::save_domain($d);
+
+	# Update the Webmin user
+	if ($d->{'webmin'}) {
+		&virtual_server::modify_webmin($d, $oldd);
+		}
+	&virtual_server::run_post_actions();
+	}
+
+&ui_print_footer(&virtual_server::domain_footer_link($d));

@@ -40,10 +40,13 @@ else {
 	&virtual_server::save_domain($d);
 
 	# Update the Webmin user
-	if ($d->{'webmin'}) {
-		&virtual_server::modify_webmin($d, $oldd);
-		}
+	&virtual_server::refresh_webmin_user($d);
 	&virtual_server::run_post_actions();
+
+	# Call any theme post command
+	if (defined(&theme_post_save_domain)) {
+		&theme_post_save_domain($d, 'modify');
+		}
 	}
 
 &ui_print_footer(&virtual_server::domain_footer_link($d));

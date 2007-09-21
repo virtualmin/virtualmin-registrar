@@ -1,10 +1,9 @@
 # Common functions for domain registration
 # XXX how do rcom accounts get any money in them?
-# XXX need to be able to 'de-import' an account, so that it doesn't get
-#     deleted whem the domain is
 # XXX register.com account creation
 #	XXX CreateAccount
 # XXX how to give domains different contacts?
+# XXX help pages for everything
 
 do '../web-lib.pl';
 &init_config();

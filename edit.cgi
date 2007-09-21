@@ -48,7 +48,7 @@ if (!$in{'registrar'}) {
 	@links = ( );
 	foreach my $d (@doms) {
 		if (&virtual_server::can_config_domain($d)) {
-			push(@links, "<a href='../virtual-server/edit_domain.cgi?id=$d->{'id'}'>$d->{'dom'}</a>");
+			push(@links, "<a href='../virtual-server/edit_domain.cgi?dom=$d->{'id'}'>$d->{'dom'}</a>");
 			}
 		else {
 			push(@links, $d->{'dom'});

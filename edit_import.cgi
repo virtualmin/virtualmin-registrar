@@ -28,6 +28,10 @@ print &ui_table_row($text{'import_account'},
 print &ui_table_row($text{'import_id'},
 	&ui_opt_textbox("id", undef, 40, $text{'import_auto'}));
 
+# Update nameservers?
+print &ui_table_row($text{'import_ns'},
+	&ui_yesno_radio("ns", 1));
+
 print &ui_table_end();
 print &ui_form_end([ [ undef, $text{'import_ok'} ] ]);
 

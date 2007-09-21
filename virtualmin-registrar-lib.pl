@@ -1,9 +1,9 @@
 # Common functions for domain registration
-# XXX how do rcom accounts get any money in them?
 # XXX register.com account creation
 #	XXX CreateAccount
 # XXX how to give domains different contacts?
 # XXX help pages for everything
+# XXX domain renewal
 
 do '../web-lib.pl';
 &init_config();
@@ -169,6 +169,37 @@ local ($dname) = @_;
 return 1 if ($access{'registrar'});
 local @doms = split(/\s+/, $access{'doms'});
 return &indexof($dname, @doms) >= 0;
+}
+
+# get_domain_nameservers(&domain)
+# Returns an array ref of nameservers in some domain, or an error message
+sub get_domain_nameservers
+{
+local ($d) = @_;
+local $z = &virtual_server::get_bind_zone($d->{'dom'});
+if (!$z) {
+	return $text{'rcom_ezone'};
+	}
+local $file = &bind8::find("file", $z->{'members'});
+local @recs = &bind8::read_zone_file($file->{'values'}->[0], $d->{'dom'});
+if (!@recs) {
+	return &text('rcom_ezonefile', $file->{'values'}->[0]);
+	}
+local @ns;
+foreach my $r (@recs) {
+	if ($r->{'type'} eq 'NS' &&
+	    $r->{'name'} eq $d->{'dom'}.".") {
+		local $ns = $r->{'values'}->[0];
+		if ($ns !~ /\.$/) {
+			$ns .= ".".$d->{'dom'};
+			}
+		else {
+			$ns =~ s/\.$//;
+			}
+		push(@ns, $ns);
+		}
+	}
+return \@ns;
 }
 
 1;

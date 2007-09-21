@@ -261,7 +261,8 @@ if ($d->{$module_name}) {
 	}
 else {
 	# Can import existing registration (master admin only)
-	if (scalar(@accounts) && !$d->{'subdom'} && $access{'registrar'}) {
+	if (scalar(@accounts) && !$d->{'subdom'} && $access{'registrar'} &&
+	    $d->{'dns'}) {
 		push(@rv, { 'mod' => $module_name,
 			    'desc' => $text{'links_import'},
 			    'page' => 'edit_import.cgi?dom='.$d->{'dom'},

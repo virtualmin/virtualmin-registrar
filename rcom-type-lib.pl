@@ -119,6 +119,32 @@ else {
 	}
 }
 
+# type_rcom_ensure_nameservers(&account, &domain, &nameservers)
+# Registers a list of nameservers with the registrar. Returns undef if all OK,
+# or an error mesage on failure.
+sub type_rcom_ensure_nameservers
+{
+local ($account, $d, $nss) = @_;
+foreach my $ns (&unique(@$nss)) {
+	local ($ok, $out, $resp) = &call_rcom_api($account, "checknsstatus",
+					{ 'checknsname' => $ns });
+	next if ($ok);
+
+	# need to add it
+	local $nsip = &to_ipaddress($ns);
+	$nsip || return (0, &text('rcom_elookupns', $ns));
+	local ($ok, $out, $resp) = &call_rcom_api($account,
+					"registernameserver",
+					{ 'add' => 'true',
+					  'nsname' => $ns,
+					  'ip' => $nsip });
+	if (!$ok) {
+		return &text('rcom_eaddns', $ns, $out);
+		}
+	}
+return undef;
+}
+
 # type_rcom_create_domain(&account, &domain)
 # Actually register a domain, if possible. Returns 0 and an error message if
 # it failed, or 1 and an ID for the domain on success.
@@ -130,49 +156,21 @@ local ($sld, $tld) = ($1, $2);
 
 # NS records come from the DNS domain
 local $args = { 'SLD' => $sld, 'TLD' => $tld };
-local $z = &virtual_server::get_bind_zone($d->{'dom'});
-if (!$z) {
-	return (0, $text{'rcom_ezone'});
+local $nss = &get_domain_nameservers($d);
+if (!ref($nss)) {
+	return (0, $nss);
 	}
-local $file = &bind8::find("file", $z->{'members'});
-local @recs = &bind8::read_zone_file($file->{'values'}->[0], $d->{'dom'});
-local $nscount = 0;
-local @ns;
-foreach my $r (@recs) {
-	if ($r->{'type'} eq 'NS' &&
-	    $r->{'name'} eq $d->{'dom'}.".") {
-		local $ns = $r->{'values'}->[0];
-		if ($ns !~ /\.$/) {
-			$ns .= ".".$d->{'dom'};
-			}
-		else {
-			$ns =~ s/\.$//;
-			}
-		$nscount++;
-		$args->{'NS'.$nscount} = $ns;
-		push(@ns, $ns);
-		}
+elsif (!@$nss) {
+	return (0, $text{'rcom_ensrecords'});
 	}
-$nscount || return (0, $text{'rcom_ensrecords'});
+my $nscount = 1;
+foreach my $ns (@$nss) {
+	$args->{'NS'.$nscount++} = $ns;
+	}
 
-# Check the if the nameservers have been added
-foreach my $ns (&unique(@ns)) {
-	local ($ok, $out, $resp) = &call_rcom_api($account, "CheckNSStatus",
-					{ 'CheckNSName' => $ns });
-	next if ($ok);
-
-	# Need to add it
-	local $nsip = &to_ipaddress($ns);
-	$nsip || return (0, &text('rcom_elookupns', $ns));
-	local ($ok, $out, $resp) = &call_rcom_api($account,
-					"RegisterNameServer",
-					{ 'Add' => 'true',
-					  'NSName' => $ns,
-					  'IP' => $nsip });
-	if (!$ok) {
-		return (0, &text('rcom_eaddns', $ns, $out));
-		}
-	}
+# check the if the nameservers have been added
+local $err = &type_rcom_ensure_nameservers($account, $d, $nss);
+return (0, $err) if ($err);
 
 # Call the API to create
 if ($account->{'rcom_years'}) {
@@ -188,6 +186,37 @@ elsif ($resp->{'RRPCode'} != 200) {
 else {
 	return (1, $resp->{'OrderID'});
 	}
+}
+
+# type_rcom_set_nameservers(&account, &domain)
+# Updates the nameservers for a domain to match DNS. Returns undef on success
+# or an error message on failure.
+sub type_rcom_set_nameservers
+{
+local ($account, $d) = @_;
+
+# Get nameservers in DNS
+local $nss = &get_domain_nameservers($d);
+if (!ref($nss)) {
+	return $nss;
+	}
+elsif (!@$nss) {
+	return $text{'rcom_ensrecords'};
+	}
+
+# Make sure they are all available
+local $err = &type_rcom_ensure_nameservers($account, $d, $nss);
+return $err if ($err);
+
+# Update for the domain
+$d->{'dom'} =~ /^([^\.]+)\.(\S+)$/ || return $text{'rcom_etld'};
+local $args = { 'SLD' => $1, 'TLD' => $2 };
+my $nscount = 1;
+foreach my $ns (@$nss) {
+	$args->{'NS'.$nscount++} = $ns;
+	}
+local ($ok, $out, $resp) = &call_rcom_api($account, "ModifyNS", $args);
+return $ok ? undef : $out;
 }
 
 # type_rcom_delete_domain(&account, &domain)

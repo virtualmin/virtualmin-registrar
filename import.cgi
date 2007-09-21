@@ -39,6 +39,19 @@ else {
 	$d->{'registrar_id'} = $msg;
 	&virtual_server::save_domain($d);
 
+	# Set nameservers to match this system
+	if ($in{'ns'}) {
+		print $text{'import_nsing'},"<br>\n";
+		$nfunc = "type_".$account->{'registrar'}."_set_nameservers";
+		$err = &$nfunc($account, $d);
+		if ($err) {
+			print &text('import_failed', $err),"<p>\n";
+			}
+		else {
+			print $virtual_server::text{'setup_done'},"<p>\n";
+			}
+		}
+
 	# Update the Webmin user
 	&virtual_server::refresh_webmin_user($d);
 	&virtual_server::run_post_actions();

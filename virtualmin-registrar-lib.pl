@@ -147,7 +147,8 @@ local @rv = (
 		'size' => 20,
 		'opt' => 1 },
 	      { 'name' => 'country',
-		'size' => 40,
+		'choices' => [ map { [ $_->[1], $_->[0] ] }
+				   &list_countries() ],
 		'opt' => 0 },
 	      { 'name' => 'emailaddress',
 		'size' => 60,
@@ -199,6 +200,26 @@ foreach my $r (@recs) {
 		}
 	}
 return \@ns;
+}
+
+# list_countries()
+# Returns a list of array refs, each of which contains a country name,
+# two-letter code, three-letter code and DNS suffix.
+# From: http://schmidt.devlib.org/data/countries.txt
+sub list_countries
+{
+local @rv;
+open(COUNTRIES, "$module_root_directory/countries.txt");
+while(<COUNTRIES>) {
+	s/\r|\n//g;
+	local ($n, $name, $two, $three, $un, $sov, $exists, $owner, $tld) =
+		split(/;/, $_);
+	if ($exists) {
+		push(@rv, [ $name, $two, $three, $tld ]);
+		}
+	}
+close(COUNTRIES);
+return sort { $a->[0] cmp $b->[0] } @rv;
 }
 
 1;

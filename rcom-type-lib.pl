@@ -4,6 +4,7 @@ $rcom_api_hostname = "partner.rcomexpress.com";
 $rcom_test_api_hostname = "partnertest.rcomexpress.com";
 $rcom_api_port = 80;
 $rcom_api_page = "/interface.asp";
+@rcom_card_types = ( "visa", "amex", "mastercard" );
 
 use Time::Local;
 
@@ -52,6 +53,108 @@ else {
 	  $in->{'rcom_years'} <= 10 || return $text{'rcom_eyears'};
 	$account->{'rcom_years'} = $in->{'rcom_years'};
 	}
+return undef;
+}
+
+# type_rcom_create_inputs()
+# Returns HTML for creating a new register.com sub-account. 
+sub type_rcom_create_inputs
+{
+local $rv;
+local @countries = &list_countries();
+local ($defc) = grep { $_->[1] eq "US" } @countries;
+$rv .= &ui_table_row($text{'rcom_newuid'},
+	&ui_textbox("newuid", undef, 20));
+$rv .= &ui_table_row($text{'rcom_newpw'},
+	&ui_password("newpw", undef, 20));
+
+# Company and personal name
+$rv .= &ui_table_row($text{'rcom_organizationname'},
+	&ui_textbox("organizationname", undef, 60));
+$rv .= &ui_table_row($text{'rcom_jobtitle'},
+	&ui_opt_textbox("jobtitle", undef, 40, $text{'rcom_none'}));
+$rv .= &ui_table_row($text{'rcom_firstname'},
+	&ui_textbox("firstname", undef, 40));
+$rv .= &ui_table_row($text{'rcom_lastname'},
+	&ui_textbox("lastname", undef, 40));
+
+# Address and phone
+$rv .= &ui_table_hr();
+$rv .= &ui_table_row($text{'rcom_address'},
+	&ui_textbox("address1", undef, 60)."<br>\n".
+	&ui_textbox("address2", undef, 60));
+$rv .= &ui_table_row($text{'rcom_city'},
+	&ui_textbox("city", undef, 40));
+$rv .= &ui_table_row($text{'rcom_postalcode'},
+	&ui_textbox("postalcode", undef, 10));
+$rv .= &ui_table_row($text{'rcom_stateprovince'},
+	&ui_select("stateprovincechoice", "S",
+		   [ [ "S", $text{'rcom_state'} ],
+		     [ "P", $text{'rcom_province'} ] ]).
+	&ui_textbox("stateprovince", undef, 40));
+$rv .= &ui_table_row($text{'rcom_country'},
+	&ui_select("country", $defc->[0],
+		[ map { [ $_->[0] ] } @countries ]));
+$rv .= &ui_table_row($text{'rcom_phone'},
+	&ui_textbox("phone", undef, 20));
+$rv .= &ui_table_row($text{'rcom_fax'},
+	&ui_opt_textbox("fax", undef, 20, $text{'rcom_none'}));
+$rv .= &ui_table_row($text{'rcom_email'},
+	&ui_textbox("email", undef, 60));
+
+# Credit card
+$rv .= &ui_table_hr();
+$rv .= &ui_table_row($text{'rcom_cardtype'},
+	&ui_select("cardtype", undef,
+		   [ map { [ $_, $text{'rcom_cardtype_'.$_} ] }
+			 @rcom_card_types ]));
+$rv .= &ui_table_row($text{'rcom_ccname'},
+	&ui_textbox("ccname", undef, 60));
+$rv .= &ui_table_row($text{'rcom_creditcardnumber'},
+	&ui_textbox("creditcardnumber", undef, 60));
+$rv .= &ui_table_row($text{'rcom_creditcardexp'},
+	&ui_textbox("creditcardexpmonth", undef, 2)."/".
+	&ui_textbox("creditcardexpyear", undef, 4));
+$rv .= &ui_table_row($text{'rcom_cvv2'},
+	&ui_textbox("cvv2", undef, 3));
+$rv .= &ui_table_row($text{'rcom_ccaddress'},
+	&ui_textbox("ccaddress", undef, 60));
+$rv .= &ui_table_row($text{'rcom_cczip'},
+	&ui_textbox("cczip", undef, 10));
+$rv .= &ui_table_row($text{'rcom_cccountry'},
+	&ui_select("cccountry", $defc->[0],
+		[ map { [ $_->[0] ] } @countries ]));
+
+return $rv;
+}
+
+# type_rcom_create_parse(&account, &in)
+# Updates the account objcet with values parsed from in. Returns undef if all
+# OK, or an error message on failure.
+sub type_rcom_create_parse
+{
+local ($account, $in) = @_;
+
+# Username and password
+$in->{'newuid'} =~ /^[a-z0-9\.\-\_]+$/ || return $text{'rcom_enewuid'};
+$account->{'rcom_newuid'} = $in->{'newuid'};
+$in->{'newpw'} =~ /^\S+$/ || return $text{'rcom_enewpw'};
+$account->{'rcom_newpw'} = $in->{'newpw'};
+
+# XXX
+}
+
+# type_rcom_create_account(&account)
+# Actually does the work of creating a new register.com sub-account, which will
+# be under the main Virtualmin account but billed separately.
+sub type_rcom_create_account
+{
+local ($account) = @_;
+
+# Make HTTP request to virtualmin.com, where a CGI knows our master password
+
+# If OK, clear un-needed details from the account object
+
 return undef;
 }
 

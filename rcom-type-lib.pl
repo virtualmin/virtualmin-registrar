@@ -5,6 +5,8 @@ $rcom_test_api_hostname = "partnertest.rcomexpress.com";
 $rcom_api_port = 80;
 $rcom_api_page = "/interface.asp";
 
+use Time::Local;
+
 # Returns the name of this registrar
 sub type_rcom_desc
 {
@@ -51,6 +53,14 @@ else {
 	$account->{'rcom_years'} = $in->{'rcom_years'};
 	}
 return undef;
+}
+
+# type_rcom_renew_years(&account, &domain)
+# Returns the number of years by default to renew a domain for
+sub type_rcom_renew_years
+{
+local ($account, $d) = @_;
+return $account->{'rcom_years'} || 2;
 }
 
 # type_rcom_validate(&account)
@@ -296,6 +306,29 @@ foreach my $ct ("Admin", "Tech") {
 		}
 	}
 return undef;
+}
+
+# type_rcom_get_expiry(&account, &domain)
+# Returns either 1 and the expiry time (unix) for a domain, or 0 and an error
+# message.
+sub type_rcom_get_expiry
+{
+local ($account, $d) = @_;
+$d->{'dom'} =~ /^([^\.]+)\.(\S+)$/ || return (0, $text{'rcom_etld'});
+local ($sld, $tld) = ($1, $2);
+local ($ok, $out, $resp) = &call_rcom_api($account, "GetDomainExp",
+				{ 'SLD' => $sld, 'TLD' => $tld });
+if (!$ok) {
+	return (0, $out);
+	}
+elsif ($resp->{'ExpirationDate'} !~ /^(\d+)\/(\d+)\/(\d+)\s+(\d+):(\d+):(\d+)\s+(\S+)/) {
+	return (0, &text('rcom_edate', $resp->{'ExpirationDate'}));
+	}
+else {
+	return (1, eval { timelocal($6, $5, $4+($7 eq "PM" ? 12 : 0),
+				$2, $1-1, $3-1900) });
+	return (0, $@);
+	}
 }
 
 # call_rcom_api(&account, command, &args)

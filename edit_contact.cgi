@@ -70,7 +70,6 @@ foreach my $con (@$cons) {
 	print &ui_hidden_table_end();
 	}
 
-print &ui_table_end();
 print &ui_form_end([ [ "save", $text{'save'} ] ]);
 
 &ui_print_footer();

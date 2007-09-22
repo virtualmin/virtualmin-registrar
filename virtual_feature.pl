@@ -247,11 +247,21 @@ local ($d) = @_;
 local @rv;
 local @accounts = &list_registrar_accounts();
 if ($d->{$module_name}) {
-	# Can edit contact details and de-import (master admin only)
+	# Edit contact details
 	push(@rv, { 'mod' => $module_name,
 		    'desc' => $text{'links_contact'},
 		    'page' => 'edit_contact.cgi?dom='.$d->{'dom'},
 		    'cat' => 'admin' });
+
+	# Renew domain (if allowed to create)
+	if (&virtual_server::can_use_feature($module_name)) {
+		push(@rv, { 'mod' => $module_name,
+			    'desc' => $text{'links_renew'},
+			    'page' => 'edit_renew.cgi?dom='.$d->{'dom'},
+			    'cat' => 'admin' });
+		}
+
+	# Dis-associate
 	if ($access{'registrar'}) {
 		push(@rv, { 'mod' => $module_name,
 			    'desc' => $text{'links_rereg'},

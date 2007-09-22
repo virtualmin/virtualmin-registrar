@@ -52,4 +52,3 @@ print &ui_form_end([ [ undef, $text{'renew_ok'} ] ]);
 
 &ui_print_footer();
 
-

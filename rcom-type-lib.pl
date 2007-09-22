@@ -331,6 +331,30 @@ else {
 	}
 }
 
+# type_rcom_renew_domain(&account, &domain, years)
+# Attempts to renew a domain for the specified period. Returns 1 and the
+# registrars confirmation code on success, or 0 and an error message on
+# failure.
+sub type_rcom_renew_domain
+{
+local ($account, $d, $years) = @_;
+local ($account, $d) = @_;
+$d->{'dom'} =~ /^([^\.]+)\.(\S+)$/ || return (0, $text{'rcom_etld'});
+local ($sld, $tld) = ($1, $2);
+local ($ok, $out, $resp) = &call_rcom_api($account, "Extend",
+				{ 'SLD' => $sld, 'TLD' => $tld,
+				  'NumYears' => $years });
+if (!$ok) {
+	return (0, $out);
+	}
+elsif ($resp->{'RRPCode'} != 200) {
+	return (0, $resp->{'RRPText'});
+	}
+else {
+	return (1, $resp->{'OrderID'});
+	}
+}
+
 # call_rcom_api(&account, command, &args)
 # Calls a register.com API method, and returns a status code (1 for success, 0
 # for error), the response text, and the response hash

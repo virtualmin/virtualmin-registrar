@@ -3,7 +3,6 @@
 #	XXX CreateAccount
 # XXX how to give domains different contacts?
 # XXX help pages for everything
-# XXX domain renewal
 
 do '../web-lib.pl';
 &init_config();

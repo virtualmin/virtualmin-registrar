@@ -51,11 +51,12 @@ else {
 	}
 
 # Form to add existing registrar account
+print "<table>\n";
 print &ui_form_start("edit.cgi");
-print "<b>$text{'index_add'}</b>\n";
-print &ui_select("registrar", undef,
-	[ map { [ $_->{'name'}, $_->{'desc'} ] } @registrar_types ]);
-print &ui_submit($text{'index_addok'});
+print "<tr> <td><b>$text{'index_add'}</b></td>\n";
+print "<td>".&ui_select("registrar", undef,
+	[ map { [ $_->{'name'}, $_->{'desc'} ] } @registrar_types ])."</td>\n";
+print "<td>".&ui_submit($text{'index_addok'})."</td> </tr>\n";
 print &ui_form_end();
 
 # Form to create new registrar account, if any support it
@@ -65,12 +66,14 @@ foreach $r (@registrar_types) {
 	}
 if (@create_types) {
 	print &ui_form_start("create_form.cgi");
-	print "<b>$text{'index_create'}</b>\n";
-	print &ui_select("registrar", undef,
-		[ map { [ $_->{'name'}, $_->{'desc'} ] } @create_types ]);
-	print &ui_submit($text{'index_createok'});
+	print "<tr> <td><b>$text{'index_create'}</b></td>\n";
+	print "<td>".&ui_select("registrar", undef,
+	    [ map { [ $_->{'name'}, $_->{'desc'} ] } @create_types ])."</td>\n";
+	print "<td>".&ui_submit($text{'index_createok'})."</td> </tr>\n";
 	print &ui_form_end();
 	}
+
+print "</table>\n";
 
 &ui_print_footer("/", $text{'index'});
 

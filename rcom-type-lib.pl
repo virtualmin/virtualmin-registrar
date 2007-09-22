@@ -4,7 +4,40 @@ $rcom_api_hostname = "partner.rcomexpress.com";
 $rcom_test_api_hostname = "partnertest.rcomexpress.com";
 $rcom_api_port = 80;
 $rcom_api_page = "/interface.asp";
+
 @rcom_card_types = ( "visa", "amex", "mastercard" );
+$rcom_create_hostname = "www.virtualmin.com";
+$rcom_create_port = 80;
+$rcom_create_ssl = 1;
+$rcom_create_page = "/cgi-bin/rcom.cgi";
+@rcom_account_params = ( 
+    "NewUID",
+    "NewPW",
+    "ConfirmPW",
+    "RegistrantOrganizationName",
+    "RegistrantJobTitle",
+    "RegistrantFirstName",
+    "RegistrantLastName",
+    "RegistrantAddress1",
+    "RegistrantAddress2",
+    "RegistrantCity",
+    "RegistrantPostalCode",
+    "RegistrantStateProvince",
+    "RegistrantStateProvinceChoice",
+    "RegistrantCountry",
+    "RegistrantPhone",
+    "RegistrantFax",
+    "RegistrantEmailAddress",
+    "CardType",
+    "CCName",
+    "CreditCardNumber",
+    "CreditCardExpMonth",
+    "CreditCardExpYear",
+    "CVV2",
+    "CCAddress",
+    "CCZip",
+    "CCCountry",
+    );
 
 use Time::Local;
 
@@ -99,8 +132,8 @@ $rv .= &ui_table_row($text{'rcom_phone'},
 	&ui_textbox("phone", undef, 20));
 $rv .= &ui_table_row($text{'rcom_fax'},
 	&ui_opt_textbox("fax", undef, 20, $text{'rcom_none'}));
-$rv .= &ui_table_row($text{'rcom_email'},
-	&ui_textbox("email", undef, 60));
+$rv .= &ui_table_row($text{'rcom_emailaddress'},
+	&ui_textbox("emailaddress", undef, 60));
 
 # Credit card
 $rv .= &ui_table_hr();
@@ -116,7 +149,7 @@ $rv .= &ui_table_row($text{'rcom_creditcardexp'},
 	&ui_textbox("creditcardexpmonth", undef, 2)."/".
 	&ui_textbox("creditcardexpyear", undef, 4));
 $rv .= &ui_table_row($text{'rcom_cvv2'},
-	&ui_textbox("cvv2", undef, 3));
+	&ui_textbox("cvv2", undef, 4));
 $rv .= &ui_table_row($text{'rcom_ccaddress'},
 	&ui_textbox("ccaddress", undef, 60));
 $rv .= &ui_table_row($text{'rcom_cczip'},
@@ -138,22 +171,116 @@ local ($account, $in) = @_;
 # Username and password
 $in->{'newuid'} =~ /^[a-z0-9\.\-\_]+$/ || return $text{'rcom_enewuid'};
 $account->{'rcom_newuid'} = $in->{'newuid'};
-$in->{'newpw'} =~ /^\S+$/ || return $text{'rcom_enewpw'};
+$in->{'newpw'} =~ /\S/ || return $text{'rcom_enewpw'};
 $account->{'rcom_newpw'} = $in->{'newpw'};
 
-# XXX
+# Company and personal name
+$in->{'organizationname'} =~ /\S/ || return $text{'rcom_eorganizationname'};
+$account->{'rcom_organizationname'} = $in->{'organizationname'};
+if (!$in->{'jobtitle_def'}) {
+	$in->{'jobtitle'} =~ /\S/ || return $text{'rcom_ejobtitle'};
+	$account->{'rcom_jobtitle'} = $in->{'jobtitle'};
+	}
+$in->{'firstname'} =~ /\S/ || return $text{'rcom_efirstname'};
+$account->{'rcom_firstname'} = $in->{'firstname'};
+$in->{'lastname'} =~ /\S/ || return $text{'rcom_elastname'};
+$account->{'rcom_lastname'} = $in->{'lastname'};
+
+# Address and phone
+$in->{'address1'} =~ /\S/ || return $text{'rcom_eaddress'};
+$account->{'rcom_address1'} = $in->{'address1'};
+$account->{'rcom_address2'} = $in->{'address2'};
+$in->{'city'} =~ /\S/ || return $text{'rcom_ecity'};
+$account->{'rcom_city'} = $in->{'city'};
+$in->{'postalcode'} =~ /^\S+$/ || return $text{'rcom_epostalcode'};
+$account->{'rcom_postalcode'} = $in->{'postalcode'};
+$account->{'rcom_stateprovincechoice'} = $in->{'stateprovincechoice'};
+$in->{'stateprovince'} =~ /\S/ || return $text{'rcom_estateprovince'};
+$account->{'rcom_stateprovince'} = $in->{'stateprovince'};
+$account->{'rcom_country'} = $in->{'country'};
+$in->{'phone'} =~ /^\+\d+\.\d+$/ || return $text{'rcom_ephone'};
+$account->{'rcom_phone'} = $in->{'phone'};
+if (!$in{'fax_def'}) {
+	$in->{'fax'} =~ /^\+\d+\.\d+$/ || return $text{'rcom_efax'};
+	$account->{'rcom_fax'} = $in->{'fax'};
+	}
+$in->{'emailaddress'} =~ /^\S+\@\S+$/ || return $text{'rcom_eemailaddress'};
+$account->{'rcom_emailaddress'} = $in->{'email'};
+
+# Credit card
+local @tm = localtime(time());
+local $y = $tm[5]+1900;
+$account->{'rcom_cardtype'} = $in->{'cardtype'};
+$in->{'ccname'} =~ /\S/ || return $text{'rcom_eccname'};
+$account->{'rcom_ccname'} = $in->{'ccname'};
+$in->{'creditcardnumber'} =~ /^\d+$/ || return $text{'rcom_ecreditcardnumber'};
+$account->{'rcom_creditcardnumber'} = $in->{'creditcardnumber'};
+$in->{'creditcardexpmonth'} =~ /^\d\d$/ && $in->{'creditcardexpmonth'} >= 1 &&
+  $in->{'creditcardexpmonth'} <= 12 || return $text{'rcom_ecreditcardexpmonth'};
+$account->{'rcom_creditcardexpmonth'} = $in->{'creditcardexpmonth'};
+$in->{'creditcardexpyear'} =~ /^\d{4}$/ &&
+  $in->{'creditcardexpyear'} >= $y || return $text{'rcom_ecreditcardexpyear'};
+$account->{'rcom_creditcardexpyear'} = $in->{'creditcardexpyear'};
+$in->{'cvv2'} =~ /^\d{3,4}$/ || return $text{'rcom_ecvv2'};
+$account->{'rcom_cvv2'} = $in->{'cvv2'};
+$in->{'ccaddress'} =~ /\S/ || return $text{'rcom_eccaddress'};
+$account->{'rcom_ccaddress'} = $in->{'ccaddress'};
+$in->{'cczip'} =~ /^\S+$/ || return $text{'rcom_ecczip'};
+$account->{'rcom_cczip'} = $in->{'cczip'};
+$account->{'rcom_cccountry'} = $in->{'cccountry'};
+
+return undef;
 }
 
 # type_rcom_create_account(&account)
 # Actually does the work of creating a new register.com sub-account, which will
-# be under the main Virtualmin account but billed separately.
+# be under the main Virtualmin account but billed separately. Returns 0 and
+# an error message on failure, or 1 and the new account ID on success.
 sub type_rcom_create_account
 {
 local ($account) = @_;
 
 # Make HTTP request to virtualmin.com, where a CGI knows our master password
+local $id;
+$account->{'rcom_confirmpw'} = $account->{'rcom_newpw'};	# Same
+local $page = $rcom_create_page."?".
+      join("&", map { my $p = lc($_);
+		      $p =~ s/^Registrant//;
+		      $p = "rcom_".$p;
+		      $_."=".&urlize($account->{$p}) } @rcom_account_params);
+if ($account->{'rcom_test'}) {
+	$page .= "&test=1";
+	}
+&http_download($rcom_create_host,
+	       $rcom_create_port,
+	       $page,
+	       \$out, \$err, undef, $rcom_create_ssl);
+if ($err) {
+	# HTTP error
+	return (0, $err);
+	}
+elsif ($out =~ /^ERR\s+(\S.*)/) {
+	# Some error
+	return (0, $1);
+	}
+elsif ($out =~ /^OK\s+(\S+)/) {
+	$id = $1;
+	}
+else {
+	# Unknown response!
+	return (0, $out);
+	}
 
 # If OK, clear un-needed details from the account object
+local $a = $account->{'rcom_newuid'};
+local $p = $account->{'rcom_newpw'};
+foreach my $k (keys %$account) {
+	delete($account->{$k}) if ($k =~ /^rcom_/);
+	}
+$account->{'rcom_account'} = $a;
+$account->{'rcom_pass'} = $p;
+
+# enabled flag? XXX
 
 return undef;
 }

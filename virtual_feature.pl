@@ -97,8 +97,7 @@ local $dfunc = "type_".$reg."_desc";
 local $rfunc = "type_".$reg."_create_domain";
 local ($ok, $msg) = &$rfunc($account, $d);
 if (!$ok) {
-	&$virtual_server::second_print(&text('feat_failed', $msg));
-	return 0;
+	&error(&text('feat_failed', $msg));
 	}
 $d->{'registrar_account'} = $account->{'id'};
 $d->{'registrar_id'} = $msg;
@@ -141,7 +140,7 @@ local ($d, $oldd) = @_;
 local ($account) = grep { $_->{'id'} eq $oldd->{'registrar_account'} }
 			&list_registrar_accounts();
 if (!$account) {
-	&$virtual_server::second_print($text{'feat_noaccount'});
+	&error($text{'feat_noaccount'});
 	return 0;
 	}
 local $reg = $account->{'registrar'};
@@ -153,7 +152,7 @@ if (defined(&$mfunc)) {
 					    $d->{'dom'}, &$dfunc($account)));
 	local ($ok, $msg) = &$mfunc($account, $d, $oldd);
 	if (!$ok) {
-		&$virtual_server::second_print(&text('feat_failed', $msg));
+		&error(&text('feat_failed', $msg));
 		return 0;
 		}
 	$d->{'registrar_account'} = $account->{'id'};
@@ -169,7 +168,7 @@ else {
 	local $ufunc = "type_".$reg."_delete_domain";
 	local ($ok, $msg) = &$ufunc($account, $oldd);
 	if (!$ok) {
-		&$virtual_server::second_print(&text('feat_failed', $msg));
+		&error(&text('feat_failed', $msg));
 		return 0;
 		}
 	delete($d->{'registrar_account'});
@@ -182,7 +181,7 @@ else {
 	local $rfunc = "type_".$reg."_create_domain";
 	local ($ok, $msg) = &$rfunc($account, $d);
 	if (!$ok) {
-		&$virtual_server::second_print(&text('feat_failed', $msg));
+		&error(&text('feat_failed', $msg));
 		return 0;
 		}
 	$d->{'registrar_account'} = $account->{'id'};
@@ -203,7 +202,7 @@ local ($d) = @_;
 local ($account) = grep { $_->{'id'} eq $d->{'registrar_account'} }
 			&list_registrar_accounts();
 if (!$account) {
-	&$virtual_server::second_print($text{'feat_noaccount'});
+	&error($text{'feat_noaccount'});
 	return 0;
 	}
 local $reg = $account->{'registrar'};
@@ -212,7 +211,7 @@ local $dfunc = "type_".$reg."_desc";
 local $ufunc = "type_".$reg."_delete_domain";
 local ($ok, $msg) = &$ufunc($account, $d);
 if (!$ok) {
-	&$virtual_server::second_print(&text('feat_failed', $msg));
+	&error(&text('feat_failed', $msg));
         return 0;
 	}
 delete($d->{'registrar_account'});
@@ -251,14 +250,14 @@ if ($d->{$module_name}) {
 	push(@rv, { 'mod' => $module_name,
 		    'desc' => $text{'links_contact'},
 		    'page' => 'edit_contact.cgi?dom='.$d->{'dom'},
-		    'cat' => 'admin' });
+		    'cat' => 'dns' });
 
 	# Renew domain (if allowed to create)
 	if (&virtual_server::can_use_feature($module_name)) {
 		push(@rv, { 'mod' => $module_name,
 			    'desc' => $text{'links_renew'},
 			    'page' => 'edit_renew.cgi?dom='.$d->{'dom'},
-			    'cat' => 'admin' });
+			    'cat' => 'dns' });
 		}
 
 	# Dis-associate
@@ -266,7 +265,7 @@ if ($d->{$module_name}) {
 		push(@rv, { 'mod' => $module_name,
 			    'desc' => $text{'links_rereg'},
 			    'page' => 'edit_dereg.cgi?dom='.$d->{'dom'},
-			    'cat' => 'admin' });
+			    'cat' => 'dns' });
 		}
 	}
 else {
@@ -276,7 +275,7 @@ else {
 		push(@rv, { 'mod' => $module_name,
 			    'desc' => $text{'links_import'},
 			    'page' => 'edit_import.cgi?dom='.$d->{'dom'},
-			    'cat' => 'admin' });
+			    'cat' => 'dns' });
 		}
 	}
 return @rv;

@@ -1,6 +1,7 @@
 # Common functions for domain registration
 # XXX register.com account creation
 #	XXX CreateAccount
+#	XXX what does 'This is not a reseller account' mean? How to create one?
 # XXX how to give domains different contacts?
 # XXX help pages for everything
 

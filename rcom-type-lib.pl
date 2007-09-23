@@ -7,7 +7,7 @@ $rcom_api_page = "/interface.asp";
 
 @rcom_card_types = ( "visa", "amex", "mastercard" );
 $rcom_create_hostname = "www.virtualmin.com";
-$rcom_create_port = 80;
+$rcom_create_port = 443;
 $rcom_create_ssl = 1;
 $rcom_create_page = "/cgi-bin/rcom.cgi";
 @rcom_account_params = ( 
@@ -37,6 +37,7 @@ $rcom_create_page = "/cgi-bin/rcom.cgi";
     "CCAddress",
     "CCZip",
     "CCCountry",
+    "AuthQuestionAnswer",
     );
 
 use Time::Local;
@@ -96,16 +97,22 @@ sub type_rcom_create_inputs
 local $rv;
 local @countries = &list_countries();
 local ($defc) = grep { $_->[1] eq "US" } @countries;
+
+# Account login and password
 $rv .= &ui_table_row($text{'rcom_newuid'},
 	&ui_textbox("newuid", undef, 20));
 $rv .= &ui_table_row($text{'rcom_newpw'},
 	&ui_password("newpw", undef, 20));
+$rv .= &ui_table_row($text{'rcom_test'},
+	&ui_radio("test", 0,
+		  [ [ 1, $text{'rcom_test1'} ],
+		    [ 0, $text{'rcom_test0'} ] ]));
 
 # Company and personal name
 $rv .= &ui_table_row($text{'rcom_organizationname'},
 	&ui_textbox("organizationname", undef, 60));
 $rv .= &ui_table_row($text{'rcom_jobtitle'},
-	&ui_opt_textbox("jobtitle", undef, 40, $text{'rcom_none'}));
+	&ui_textbox("jobtitle", undef, 40));
 $rv .= &ui_table_row($text{'rcom_firstname'},
 	&ui_textbox("firstname", undef, 40));
 $rv .= &ui_table_row($text{'rcom_lastname'},
@@ -173,14 +180,13 @@ $in->{'newuid'} =~ /^[a-z0-9\.\-\_]+$/ || return $text{'rcom_enewuid'};
 $account->{'rcom_newuid'} = $in->{'newuid'};
 $in->{'newpw'} =~ /\S/ || return $text{'rcom_enewpw'};
 $account->{'rcom_newpw'} = $in->{'newpw'};
+$account->{'rcom_test'} = defined($in->{'test'}) ? $in->{'test'} : 1;
 
 # Company and personal name
 $in->{'organizationname'} =~ /\S/ || return $text{'rcom_eorganizationname'};
 $account->{'rcom_organizationname'} = $in->{'organizationname'};
-if (!$in->{'jobtitle_def'}) {
-	$in->{'jobtitle'} =~ /\S/ || return $text{'rcom_ejobtitle'};
-	$account->{'rcom_jobtitle'} = $in->{'jobtitle'};
-	}
+$in->{'jobtitle'} =~ /\S/ || return $text{'rcom_ejobtitle'};
+$account->{'rcom_jobtitle'} = $in->{'jobtitle'};
 $in->{'firstname'} =~ /\S/ || return $text{'rcom_efirstname'};
 $account->{'rcom_firstname'} = $in->{'firstname'};
 $in->{'lastname'} =~ /\S/ || return $text{'rcom_elastname'};
@@ -205,7 +211,7 @@ if (!$in{'fax_def'}) {
 	$account->{'rcom_fax'} = $in->{'fax'};
 	}
 $in->{'emailaddress'} =~ /^\S+\@\S+$/ || return $text{'rcom_eemailaddress'};
-$account->{'rcom_emailaddress'} = $in->{'email'};
+$account->{'rcom_emailaddress'} = $in->{'emailaddress'};
 
 # Credit card
 local @tm = localtime(time());
@@ -243,15 +249,16 @@ local ($account) = @_;
 # Make HTTP request to virtualmin.com, where a CGI knows our master password
 local $id;
 $account->{'rcom_confirmpw'} = $account->{'rcom_newpw'};	# Same
+$account->{'rcom_authquestionanswer'} = 'none';			# Not needed?
 local $page = $rcom_create_page."?".
       join("&", map { my $p = lc($_);
-		      $p =~ s/^Registrant//;
+		      $p =~ s/^registrant//;
 		      $p = "rcom_".$p;
 		      $_."=".&urlize($account->{$p}) } @rcom_account_params);
 if ($account->{'rcom_test'}) {
 	$page .= "&test=1";
 	}
-&http_download($rcom_create_host,
+&http_download($rcom_create_hostname,
 	       $rcom_create_port,
 	       $page,
 	       \$out, \$err, undef, $rcom_create_ssl);
@@ -274,15 +281,15 @@ else {
 # If OK, clear un-needed details from the account object
 local $a = $account->{'rcom_newuid'};
 local $p = $account->{'rcom_newpw'};
+local $t = $account->{'rcom_test'};
 foreach my $k (keys %$account) {
 	delete($account->{$k}) if ($k =~ /^rcom_/);
 	}
 $account->{'rcom_account'} = $a;
 $account->{'rcom_pass'} = $p;
+$account->{'rcom_test'} = $t;
 
-# enabled flag? XXX
-
-return undef;
+return (1, $id);
 }
 
 # type_rcom_renew_years(&account, &domain)

@@ -38,6 +38,7 @@ $rcom_create_page = "/cgi-bin/rcom.cgi";
     "CCZip",
     "CCCountry",
     "AuthQuestionAnswer",
+    "Reseller",
     );
 
 use Time::Local;
@@ -250,6 +251,7 @@ local ($account) = @_;
 local $id;
 $account->{'rcom_confirmpw'} = $account->{'rcom_newpw'};	# Same
 $account->{'rcom_authquestionanswer'} = 'none';			# Not needed?
+$account->{'rcom_reseller'} = 1;				# Needed
 local $page = $rcom_create_page."?".
       join("&", map { my $p = lc($_);
 		      $p =~ s/^registrant//;
@@ -422,6 +424,9 @@ return (0, $err) if ($err);
 # Call the API to create
 if ($account->{'rcom_years'}) {
 	$args->{'NumYears'} = $account->{'rcom_years'};
+	}
+if ($tld eq "eu") {
+	$args->{'EU_WhoisPolicy'} = "I Agree";
 	}
 local ($ok, $out, $resp) = &call_rcom_api($account, "Purchase", $args);
 if (!$ok) {

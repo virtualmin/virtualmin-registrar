@@ -4,6 +4,9 @@
 #	XXX what does 'This is not a reseller account' mean? How to create one?
 # XXX how to give domains different contacts?
 # XXX help pages for everything
+# XXX allowed domains for register.com
+#	XXX what happens if no account could be found?
+# XXX create test r.api account
 
 do '../web-lib.pl';
 &init_config();

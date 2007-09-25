@@ -49,6 +49,58 @@ sub type_rcom_desc
 return $text{'type_rcom'};
 }
 
+# type_rcom_domains(&account)
+# Returns a list of TLDs that can be used with register.com. Hard-coded for
+# now, as I don't know of any programatic way to get this.
+sub type_rcom_domains
+{
+return (".com",
+	".net",
+	".org",
+	".us",
+	".info",
+	".mobi",
+	".biz",
+	".co.uk",
+	".org.uk",
+	".ca",
+	".cn",
+	".eu",
+	".cc",
+	".tv",
+	".ws",
+	".com.cn",
+	".net.cn",
+	".org.cn",
+	".de",
+	".be",
+	".tc",
+	".vg",
+	".ms",
+	".gs",
+	".jp",
+	".co.nz",
+	".br.com",
+	".cn.com",
+	".jpn.com",
+	".eu.com",
+	".uk.com",
+	".uk.net",
+	".us.com",
+	".uy.com",
+	".hu.com",
+	".no.com",
+	".qc.com",
+	".ru.com",
+	".sa.com",
+	".se.com",
+	".se.net",
+	".za.com",
+	".de.com",
+	".me.uk",
+	);
+}
+
 # type_rcom_edit_inputs(&account, new?)
 # Returns table fields for entering the account login details
 sub type_rcom_edit_inputs

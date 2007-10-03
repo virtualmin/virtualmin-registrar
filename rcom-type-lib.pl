@@ -469,9 +469,9 @@ foreach my $ns (@$nss) {
 	$args->{'NS'.$nscount++} = $ns;
 	}
 
-# check the if the nameservers have been added
+# Check the if the nameservers have been added, and try to add them. This
 local $err = &type_rcom_ensure_nameservers($account, $d, $nss);
-return (0, $err) if ($err);
+#return (0, $err) if ($err);
 
 # Call the API to create
 if ($account->{'rcom_years'}) {
@@ -590,7 +590,8 @@ foreach my $ct ("Admin", "Tech") {
 	local $args = { 'SLD' => $sld, 'TLD' => $tld,
 			'ContactType' => $ ct };
 	foreach my $k (keys %$con) {
-		if ($k ne "type" && $k ne "lcmap") {
+		if ($k ne "type" && $k ne "lcmap" &&
+		    $k ne $ct."PartyID") {
 			$args->{$ct.$con->{'lcmap'}->{$k}} = $con->{$k};
 			}
 		}
@@ -678,6 +679,7 @@ foreach my $l (split(/\r?\n/, $out)) {
 	$l =~ s/^\s*;.*//;
 	if ($l =~ /^([^=]+)=(.*)/) {
 		$resp{$1} = $2;
+		$resp{$1} =~ s/\s+$//;	# Remove trailing spaces
 		}
 	}
 if ($resp{'ErrCount'}) {

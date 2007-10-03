@@ -30,7 +30,7 @@ print &ui_table_row($text{'import_id'},
 
 # Update nameservers?
 print &ui_table_row($text{'import_ns'},
-	&ui_yesno_radio("ns", 1));
+	&ui_yesno_radio("ns", 0));
 
 print &ui_table_end();
 print &ui_form_end([ [ undef, $text{'import_ok'} ] ]);

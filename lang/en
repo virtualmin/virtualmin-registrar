@@ -214,6 +214,7 @@ renew_eyears=Missing or invalid number of years
 renew_doing=Renewing domain $1 with $2 for $3 years ..
 renew_failed=.. renewal failed : $1
 renew_done=.. renewal complete - code from registrar was $1
+renew_account=Renewing with account
 
 create_title=Create Registrar Account
 create_header=New registrar account details

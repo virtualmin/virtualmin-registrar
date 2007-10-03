@@ -137,6 +137,10 @@ return 1;
 sub feature_modify
 {
 local ($d, $oldd) = @_;
+if ($d->{'dom'} eq $oldd->{'dom'}) {
+	# Nothing to do if domain name hasn't changed
+	return;
+	}
 local ($account) = grep { $_->{'id'} eq $oldd->{'registrar_account'} }
 			&list_registrar_accounts();
 if (!$account) {
@@ -247,10 +251,16 @@ local @rv;
 local @accounts = &list_registrar_accounts();
 if ($d->{$module_name}) {
 	# Edit contact details
-	push(@rv, { 'mod' => $module_name,
-		    'desc' => $text{'links_contact'},
-		    'page' => 'edit_contact.cgi?dom='.$d->{'dom'},
-		    'cat' => 'dns' });
+	local $cm = &can_contacts($d);
+	if ($cm) {
+		push(@rv, { 'mod' => $module_name,
+			    'desc' => $cm == 1 ? $text{'links_contact'}
+					       : $text{'links_contactv'},
+			    'page' => $cm == 1 ? 
+				'edit_contact.cgi?dom='.$d->{'dom'} :
+				'view_contact.cgi?dom='.$d->{'dom'},
+			    'cat' => 'dns' });
+		}
 
 	# Renew domain (if allowed to create)
 	if (&virtual_server::can_use_feature($module_name)) {
@@ -288,7 +298,7 @@ sub feature_webmin
 {
 local ($d, $doms) = @_;
 local @rdoms = grep { $_->{$module_name} } @$doms;
-if ($any) {
+if (@rdoms) {
 	return ( [ $module_name,
 		   { 'registrar' => 0,
 		     'doms' => join(' ', map { $_->{'dom'} } @rdoms) } ] );

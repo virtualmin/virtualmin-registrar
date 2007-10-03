@@ -4,7 +4,6 @@
 #	XXX how to whitelist IPs?
 #	XXX when creating, how to add a nameserver in a non-hosted domain
 # XXX how to give domains different contacts?
-# XXX help pages for everything
 # XXX create test r.api account
 # XXX nameserver management - how to add?
 
@@ -173,6 +172,12 @@ local ($dname) = @_;
 return 1 if ($access{'registrar'});
 local @doms = split(/\s+/, $access{'doms'});
 return &indexof($dname, @doms) >= 0;
+}
+
+# can_contacts(&domain)
+sub can_contacts
+{
+return &virtual_server::master_admin() ? 1 : $config{'can_contacts'};
 }
 
 # get_domain_nameservers(&domain)

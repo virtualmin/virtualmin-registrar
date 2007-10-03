@@ -21,6 +21,7 @@ feat_nocopy=.. none found to copy
 feat_ecopy2=.. failed to set new contacts : $1
 
 links_contact=Edit Domain Contacts
+links_contactv=View Domain Contacts
 links_rereg=Dis-associate Domain
 links_import=Associate Domain
 links_renew=Renew Domain
@@ -156,6 +157,7 @@ contact_ecannot=You are not allowed to edit contacts for this domain
 contact_edom=No Virtualmin server for $1 was found
 contact_eaccount=No registrar account for the Virtualmin server $1 was found
 contact_title=Edit Domain Contacts
+contact_title2=View Domain Contacts
 contact_header_admin=Administrative contact
 contact_header_tech=Technical contact
 contact_header_billing=Billing contact

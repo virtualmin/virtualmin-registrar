@@ -1,0 +1,28 @@
+<header>Add Registrar Account</header>
+
+This page allows you to tell Virtualmin about a registrar account that you
+have already setup, so that it can be used to register new domains. The most
+important fields on the form are :
+
+<ul>
+<li><b>Account description</b><br>
+    A short description to identify this account.
+<li><b>Account login ID</b> and <b>Account password</b><br>
+    The account authentication details provided by your registrar. These will
+    be checked when the <b>Create</b> button is clicked.
+<li><b>Top-level domains supported by registrar</b><br>
+    Not an editable field, but a list of TLDs that this registrar can be used
+    for.
+<li><b>Additionally limit to top-level domains</b><br>
+    If you want to limit this registrar account to creating domains under
+    only a subset of the possible TLDs, enter them here. This can be useful
+    if you have multiple accounts and some offer better prices than others
+    on the same domain.
+</ul>
+
+When the <b>Create</b> button is clicked, the registrar's details will be
+validated and then the account added to Virtualmin's list of usable
+registrars.<p>
+
+<footer>
+

@@ -1,10 +1,12 @@
 # Common functions for domain registration
 # XXX register.com account creation
 #	XXX CreateAccount
-#	XXX what does 'This is not a reseller account' mean? How to create one?
+#	XXX how to whitelist IPs?
+#	XXX when creating, how to add a nameserver in a non-hosted domain
 # XXX how to give domains different contacts?
 # XXX help pages for everything
 # XXX create test r.api account
+# XXX nameserver management - how to add?
 
 do '../web-lib.pl';
 &init_config();

@@ -5,7 +5,8 @@ require './virtualmin-registrar-lib.pl';
 $access{'registrar'} || &error($text{'edit_ecannot'});
 &ReadParse();
 &ui_print_header(undef, $in{'registrar'} ? $text{'edit_title1'}
-					 : $text{'edit_title2'}, "");
+					 : $text{'edit_title2'}, "",
+		        $in{'registrar'} ? "add" : "edit");
 if ($in{'registrar'}) {
 	$reg = $in{'registrar'};
 	}
@@ -33,7 +34,15 @@ print &ui_table_row($text{'edit_enabled'},
 	&ui_yesno_radio("enabled",
 			$in{'registrar'} ? 1 : $account->{'enabled'}));
 
-# For top-level domains
+# Registrar's top-level domains
+$tfunc = "type_".$reg."_domains";
+if (defined(&$tfunc)) {
+	@tlds = &$tfunc();
+	print &ui_table_row($text{'edit_rdoms'},
+		&ui_grid_table([ map { "<tt>$_</tt>" } @tlds ], 8));
+	}
+
+# Your top-level domains
 print &ui_table_row($text{'edit_doms'},
 	&ui_opt_textbox("doms", $account->{'doms'}, 50, $text{'edit_all'},
 			$text{'edit_suffixes'}));

@@ -224,4 +224,5 @@ create_ecannot=You are not allowed to create new accounts
 create_err=Failed to create account
 create_doing=Creating new account with $1 ..
 create_done=.. created successfully! Your account ID with the registrar is $1
+create_warn=.. created, but with warnings : $2. Your account ID with the registrar is $1
 create_failed=.. creation failed : $1

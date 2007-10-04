@@ -294,7 +294,8 @@ return undef;
 # type_rcom_create_account(&account)
 # Actually does the work of creating a new register.com sub-account, which will
 # be under the main Virtualmin account but billed separately. Returns 0 and
-# an error message on failure, or 1 and the new account ID on success.
+# an error message on failure, or 1, the new account ID on success, and any
+# warnings on success.
 sub type_rcom_create_account
 {
 local ($account) = @_;
@@ -316,6 +317,7 @@ if ($account->{'rcom_test'}) {
 	       $rcom_create_port,
 	       $page,
 	       \$out, \$err, undef, $rcom_create_ssl);
+local $warn;
 if ($err) {
 	# HTTP error
 	return (0, $err);
@@ -324,8 +326,9 @@ elsif ($out =~ /^ERR\s+(\S.*)/) {
 	# Some error
 	return (0, $1);
 	}
-elsif ($out =~ /^OK\s+(\S+)/) {
+elsif ($out =~ /^OK\s+(\S+)\s*(.*)/) {
 	$id = $1;
+	$warn = $2;
 	}
 else {
 	# Unknown response!
@@ -343,7 +346,7 @@ $account->{'rcom_account'} = $a;
 $account->{'rcom_pass'} = $p;
 $account->{'rcom_test'} = $t;
 
-return (1, $id);
+return (1, $id, $warn);
 }
 
 # type_rcom_renew_years(&account, &domain)

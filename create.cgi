@@ -23,9 +23,14 @@ $err = &$pfunc($account, \%in);
 $dfunc = "type_".$reg."_desc";
 print &text('create_doing', &$dfunc()),"<br>\n";
 $cfunc = "type_".$reg."_create_account";
-($ok, $msg) = &$cfunc($account);
+($ok, $msg, $warn) = &$cfunc($account);
 if ($ok) {
-	print &text('create_done', $msg),"<p>\n";
+	if ($warn) {
+		print &text('create_warn', $msg, $warn),"<p>\n";
+		}
+	else {
+		print &text('create_done', $msg),"<p>\n";
+		}
 	&save_registrar_account($account);
 	}
 else {

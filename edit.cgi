@@ -34,6 +34,15 @@ print &ui_table_row($text{'edit_enabled'},
 	&ui_yesno_radio("enabled",
 			$in{'registrar'} ? 1 : $account->{'enabled'}));
 
+# Nameservers
+@defns = &get_default_nameservers();
+print &ui_table_row($text{'edit_ns'},
+	&ui_radio("ns_def", $account->{'ns'} ? 0 : 1,
+	   [ [ 1, &text('edit_ns1',
+			join(" , ", map { "<tt>$_</tt>" } @defns))."<br>" ],
+	     [ 0, $text{'edit_ns0'}." ".
+			&ui_textbox("ns", $account->{'ns'}, 50) ] ]));
+
 # Registrar-specific fields
 $efunc = "type_".$reg."_edit_inputs";
 print &$efunc($account, $in{'registrar'} ? 1 : 0);

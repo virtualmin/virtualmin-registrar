@@ -1,7 +1,4 @@
 # Common functions for domain registration
-# XXX get Joe to test
-# XXX documentation
-# XXX per-account nameservers (show default)
 
 do '../web-lib.pl';
 &init_config();
@@ -176,11 +173,17 @@ sub can_contacts
 return &virtual_server::master_admin() ? 1 : $config{'can_contacts'};
 }
 
-# get_domain_nameservers(&domain)
-# Returns an array ref of nameservers in some domain, or an error message
+# get_domain_nameservers(&account, &domain)
+# Returns an array ref of nameservers to use for some domain, or an error
+# message
 sub get_domain_nameservers
 {
-local ($d) = @_;
+local ($account, $d) = @_;
+if ($account->{'ns'}) {
+	# Account-specific override given .. use it
+	return [ split(/\s+/, $account->{'ns'}) ];
+	}
+
 local $z = &virtual_server::get_bind_zone($d->{'dom'});
 if (!$z) {
 	return $text{'rcom_ezone'};
@@ -225,6 +228,30 @@ while(<COUNTRIES>) {
 	}
 close(COUNTRIES);
 return sort { $a->[0] cmp $b->[0] } @rv;
+}
+
+# get_default_nameservers()
+# Returns a list of nameserver hostnames that Virtualmin will use for
+# new DNS domains. They won't have . at the end.
+sub get_default_nameservers
+{
+&virtual_server::require_bind();
+local $tmpl = &virtual_server::get_template(0);
+local $tmaster = $tmpl->{'dns_master'} eq 'none' ? undef :
+                                        $tmpl->{'dns_master'};
+local $master = $tmaster ||
+		$bind8::config{'default_prins'} ||
+		&get_system_hostname();
+$master =~ s/\.$//;
+local @rv;
+push(@rv, $master);
+local @slaves = &bind8::list_slave_servers();
+foreach my $slave (@slaves) {
+	local @bn = $slave->{'nsname'} ||
+		    gethostbyname($slave->{'host'});
+	push(@rv, $bn[0]);
+	}
+return @rv;
 }
 
 1;

@@ -460,7 +460,7 @@ local ($sld, $tld) = ($1, $2);
 
 # NS records come from the DNS domain
 local $args = { 'SLD' => $sld, 'TLD' => $tld };
-local $nss = &get_domain_nameservers($d);
+local $nss = &get_domain_nameservers($account, $d);
 if (!ref($nss)) {
 	return (0, $nss);
 	}
@@ -503,7 +503,7 @@ sub type_rcom_set_nameservers
 local ($account, $d) = @_;
 
 # Get nameservers in DNS
-local $nss = &get_domain_nameservers($d);
+local $nss = &get_domain_nameservers($account, $d);
 if (!ref($nss)) {
 	return $nss;
 	}

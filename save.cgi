@@ -63,6 +63,19 @@ else {
 			}
 		$account->{'doms'} = $in{'doms'};
 		}
+	if ($in{'ns_def'}) {
+		delete($account->{'ns'});
+		}
+	else {
+		@ns = split(/\s+/, $in{'ns'});
+		foreach my $ns (@ns) {
+			gethostbyname($ns) || &error(&text('save_ens', $ns));
+			&check_ipaddress($ns) &&
+				&error(&text('save_ensip', $ns));
+			}
+		@ns || &error(&text('save_enss'));
+		$account->{'ns'} = join(" ", @ns);
+		}
 	$pfunc = "type_".$reg."_edit_parse";
 	$perr = &$pfunc($account, $in{'registrar'}, \%in);
 	&error($perr) if ($perr);

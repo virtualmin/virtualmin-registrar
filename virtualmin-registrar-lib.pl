@@ -1,6 +1,7 @@
 # Common functions for domain registration
 # XXX get Joe to test
 # XXX documentation
+# XXX per-account nameservers (show default)
 
 do '../web-lib.pl';
 &init_config();

@@ -47,6 +47,7 @@ type_rcom=Register.com
 edit_title1=Add Registrar Account
 edit_title2=Edit Registrar Account
 edit_header=DNS registrar account details
+edit_header2=Top-level domain options
 edit_egone=Account no longer exists!
 edit_registrar=Registrar name
 edit_desc=Account description

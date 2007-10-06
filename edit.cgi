@@ -19,7 +19,7 @@ else {
 print &ui_form_start("save.cgi", "post");
 print &ui_hidden("registrar", $in{'registrar'});
 print &ui_hidden("id", $in{'id'});
-print &ui_table_start($text{'edit_header'}, undef, 2);
+print &ui_hidden_table_start($text{'edit_header'}, undef, 2, "main", 1);
 
 # Registrar type
 $dfunc = "type_".$reg."_desc";
@@ -33,19 +33,6 @@ print &ui_table_row($text{'edit_desc'},
 print &ui_table_row($text{'edit_enabled'},
 	&ui_yesno_radio("enabled",
 			$in{'registrar'} ? 1 : $account->{'enabled'}));
-
-# Registrar's top-level domains
-$tfunc = "type_".$reg."_domains";
-if (defined(&$tfunc)) {
-	@tlds = &$tfunc();
-	print &ui_table_row($text{'edit_rdoms'},
-		&ui_grid_table([ map { "<tt>$_</tt>" } @tlds ], 8));
-	}
-
-# Your top-level domains
-print &ui_table_row($text{'edit_doms'},
-	&ui_opt_textbox("doms", $account->{'doms'}, 50, $text{'edit_all'},
-			$text{'edit_suffixes'}));
 
 # Registrar-specific fields
 $efunc = "type_".$reg."_edit_inputs";
@@ -67,7 +54,27 @@ if (!$in{'registrar'}) {
 		@links ? &ui_links_row(\@links) : $text{'edit_none'});
 	}
 
-print &ui_table_end();
+print &ui_hidden_table_end("main");
+
+# Supported domains section
+print &ui_hidden_table_start($text{'edit_header2'}, undef, 2, "tlds", 0);
+
+# Registrar's top-level domains
+$tfunc = "type_".$reg."_domains";
+if (defined(&$tfunc)) {
+	@tlds = &$tfunc();
+	print &ui_table_row($text{'edit_rdoms'},
+		&ui_grid_table([ map { "<tt>$_</tt>" } @tlds ], 8, 100));
+	}
+
+# Your top-level domains
+print &ui_table_row($text{'edit_doms'},
+	&ui_opt_textbox("doms", $account->{'doms'}, 50, $text{'edit_all'},
+			$text{'edit_suffixes'}));
+
+print &ui_hidden_table_end("tlds");
+
+
 if ($in{'registrar'}) {
 	print &ui_form_end([ [ undef, $text{'create'} ] ]);
 	}

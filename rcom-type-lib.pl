@@ -661,8 +661,8 @@ sub call_rcom_api
 {
 local ($account, $cmd, $args) = @_;
 local ($out, $err);
-print STDERR "calling $cmd with ",
-     (join("", map { "&".$_."=".&urlize($args->{$_}) } keys %$args)),"\n";
+#print STDERR "calling $cmd with ",
+#     (join("", map { "&".$_."=".&urlize($args->{$_}) } keys %$args)),"\n";
 &http_download($account->{'rcom_test'} ? $rcom_test_api_hostname
 				       : $rcom_api_hostname,
 	       $rcom_api_port,
@@ -676,7 +676,7 @@ if ($error) {
 	# HTTP error
 	return (0, $error, undef);
 	}
-print STDERR "got $out\n";
+#print STDERR "got $out\n";
 # Parse response lines
 local %resp;
 foreach my $l (split(/\r?\n/, $out)) {

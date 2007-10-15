@@ -369,6 +369,16 @@ if ($ok) {
 	return undef;
 	}
 else {
+	if ($account->{'rcom_test'}) {
+		# Test mode, but perhaps it should have been real
+		local $realaccount = { %$account };
+		$realaccount->{'rcom_test'} = 0;
+		local ($realok, $realmsg) =
+			&call_rcom_api($realaccount, "GetDomainCount", { });
+		if ($realok) {
+			return $text{'rcom_ereal'};
+			}
+		}
 	return $msg;
 	}
 }

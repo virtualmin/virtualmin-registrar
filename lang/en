@@ -85,6 +85,7 @@ rcom_taken=Already registered
 rcom_test=Registration testing mode
 rcom_test1=Test only
 rcom_test0=Really register domains
+rcom_ereal=You selected test registration mode, but this account can only be used to really register domains
 rcom_etld=Could not extract TLD from domain name
 rcom_ezone=Could not find BIND zone configuration
 rcom_ezonefile=Could not read BIND records file $1

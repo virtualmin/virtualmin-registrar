@@ -1,5 +1,4 @@
 # Common functions for domain registration
-# TODO - Automatic domain renewal
 
 do '../web-lib.pl';
 &init_config();
@@ -7,6 +6,7 @@ do '../ui-lib.pl';
 &foreign_require("virtual-server", "virtual-server-lib.pl");
 $registrar_accounts_dir = "$module_config_directory/accounts";
 %access = &get_module_acl();
+$auto_cron_cmd = "$module_config_directory/auto.pl";
 
 # Bring in all register-type specific libraries
 @registrar_types = (

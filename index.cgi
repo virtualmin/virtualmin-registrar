@@ -22,19 +22,31 @@ if (@accounts) {
 		$text{'index_desc'},
 		$text{'index_registrar'},
 		$text{'index_enabled'},
-		$text{'index_doms'}
+		$text{'index_acts'}
 		], 100, 0, \@tds);
 	foreach $a (@accounts) {
 		$dfunc = "type_".$a->{'registrar'}."_desc";
 		$desc = &$dfunc($a);
+		@links = ( );
+		$msg = &text('index_msg', "<i>$a->{'desc'}</i>");
+		$nonemsg = &text('index_nonemsg', "<i>$a->{'desc'}</i>");
+		push(@links, "<a href='../virtual-server/search.cgi?".
+			     "field=registrar_account&what=$a->{'id'}&".
+			     "msg=".&urlize($msg)."&".
+			     "nonemsg=".&urlize($nonemsg)."'>".
+			     "$text{'index_actdoms'}</a>");
+		push(@links, "<a href='edit_auto.cgi?id=$a->{'id'}'>".
+			     "$text{'index_actauto'}</a>");
+		if ($a->{'autodays'}) {
+			$links[$#links] = "<i>".$links[$#links]."</i>";
+			}
 		print &ui_checked_columns_row([
 		    "<a href='edit.cgi?id=$a->{'id'}'>".
 		     ($a->{'desc'} || $a->{'account'})."</a>",
 		    $desc,
 		    $a->{'enabled'} ? "<font color=#00aa00>$text{'yes'}</font>"
 				    : "<font color=#ff0000>$text{'no'}</font>",
-		    $a->{'doms'} ? "<tt>$a->{'doms'}</tt>"
-				 : $text{'index_all'}
+		    &ui_links_row(\@links),
 		    ], \@tds, "d", $a->{'id'});
 		}
 	print &ui_columns_end();

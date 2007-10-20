@@ -48,6 +48,7 @@ edit_title1=Add Registrar Account
 edit_title2=Edit Registrar Account
 edit_header=DNS registrar account details
 edit_header2=Top-level domain options
+edit_header3=New account instructions
 edit_egone=Account no longer exists!
 edit_registrar=Registrar name
 edit_desc=Account description
@@ -143,6 +144,7 @@ rcom_ecreditcardexpmonth=Missing or invalid credit card expiry month - must cont
 rcom_ecreditcardexpyear=Missing or invalid credit card expiry year - must contain four digits
 rcom_eccaddress=Missing credit card billing address
 rcom_ecczip=Missing credit card billing postal code
+rcom_instructions=To sign up for an account with Register.com with access to their API, go to their <a href='$1' target=_new'>new partner account page</a> and complete the form there. After creating the account and logging in to their website, you will need to add funds to it using a credit card before it can be used to register any domains.
 
 delete_err1=Failed to disable accounts
 delete_err2=Failed to enable accounts

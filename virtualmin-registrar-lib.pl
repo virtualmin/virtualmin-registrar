@@ -1,4 +1,5 @@
 # Common functions for domain registration
+# TODO - Automatic domain renewal
 
 do '../web-lib.pl';
 &init_config();

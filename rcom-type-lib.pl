@@ -3,6 +3,7 @@
 $rcom_api_hostname = "partner.rcomexpress.com";
 $rcom_test_api_hostname = "partnertest.rcomexpress.com";
 $rcom_api_port = 80;
+$rcom_api_ssl = 0;
 $rcom_api_page = "/interface.asp";
 
 @rcom_card_types = ( "visa", "amex", "mastercard" );
@@ -662,6 +663,15 @@ elsif ($resp->{'RRPCode'} != 200) {
 else {
 	return (1, $resp->{'OrderID'});
 	}
+}
+
+# type_rcom_add_instructions()
+# Returns HTML for instructions to be shown on the account adding form, such
+# as where to create one.
+sub type_rcom_add_instructions
+{
+return &text('rcom_instructions',
+     'https://secure.rconnection.com/sign-up.asp?resell=VIRTUALMIN-TPP');
 }
 
 # call_rcom_api(&account, command, &args)

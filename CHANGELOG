@@ -2,3 +2,4 @@
 First version of this plugin.
 ---- Changes since 1.1 ----
 Added instructions for creating a Register.com account.
+Added a form for configuring automatic renewal for domains approaching their expiry date, linked next to each account on the module's main page.

@@ -15,7 +15,6 @@ foreach $account (grep { $_->{'autodays'} } &list_registrar_accounts()) {
 	foreach $d (@doms) {
 		$msg = undef;
 		($ok, $exp) = &$efunc($account, $d);
-		print STDERR "account=$account->{'desc'} dom=$d->{'dom'} ok=$ok exp=$exp\n";
 		if (!$ok) {
 			# Couldn't get it!
 			$msg = &text('auto_eget', $exp);
@@ -33,7 +32,6 @@ foreach $account (grep { $_->{'autodays'} } &list_registrar_accounts()) {
 				$msg = &text('auto_failed', $rmsg);
 				}
 			}
-		print STDERR "msg=$msg\n";
 
 		if ($msg) {
 			# Add to results list
@@ -42,18 +40,15 @@ foreach $account (grep { $_->{'autodays'} } &list_registrar_accounts()) {
 		}
 
 	# Send email if anything was done
-	print STDERR "rv=",scalar(@rv)," email=$account->{'autoemail'}\n";
 	if (@rv && $account->{'autoemail'}) {
 		&foreign_require("mailboxes", "mailboxes-lib.pl");
 		$msg = join("\n", &mailboxes::wrap_lines(
 					$text{'auto_results'}, 70))."\n\n";
-		$fmt = "%-20.20s %-30.30s %-28.28s\n";
-		$msg .= sprintf $fmt, $text{'auto_raccount'}, $text{'auto_rdom'},
-				      $text{'auto_rmsg'};
-		$msg .= sprintf $fmt, ("-" x 20), ("-" x 30), ("-" x 28);
+		$fmt = "%-40.40s %-39.39s\n";
+		$msg .= sprintf $fmt, $text{'auto_rdom'}, $text{'auto_rmsg'};
+		$msg .= sprintf $fmt, ("-" x 40), ("-" x 39);
 		foreach $r (@rv) {
-			$msg .= sprintf $fmt, $r->[0]->{'desc'},
-					      $r->[1]->{'dom'}, $r->[2];
+			$msg .= sprintf $fmt, $r->[1]->{'dom'}, $r->[2];
 			}
 		$msg .= "\n";
 		&mailboxes::send_text_mail(
@@ -63,7 +58,6 @@ foreach $account (grep { $_->{'autodays'} } &list_registrar_accounts()) {
 			undef,
 			$text{'auto_subject'},
 			$msg);
-		print STDERR "sent $msg\n";
 		}
 	}
 

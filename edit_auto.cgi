@@ -43,11 +43,6 @@ print &ui_table_row($text{'auto_email'},
 
 print &ui_hidden_table_end("main");
 
-# Domains currently close to renewal
-if ($account->{'autodays'}) {
-	# XXX
-	}
-
 print &ui_form_end([ [ undef, $text{'save'} ] ]);
 
 &ui_print_footer("", $text{'index_return'});

@@ -247,7 +247,6 @@ auto_ecannot=You are not allowed to manage automatic renewal
 auto_title=Automatic Domain Renewal
 auto_header1=Renewal options
 auto_account=Account description
-edit_registrar=Registrar name
 auto_days=Automatically renew domains close to expiry?
 auto_off=No
 auto_on=Yes, $1 days before expiring

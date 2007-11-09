@@ -147,7 +147,7 @@ return undef;
 # type_rcom_create_inputs()
 # Returns HTML for creating a new register.com sub-account. 
 # XXX disabled until rcom does it's stuff
-sub type_rcom_create_inputs_disabled
+sub type_rcom_create_inputs
 {
 local $rv;
 local @countries = &list_countries();
@@ -348,7 +348,7 @@ $account->{'rcom_account'} = $a;
 $account->{'rcom_pass'} = $p;
 $account->{'rcom_test'} = $t;
 
-return (1, $id, $warn);
+return (1, $id, $warn, $text{'rcom_createinfo'});
 }
 
 # type_rcom_renew_years(&account, &domain)

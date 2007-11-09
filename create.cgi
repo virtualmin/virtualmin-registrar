@@ -23,7 +23,7 @@ $err = &$pfunc($account, \%in);
 $dfunc = "type_".$reg."_desc";
 print &text('create_doing', &$dfunc()),"<br>\n";
 $cfunc = "type_".$reg."_create_account";
-($ok, $msg, $warn) = &$cfunc($account);
+($ok, $msg, $warn, $extra) = &$cfunc($account);
 if ($ok) {
 	if ($warn) {
 		print &text('create_warn', $msg, $warn),"<p>\n";
@@ -35,6 +35,9 @@ if ($ok) {
 	}
 else {
 	print &text('create_failed', $msg),"<p>\n";
+	}
+if ($extra) {
+	print $extra,"<p>\n";
 	}
 
 &ui_print_footer("", $text{'index_return'});

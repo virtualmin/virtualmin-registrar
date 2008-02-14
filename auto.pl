@@ -9,6 +9,7 @@ require './virtualmin-registrar-lib.pl';
 foreach $account (grep { $_->{'autodays'} } &list_registrar_accounts()) {
 	# Find domains, and get expiry for each
 	@rv = ( );
+	$donecount = 0;
 	@doms = &find_account_domains($account);
 	$efunc = "type_".$account->{'registrar'}."_get_expiry";
 	$rfunc = "type_".$account->{'registrar'}."_renew_domain";
@@ -31,6 +32,7 @@ foreach $account (grep { $_->{'autodays'} } &list_registrar_accounts()) {
 			else {
 				$msg = &text('auto_failed', $rmsg);
 				}
+			$donecount++;
 			}
 
 		if ($msg) {
@@ -40,7 +42,7 @@ foreach $account (grep { $_->{'autodays'} } &list_registrar_accounts()) {
 		}
 
 	# Send email if anything was done
-	if (@rv && $account->{'autoemail'}) {
+	if ($donecount && $account->{'autoemail'}) {
 		&foreign_require("mailboxes", "mailboxes-lib.pl");
 		$msg = join("\n", &mailboxes::wrap_lines(
 					$text{'auto_results'}, 70))."\n\n";

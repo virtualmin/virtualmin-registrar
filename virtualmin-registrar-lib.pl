@@ -1,4 +1,5 @@
 # Common functions for domain registration
+# TODO - Offer to charge credit card at account creation time
 
 do '../web-lib.pl';
 &init_config();

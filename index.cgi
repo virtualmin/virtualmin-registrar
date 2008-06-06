@@ -10,57 +10,54 @@ if (!$access{'registrar'}) {
 	}
 &ui_print_header(undef, $text{'index_title'}, "", "intro", 0, 1);
 
-# Table of existing accounts
+# Build table of existing accounts
 @accounts = &list_registrar_accounts();
-if (@accounts) {
-	print &ui_form_start("delete.cgi", "post");
-	@links = ( &select_all_link("d"), &select_invert_link("d") );
-	@tds = ( "width=5" );
-	print &ui_links_row(\@links);
-	print &ui_columns_start([
-		"",
-		$text{'index_desc'},
-		$text{'index_registrar'},
-		$text{'index_enabled'},
-		$text{'index_acts'}
-		], 100, 0, \@tds);
-	foreach $a (@accounts) {
-		$dfunc = "type_".$a->{'registrar'}."_desc";
-		$desc = &$dfunc($a);
-		@links = ( );
-		$msg = &text('index_msg', "<i>$a->{'desc'}</i>");
-		$nonemsg = &text('index_nonemsg', "<i>$a->{'desc'}</i>");
-		push(@links, "<a href='../virtual-server/search.cgi?".
-			     "field=registrar_account&what=$a->{'id'}&".
-			     "msg=".&urlize($msg)."&".
-			     "nonemsg=".&urlize($nonemsg)."'>".
-			     "$text{'index_actdoms'}</a>");
-		push(@links, "<a href='edit_auto.cgi?id=$a->{'id'}'>".
-			     "$text{'index_actauto'}</a>");
-		if ($a->{'autodays'}) {
-			$links[$#links] = "<i>".$links[$#links]."</i>";
-			}
-		print &ui_checked_columns_row([
-		    "<a href='edit.cgi?id=$a->{'id'}'>".
-		     ($a->{'desc'} || $a->{'account'})."</a>",
-		    $desc,
-		    $a->{'enabled'} ? "<font color=#00aa00>$text{'yes'}</font>"
-				    : "<font color=#ff0000>$text{'no'}</font>",
-		    &ui_links_row(\@links),
-		    ], \@tds, "d", $a->{'id'});
+@table = ( );
+foreach $a (@accounts) {
+	$dfunc = "type_".$a->{'registrar'}."_desc";
+	$desc = &$dfunc($a);
+	@links = ( );
+	$msg = &text('index_msg', "<i>$a->{'desc'}</i>");
+	$nonemsg = &text('index_nonemsg', "<i>$a->{'desc'}</i>");
+	push(@links, "<a href='../virtual-server/search.cgi?".
+		     "field=registrar_account&what=$a->{'id'}&".
+		     "msg=".&urlize($msg)."&".
+		     "nonemsg=".&urlize($nonemsg)."'>".
+		     "$text{'index_actdoms'}</a>");
+	push(@links, "<a href='edit_auto.cgi?id=$a->{'id'}'>".
+		     "$text{'index_actauto'}</a>");
+	if ($a->{'autodays'}) {
+		$links[$#links] = "<i>".$links[$#links]."</i>";
 		}
-	print &ui_columns_end();
-	print &ui_links_row(\@links);
-	print &ui_form_end([
-		[ "disable", $text{'index_disable'} ],
-		[ "enable", $text{'index_enable'} ],
-		undef,
-		[ "delete", $text{'index_delete'} ],
-		]);
+	push(@table, [
+	    { 'type' => 'checkbox', 'name' => 'd', 'value' => $a->{'id'} },
+	    "<a href='edit.cgi?id=$a->{'id'}'>".
+	     ($a->{'desc'} || $a->{'account'})."</a>",
+	    $desc,
+	    $a->{'enabled'} ? "<font color=#00aa00>$text{'yes'}</font>"
+			    : "<font color=#ff0000>$text{'no'}</font>",
+	    &ui_links_row(\@links),
+	    ]);
 	}
-else {
-	print "<b>$text{'index_none'}</b><p>\n";
-	}
+
+# Print table of accounts
+print &ui_form_columns_table(
+	"delete.cgi",
+	[ [ "disable", $text{'index_disable'} ],
+          [ "enable", $text{'index_enable'} ],
+          undef,
+          [ "delete", $text{'index_delete'} ], ],
+	1,
+	undef,
+	undef,
+	[ "", $text{'index_desc'}, $text{'index_registrar'},
+	  $text{'index_enabled'}, $text{'index_acts'} ],
+	100,
+	\@table,
+	undef,
+	0,
+	undef,
+	$text{'index_none'});
 
 # Form to add existing registrar account
 print "<table>\n";

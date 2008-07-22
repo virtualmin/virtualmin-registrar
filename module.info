@@ -1,5 +1,5 @@
 desc=Virtualmin Domain Registration
 category=net
 depends=virtual-server/3.47 1.420
-version=1.4
+version=1.5
 desc_nl=Virtualmin Domein Registratie

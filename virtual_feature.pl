@@ -311,7 +311,7 @@ return ( );
 # an error message if any problem is found
 sub feature_validate
 {
-# XXX check if really registered
+return undef;
 }
 
 # settings_links()

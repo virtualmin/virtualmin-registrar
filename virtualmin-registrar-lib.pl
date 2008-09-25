@@ -16,6 +16,8 @@ $auto_cron_cmd = "$module_config_directory/auto.pl";
 	  'desc' => $text{'type_rcom'} },
 	{ 'name' => 'gandi',
 	  'desc' => $text{'type_gandi'} },
+	{ 'name' => 'distribute',
+	  'desc' => $text{'type_distribute'} },
     );
 foreach my $t (@registrar_types) {
 	do $t->{'name'}.'-type-lib.pl';

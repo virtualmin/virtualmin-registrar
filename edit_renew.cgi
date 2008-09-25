@@ -24,7 +24,7 @@ $ok || &error($exp);
 
 print &ui_form_start("renew.cgi", "post");
 print &ui_hidden("dom", $in{'dom'});
-print &ui_table_start($text{'renew_header'}, undef, 2, [ "width=30%" ]);
+print &ui_table_start($text{'renew_header'}, undef, 2);
 
 # Account
 print &ui_table_row($text{'renew_account'},

@@ -1,5 +1,6 @@
 # Common functions for domain registration
-# TODO - Offer to charge credit card at account creation time
+# XXX - Show and allow editing of nameservers for a domain
+# XXX - Gandi contact management
 
 do '../web-lib.pl';
 &init_config();
@@ -171,6 +172,7 @@ return &indexof($dname, @doms) >= 0;
 }
 
 # can_contacts(&domain)
+# Returns 1 if the current user is allowed to edit contacts for a domain
 sub can_contacts
 {
 return &virtual_server::master_admin() ? 1 : $config{'can_contacts'};

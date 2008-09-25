@@ -20,8 +20,9 @@ print &ui_table_start($text{'import_header'}, undef, 2);
 
 # Account it will be under
 @accounts = &list_registrar_accounts();
+$def = &find_registrar_account($d);
 print &ui_table_row($text{'import_account'},
-	&ui_select("account", undef,
+	&ui_select("account", $def ? $def->{'id'} : undef,
 		[ map { [ $_->{'id'}, $_->{'desc'} ] } @accounts ]));
 
 # Registrar ID

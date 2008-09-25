@@ -158,10 +158,9 @@ if (!ref($nss)) {
 elsif (!@$nss) {
         return (0, $text{'rcom_ensrecords'});
         }
-
-# Ensure we have the nameservers?
-# XXX
-# XXX need at least two?
+elsif (@$nss < 2) {
+	return (0, &text('gandi_enstwo', 2, $nss->[0]));
+	}
 
 # Call to create
 local $opid;
@@ -178,6 +177,34 @@ eval {
 	};
 return (0, &text('gandi_error', $@)) if ($@);
 return (1, $d->{'dom'});
+}
+
+# type_gandi_set_nameservers(&account, &domain)
+# Updates the nameservers for a domain to match DNS. Returns undef on success
+# or an error message on failure.
+sub type_gandi_set_nameservers
+{
+local ($account, $d) = @_;
+local ($server, $sid) = &connect_gandi_api($account, 1);
+return (0, &text('gandi_error', $sid)) if (!$server);
+
+# Get nameservers in DNS
+local $nss = &get_domain_nameservers($account, $d);
+if (!ref($nss)) {
+	return $nss;
+	}
+elsif (!@$nss) {
+	return $text{'rcom_ensrecords'};
+	}
+elsif (@$nss < 2) {
+	return (0, &text('gandi_enstwo', 2, $nss->[0]));
+	}
+
+# Call to set nameservers
+eval {
+	$server->call("domain_ns_set", $sid, $d->{'dom'}, $nss);
+	};
+return $@ ? &text('gandi_error', $@) : undef;
 }
 
 # type_gandi_delete_domain(&account, &domain)
@@ -202,7 +229,21 @@ return (1, $opid);
 # message.
 sub type_gandi_get_expiry
 {
-# XXX
+local ($account, $d) = @_;
+local ($server, $sid) = &connect_gandi_api($account, 1);
+return (0, &text('gandi_error', $sid)) if (!$server);
+
+# Call to get info
+local $info;
+eval {
+	$info = $server->call("domain_info", $sid, $d->{'dom'});
+	};
+return (0, &text('gandi_error', $@)) if ($@);
+local $expirydate = $info->{'registry_expiration_date'}->value();
+if ($expirydate =~ /^(\d{4})(\d\d)(\d\d)T(\d\d):(\d\d):(\d\d)$/) {
+	return (1, timelocal($6, $5, $4, $3, $2-1, $1-1900));
+	}
+return (0, &text('gandi_eexpiry', $expirydate));
 }
 
 # type_gandi_renew_domain(&account, &domain, years)
@@ -229,9 +270,7 @@ return (1, $opid);
 # as where to create one.
 sub type_gandi_add_instructions
 {
-# XXX
-return &text('rcom_instructions',
-     'https://secure.rconnection.com/sign-up.asp?resell=VIRTUALMIN-TPP');
+return &text('gandi_instructions', 'https://www.gandi.net/resellers/');
 }
 
 # connect_gandi_api(&account, [return-error])

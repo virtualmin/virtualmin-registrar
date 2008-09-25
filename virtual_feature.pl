@@ -169,7 +169,10 @@ else {
 	&$virtual_server::first_print(&text('feat_modify1', $oldd->{'dom'},
 					    &$dfunc($account)));
 	local $gcfunc = "type_".$reg."_get_contact";
-	local $cons = &$gcfunc($account, $oldd);
+	local $cons;
+	if (defined(&$gcfunc)) {
+		$cons = &$gcfunc($account, $oldd);
+		}
 	local $ufunc = "type_".$reg."_delete_domain";
 	local ($ok, $msg) = &$ufunc($account, $oldd);
 	if (!$ok) {
@@ -193,7 +196,9 @@ else {
 	$d->{'registrar_id'} = $msg;
 	if (ref($cons) && @$cons > 0) {
 		local $scfunc = "type_".$reg."_save_contact";
-		&$scfunc($account, $d, $cons);
+		if (defined(&$scfunc)) {
+			&$scfunc($account, $d, $cons);
+			}
 		}
 	&$virtual_server::second_print(&text('feat_setupdone', $msg));
 	}
@@ -252,8 +257,11 @@ local @rv;
 local @accounts = &list_registrar_accounts();
 if ($d->{$module_name}) {
 	# Edit contact details
+	local ($account) = grep { $_->{'id'} eq $d->{'registrar_account'} }
+				@accounts;
+	local $cfunc = "type_".$account->{'registrar'}."_get_contact";
 	local $cm = &can_contacts($d);
-	if ($cm) {
+	if ($cm && defined(&$cfunc)) {
 		push(@rv, { 'mod' => $module_name,
 			    'desc' => $cm == 1 ? $text{'links_contact'}
 					       : $text{'links_contactv'},

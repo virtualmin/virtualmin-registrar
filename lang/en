@@ -161,6 +161,9 @@ gandi_eperl=The Perl module $1 needed to call the Gandi XML-RPC API is not insta
 gandi_cpan=However, Webmin can <a href='$1'>automatically install</a> it for you.
 gandi_error=Gandi API error : $1
 gandi_taken=Already registered accounting to Gandi
+gandi_eexpiry=Could not parse expiry date $1
+gandi_instructions=To sign up for an account with Gandi.net, go to their <a href='$1' target=_new'>resellers site</a> and sign up for an account. You will need to enable XML-RPC on your reseller account, and then switch it from test to production mode to create real Internet domains.
+gandi_enstwo=Gandi requires that each domain have at least $1 nameservers, but you only have $2
 
 delete_err1=Failed to disable accounts
 delete_err2=Failed to enable accounts

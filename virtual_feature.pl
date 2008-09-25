@@ -104,11 +104,12 @@ $d->{'registrar_id'} = $msg;
 &$virtual_server::second_print(&text('feat_setupdone', $msg));
 
 # Copy contacts from the user's main domain to this new one
+local $gcfunc = "type_".$reg."_get_contact";
 if ($d->{'parent'} && ($parent = &virtual_server::get_domain($d->{'parent'})) &&
     $parent->{$module_name} &&
-    $parent->{'registrar_account'} eq $account->{'id'}) {
+    $parent->{'registrar_account'} eq $account->{'id'} &&
+    defined(&$gfunc)) {
 	&$virtual_server::first_print(&text('feat_copy', $parent->{'dom'}));
-	local $gcfunc = "type_".$reg."_get_contact";
 	local $cons = &$gcfunc($account, $parent);
 	if (!ref($cons)) {
 		&$virtual_server::second_print(&text('feat_ecopy', $cons));

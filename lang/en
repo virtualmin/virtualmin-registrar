@@ -48,6 +48,7 @@ index_msg=Virtual servers using registrar account $1 ..
 index_nonemsg=No Virtual servers using registrar account $1 were found.
 
 type_rcom=Register.com
+type_gandi=Gandi.net
 
 edit_title1=Add Registrar Account
 edit_title2=Edit Registrar Account
@@ -87,7 +88,7 @@ rcom_account=Account login ID
 rcom_pass=Account password
 rcom_eaccount=Missing or invalid login ID
 rcom_epass=Missing or invalid account password
-rcom_taken=Already registered
+rcom_taken=Already registered according to Register.com
 rcom_test=Registration testing mode
 rcom_test1=Test only
 rcom_test0=Really register domains
@@ -151,6 +152,15 @@ rcom_eccaddress=Missing credit card billing address
 rcom_ecczip=Missing credit card billing postal code
 rcom_instructions=To sign up for an account with Register.com with access to their API, go to their <a href='$1' target=_new'>new partner account page</a> and complete the form there. After creating the account and logging in to their website, you will need to add funds to it using a credit card before it can be used to register any domains.
 rcom_createinfo=Before this account can be used, the following must happen :<br><ul><li>Your system's IP address must be whitelisted by Register.com, which may take several hours.<br><li>Credit must be added to your account, which can be done at <a href=http://www.rcomexpress.com/>http://www.rcomexpress.com/</a> by logging in with the username and password you selected.<br></ul>
+
+gandi_account=Account login (like <tt>XX5555-GANDI</tt>)
+gandi_pass=Account password
+gandi_eaccount=Missing or invalid account login
+gandi_epass=Missing or invalid account password
+gandi_eperl=The Perl module $1 needed to call the Gandi XML-RPC API is not installed.
+gandi_cpan=However, Webmin can <a href='$1'>automatically install</a> it for you.
+gandi_error=Gandi API error : $1
+gandi_taken=Already registered accounting to Gandi
 
 delete_err1=Failed to disable accounts
 delete_err2=Failed to enable accounts

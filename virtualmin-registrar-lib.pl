@@ -12,8 +12,9 @@ $auto_cron_cmd = "$module_config_directory/auto.pl";
 # Bring in all register-type specific libraries
 @registrar_types = (
 	{ 'name' => 'rcom',
-	  'desc' => $text{'type_rcom'},
-	},
+	  'desc' => $text{'type_rcom'} },
+	{ 'name' => 'gandi',
+	  'desc' => $text{'type_gandi'} },
     );
 foreach my $t (@registrar_types) {
 	do $t->{'name'}.'-type-lib.pl';
@@ -249,8 +250,8 @@ local @rv;
 push(@rv, $master);
 local @slaves = &bind8::list_slave_servers();
 foreach my $slave (@slaves) {
-	local @bn = $slave->{'nsname'} ||
-		    gethostbyname($slave->{'host'});
+	local @bn = $slave->{'nsname'} ? ( $slave->{'nsname'} )
+				       : gethostbyname($slave->{'host'});
 	push(@rv, $bn[0]);
 	}
 return @rv;

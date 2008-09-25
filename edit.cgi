@@ -7,8 +7,17 @@ $access{'registrar'} || &error($text{'edit_ecannot'});
 &ui_print_header(undef, $in{'registrar'} ? $text{'edit_title1'}
 					 : $text{'edit_title2'}, "",
 		        $in{'registrar'} ? "add" : "edit");
+
+# Get registrar and account
 if ($in{'registrar'}) {
 	$reg = $in{'registrar'};
+	$cfunc = "type_".$reg."_check";
+	if (defined(&$cfunc)) {
+		$err = &$cfunc();
+		if ($err) {
+			&ui_print_endpage($err);
+			}
+		}
 	}
 else {
 	($account) = grep { $_->{'id'} eq $in{'id'}} &list_registrar_accounts();

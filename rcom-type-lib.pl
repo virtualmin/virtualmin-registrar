@@ -146,7 +146,6 @@ return undef;
 
 # type_rcom_create_inputs()
 # Returns HTML for creating a new register.com sub-account. 
-# XXX disabled until rcom does it's stuff
 sub type_rcom_create_inputs
 {
 local $rv;

@@ -1,6 +1,46 @@
 # Functions for talking to the Distribute.IT API
 
 $distribute_api_url = "https://www.distributeit.com.au/api/";
+%distribute_error_map = (
+	"100", "Missing parameters",
+	"101", "API Site not currently functioning",
+	"102", "Authentication Failure",
+	"103", "Account has been disabled",
+	"104", "User has been disabled",
+	"105", "Request coming from incorrect IP address.",
+	"108", "Account Balance could not be obtained as account is Invoice based",
+	"201", "Invalid or not supplied 'Type' parameter",
+	"202", "Your Account has not been enabled for this 'Type'",
+	"203", "Invalid or not supplied 'Action/Object parameter/s",
+	"301", "Invalid Order ID.",
+	"302", "Domain not supplied.",
+	"303", "Domain Pricing table not set up for your account.",
+	"304", "Domain not available for Registration.",
+	"305", "Domain is not renewable.",
+	"306", "Domain is not transferable.",
+	"307", "Incorrect Domain Password",
+	"308", "Domain UserID or Password not supplied",
+	"309", "Invalid Domain Extension",
+	"310", "Domain does not exist, has been deleted or transferred away",
+	"311", "Domain does not exist in your reseller profile",
+	"312", "Supplied UserID and Password do not match the domain.",
+	"401", "Connection to Registry failed - retry.",
+	"500", "Pre-Paid balance is not enough to cover order cost.",
+	"501", "Invalid credit card type. See Appendix G.",
+	"502", "Invalid credit card number.",
+	"503", "Invalid credit card expiry date.",
+	"504", "Credit Card amount plus the current pre-paid balance is not sufficient to cover the cost of the order.",
+	"505", "Error with credit card transaction at bank.",
+	"600", "Error with one or more fields when creating a Domain Contact.",
+	"601", "Error with one or more fields when creating, renewing or transferring a Domain.",
+	"602", "Error with one or more fields associated with a Host.",
+	"603", "Error with one or more fields associated with Eligibility fields.",
+	"604", "Error with one or more fields associated with a Nameserver.",
+	"610", "Error connecting to registry",
+	"611", "Domain cannot be Renewed or Transferred",
+	"612", "Locking is not available for this domain",
+	"613", "Domain Status prevents changing of domain lock",
+	);
 
 # Returns the name of this registrar
 sub type_distribute_desc
@@ -122,6 +162,72 @@ return !$ok && $out =~ /310/ ? (1, undef) :
        !$ok ? (0, $out) : (1, $domid);
 }
 
+# type_distribute_create_domain(&account, &domain)
+# Actually register a domain, if possible. Returns 0 and an error message if
+# it failed, or 1 and an ID for the domain on success.
+sub type_distribute_create_domain
+{
+local ($account, $d) = @_;
+local ($ok, $sid) = &connect_distribute_api($account, 1);
+return &text('distribute_error', $sid) if (!$ok);
+
+# NS records come from the DNS domain
+local $nss = &get_domain_nameservers($account, $d);
+if (!ref($nss)) {
+	return (0, $nss);
+	}
+elsif (!@$nss) {
+	return (0, $text{'rcom_ensrecords'});
+	}
+elsif (@$nss < 2) {
+	return (0, &text('distribute_enstwo', 2, $nss->[0]));
+	}
+
+# Create parameters
+local $conid = $account->{'distribute_account'};
+local %params = ( 'Type' => 'Domains',
+		  'Object' => 'Domain',
+		  'Action' => 'Create',
+		  'Domain' => $d->{'dom'},
+		  'UserID' => $d->{'user'},
+		  'Password' => $d->{'pass'},
+		  'Host' => $nss,
+		  'OwnerContactID' => $conid,
+		  'AdministrationContactID' => $conid,
+		  'TechnicalContactID' => $conid,
+		  'BillingContactID' => $conid,
+		);
+if ($account->{'distribute_period'}) {
+	$params{'Period'} = $account->{'distribute_period'};
+	}
+
+# Create it
+local ($ok, $out) = &call_distribute_api($sid, "order", \%params);
+if ($ok) {
+	# Done, and got order ID
+	return (1, $out);
+	}
+else {
+	return (0, $out);
+	}
+}
+
+# type_distribute_delete_domain(&account, &domain)
+# Deletes a domain previously created with this registrar
+sub type_distribute_delete_domain
+{
+local ($account, $d) = @_;
+local ($ok, $sid) = &connect_distribute_api($account, 1);
+return &text('distribute_error', $sid) if (!$ok);
+
+local ($ok, $out) = &call_distribute_api(
+	$sid, "order", { 'Type' => 'Domains',
+			 'Object' => 'Domain',
+			 'Action' => 'Cancel',
+			 'OrderID' => $d->{'registrar_id'} });
+return ($ok, $out);
+}
+
 # connect_distribute_api(&account, return-error)
 # Login to the API, and return 1 and a session ID or 0 and an error message
 sub connect_distribute_api
@@ -147,9 +253,16 @@ if ($sid) {
 	$params->{'SessionID'} = $sid;
 	}
 $page .= $prog.".pl";
-$page .= "?".join("&", map { &urlize($_)."=".&urlize($params->{$_}) }
-			   keys %$params);
+local @params;
+foreach my $k (keys %$params) {
+	my $v = $params->{$k};
+	foreach my $vv (ref($v) ? @$v : ( $v )) {
+		push(@params, &urlize($k)."=".&urlize($vv));
+		}
+	}
+$page .= "?".join("&", @params);
 local ($out, $err);
+print STDERR "page=$page\n";
 &http_download($host, $port, $page, \$out, \$err, undef, $ssl);
 if ($err =~ /403/) {
 	# Bad IP .. warn specifically
@@ -165,7 +278,11 @@ if ($out =~ /^((\S+):\s+)?OK:\s*([\000-\377]*)/) {
 	}
 elsif ($out =~ /^((\S+):\s+)?ERR:\s*([\000-\377]*)/) {
 	# Valid error
-	return (0, $3, $2);
+	local ($ecode, $dname) = ($3, $2);
+	if ($ecode =~ /^(\d+)(.*)$/ && $distribute_error_map{$1}) {
+		$ecode = $1." - ".$distribute_error_map{$1}.$2;
+		}
+	return (0, $ecode, $dname);
 	}
 else {
 	# Some other output??

@@ -92,13 +92,34 @@ local ($account, $dname) = @_;
 local ($ok, $sid) = &connect_distribute_api($account, 1);
 return &text('distribute_error', $sid) if (!$ok);
 local ($ok, $out) = &call_distribute_api(
-	$sid, { 'Type' => 'Domains',
-		'Object' => 'Domain',
-		'Action' => 'Availability',
-		'Domain' => $dname });
+	$sid, "query", { 'Type' => 'Domains',
+			 'Object' => 'Domain',
+			 'Action' => 'Availability',
+			 'Domain' => $dname });
+# XXX not working??
+print STDERR "ok=$ok out=$out\n";
 return &text('distribute_taken', "$1") if (!$ok && $out =~ /304,(.*)/);
 return &text('distribute_error', $out) if (!$ok);
 return undef;
+}
+
+# type_distribute_owned_domain(&account, domain, [id])
+# Checks if some domain is owned by the given account. If so, returns the
+# 1 and the registrar's ID - if not, returns 1 and undef, on failure returns
+# 0 and an error message.
+sub type_distribute_owned_domain
+{
+local ($account, $dname, $id) = @_;
+local ($ok, $sid) = &connect_distribute_api($account, 1);
+return &text('distribute_error', $sid) if (!$ok);
+local ($ok, $out) = &call_distribute_api(
+	 $sid, "query", { 'Type' => 'Domains',
+                          'Object' => 'Domain',
+                          'Action' => 'Details',
+			  'Domain' => $dname });
+# XXX how to get domain ID?
+return !$ok && $out =~ /310/ ? (1, undef) :
+       !$ok ? (0, $out) : (1, $domid);
 }
 
 # connect_distribute_api(&account, return-error)
@@ -107,24 +128,25 @@ sub connect_distribute_api
 {
 local ($account, $reterr) = @_;
 local ($ok, $sid) = &call_distribute_api(
-	undef, { 'AccountNo' => $account->{'distribute_account'},
-		 'UserId' => $account->{'distribute_user'},
-		 'Password' => $account->{'distribute_pass'} });
+	undef, "auth", { 'AccountNo' => $account->{'distribute_account'},
+			 'UserId' => $account->{'distribute_user'},
+			 'Password' => $account->{'distribute_pass'} });
 &error("Distribute IT login failed : $sid") if (!$ok && !$reterr);
 return ($ok, $sid);
 }
 
-# call_distribute_api(session-id, &params)
+# call_distribute_api(session-id, program, &params)
 # Calls the API via an HTTP request, and returns either 1 and the output or
 # 0 and an error message
 sub call_distribute_api
 {
-local ($sid, $params) = @_;
+local ($sid, $prog, $params) = @_;
 local ($host, $port, $page, $ssl) = &parse_http_url($distribute_api_url);
 $params ||= { };
 if ($sid) {
 	$params->{'SessionID'} = $sid;
 	}
+$page .= $prog.".pl";
 $page .= "?".join("&", map { &urlize($_)."=".&urlize($params->{$_}) }
 			   keys %$params);
 local ($out, $err);
@@ -137,13 +159,13 @@ elsif ($err) {
 	# Some other HTTP error
 	return (0, $err);
 	}
-if ($out =~ /^OK:\s*(.*)/) {
+if ($out =~ /^((\S+):\s+)?OK:\s*([\000-\377]*)/) {
 	# Valid response
-	return (1, $1);
+	return (1, $3, $2);
 	}
-elsif ($out =~ /^ERR:\s*(.*)$/) {
+elsif ($out =~ /^((\S+):\s+)?ERR:\s*([\000-\377]*)/) {
 	# Valid error
-	return (0, $1);
+	return (0, $3, $2);
 	}
 else {
 	# Some other output??

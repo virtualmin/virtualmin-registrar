@@ -174,7 +174,7 @@ distribute_euser=Missing or invalid-looking account username
 distribute_epass=Missing or invalid-looking account password
 distribute_eip=Your system's IP address is not on the allowed list for this account
 distribute_error=Distribute.IT API error : $1
-distribute_taken=Not available for registration account to Distribute.IT : $1
+distribute_taken=Not available for registration according to Distribute.IT
 
 delete_err1=Failed to disable accounts
 delete_err2=Failed to enable accounts

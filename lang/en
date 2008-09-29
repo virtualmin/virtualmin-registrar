@@ -176,6 +176,8 @@ distribute_eip=Your system's IP address is not on the allowed list for this acco
 distribute_error=Distribute.IT API error : $1
 distribute_taken=Not available for registration according to Distribute.IT
 distribute_enstwo=Distribute.IT requires that each domain have at least $1 nameservers, but you only have $2
+distribute_estatus=This domain cannot be managed, as it's order with Distribute.IT is not yet complete. The current status is : $1
+distribute_estatus2=Failed to get order status : $1
 
 delete_err1=Failed to disable accounts
 delete_err2=Failed to enable accounts

@@ -136,7 +136,6 @@ local ($ok, $out) = &call_distribute_api(
 			 'Object' => 'Domain',
 			 'Action' => 'Availability',
 			 'Domain' => $dname });
-# XXX not working??
 print STDERR "ok=$ok out=$out\n";
 return &text('distribute_taken', "$1") if (!$ok && $out =~ /304,(.*)/);
 return &text('distribute_error', $out) if (!$ok);
@@ -228,6 +227,71 @@ local ($ok, $out) = &call_distribute_api(
 return ($ok, $out);
 }
 
+# type_distribute_get_expiry(&account, &domain)
+# Returns either 1 and the expiry time (unix) for a domain, or 0 and an error
+# message.
+sub type_distribute_get_expiry
+{
+local ($account, $d) = @_;
+local ($ok, $sid) = &connect_distribute_api($account, 1);
+return &text('distribute_error', $sid) if (!$ok);
+local $os = &check_distribute_order_status($sid, $d->{'registrar_id'});
+return (0, $os) if ($os);
+local ($ok, $out) = &call_distribute_api(
+	 $sid, "query", { 'Type' => 'Domains',
+                          'Object' => 'Domain',
+                          'Action' => 'Renewal',
+			  'Domain' => $d->{'dom'} });
+if (!$ok) {
+	# Failed completed
+	return (0, $out);
+	}
+elsif ($out =~ /ExpiryDate=(\d+)\-(\d+)\-(\d+)/i) {
+	# Got a date
+	return (1, timelocal(0, 0, 0, $3, $2-1, $1-1900));
+	}
+else {
+	# Unknown output??
+	return (0, "Unknown expiry information : $out");
+	}
+}
+
+# type_distribute_renew_domain(&account, &domain, years)
+# Attempts to renew a domain for the specified period. Returns 1 and the
+# registrars confirmation code on success, or 0 and an error message on
+# failure.
+sub type_distribute_renew_domain
+{
+local ($account, $d, $years) = @_;
+local ($ok, $sid) = &connect_distribute_api($account, 1);
+return &text('distribute_error', $sid) if (!$ok);
+local $os = &check_distribute_order_status($sid, $d->{'registrar_id'});
+return (0, $os) if ($os);
+local ($ok, $out) = &call_distribute_api(
+	$sid, "order", { 'Type' => 'Domains',
+                          'Object' => 'Domain',
+                          'Action' => 'Renewal',
+			  'Domain' => $d->{'dom'},
+			  'Period' => $years });
+return ($ok, $out);
+}
+
+# check_distribute_order_status(sid, order-id)
+# Returns an error message if a domain order is pending, undef if not
+sub check_distribute_order_status
+{
+local ($sid, $orderid) = @_;
+local ($ok, $out) = &call_distribute_api(
+         $sid, "query", { 'Type' => 'Domains',
+                          'Object' => 'Order',
+			  'Action' => 'OrderStatus',
+			  'OrderID' => $orderid });
+$out =~ s/,\s*$//;
+return !$ok ? &text('distribute_estatus2', $out) :
+       $out =~ /^Complete/i ? undef :
+       &text('distribute_estatus', $out);
+}
+
 # connect_distribute_api(&account, return-error)
 # Login to the API, and return 1 and a session ID or 0 and an error message
 sub connect_distribute_api
@@ -264,6 +328,7 @@ $page .= "?".join("&", @params);
 local ($out, $err);
 print STDERR "page=$page\n";
 &http_download($host, $port, $page, \$out, \$err, undef, $ssl);
+print STDERR "err=$err out=$out\n";
 if ($err =~ /403/) {
 	# Bad IP .. warn specifically
 	return (0, $text{'distribute_eip'});

@@ -195,8 +195,11 @@ local %params = ( 'Type' => 'Domains',
 		  'TechnicalContactID' => $conid,
 		  'BillingContactID' => $conid,
 		);
-if ($account->{'distribute_period'}) {
-	$params{'Period'} = $account->{'distribute_period'};
+if ($d->{'registrar_years'}) {
+	$params{'Period'} = $d->{'registrar_years'};
+	}
+elsif ($account->{'distribute_years'}) {
+	$params{'Period'} = $account->{'distribute_years'};
 	}
 
 # Create it

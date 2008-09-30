@@ -168,7 +168,8 @@ eval {
 	$opid = $server->call("domain_create",
 			      $sid,
 			      $d->{'dom'},
-			      $account->{'gandi_years'} || 1,
+			      $d->{'registrar_years'} ||
+				$account->{'gandi_years'} || 1,
 			      $account->{'gandi_account'},
 			      $account->{'gandi_account'},
 			      $account->{'gandi_account'},

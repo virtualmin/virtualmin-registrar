@@ -488,7 +488,10 @@ local $err = &type_rcom_ensure_nameservers($account, $d, $nss);
 #return (0, $err) if ($err);
 
 # Call the API to create
-if ($account->{'rcom_years'}) {
+if ($d->{'registrar_years'}) {
+	$args->{'NumYears'} = $d->{'registrar_years'};
+	}
+elsif ($account->{'rcom_years'}) {
 	$args->{'NumYears'} = $account->{'rcom_years'};
 	}
 if ($tld eq "eu") {

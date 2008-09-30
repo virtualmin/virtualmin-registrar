@@ -19,6 +19,10 @@ feat_copy=Copying domain contacts from $1 ..
 feat_ecopy=.. failed to fetch contacts : $1
 feat_nocopy=.. none found to copy
 feat_ecopy2=.. failed to set new contacts : $1
+feat_period=Domain registration period
+feat_perioddef=Registrar default
+feat_periodyears=years
+feat_eperiod=Missing or invalid registration period in years
 
 links_contact=Edit Domain Contacts
 links_contactv=View Domain Contacts

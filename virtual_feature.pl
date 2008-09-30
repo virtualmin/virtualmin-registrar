@@ -230,6 +230,62 @@ delete($d->{'registrar_id'});
 return 1;
 }
 
+# feature_inputs_show([&domain])
+# Always show registration period, if any accounts
+sub feature_inputs_show
+{
+local @accounts = grep { $_->{'enabled'} } &list_registrar_accounts();
+return @accounts ? 1 : 0;
+}
+
+# feature_inputs([&domain])
+# Return field for registration period
+sub feature_inputs
+{
+return &ui_table_row($text{'feat_period'},
+	&ui_opt_textbox($input_name."_period", undef, 5,
+			$text{'feat_perioddef'})." ".
+	$text{'feat_periodyears'});
+}
+
+# feature_inputs_parse(&domain, &in)
+# Update the domain object with a custom registration period, if requested
+sub feature_inputs_parse
+{
+local ($d, $in) = @_;
+if (defined($in->{$input_name."_period"}) &&
+    !$in->{$input_name."_period_def"}) {
+	$in->{$input_name."_period"} =~ /^\d+$/ ||
+		return $text{'feat_eperiod'};
+	$d->{'registrar_years'} = $in->{$input_name."_period"};
+	}
+return undef;
+}
+
+# feature_args(&domain)
+# Return command-line arguments for domain registration
+sub feature_args
+{
+return ( { 'name' => $module_name."-period",
+	   'value' => 'years',
+	   'opt' => 1,
+	   'desc' => 'Period to register a new domain for' },
+       );
+}
+
+# feature_args_parse(&domain, &args)
+# Parse command-line arguments from feature_args
+sub feature_args_parse
+{
+local ($d, $args) = @_;
+if (defined($args->{$module_name."-period"})) {
+	$args->{$module_name."-period"} =~ /^\d+$/ ||
+		return "Registration period must be a number of years";
+	$d->{'registrar_years'} = $args->{$module_name."-period"};
+	}
+return undef;
+}
+
 # feature_disable(&domain)
 # Called when this feature is temporarily disabled for a domain
 # (optional)

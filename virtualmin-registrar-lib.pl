@@ -9,6 +9,7 @@ do '../ui-lib.pl';
 $registrar_accounts_dir = "$module_config_directory/accounts";
 %access = &get_module_acl();
 $auto_cron_cmd = "$module_config_directory/auto.pl";
+($input_name = $module_name) =~ s/[^A-Za-z0-9]/_/g;
 
 # Bring in all register-type specific libraries
 @registrar_types = (

@@ -7,35 +7,35 @@ $distribute_api_url = "https://www.distributeit.com.au/api/";
 	"102", "Authentication Failure",
 	"103", "Account has been disabled",
 	"104", "User has been disabled",
-	"105", "Request coming from incorrect IP address.",
+	"105", "Request coming from incorrect IP address",
 	"108", "Account Balance could not be obtained as account is Invoice based",
 	"201", "Invalid or not supplied 'Type' parameter",
 	"202", "Your Account has not been enabled for this 'Type'",
-	"203", "Invalid or not supplied 'Action/Object parameter/s",
-	"301", "Invalid Order ID.",
-	"302", "Domain not supplied.",
-	"303", "Domain Pricing table not set up for your account.",
-	"304", "Domain not available for Registration.",
-	"305", "Domain is not renewable.",
-	"306", "Domain is not transferable.",
+	"203", "Invalid or not supplied Action/Object parameters",
+	"301", "Invalid Order ID",
+	"302", "Domain not supplied",
+	"303", "Domain Pricing table not set up for your account",
+	"304", "Domain not available for Registration",
+	"305", "Domain is not renewable",
+	"306", "Domain is not transferable",
 	"307", "Incorrect Domain Password",
 	"308", "Domain UserID or Password not supplied",
 	"309", "Invalid Domain Extension",
 	"310", "Domain does not exist, has been deleted or transferred away",
 	"311", "Domain does not exist in your reseller profile",
-	"312", "Supplied UserID and Password do not match the domain.",
-	"401", "Connection to Registry failed - retry.",
-	"500", "Pre-Paid balance is not enough to cover order cost.",
-	"501", "Invalid credit card type. See Appendix G.",
-	"502", "Invalid credit card number.",
-	"503", "Invalid credit card expiry date.",
-	"504", "Credit Card amount plus the current pre-paid balance is not sufficient to cover the cost of the order.",
-	"505", "Error with credit card transaction at bank.",
-	"600", "Error with one or more fields when creating a Domain Contact.",
-	"601", "Error with one or more fields when creating, renewing or transferring a Domain.",
-	"602", "Error with one or more fields associated with a Host.",
-	"603", "Error with one or more fields associated with Eligibility fields.",
-	"604", "Error with one or more fields associated with a Nameserver.",
+	"312", "Supplied UserID and Password do not match the domain",
+	"401", "Connection to Registry failed - retry",
+	"500", "Pre-Paid balance is not enough to cover order cost",
+	"501", "Invalid credit card type. See Appendix G",
+	"502", "Invalid credit card number",
+	"503", "Invalid credit card expiry date",
+	"504", "Credit Card amount plus the current pre-paid balance is not sufficient to cover the cost of the order",
+	"505", "Error with credit card transaction at bank",
+	"600", "Error with one or more fields when creating a Domain Contact",
+	"601", "Error with one or more fields when creating, renewing or transferring a Domain",
+	"602", "Error with one or more fields associated with a Host",
+	"603", "Error with one or more fields associated with Eligibility fields",
+	"604", "Error with one or more fields associated with a Nameserver",
 	"610", "Error connecting to registry",
 	"611", "Domain cannot be Renewed or Transferred",
 	"612", "Locking is not available for this domain",
@@ -156,9 +156,8 @@ local ($ok, $out) = &call_distribute_api(
                           'Object' => 'Domain',
                           'Action' => 'Details',
 			  'Domain' => $dname });
-# XXX how to get domain ID?
 return !$ok && $out =~ /310/ ? (1, undef) :
-       !$ok ? (0, $out) : (1, $domid);
+       !$ok ? (0, $out) : (1, $dname);
 }
 
 # type_distribute_create_domain(&account, &domain)
@@ -240,7 +239,7 @@ return (0, $os) if ($os);
 local ($ok, $out) = &call_distribute_api(
 	 $sid, "query", { 'Type' => 'Domains',
                           'Object' => 'Domain',
-                          'Action' => 'Renewal',
+                          'Action' => 'Details',
 			  'Domain' => $d->{'dom'} });
 if (!$ok) {
 	# Failed completed
@@ -281,6 +280,7 @@ return ($ok, $out);
 sub check_distribute_order_status
 {
 local ($sid, $orderid) = @_;
+return undef if ($orderid !~ /^\d+$/);		# Don't know it
 local ($ok, $out) = &call_distribute_api(
          $sid, "query", { 'Type' => 'Domains',
                           'Object' => 'Order',

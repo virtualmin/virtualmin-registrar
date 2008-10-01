@@ -213,6 +213,38 @@ else {
 	}
 }
 
+# type_distribute_set_nameservers(&account, &domain)
+# Updates the nameservers for a domain to match DNS. Returns undef on success
+# or an error message on failure.
+sub type_distribute_set_nameservers
+{
+local ($account, $d) = @_;
+local ($ok, $sid) = &connect_distribute_api($account, 1);
+return &text('distribute_error', $sid) if (!$ok);
+
+# Get nameservers in DNS
+local $nss = &get_domain_nameservers($account, $d);
+if (!ref($nss)) {
+	return $nss;
+	}
+elsif (!@$nss) {
+	return $text{'rcom_ensrecords'};
+	}
+elsif (@$nss < 2) {
+	return (0, &text('distribute_enstwo', 2, $nss->[0]));
+	}
+
+# Set nameservers
+local ($ok, $out) = &call_distribute_api(
+	$sid, "order", { 'Type' => 'Domains',
+                          'Object' => 'Domain',
+                          'Action' => 'UpdateHosts',
+			  'Domain' => $d->{'dom'},
+			  'AddHost' => $nss,
+			  'RemoveHost' => 'ALL' });
+return $ok ? undef : $out;
+}
+
 # type_distribute_delete_domain(&account, &domain)
 # Deletes a domain previously created with this registrar
 sub type_distribute_delete_domain

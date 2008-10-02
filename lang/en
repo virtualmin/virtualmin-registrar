@@ -50,6 +50,7 @@ index_actdoms=List domains
 index_actauto=Auto renewal
 index_msg=Virtual servers using registrar account $1 ..
 index_nonemsg=No Virtual servers using registrar account $1 were found.
+index_listall=List all registered domains
 
 type_rcom=Register.com
 type_gandi=Gandi.net
@@ -198,6 +199,7 @@ list_registrar=Registrar name
 list_account=Registrar account
 list_id=ID with registrar
 list_none=No Virtualmin domains have been registered with any DNS registrar yet.
+list_expiry=Expiry date
 
 contact_err=Failed to edit contact details
 contact_ecannot=You are not allowed to edit contacts for this domain

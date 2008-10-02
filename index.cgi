@@ -48,7 +48,7 @@ print &ui_form_columns_table(
           undef,
           [ "delete", $text{'index_delete'} ], ],
 	1,
-	undef,
+	[ [ "list.cgi", $text{'index_listall'} ] ],
 	undef,
 	[ "", $text{'index_desc'}, $text{'index_registrar'},
 	  $text{'index_enabled'}, $text{'index_acts'} ],

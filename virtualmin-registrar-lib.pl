@@ -1,6 +1,7 @@
 # Common functions for domain registration
 # XXX - Show and allow editing of nameservers for a domain
 # XXX - Gandi contact management
+# XXX - domain transfer
 
 do '../web-lib.pl';
 &init_config();

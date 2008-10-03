@@ -1,4 +1,4 @@
-# Functions for talking to the Distribute.IT API
+# }); Functions for talking to the Distribute.IT API
 
 $distribute_api_url = "https://www.distributeit.com.au/api/";
 %distribute_error_map = (
@@ -307,6 +307,33 @@ local ($ok, $out) = &call_distribute_api(
                           'Action' => 'Renewal',
 			  'Domain' => $d->{'dom'},
 			  'Period' => $years });
+return ($ok, $out);
+}
+
+# type_distribute_transfer_domain(&account, &domain, key, [years])
+# Transfer a domain from whatever registrar it is currently hosted with to
+# this Distribute.IT account. Returns 1 and an order ID on succes, or 0
+# and an error mesasge on failure. If a number of years is given, also renews
+# the domain for that period.
+sub type_distribute_transfer_domain
+{
+local ($account, $d, $key, $years) = @_;
+local ($ok, $sid) = &connect_distribute_api($account, 1);
+return &text('distribute_error', $sid) if (!$ok);
+local $conid = $account->{'distribute_account'};
+local ($ok, $out) = &call_distribute_api(
+	$sid, "order", { 'Type' => 'Domains',
+                         'Object' => 'Domain',
+                         'Action' => 'TransferRequest',
+			 'Domain' => $d->{'dom'},
+			 $years ? ( 'Period' => $years ) : ( ),
+			 'DomainPassword' => $key,
+			 'UserID' => $d->{'user'},
+			 'Password' => $d->{'pass'},
+		         'OwnerContactID' => $conid,
+		         'AdministrationContactID' => $conid,
+		         'TechnicalContactID' => $conid,
+		         'BillingContactID' => $conid, });
 return ($ok, $out);
 }
 

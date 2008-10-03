@@ -15,6 +15,14 @@ $d->{$module_name} && &error($text{'import_ealready'});
 $account || &error(&text('contact_eaccount', $in{'dom'}));
 $oldd = { %$d };
 
+# Validate inputs
+if (defined($in{'transfer'})) {
+	$in{'transfer_def'} || $in{'transfer'} =~ /\S/ ||
+		&error($text{'import_etransfer'});
+	$in{'years_def'} || $in{'years'} =~ /^\d+$/ ||
+		&error($text{'renew_eyears'});
+	}
+
 # Show import progress
 &ui_print_unbuffered_header(&virtual_server::domain_in($d),
 			    $text{'import_title'}, "", "import");

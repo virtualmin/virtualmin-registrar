@@ -244,6 +244,10 @@ import_done=.. done. The registrar's ID is $1
 import_ealready=This domain is already associated with a registrar
 import_ns=Update nameservers to match this system?
 import_nsing=Updating nameservers ..
+import_transfer=Transfer from another registrar?
+import_transferyes=Yes, with key
+import_renew=Also renew when transferring?
+import_renewyes=Yes, for
 
 dereg_err=Failed to dis-associate domain
 dereg_ealready=This domain is not associated with any registrar

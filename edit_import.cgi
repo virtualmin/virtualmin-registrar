@@ -27,11 +27,30 @@ print &ui_table_row($text{'import_account'},
 
 # Registrar ID
 print &ui_table_row($text{'import_id'},
-	&ui_opt_textbox("id", undef, 40, $text{'import_auto'}));
+	&ui_opt_textbox("id", undef, 20, $text{'import_auto'}));
 
 # Update nameservers?
 print &ui_table_row($text{'import_ns'},
 	&ui_yesno_radio("ns", 0));
+
+# Transfer in, if possible
+$cantransfer = 0;
+foreach $a (@accounts) {
+	$tfunc = "type_".$a->{'registrar'}."_transfer_domain";
+	$cantransfer = 1 if (defined(&$tfunc));
+	}
+if ($cantransfer) {
+	# Transfer key
+	print &ui_table_row($text{'import_transfer'},
+		&ui_opt_textbox("transfer", undef, 20, $text{'no'},
+				$text{'import_transferyes'}));
+
+	# Optional renewal period
+	print &ui_table_row($text{'import_renew'},
+		&ui_opt_textbox("years", undef, 5, $text{'no'},
+				$text{'import_renewyes'})." ".
+		$text{'feat_periodyears'});
+	}
 
 print &ui_table_end();
 print &ui_form_end([ [ undef, $text{'import_ok'} ] ]);

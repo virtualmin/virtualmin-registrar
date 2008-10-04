@@ -19,6 +19,13 @@ else {
 	$in{'days'} =~ /^[1-9]\d*$/ || &error($text{'auto_edays'});
 	$account->{'autodays'} = $in{'days'};
 	}
+if ($in{'warn_def'}) {
+	delete($account->{'autowarn'});
+	}
+else {
+	$in{'warn'} =~ /^[1-9]\d*$/ || &error($text{'auto_ewarn'});
+	$account->{'autowarn'} = $in{'warn'};
+	}
 if ($in{'email_def'}) {
 	delete($account->{'autoemail'});
 	}
@@ -28,12 +35,14 @@ else {
 	}
 $in{'years'} =~ /^[1-9]\d*$/ || &error($text{'auto_eyears'});
 $account->{'autoyears'} = $in{'years'};
+$account->{'autoowner'} = $in{'owner'};
 
 # Save the account, and create the cron job if needed
 &save_registrar_account($account);
 ($job) = grep { $_->{'command'} eq $auto_cron_cmd &&
 		$_->{'user'} eq 'root' } &cron::list_cron_jobs();
-@anyauto = grep { $_->{'autodays'} } &list_registrar_accounts();
+@anyauto = grep { $_->{'autodays'} || $_->{'autowarn'} }
+		&list_registrar_accounts();
 if (@anyauto && !$job) {
 	# Create the job
 	$job = { 'user' => 'root',
@@ -47,7 +56,6 @@ if (@anyauto && !$job) {
 	&lock_file(&cron::cron_file($job));
 	&cron::create_cron_job($job);
 	&unlock_file(&cron::cron_file($job));
-	&cron::create_wrapper($auto_cron_cmd, $module_name, "auto.pl");
 	}
 elsif (!@anyauto && $job) {
 	# Delete the job
@@ -55,6 +63,7 @@ elsif (!@anyauto && $job) {
 	&cron::delete_cron_job($job);
 	&unlock_file(&cron::cron_file($job));
 	}
+&cron::create_wrapper($auto_cron_cmd, $module_name, "auto.pl");
 
 &redirect("");
 

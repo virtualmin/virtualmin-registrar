@@ -31,6 +31,13 @@ print &ui_table_row($text{'auto_days'},
 	    [ 0, &text('auto_on',
 		       &ui_textbox("days", $account->{'autodays'}, 5)) ] ]));
 
+# Warning policy
+print &ui_table_row($text{'auto_warn'},
+	&ui_radio("warn_def", $account->{'autowarn'} ? 0 : 1,
+	  [ [ 1, $text{'auto_off'} ],
+	    [ 0, &text('auto_on',
+		       &ui_textbox("warn", $account->{'autowarn'}, 5)) ] ]));
+
 # How long to renew for
 $yfunc = "type_".$account->{'registrar'}."_renew_years";
 print &ui_table_row($text{'auto_years'},
@@ -40,6 +47,10 @@ print &ui_table_row($text{'auto_years'},
 print &ui_table_row($text{'auto_email'},
 	&ui_opt_textbox("email", $account->{'autoemail'}, 40,
 			$text{'auto_none'}, $text{'auto_addr'}));
+
+# Also notify domain owner?
+print &ui_table_row($text{'auto_owner'},
+	&ui_yesno_radio("owner", $account->{'autoowner'}));
 
 print &ui_hidden_table_end("main");
 

@@ -5,3 +5,6 @@ Added instructions for creating a Register.com account.
 Added a form for configuring automatic renewal for domains approaching their expiry date, linked next to each account on the module's main page.
 ---- Changes since 1.5 ----
 Added support for the Gandi.net registrar. Only domain creation, deletion and renewal is available so far, not contact management.
+---- Changes since 1.6 ----
+Added support for the Distribute.IT registrar.
+The automatic renewal page can also be used to configure warning email send before a domain expires.

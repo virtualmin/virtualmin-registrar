@@ -26,7 +26,7 @@ foreach $a (@accounts) {
 		     "$text{'index_actdoms'}</a>");
 	push(@links, "<a href='edit_auto.cgi?id=$a->{'id'}'>".
 		     "$text{'index_actauto'}</a>");
-	if ($a->{'autodays'}) {
+	if ($a->{'autodays'} || $a->{'autowarn'}) {
 		$links[$#links] = "<i>".$links[$#links]."</i>";
 		}
 	push(@table, [
@@ -60,6 +60,7 @@ print &ui_form_columns_table(
 	$text{'index_none'});
 
 # Form to add existing registrar account
+print &ui_hr();
 print "<table>\n";
 print &ui_form_start("edit.cgi");
 print "<tr> <td><b>$text{'index_add'}</b></td>\n";

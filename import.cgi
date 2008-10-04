@@ -27,6 +27,20 @@ if (defined($in{'transfer'})) {
 &ui_print_unbuffered_header(&virtual_server::domain_in($d),
 			    $text{'import_title'}, "", "import");
 
+# If requested, try a transfer
+if (defined($in{'transfer'}) && !$in{'transfer_def'}) {
+	print $text{'import_transferring'},"<br>\n";
+	$tfunc = "type_".$account->{'registrar'}."_transfer_domain";
+	($ok, $msg) = &$tfunc($account, $d, $in{'transfer'},
+		$in{'years_def'} ? undef : $in{'years'});
+	if ($ok) {
+		print &text('import_done', $msg),"<p>\n";
+		}
+	else {
+		print &text('import_failed', $msg),"<p>\n";
+		}
+	}
+
 print &text('import_doing', "<tt>$d->{'dom'}</tt>",
 			    "<i>$account->{'desc'}</i>"),"<br>\n";
 $ifunc = "type_".$account->{'registrar'}."_owned_domain";

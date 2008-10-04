@@ -248,6 +248,7 @@ import_transfer=Transfer from another registrar?
 import_transferyes=Yes, with key
 import_renew=Also renew when transferring?
 import_renewyes=Yes, for
+import_transferring=Transferring from current registrar ..
 
 dereg_err=Failed to dis-associate domain
 dereg_ealready=This domain is not associated with any registrar

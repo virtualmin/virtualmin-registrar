@@ -48,9 +48,10 @@ index_return=list of accounts
 index_acts=Actions
 index_actdoms=List domains
 index_actauto=Auto renewal
+index_actvirts=List virtual servers
 index_msg=Virtual servers using registrar account $1 ..
 index_nonemsg=No Virtual servers using registrar account $1 were found.
-index_listall=List all registered domains
+index_listall=List all registered domains.
 
 type_rcom=Register.com
 type_gandi=Gandi.net

@@ -23,6 +23,8 @@ foreach $a (@accounts) {
 		     "field=registrar_account&what=$a->{'id'}&".
 		     "msg=".&urlize($msg)."&".
 		     "nonemsg=".&urlize($nonemsg)."'>".
+		     "$text{'index_actvirts'}</a>");
+	push(@links, "<a href='list.cgi?id=$a->{'id'}'>".
 		     "$text{'index_actdoms'}</a>");
 	push(@links, "<a href='edit_auto.cgi?id=$a->{'id'}'>".
 		     "$text{'index_actauto'}</a>");

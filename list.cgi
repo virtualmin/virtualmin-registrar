@@ -3,14 +3,21 @@
 
 require 'virtualmin-registrar-lib.pl';
 &ui_print_header(undef, $text{'list_title'}, "");
+&ReadParse();
 
 # Find the domains
 @doms = grep { $_->{$module_name} &&
 	       &virtual_server::can_edit_domain($_) }
 	     &virtual_server::list_domains();
 
-# Show each domain, with registration info
+# Get relevant accounts
 @accounts = &list_registrar_accounts();
+if ($in{'id'}) {
+	# Just one account
+	@accounts = grep { $_->{'id'} eq $in{'id'} } @accounts;
+	}
+
+# Show each domain, with registration info
 @table = ( );
 foreach $d (@doms) {
 	$url = &virtual_server::can_config_domain($d) ?
@@ -18,8 +25,8 @@ foreach $d (@doms) {
 		"../virtual-server/view_domain.cgi?id=$d->{'id'}";
 	($account) = grep { $_->{'id'} eq $d->{'registrar_account'} }
 			  @accounts;
-	$rfunc = "type_".$account->{'registrar'}."_desc"
-		if ($account);
+	next if (!$account);
+	$rfunc = "type_".$account->{'registrar'}."_desc";
 	$dname = &virtual_server::show_domain_name($d);
 
 	# Get expiry date, if possible

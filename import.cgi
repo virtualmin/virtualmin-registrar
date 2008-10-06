@@ -6,7 +6,7 @@ require './virtualmin-registrar-lib.pl';
 &error_setup($text{'import_err'});
 $access{'registrar'} || &error($text{'import_ecannot'});
 
-# Get the Virtualmin domain
+# Get the Virtualmin domain and account
 $d = &virtual_server::get_domain_by("dom", $in{'dom'});
 $d || &error(&text('contact_edom', $in{'dom'}));
 $d->{$module_name} && &error($text{'import_ealready'});
@@ -15,31 +15,9 @@ $d->{$module_name} && &error($text{'import_ealready'});
 $account || &error(&text('contact_eaccount', $in{'dom'}));
 $oldd = { %$d };
 
-# Validate inputs
-if (defined($in{'transfer'})) {
-	$in{'transfer_def'} || $in{'transfer'} =~ /\S/ ||
-		&error($text{'import_etransfer'});
-	$in{'years_def'} || $in{'years'} =~ /^\d+$/ ||
-		&error($text{'renew_eyears'});
-	}
-
 # Show import progress
 &ui_print_unbuffered_header(&virtual_server::domain_in($d),
-			    $text{'import_title'}, "", "import");
-
-# If requested, try a transfer
-if (defined($in{'transfer'}) && !$in{'transfer_def'}) {
-	print $text{'import_transferring'},"<br>\n";
-	$tfunc = "type_".$account->{'registrar'}."_transfer_domain";
-	($ok, $msg) = &$tfunc($account, $d, $in{'transfer'},
-		$in{'years_def'} ? undef : $in{'years'});
-	if ($ok) {
-		print &text('import_done', $msg),"<p>\n";
-		}
-	else {
-		print &text('import_failed', $msg),"<p>\n";
-		}
-	}
+			    $text{'import_title'}, "");
 
 print &text('import_doing', "<tt>$d->{'dom'}</tt>",
 			    "<i>$account->{'desc'}</i>"),"<br>\n";

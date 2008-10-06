@@ -352,6 +352,20 @@ else {
 			    'page' => 'edit_import.cgi?dom='.$d->{'dom'},
 			    'cat' => 'dns' });
 		}
+
+	# Can request a domain transfer
+	my $cantransfer = 0;
+	foreach my $a (@accounts) {
+		my $tfunc = "type_".$a->{'registrar'}."_transfer_domain";
+		$cantransfer = 1 if (defined(&$tfunc));
+		}
+	if (scalar(@accounts) && !$d->{'subdom'} && $access{'registrar'} &&
+	    $d->{'dns'} && $cantransfer) {
+		push(@rv, { 'mod' => $module_name,
+			    'desc' => $text{'links_transfer'},
+			    'page' => 'edit_transfer.cgi?dom='.$d->{'dom'},
+			    'cat' => 'dns' });
+		}
 	}
 return @rv;
 }

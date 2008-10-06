@@ -29,6 +29,7 @@ links_contactv=View Domain Contacts
 links_rereg=Dis-associate Domain
 links_import=Associate Domain
 links_renew=Renew Domain
+links_transfer=Transfer Domain
 
 index_title=DNS Domain Registrars
 index_registrar=Registrar
@@ -249,7 +250,18 @@ import_transfer=Transfer from another registrar?
 import_transferyes=Yes, with key
 import_renew=Also renew when transferring?
 import_renewyes=Yes, for
-import_transferring=Transferring from current registrar ..
+
+transfer_title=Transfer Domain Registration
+transfer_header=Details of transfer request
+transfer_account=Transfer to account
+transfer_key=Transfer key
+transfer_ok=Request Domain Transfer
+transfer_err=Failed to transfer domain
+transfer_ecannot=You are not allowed to transfer domains
+transfer_transferring=Transferring from current registrar ..
+transfer_done=.. done. The registrar's ID is $1.
+transfer_done2=Other steps may be needed at the original registrar before the transfer is complete, and this domain can be <a href='$1'>imported into Virtualmin</a>.
+
 
 dereg_err=Failed to dis-associate domain
 dereg_ealready=This domain is not associated with any registrar

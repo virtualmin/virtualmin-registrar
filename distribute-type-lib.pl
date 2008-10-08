@@ -187,7 +187,7 @@ local %params = ( 'Type' => 'Domains',
 		  'Object' => 'Domain',
 		  'Action' => 'Create',
 		  'Domain' => $d->{'dom'},
-		  'UserID' => $d->{'user'},
+		  'UserID' => &distribute_username($d),
 		  'Password' => $d->{'pass'},
 		  'Host' => $nss,
 		  'OwnerContactID' => $conid,
@@ -328,7 +328,7 @@ local ($ok, $out) = &call_distribute_api(
 			 'Domain' => $d->{'dom'},
 			 $years ? ( 'Period' => $years ) : ( ),
 			 'DomainPassword' => $key,
-			 'UserID' => $d->{'user'},
+			 'UserID' => &distribute_username($d),
 			 'Password' => $d->{'pass'},
 		         'OwnerContactID' => $conid,
 		         'AdministrationContactID' => $conid,
@@ -415,6 +415,14 @@ else {
 	# Some other output??
 	return (0, "Unknown error : $out");
 	}
+}
+
+sub distribute_username
+{
+local ($d) = @_;
+local $rv = $d->{'dom'};
+$rv =~ s/[^a-z0-9]//gi;
+return $rv;
 }
 
 1;

@@ -79,6 +79,8 @@ $rv .= &ui_table_row($text{'distribute_pass'},
 $rv .= &ui_table_row($text{'rcom_years'},
 	&ui_opt_textbox("distribute_years", $account->{'distribute_years'},
 			4, $text{'rcom_yearsdef'}));
+$rv .= &ui_table_row($text{'distribute_dom'},
+	&ui_textbox("distribute_dom", $account->{'distribute_dom'}, 40));
 return $rv;
 }
 
@@ -102,6 +104,9 @@ else {
 	  $in->{'distribute_years'} <= 10 || return $text{'rcom_eyears'};
 	$account->{'distribute_years'} = $in->{'distribute_years'};
 	}
+$in->{'distribute_dom'} =~ /^[a-z0-9\.\-\_]+$/i ||
+	return $text{'distribute_edom'};
+$account->{'distribute_dom'} = $in->{'distribute_dom'};
 return undef;
 }
 
@@ -119,8 +124,20 @@ return $account->{'distribute_years'} || 2;
 sub type_distribute_validate
 {
 local ($account) = @_;
+
+# Try to login
 local ($ok, $sid) = &connect_distribute_api($account, 1);
-return $ok ? undef : $sid;
+return $sid if (!$ok);
+
+# Validate the template domain
+local ($ok, $out) = &call_distribute_api(
+	$sid, "query", { 'Type' => 'Domains',
+			 'Object' => 'Domain',
+			 'Action' => 'Details',
+			 'Domain' => $account->{'distribute_dom'} });
+$ok || return &text('distribute_edom2', $out);
+
+return undef;
 }
 
 # type_distribute_check_domain(&account, domain)
@@ -422,6 +439,7 @@ sub distribute_username
 local ($d) = @_;
 local $rv = $d->{'dom'};
 $rv =~ s/[^a-z0-9]//gi;
+$rv = substr($rv, 0, 16) if (length($rv) > 16);
 return $rv;
 }
 

@@ -198,6 +198,24 @@ elsif (@$nss < 2) {
 	return (0, &text('distribute_enstwo', 2, $nss->[0]));
 	}
 
+# Get contact ID from the base domain
+local ($ok, $out) = &call_distribute_api(
+	$sid, "query", { 'Type' => 'Domains',
+			 'Object' => 'Domain',
+			 'Action' => 'Details',
+			 'Domain' => $account->{'distribute_dom'} });
+$ok || return (0, &text('distribute_ebase', $account->{'distribute_dom'}));
+local ($ownerid, $adminid, $techid, $billingid);
+if ($out =~ /Owner-ContactID=(\S+)/) {
+	$ownerid = $1;
+	}
+else {
+	return (0, &text('distribute_eowner', $account->{'distribute_dom'}));
+	}
+$adminid = $out =~ /Administration-ContactID=(\S+)/ ? $1 : $ownerid;
+$techid = $out =~ /Technical-ContactID=(\S+)/ ? $1 : $ownerid;
+$billingid = $out =~ /Billing-ContactID=(\S+)/ ? $1 : $ownerid;
+
 # Create parameters
 local $conid = $account->{'distribute_account'};
 local %params = ( 'Type' => 'Domains',
@@ -207,10 +225,10 @@ local %params = ( 'Type' => 'Domains',
 		  'UserID' => &distribute_username($d),
 		  'Password' => $d->{'pass'},
 		  'Host' => $nss,
-		  'OwnerContactID' => $conid,
-		  'AdministrationContactID' => $conid,
-		  'TechnicalContactID' => $conid,
-		  'BillingContactID' => $conid,
+		  'OwnerContactID' => $ownerid,
+		  'AdministrationContactID' => $adminid,
+		  'TechnicalContactID' => $techid,
+		  'BillingContactID' => $billingid,
 		);
 if ($d->{'registrar_years'}) {
 	$params{'Period'} = $d->{'registrar_years'};

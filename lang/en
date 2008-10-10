@@ -188,6 +188,8 @@ distribute_estatus2=Failed to get order status : $1
 distribute_dom=Existing domain to link new domains to
 distribute_edom=Missing or invalid-looking existing domain name to link with
 distribute_edom2=Failed to get details of existing domain : $1
+distribute_ebase=Failed to get details for domain $1
+distribute_eowner=Failed to get owner contact ID for domain $1
 
 delete_err1=Failed to disable accounts
 delete_err2=Failed to enable accounts

@@ -199,25 +199,11 @@ elsif (@$nss < 2) {
 	}
 
 # Get contact ID from the base domain
-local ($ok, $out) = &call_distribute_api(
-	$sid, "query", { 'Type' => 'Domains',
-			 'Object' => 'Domain',
-			 'Action' => 'Details',
-			 'Domain' => $account->{'distribute_dom'} });
-$ok || return (0, &text('distribute_ebase', $account->{'distribute_dom'}));
-local ($ownerid, $adminid, $techid, $billingid);
-if ($out =~ /Owner-ContactID=(\S+)/) {
-	$ownerid = $1;
-	}
-else {
-	return (0, &text('distribute_eowner', $account->{'distribute_dom'}));
-	}
-$adminid = $out =~ /Administration-ContactID=(\S+)/ ? $1 : $ownerid;
-$techid = $out =~ /Technical-ContactID=(\S+)/ ? $1 : $ownerid;
-$billingid = $out =~ /Billing-ContactID=(\S+)/ ? $1 : $ownerid;
+local ($ok, $ownerid, $adminid, $techid, $billingid) =
+	&get_distribute_contact_ids($account, $sid);
+$ok || return (0, $ownerid);
 
 # Create parameters
-local $conid = $account->{'distribute_account'};
 local %params = ( 'Type' => 'Domains',
 		  'Object' => 'Domain',
 		  'Action' => 'Create',
@@ -246,6 +232,31 @@ if ($ok) {
 else {
 	return (0, $out);
 	}
+}
+
+# get_distribute_contact_ids(&account, sid)
+# Returns the default owner, admin, tech and contact IDs for some account,
+# or an error message
+sub get_distribute_contact_ids
+{
+local ($account, $sid) = @_;
+local ($ok, $out) = &call_distribute_api(
+	$sid, "query", { 'Type' => 'Domains',
+			 'Object' => 'Domain',
+			 'Action' => 'Details',
+			 'Domain' => $account->{'distribute_dom'} });
+$ok || return (0, &text('distribute_ebase', $account->{'distribute_dom'}));
+local ($ownerid, $adminid, $techid, $billingid);
+if ($out =~ /Owner-ContactID=(\S+)/) {
+	$ownerid = $1;
+	}
+else {
+	return (0, &text('distribute_eowner', $account->{'distribute_dom'}));
+	}
+$adminid = $out =~ /Administration-ContactID=(\S+)/ ? $1 : $ownerid;
+$techid = $out =~ /Technical-ContactID=(\S+)/ ? $1 : $ownerid;
+$billingid = $out =~ /Billing-ContactID=(\S+)/ ? $1 : $ownerid;
+return (1, $ownerid, $adminid, $techid, $billingid);
 }
 
 # type_distribute_set_nameservers(&account, &domain)
@@ -355,7 +366,12 @@ sub type_distribute_transfer_domain
 local ($account, $d, $key, $years) = @_;
 local ($ok, $sid) = &connect_distribute_api($account, 1);
 return &text('distribute_error', $sid) if (!$ok);
-local $conid = $account->{'distribute_account'};
+
+# Get contact ID from the base domain
+local ($ok, $ownerid, $adminid, $techid, $billingid) =
+	&get_distribute_contact_ids($account, $sid);
+$ok || return (0, $ownerid);
+
 local ($ok, $out) = &call_distribute_api(
 	$sid, "order", { 'Type' => 'Domains',
                          'Object' => 'Domain',
@@ -365,10 +381,10 @@ local ($ok, $out) = &call_distribute_api(
 			 'DomainPassword' => $key,
 			 'UserID' => &distribute_username($d),
 			 'Password' => $d->{'pass'},
-		         'OwnerContactID' => $conid,
-		         'AdministrationContactID' => $conid,
-		         'TechnicalContactID' => $conid,
-		         'BillingContactID' => $conid, });
+		         'OwnerContactID' => $ownerid,
+		         'AdministrationContactID' => $adminid,
+		         'TechnicalContactID' => $techid,
+		         'BillingContactID' => $billingid, });
 return ($ok, $out);
 }
 

@@ -256,6 +256,10 @@ else {
 $adminid = $out =~ /Administration-ContactID=(\S+)/ ? $1 : $ownerid;
 $techid = $out =~ /Technical-ContactID=(\S+)/ ? $1 : $ownerid;
 $billingid = $out =~ /Billing-ContactID=(\S+)/ ? $1 : $ownerid;
+$ownerid =~ s/^DIT-//i;
+$adminid =~ s/^DIT-//i;
+$techid =~ s/^DIT-//i;
+$billingid =~ s/^DIT-//i;
 return (1, $ownerid, $adminid, $techid, $billingid);
 }
 

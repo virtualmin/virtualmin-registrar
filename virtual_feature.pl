@@ -360,7 +360,7 @@ else {
 		$cantransfer = 1 if (defined(&$tfunc));
 		}
 	if (scalar(@accounts) && !$d->{'subdom'} && $access{'registrar'} &&
-	    $d->{'dns'} && $cantransfer) {
+	    $d->{'dns'} && $cantransfer && !$d->{'registrar_transferred'}) {
 		push(@rv, { 'mod' => $module_name,
 			    'desc' => $text{'links_transfer'},
 			    'page' => 'edit_transfer.cgi?dom='.$d->{'dom'},

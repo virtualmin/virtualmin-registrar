@@ -30,6 +30,8 @@ $tfunc = "type_".$account->{'registrar'}."_transfer_domain";
 if ($ok) {
 	print &text('transfer_done', $msg),"<p>\n";
 	print &text('transfer_done2', "edit_import.cgi?dom=$d->{'dom'}"),"<p>\n";
+	$d->{'registrar_transferred'} = $msg;
+	&virtual_server::save_domain($d);
 	}
 else {
 	print &text('import_failed', $msg),"<p>\n";

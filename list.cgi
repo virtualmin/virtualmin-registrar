@@ -21,8 +21,8 @@ if ($in{'id'}) {
 @table = ( );
 foreach $d (@doms) {
 	$url = &virtual_server::can_config_domain($d) ?
-		"../virtual-server/edit_domain.cgi?id=$d->{'id'}" :
-		"../virtual-server/view_domain.cgi?id=$d->{'id'}";
+		"../virtual-server/edit_domain.cgi?dom=$d->{'id'}" :
+		"../virtual-server/view_domain.cgi?dom=$d->{'id'}";
 	($account) = grep { $_->{'id'} eq $d->{'registrar_account'} }
 			  @accounts;
 	next if (!$account);

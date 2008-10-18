@@ -1,4 +1,4 @@
-# }); Functions for talking to the Distribute.IT API
+# Functions for talking to the Distribute.IT API
 
 $distribute_api_url = "https://www.distributeit.com.au/api/";
 %distribute_error_map = (

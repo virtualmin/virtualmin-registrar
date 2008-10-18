@@ -29,7 +29,7 @@ $tfunc = "type_".$account->{'registrar'}."_transfer_domain";
 	$in{'years_def'} ? undef : $in{'years'});
 if ($ok) {
 	print &text('transfer_done', $msg),"<p>\n";
-	print &text('transfer_done2', "edit_import.cgi?dom=$d->{'id'}"),"<p>\n";
+	print &text('transfer_done2', "edit_import.cgi?dom=$d->{'dom'}"),"<p>\n";
 	}
 else {
 	print &text('import_failed', $msg),"<p>\n";

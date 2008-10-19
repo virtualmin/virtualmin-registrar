@@ -209,7 +209,7 @@ local %params = ( 'Type' => 'Domains',
 		  'Action' => 'Create',
 		  'Domain' => $d->{'dom'},
 		  'UserID' => &distribute_username($d),
-		  'Password' => $d->{'pass'},
+		  'Password' => &distribute_password($d),
 		  'Host' => $nss,
 		  'OwnerContactID' => $ownerid,
 		  'AdministrationContactID' => $adminid,
@@ -384,7 +384,7 @@ local ($ok, $out) = &call_distribute_api(
 			 $years ? ( 'Period' => $years ) : ( ),
 			 'DomainPassword' => $key,
 			 'UserID' => &distribute_username($d),
-			 'Password' => $d->{'pass'},
+			 'Password' => &distribute_password($d),
 		         'OwnerContactID' => $ownerid,
 		         'AdministrationContactID' => $adminid,
 		         'TechnicalContactID' => $techid,
@@ -478,6 +478,13 @@ local ($d) = @_;
 local $rv = $d->{'dom'};
 $rv =~ s/[^a-z0-9]//gi;
 $rv = substr($rv, 0, 16) if (length($rv) > 16);
+return $rv;
+}
+
+sub distribute_password
+{
+local ($d) = @_;
+local $rv = $d->{'pass'} || &virtual_server::random_password(8);
 return $rv;
 }
 

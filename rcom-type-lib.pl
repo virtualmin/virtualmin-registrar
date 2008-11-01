@@ -113,7 +113,8 @@ $rv .= &ui_table_row($text{'rcom_account'},
 $rv .= &ui_table_row($text{'rcom_pass'},
 	&ui_textbox("rcom_pass", $account->{'rcom_pass'}, 30));
 $rv .= &ui_table_row($text{'rcom_test'},
-	&ui_yesno_radio("rcom_test", $account->{'rcom_test'}));
+	&ui_radio("rcom_test", int($account->{'rcom_test'}),
+		  [ [ 1, $text{'rcom_test1'} ], [ 0, $text{'rcom_test0'} ] ]));
 $rv .= &ui_table_row($text{'rcom_years'},
 	&ui_opt_textbox("rcom_years", $account->{'rcom_years'},
 			4, $text{'rcom_yearsdef'}));

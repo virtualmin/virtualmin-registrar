@@ -54,8 +54,9 @@ $rv .= &ui_table_row($text{'gandi_pass'},
 $rv .= &ui_table_row($text{'rcom_years'},
 	&ui_opt_textbox("gandi_years", $account->{'gandi_years'},
 			4, $text{'rcom_yearsdef'}));
-$rv .= &ui_table_row($text{'gandi_test'},
-	&ui_yesno_radio("gandi_test", $account->{'gandi_test'}));
+$rv .= &ui_table_row($text{'rcom_test'},
+	&ui_radio("gandi_test", int($account->{'gandi_test'}),
+		  [ [ 1, $text{'rcom_test1'} ], [ 0, $text{'rcom_test0'} ] ]));
 return $rv;
 }
 
@@ -287,8 +288,8 @@ local ($account, $reterr) = @_;
 local $server;
 eval {
 	$server = Frontier::Client->new(
-		'url' => $account->{'test'} ? $gandi_api_url_test
-					    : $gandi_api_url,
+		'url' => $account->{'gandi_test'} ? $gandi_api_url_test
+					          : $gandi_api_url,
 		'debug' => 0);
 	};
 if ($@) {

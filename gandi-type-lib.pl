@@ -1,6 +1,7 @@
 # Functions for talking to gandi.net
 
-$gandi_api_url = "https://api.ote.gandi.net/xmlrpc/";
+$gandi_api_url_test = "https://api.ote.gandi.net/xmlrpc/";
+$gandi_api_url = "https://api.gandi.net/xmlrpc/";
 
 $@ = undef;
 eval "use Frontier::Client";
@@ -53,6 +54,8 @@ $rv .= &ui_table_row($text{'gandi_pass'},
 $rv .= &ui_table_row($text{'rcom_years'},
 	&ui_opt_textbox("gandi_years", $account->{'gandi_years'},
 			4, $text{'rcom_yearsdef'}));
+$rv .= &ui_table_row($text{'gandi_test'},
+	&ui_yesno_radio("gandi_test", $account->{'gandi_test'}));
 return $rv;
 }
 
@@ -74,6 +77,7 @@ else {
 	  $in->{'gandi_years'} <= 10 || return $text{'rcom_eyears'};
 	$account->{'gandi_years'} = $in->{'gandi_years'};
 	}
+$account->{'gandi_test'} = $in->{'gandi_test'};
 return undef;
 }
 
@@ -282,8 +286,10 @@ sub connect_gandi_api
 local ($account, $reterr) = @_;
 local $server;
 eval {
-	$server = Frontier::Client->new('url' => $gandi_api_url,
-					'debug' => 0);
+	$server = Frontier::Client->new(
+		'url' => $account->{'test'} ? $gandi_api_url_test
+					    : $gandi_api_url,
+		'debug' => 0);
 	};
 if ($@) {
 	if ($reterr) {

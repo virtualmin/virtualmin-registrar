@@ -230,6 +230,40 @@ return (0, &text('gandi_error', $@)) if ($@);
 return (1, $opid);
 }
 
+# type_gandi_get_contact(&account, &domain)
+# Returns a array containing hashes of domain contact information, or an error
+# message if it could not be found.
+sub type_gandi_get_contact
+{
+local ($account, $d) = @_;
+local ($server, $sid) = &connect_gandi_api($account, 1);
+return &text('gandi_error', $sid) if (!$server);
+
+# Get the contact IDs and contact details
+local $info;
+eval {
+	$info = $server->call("domain_info", $sid, $d->{'dom'});
+	};
+return &text('gandi_error', $@) if ($@);
+local @rv;
+foreach my $ct ('owner', 'admin', 'tech', 'billing') {
+	next if (!$info->{$ct.'_handle'});
+	local $con;
+	eval {
+		$con = $server->call("contact_info", $sid,
+				     $info->{$ct.'_handle'});
+		};
+	if (!$@ && $con) {
+		use Data::Dumper;
+		&error("<pre>".&html_escape(Dumper($con))."</pre>");
+		$con->{'type'} = $ct;
+		push(@rv, $con);
+		}
+	}
+
+return \@rv;
+}
+
 # type_gandi_get_expiry(&account, &domain)
 # Returns either 1 and the expiry time (unix) for a domain, or 0 and an error
 # message.

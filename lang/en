@@ -217,6 +217,7 @@ contact_title2=View Domain Contacts
 contact_header_admin=Administrative contact
 contact_header_tech=Technical contact
 contact_header_billing=Billing contact
+contact_header_owner=Owner contact
 contact_organizationname=Organization name
 contact_firstname=First name
 contact_lastname=Family name

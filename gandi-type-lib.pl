@@ -254,10 +254,11 @@ foreach my $ct ('owner', 'admin', 'tech', 'billing') {
 				     $info->{$ct.'_handle'});
 		};
 	if (!$@ && $con) {
-		use Data::Dumper;
-		&error("<pre>".&html_escape(Dumper($con))."</pre>");
 		$con->{'type'} = $ct;
-		$con->{'id'} = $info->{$ct.'_handle'};
+		$con->{'handle'} ||= $info->{$ct.'_handle'};
+		$con->{'name'} = $con->{'company_name'} ||
+				 $con->{'association_name'} ||
+			         $con->{'body_name'};
 		push(@rv, $con);
 		}
 	}
@@ -281,33 +282,103 @@ return $oldcons if (!ref($oldcons));
 # For changed contacts, create a new one and associate with the domain
 foreach my $c (@$cons) {
 	local ($oldc) = grep { $_->{'type'} eq $c->{'type'} } @$oldcons;
-	if ($oldc &&
-	    &contact_hash_to_string($c) eq &contact_hash_to_string($oldc)) {
+	local $hash = &contact_hash_to_string($c);
+	if ($oldc && $hash eq &contact_hash_to_string($oldc)) {
 		# No change
 		next;
 		}
 	eval {
 		# Make the new contact
-		$c->{'id'} = $server->call("contact_create", $sid,
-				$c->{'class'},
-				$c->{'firstname'},
-				$c->{'lastname'},
-				$c->{'address'},
-				$c->{'zipcode'},
-				$c->{'city'},
-				$c->{'country'},
-				$c->{'phone'},
-				$c->{'email'});
-		# XXX what about other params?
+		if ($same{$hash}) {
+			# Re-use same details
+			$c->{'handle'} = $same{$hash};
+			print STDERR "re-using $c->{'handle'}\n";
+			}
+		else {
+			local %params;
+			if ($c->{'name'}) {
+				if ($c->{'class'} eq 'individual') {
+					die $text{'gandi_eindivname'};
+					}
+				$params{$c->{'class'}.'_name'} = $c->{'name'};
+				}
+			if ($c->{'state'}) {
+				$params{'state'} = $c->{'state'};
+				}
+			print STDERR "creating contact class=$c->{'class'} firstname=$c->{'firstname'} lastname=$c->{'lastname'} address=$c->{'address'} zipcode=$c->{'zipcode'} city=$c->{'city'} country=$c->{'country'} phone=$c->{'phone'} email=$c->{'email'}\n";
+			$c->{'handle'} = $server->call("contact_create", $sid,
+					$c->{'class'},
+					$c->{'firstname'},
+					$c->{'lastname'},
+					$c->{'address'},
+					$server->string($c->{'zipcode'}),
+					$c->{'city'},
+					$c->{'country'},
+					$server->string($c->{'phone'}),
+					$c->{'email'},
+					\%params);
+			$same{$hash} = $c->{'handle'};
+			# XXX what about other params?
+			print STDERR "new id = $c->{'handle'}\n";
+			}
 
 		# Update in the domain
+		print STDERR "setting $c->{'type'} contact to $c->{'handle'}\n";
 		$server->call("domain_change_contact", $sid,
-			$c->{'type'}, $c->{'id'});
+			$c->{'type'}, $c->{'handle'});
+		print STDERR "all done\n";
 		};
+	print STDERR "err=$@\n";
 	return &text('gandi_error', $@) if ($@);
-local @rv;
 	}
 return undef;
+}
+
+# type_gandi_get_contact_schema(&account, &domain, type)
+# Returns a list of fields for domain contacts, as seen by gandi.net
+sub type_gandi_get_contact_schema
+{
+local ($account, $d, $type) = @_;
+return ( { 'name' => 'handle',
+	   'readonly' => 1 },
+         { 'name' => 'class',
+	   'choices' => [ [ 'individual', $text{'gandi_individual'} ],
+			  [ 'company', $text{'gandi_company'} ],
+			  [ 'public', $text{'gandi_public'} ],
+			  [ 'association', $text{'gandi_association'} ] ],
+	   'opt' => 0,
+	 },
+	 { 'name' => 'name',
+	   'size' => 60,
+	   'opt' => 1 },
+	 { 'name' => 'firstname',
+	   'size' => 40,
+	   'opt' => 0 },
+	 { 'name' => 'lastname',
+	   'size' => 40,
+	   'opt' => 0 },
+	 { 'name' => 'address',
+	   'size' => 60,
+	   'opt' => 0 },
+	 { 'name' => 'city',
+	   'size' => 40,
+	   'opt' => 0 },
+	 { 'name' => 'state',
+	   'size' => 40,
+	   'opt' => 1 },
+         { 'name' => 'zipcode',
+	   'size' => 20,
+	   'opt' => 1 },
+         { 'name' => 'country',
+	   'choices' => [ map { [ $_->[1], $_->[0] ] } &list_countries() ],
+	   'opt' => 1 },
+         { 'name' => 'email',
+	   'size' => 60,
+	   'opt' => 0 },
+         { 'name' => 'phone',
+	   'size' => 40,
+	   'opt' => 0 },
+	);
 }
 
 # type_gandi_get_expiry(&account, &domain)

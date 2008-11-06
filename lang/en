@@ -172,6 +172,11 @@ gandi_taken=Already registered according to Gandi
 gandi_eexpiry=Could not parse expiry date $1
 gandi_instructions=To sign up for an account with Gandi.net, go to their <a href='$1' target=_new'>resellers site</a> and sign up for an account. You will need to enable XML-RPC on your reseller account, and then switch it from test to production mode to create real Internet domains.
 gandi_enstwo=Gandi requires that each domain have at least $1 nameservers, but you only have $2
+gandi_individual=Individual
+gandi_company=Company
+gandi_public=Public body
+gandi_association=Association
+gandi_eindivname=Individuals cannot have an organization name
 
 distribute_account=Account number
 distribute_user=Account username
@@ -233,6 +238,13 @@ contact_emailaddress=Email address
 contact_phone=Phone number
 contact_fax=Fax number
 contact_default=Not set
+contact_name=$contact_organizationname
+contact_address=Street address
+contact_state=State name
+contact_email=$contact_emailaddress
+contact_zipcode=$contact_postalcode
+contact_class=Contact class
+contact_handle=Contact ID
 contact_same=Same as the first contact?
 contact_emissing=Missing value for $1
 contact_esave=Failed to update registrar : $1

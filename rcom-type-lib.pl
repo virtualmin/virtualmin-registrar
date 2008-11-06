@@ -619,6 +619,56 @@ foreach my $ct ("Admin", "Tech") {
 return undef;
 }
 
+# type_rcom_get_contact_schema(&account, &domain, type)
+# Returns a list of fields for domain contacts, as seen by register.com
+sub type_rcom_get_contact_schema
+{
+local ($account, $d, $type) = @_;
+return (      { 'name' => 'organizationname',
+		'size' => 60,
+		'opt' => 0 },
+	      { 'name' => 'firstname',
+		'size' => 40,
+		'opt' => 0 },
+	      { 'name' => 'lastname',
+		'size' => 40,
+		'opt' => 0 },
+	      { 'name' => 'jobtitle',
+		'size' => 60,
+		'opt' => 1 },
+	      { 'name' => 'address1',
+		'size' => 60,
+		'opt' => 0 },
+	      { 'name' => 'address2',
+		'size' => 60,
+		'opt' => 2 },
+	      { 'name' => 'city',
+		'size' => 40,
+		'opt' => 0 },
+	      { 'name' => 'stateprovincechoice',
+		'choices' => [ [ 'S', 'State' ], [ 'P', 'Province' ] ],
+		'opt' => 1 },
+	      { 'name' => 'stateprovince',
+		'size' => 40,
+		'opt' => 1 },
+	      { 'name' => 'postalcode',
+		'size' => 20,
+		'opt' => 1 },
+	      { 'name' => 'country',
+		'choices' => [ map { [ $_->[1], $_->[0] ] } &list_countries() ],
+		'opt' => 0 },
+	      { 'name' => 'emailaddress',
+		'size' => 60,
+		'opt' => 0 },
+	      { 'name' => 'phone',
+		'size' => 40,
+		'opt' => 0 },
+	      { 'name' => 'fax',
+		'size' => 40,
+		'opt' => 1 },
+	);
+}
+
 # type_rcom_get_expiry(&account, &domain)
 # Returns either 1 and the expiry time (unix) for a domain, or 0 and an error
 # message.

@@ -119,52 +119,9 @@ return @rv;
 # Returns a list of fields for domain contacts
 sub get_contact_schema
 {
-local @rv = (
-	      { 'name' => 'organizationname',
-		'size' => 60,
-		'opt' => 0 },
-	      { 'name' => 'firstname',
-		'size' => 40,
-		'opt' => 0 },
-	      { 'name' => 'lastname',
-		'size' => 40,
-		'opt' => 0 },
-	      { 'name' => 'jobtitle',
-		'size' => 60,
-		'opt' => 1 },
-	      { 'name' => 'address1',
-		'size' => 60,
-		'opt' => 0 },
-	      { 'name' => 'address2',
-		'size' => 60,
-		'opt' => 2 },
-	      { 'name' => 'city',
-		'size' => 40,
-		'opt' => 0 },
-	      { 'name' => 'stateprovincechoice',
-		'choices' => [ [ 'S', 'State' ], [ 'P', 'Province' ] ],
-		'opt' => 1 },
-	      { 'name' => 'stateprovince',
-		'size' => 40,
-		'opt' => 1 },
-	      { 'name' => 'postalcode',
-		'size' => 20,
-		'opt' => 1 },
-	      { 'name' => 'country',
-		'choices' => [ map { [ $_->[1], $_->[0] ] }
-				   &list_countries() ],
-		'opt' => 0 },
-	      { 'name' => 'emailaddress',
-		'size' => 60,
-		'opt' => 0 },
-	      { 'name' => 'phone',
-		'size' => 40,
-		'opt' => 0 },
-	      { 'name' => 'fax',
-		'size' => 40,
-		'opt' => 1 },
-	);
-return @rv;
+local ($account, $d, $type) = @_;
+local $sfunc = "type_".$account->{'registrar'}."_get_contact_schema";
+return &$sfunc($account, $d, $type);
 }
 
 sub can_domain
@@ -269,7 +226,8 @@ sub contact_hash_to_string
 {
 local ($h) = @_;
 local @k = sort { $a cmp $b }
-	        grep { $_ ne "type" && $_ ne "lcmap" && $_ ne "id" } (keys %$h);
+	        grep { $_ ne "type" && $_ ne "lcmap" && $_ ne "id" &&
+		       !ref($h->{$_}) } (keys %$h);
 return join(" ", map { $_."=".$h->{$_} } @k);
 }
 

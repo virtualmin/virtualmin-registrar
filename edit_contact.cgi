@@ -47,21 +47,28 @@ foreach my $con (@$cons) {
 	@schema = &get_contact_schema($account, $d, $con->{'type'});
 	foreach my $s (@schema) {
 		$n = $con->{'type'}.$s->{'name'};
-		if ($s->{'choices'}) {
+		if ($s->{'readonly'}) {
+			# Just show value
+			$field = $con->{$s->{'name'}};
+			}
+		elsif ($s->{'choices'}) {
+			# Select from menu
 			@choices = @{$s->{'choices'}};
 			if ($s->{'opt'}) {
 				unshift(@choices,
 					[ undef, $text{'contact_default'} ]);
 				}
 			$field = &ui_select($n, $con->{$s->{'name'}},
-					    \@choices);
+					    \@choices, 1, 0, 1);
 			}
 		elsif ($s->{'opt'} == 1) {
+			# Optional value
 			$field = &ui_opt_textbox($n,
 				$con->{$s->{'name'}}, $s->{'size'},
 				$text{'contact_default'});
 			}
 		else {
+			# Required value
 			$field = &ui_textbox($n,
 				$con->{$s->{'name'}}, $s->{'size'});
 			}

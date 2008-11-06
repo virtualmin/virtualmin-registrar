@@ -32,7 +32,11 @@ foreach my $con (@$cons) {
 	foreach my $s (@schema) {
 		$n = $con->{'type'}.$s->{'name'};
 		$fn = $text{'contact_'.$s->{'name'}};
-		if ($s->{'choices'}) {
+		if ($s->{'readonly'}) {
+			# No need to save
+			next;
+			}
+		elsif ($s->{'choices'}) {
 			# Menu of choices
 			$con->{$s->{'name'}} = $in{$n};
 			}

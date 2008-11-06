@@ -257,11 +257,57 @@ foreach my $ct ('owner', 'admin', 'tech', 'billing') {
 		use Data::Dumper;
 		&error("<pre>".&html_escape(Dumper($con))."</pre>");
 		$con->{'type'} = $ct;
+		$con->{'id'} = $info->{$ct.'_handle'};
 		push(@rv, $con);
 		}
 	}
 
 return \@rv;
+}
+
+# type_gandi_save_contact(&&account, &domain, &contacts)
+# Updates contacts from an array of hashes
+sub type_gandi_save_contact
+{
+local ($account, $d, $cons) = @_;
+
+local ($server, $sid) = &connect_gandi_api($account, 1);
+return &text('gandi_error', $sid) if (!$server);
+
+# Get existing contacts
+local $oldcons = &type_gandi_get_contact($account, $d);
+return $oldcons if (!ref($oldcons));
+
+# For changed contacts, create a new one and associate with the domain
+foreach my $c (@$cons) {
+	local ($oldc) = grep { $_->{'type'} eq $c->{'type'} } @$oldcons;
+	if ($oldc &&
+	    &contact_hash_to_string($c) eq &contact_hash_to_string($oldc)) {
+		# No change
+		next;
+		}
+	eval {
+		# Make the new contact
+		$c->{'id'} = $server->call("contact_create", $sid,
+				$c->{'class'},
+				$c->{'firstname'},
+				$c->{'lastname'},
+				$c->{'address'},
+				$c->{'zipcode'},
+				$c->{'city'},
+				$c->{'country'},
+				$c->{'phone'},
+				$c->{'email'});
+		# XXX what about other params?
+
+		# Update in the domain
+		$server->call("domain_change_contact", $sid,
+			$c->{'type'}, $c->{'id'});
+		};
+	return &text('gandi_error', $@) if ($@);
+local @rv;
+	}
+return undef;
 }
 
 # type_gandi_get_expiry(&account, &domain)
@@ -311,6 +357,45 @@ return (1, $opid);
 sub type_gandi_add_instructions
 {
 return &text('gandi_instructions', 'https://www.gandi.net/resellers/');
+}
+
+# type_gandi_transfer_domain(&account, &domain, key)
+# Transfer a domain from whatever registrar it is currently hosted with to
+# this Gandi account. Returns 1 and an order ID on succes, or 0
+# and an error mesasge on failure. If a number of years is given, also renews
+# the domain for that period.
+sub type_gandi_transfer_domain
+{
+local ($account, $d, $key) = @_;
+
+local ($server, $sid) = &connect_gandi_api($account, 1);
+return (0, &text('gandi_error', $sid)) if (!$server);
+
+# Get my nameservers
+local $nss = &get_domain_nameservers($account, $d);
+if (!ref($nss)) {
+        return (0, $nss);
+        }
+elsif (!@$nss) {
+        return (0, $text{'rcom_ensrecords'});
+        }
+elsif (@$nss < 2) {
+	return (0, &text('gandi_enstwo', 2, $nss->[0]));
+	}
+
+# Do the transfer
+local $tid;
+eval {
+	$tid = $server->call("domain_transfer_in", $sid, $d->{'dom'},
+		$account->{'gandi_account'},
+		$account->{'gandi_account'},
+		$account->{'gandi_account'},
+		$account->{'gandi_account'},
+		$nss,
+		$key);
+	};
+return (0, &text('gandi_error', $@)) if ($@);
+return (1, $tid);
 }
 
 # connect_gandi_api(&account, [return-error])

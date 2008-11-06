@@ -30,8 +30,8 @@ foreach my $con (@$cons) {
 	# Is this the same as the first one?
 	$same = undef;
 	if ($con ne $cons->[0]) {
-		$same = &hash_to_string($cons->[0]) eq
-			&hash_to_string($con) ? 1 : 0;
+		$same = &contact_hash_to_string($cons->[0]) eq
+			&contact_hash_to_string($con) ? 1 : 0;
 		}
 
 	print &ui_hidden_table_start($text{'contact_header_'.$con->{'type'}},
@@ -75,9 +75,3 @@ print &ui_form_end([ [ "save", $text{'save'} ] ]);
 
 &ui_print_footer();
 
-sub hash_to_string
-{
-local ($h) = @_;
-local @k = sort { $a cmp $b } grep { $_ ne "type" && $_ ne "lcmap" } (keys %$h);
-return join(" ", map { $_."=".$h->{$_} } @k);
-}

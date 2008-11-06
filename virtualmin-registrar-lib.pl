@@ -1,7 +1,7 @@
 # Common functions for domain registration
 # XXX - Show and allow editing of nameservers for a domain
 # XXX - Gandi contact management
-# XXX - domain transfer
+# XXX - List all domains from registrar
 
 do '../web-lib.pl';
 &init_config();
@@ -261,6 +261,16 @@ foreach my $slave (@slaves) {
 	push(@rv, $bn[0]);
 	}
 return @rv;
+}
+
+# contact_hash_to_string(&contact)
+# Returns a string version of a contact hash, for comparisons
+sub contact_hash_to_string
+{
+local ($h) = @_;
+local @k = sort { $a cmp $b }
+	        grep { $_ ne "type" && $_ ne "lcmap" && $_ ne "id" } (keys %$h);
+return join(" ", map { $_."=".$h->{$_} } @k);
 }
 
 1;

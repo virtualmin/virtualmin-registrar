@@ -246,7 +246,7 @@ eval {
 	};
 return &text('gandi_error', $@) if ($@);
 local @rv;
-foreach my $ct ('owner', 'admin', 'tech', 'billing') {
+foreach my $ct ('admin', 'tech', 'billing') {
 	next if (!$info->{$ct.'_handle'});
 	local $con;
 	eval {

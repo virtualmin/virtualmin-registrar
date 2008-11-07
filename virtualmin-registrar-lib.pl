@@ -1,6 +1,5 @@
 # Common functions for domain registration
 # XXX - Show and allow editing of nameservers for a domain
-# XXX - Gandi contact management
 # XXX - List all domains from registrar
 
 do '../web-lib.pl';

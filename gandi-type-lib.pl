@@ -292,20 +292,16 @@ foreach my $c (@$cons) {
 		if ($same{$hash}) {
 			# Re-use same details
 			$c->{'handle'} = $same{$hash};
-			print STDERR "re-using $c->{'handle'}\n";
 			}
 		else {
-			local %params;
+			local %params = %$c;
 			if ($c->{'name'}) {
 				if ($c->{'class'} eq 'individual') {
 					die $text{'gandi_eindivname'};
 					}
 				$params{$c->{'class'}.'_name'} = $c->{'name'};
+				delete($params{'name'});
 				}
-			if ($c->{'state'}) {
-				$params{'state'} = $c->{'state'};
-				}
-			print STDERR "creating contact class=$c->{'class'} firstname=$c->{'firstname'} lastname=$c->{'lastname'} address=$c->{'address'} zipcode=$c->{'zipcode'} city=$c->{'city'} country=$c->{'country'} phone=$c->{'phone'} email=$c->{'email'}\n";
 			$c->{'handle'} = $server->call("contact_create", $sid,
 					$c->{'class'},
 					$c->{'firstname'},
@@ -318,17 +314,18 @@ foreach my $c (@$cons) {
 					$c->{'email'},
 					\%params);
 			$same{$hash} = $c->{'handle'};
-			# XXX what about other params?
-			print STDERR "new id = $c->{'handle'}\n";
 			}
 
 		# Update in the domain
-		print STDERR "setting $c->{'type'} contact to $c->{'handle'}\n";
-		$server->call("domain_change_contact", $sid,
-			$c->{'type'}, $c->{'handle'});
-		print STDERR "all done\n";
+		if ($c->{'type'} eq 'owner') {
+			$server->call("domain_change_owner", $sid,
+				$d->{'dom'}, $c->{'handle'});
+			}
+		else {
+			$server->call("domain_change_contact", $sid,
+				$d->{'dom'}, $c->{'type'}, $c->{'handle'});
+			}
 		};
-	print STDERR "err=$@\n";
 	return &text('gandi_error', $@) if ($@);
 	}
 return undef;

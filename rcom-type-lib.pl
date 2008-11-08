@@ -508,15 +508,15 @@ else {
 	}
 }
 
-# type_rcom_set_nameservers(&account, &domain)
+# type_rcom_set_nameservers(&account, &domain, [&nameservers])
 # Updates the nameservers for a domain to match DNS. Returns undef on success
 # or an error message on failure.
 sub type_rcom_set_nameservers
 {
-local ($account, $d) = @_;
+local ($account, $d, $nss) = @_;
 
 # Get nameservers in DNS
-local $nss = &get_domain_nameservers($account, $d);
+$nss ||= &get_domain_nameservers($account, $d);
 if (!ref($nss)) {
 	return $nss;
 	}

@@ -25,6 +25,7 @@ feat_periodyears=years
 feat_eperiod=Missing or invalid registration period in years
 
 links_contact=Edit Domain Contacts
+links_ns=Edit Nameservers
 links_contactv=View Domain Contacts
 links_rereg=Dis-associate Domain
 links_import=Associate Domain
@@ -341,3 +342,13 @@ auto_subject=Virtualmin automatic domain renewal
 auto_warnmsg=Will expire in $1 days
 auto_wsubject=Virtualmin domain expiry notification
 auto_wresults=The following virtual servers will have their DNS domains expire soon :
+
+ns_err=Failed to edit nameservers
+ns_ecannot=You are not allowed to edit contacts for this domain
+ns_title=Edit Nameservers
+ns_header=Registrar nameserver details
+ns_ns=Nameservers used by registrar
+ns_same=Same as Virtualmin expects
+ns_diff=Different nameservers
+ns_bind=Nameservers in local DNS zone
+ns_sync=Update to match registar

@@ -80,5 +80,5 @@ foreach my $con (@$cons) {
 
 print &ui_form_end([ [ "save", $text{'save'} ] ]);
 
-&ui_print_footer();
+&ui_print_footer(&virtual_server::domain_footer_link($d));
 

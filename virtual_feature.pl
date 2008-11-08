@@ -327,6 +327,16 @@ if ($d->{$module_name}) {
 			    'cat' => 'dns' });
 		}
 
+	# Show and allow editing of nameservers
+	local $nfunc = "type_".$account->{'registrar'}."_get_nameservers";
+	local $cn = &can_nameservers($d);
+	if ($cn && defined(&$nfunc)) {
+		push(@rv, { 'mod' => $module_name,
+			    'desc' => $text{'links_ns'},
+			    'page' => 'edit_ns.cgi?dom='.$d->{'dom'},
+			    'cat' => 'dns' });
+		}
+
 	# Renew domain (if allowed to create)
 	if (&virtual_server::can_use_feature($module_name)) {
 		push(@rv, { 'mod' => $module_name,

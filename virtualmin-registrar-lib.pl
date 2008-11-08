@@ -138,13 +138,20 @@ sub can_contacts
 return &virtual_server::master_admin() ? 1 : $config{'can_contacts'};
 }
 
-# get_domain_nameservers(&account, &domain)
+# can_nameservers(&domain)
+# Returns 1 if the current user is allowed to edit nameservers for a domain
+sub can_nameservers
+{
+return &virtual_server::master_admin() ? 1 : $config{'can_nameservers'};
+}
+
+# get_domain_nameservers([&account], &domain)
 # Returns an array ref of nameservers to use for some domain, or an error
 # message
 sub get_domain_nameservers
 {
 local ($account, $d) = @_;
-if ($account->{'ns'}) {
+if ($account && $account->{'ns'}) {
 	# Account-specific override given .. use it
 	return [ split(/\s+/, $account->{'ns'}) ];
 	}
@@ -173,6 +180,15 @@ foreach my $r (@recs) {
 		}
 	}
 return \@ns;
+}
+
+# set_domain_nameservers(&domain, &nameservers)
+# Updates the nameservers in a domain's zone file. Returns undef on success or
+# an error message on failure.
+sub set_domain_nameservers
+{
+local ($d, $nss) = @_;
+# XXX
 }
 
 # list_countries()

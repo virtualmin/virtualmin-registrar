@@ -1,1 +1,3 @@
 can_contacts=Allow server administrators to edit contacts?,1,1-Yes,0-No,2-View only
+can_nameservers=Allow server administrators to edit nameservers?,1,1-Yes,0-No
+

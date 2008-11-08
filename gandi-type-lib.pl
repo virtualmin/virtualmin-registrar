@@ -185,17 +185,34 @@ return (0, &text('gandi_error', $@)) if ($@);
 return (1, $d->{'dom'});
 }
 
-# type_gandi_set_nameservers(&account, &domain)
+# type_gandi_get_nameservers(&account, &domain)
+# Returns a array ref list of nameserver hostnames for some domain, or
+# an error message on failure.
+sub type_gandi_get_nameservers
+{
+local ($account, $d) = @_;
+local ($server, $sid) = &connect_gandi_api($account, 1);
+return &text('gandi_error', $sid) if (!$server);
+
+local $rv;
+eval {
+	$rv = $server->call("domain_ns_list", $sid, $d->{'dom'});
+	$rv = [ map { $_."" } @$rv ];
+	};
+return $@ ? &text('gandi_error', $@) : $rv;
+}
+
+# type_gandi_set_nameservers(&account, &domain, [&nameservers])
 # Updates the nameservers for a domain to match DNS. Returns undef on success
 # or an error message on failure.
 sub type_gandi_set_nameservers
 {
-local ($account, $d) = @_;
+local ($account, $d, $nss) = @_;
 local ($server, $sid) = &connect_gandi_api($account, 1);
 return (0, &text('gandi_error', $sid)) if (!$server);
 
 # Get nameservers in DNS
-local $nss = &get_domain_nameservers($account, $d);
+$nss ||= &get_domain_nameservers($account, $d);
 if (!ref($nss)) {
 	return $nss;
 	}
@@ -294,13 +311,21 @@ foreach my $c (@$cons) {
 			$c->{'handle'} = $same{$hash};
 			}
 		else {
-			local %params = %$c;
+			# Keep all original extra parameters the same
+			local %params;
+			local @skip = ( 'id', 'type', 'handle', 'name', 'class', 'firstname', 'lastname', 'address', 'zipcode', 'city', 'country', 'phone', 'email' );
+			foreach my $k (keys %$c) {
+				if (&indexof($k, @skip) < 0 &&
+				    $c->{$k}) {
+					$params{$k} = $c->{$k};
+					}
+				}
+			# Convert name param into appropriate for class
 			if ($c->{'name'}) {
 				if ($c->{'class'} eq 'individual') {
 					die $text{'gandi_eindivname'};
 					}
 				$params{$c->{'class'}.'_name'} = $c->{'name'};
-				delete($params{'name'});
 				}
 			$c->{'handle'} = $server->call("contact_create", $sid,
 					$c->{'class'},

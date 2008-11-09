@@ -295,6 +295,30 @@ local ($ok, $out) = &call_distribute_api(
 return $ok ? undef : $out;
 }
 
+# type_gandi_get_nameservers(&account, &domain)
+# Returns a array ref list of nameserver hostnames for some domain, or
+# an error message on failure.
+sub type_distribute_get_nameservers
+{
+local ($account, $d, $nss) = @_;
+local ($ok, $sid) = &connect_distribute_api($account, 1);
+return &text('distribute_error', $sid) if (!$ok);
+
+local ($ok, $out) = &call_distribute_api(
+	$sid, "query", { 'Type' => 'Domains',
+			 'Object' => 'Domain',
+			 'Action' => 'Details',
+			 'Domain' => $d->{'dom'} });
+$ok || return $out;
+local @rv;
+foreach my $l (split(/\r?\n/, $out)) {
+	if ($l =~ /^Nameserver=(\S+)/) {
+		push(@rv, $1);
+		}
+	}
+return \@rv;
+}
+
 # type_distribute_delete_domain(&account, &domain)
 # Deletes a domain previously created with this registrar
 sub type_distribute_delete_domain

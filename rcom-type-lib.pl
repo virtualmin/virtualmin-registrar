@@ -539,6 +539,22 @@ local ($ok, $out, $resp) = &call_rcom_api($account, "ModifyNS", $args);
 return $ok ? undef : $out;
 }
 
+# type_rcom_get_nameservers(&account, &domain)
+# Returns an array ref of nameserver hosts, or an error message
+sub type_rcom_get_nameservers
+{
+local ($account, $d) = @_;
+$d->{'dom'} =~ /^([^\.]+)\.(\S+)$/ || return $text{'rcom_etld'};
+local $args = { 'SLD' => $1, 'TLD' => $2 };
+local ($ok, $out, $resp) = &call_rcom_api($account, "GetDNS", $args);
+return $out if (!$ok);
+local @rv;
+for(my $i=1; $i<=$resp->{'NSCount'}; $i++) {
+	push(@rv, $resp->{'DNS'.$i});
+	}
+return \@rv;
+}
+
 # type_rcom_delete_domain(&account, &domain)
 # Deletes a domain previously created with this registrar
 sub type_rcom_delete_domain

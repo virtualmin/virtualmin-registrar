@@ -9,10 +9,11 @@ require './virtualmin-registrar-lib.pl';
 &can_domain($in{'dom'}) || &error($text{'ns_ecannot'});
 $d = &virtual_server::get_domain_by("dom", $in{'dom'});
 $d || &error(&text('contact_edom', $in{'dom'}));
-&can_ns($d) || &error($text{'ns_ecannot'});
+&can_nameservers($d) || &error($text{'ns_ecannot'});
 ($account) = grep { $_->{'id'} eq $d->{'registrar_account'} }
 		  &list_registrar_accounts();
 $account || &error(&text('contact_eaccount', $in{'dom'}));
+&virtual_server::obtain_lock_dns($d);
 
 # Validate and parse inputs
 if ($in{'same'}) {
@@ -50,7 +51,7 @@ if ($in{'sync'} && !$err) {
 	&$virtual_server::second_print($virtual_server::text{'setup_done'});
 	}
 
+&virtual_server::release_lock_dns($d);
 &virtual_server::run_post_actions();
-
 &ui_print_footer(&virtual_server::domain_footer_link($d));
 

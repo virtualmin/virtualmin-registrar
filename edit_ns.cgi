@@ -22,10 +22,8 @@ ref($nss) || &error($nss);
 # Get nameservers Virtualmin expects, and in BIND zone
 $enss = &get_domain_nameservers($account, $d);
 $znss = &get_domain_nameservers(undef, $d);
-$same_nss = join(" ", sort { $a cmp $b } map { lc($_) } @$nss) eq
-	    join(" ", sort { $a cmp $b } map { lc($_) } @$enss) ? 1 : 0;
-$sync_nss = join(" ", sort { $a cmp $b } map { lc($_) } @$nss) eq
-	    join(" ", sort { $a cmp $b } map { lc($_) } @$znss) ? 1 : 0;
+$same_nss = &ns_list_to_string(@$nss) eq &ns_list_to_string(@$enss) ? 1 : 0;
+$sync_nss = &ns_list_to_string(@$nss) eq &ns_list_to_string(@$znss) ? 1 : 0;
 
 &ui_print_header(&virtual_server::domain_in($d), $text{'ns_title'}, "", "ns");
 
@@ -39,7 +37,7 @@ print &ui_table_row($text{'ns_ns'},
 	&ui_radio_table("same", $same_nss, 
 		[ [ 1, $text{'ns_same'},
 		       join(" , ", map { "<tt>$_</tt>" } @$enss) ],
-		  [ 2, $text{'ns_diff'},
+		  [ 0, $text{'ns_diff'},
 		       &ui_textarea("ns", join("\n", @$nss), 4, 30) ] ]));
 
 # Show nameservers in BIND
@@ -52,3 +50,7 @@ print &ui_form_end([ [ undef, $text{'save'} ] ]);
 
 &ui_print_footer(&virtual_server::domain_footer_link($d));
 
+sub ns_list_to_string
+{
+return join(" ", sort { $a cmp $b } &unique(map { lc($_) } @_));
+}

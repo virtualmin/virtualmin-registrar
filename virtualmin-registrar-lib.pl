@@ -1,5 +1,4 @@
 # Common functions for domain registration
-# XXX - Show and allow editing of nameservers for a domain
 # XXX - List all domains from registrar
 
 do '../web-lib.pl';
@@ -188,7 +187,35 @@ return \@ns;
 sub set_domain_nameservers
 {
 local ($d, $nss) = @_;
-# XXX
+&virtual_server::require_bind();
+
+# Find the zone and records
+local $z = &virtual_server::get_bind_zone($d->{'dom'});
+if (!$z) {
+        return $text{'rcom_ezone'};
+        }
+local $file = &bind8::find("file", $z->{'members'});
+local $fn = $file->{'values'}->[0];
+local @recs = &bind8::read_zone_file($file->{'values'}->[0], $d->{'dom'});
+if (!@recs) {
+        return &text('rcom_ezonefile', $file->{'values'}->[0]);
+        }
+
+# Remove existing NS records
+local @oldns = grep { $_->{'type'} eq 'NS' &&
+		      $_->{'name'} eq $d->{'dom'}."." } @recs;
+foreach my $r (reverse(@oldns)) {
+	&bind8::delete_record($fn, $r);
+	}
+
+# Add new NS records
+foreach my $h (@$nss) {
+	&bind8::create_record($fn, $d->{'dom'}.".", undef, "IN", "NS", $h.".");
+	}
+
+&bind8::bump_soa_record($fn, \@recs);
+&virtual_server::register_post_action(\&virtual_server::restart_bind);
+return undef;
 }
 
 # list_countries()

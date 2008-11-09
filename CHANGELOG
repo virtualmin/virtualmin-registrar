@@ -8,3 +8,6 @@ Added support for the Gandi.net registrar. Only domain creation, deletion and re
 ---- Changes since 1.6 ----
 Added support for the Distribute.IT registrar.
 The automatic renewal page can also be used to configure warning email send before a domain expires.
+---- Changes since 1.7 ----
+Contact information for domains hosted with Gandi.net can now be edited.
+Nameservers for registered domains can be viewed and edited after creation, usin the Edit Nameservers link on the left menu.

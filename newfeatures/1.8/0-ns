@@ -3,4 +3,4 @@ html=Nameservers for registered domains can be viewed and edited after creation,
 master=1
 domain=1
 reseller=1
-link=edit_ns.cgi?dom=${DOM}
+link=/virtualmin-registrar/edit_ns.cgi?dom=${DOM}

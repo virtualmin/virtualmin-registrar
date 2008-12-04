@@ -16,13 +16,6 @@ sub feature_losing
 return $text{'feat_losing'};
 }
 
-# feature_disname(&domain)
-# Returns a description of what will be turned off when this feature is disabled
-sub feature_disname
-{
-return $text{'feat_disabling'};
-}
-
 # feature_label(in-edit-form)
 # Returns the name of this feature, as displayed on the domain creation and
 # editing form
@@ -284,22 +277,6 @@ if (defined($args->{$module_name."-period"})) {
 	$d->{'registrar_years'} = $args->{$module_name."-period"};
 	}
 return undef;
-}
-
-# feature_disable(&domain)
-# Called when this feature is temporarily disabled for a domain
-# (optional)
-sub feature_disable
-{
-# XXX call the API
-}
-
-# feature_enable(&domain)
-# Called when this feature is re-enabled for a domain
-# (optional)
-sub feature_enable
-{
-# XXX call the API
 }
 
 # feature_always_links(&domain)

@@ -28,7 +28,7 @@ else {
 print &ui_form_start("save.cgi", "post");
 print &ui_hidden("registrar", $in{'registrar'});
 print &ui_hidden("id", $in{'id'});
-print &ui_hidden_table_start($text{'edit_header'}, undef, 2, "main", 1);
+print &ui_hidden_table_start($text{'edit_header'}, "width=100%", 2, "main", 1);
 
 # Registrar type
 $dfunc = "type_".$reg."_desc";
@@ -75,7 +75,7 @@ if (!$in{'registrar'}) {
 print &ui_hidden_table_end("main");
 
 # Supported domains section
-print &ui_hidden_table_start($text{'edit_header2'}, undef, 2, "tlds", 0);
+print &ui_hidden_table_start($text{'edit_header2'}, "width=100%", 2, "tlds", 0);
 
 # Registrar's top-level domains
 $tfunc = "type_".$reg."_domains";

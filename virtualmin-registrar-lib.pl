@@ -1,9 +1,14 @@
 # Common functions for domain registration
 # XXX - List all domains from registrar
+# XXX - OpenSRS support - FS#5098
 
-do '../web-lib.pl';
+BEGIN { push(@INC, ".."); };
+eval "use WebminCore;";
+if ($@) {
+        do '../web-lib.pl';
+        do '../ui-lib.pl';
+        }
 &init_config();
-do '../ui-lib.pl';
 &foreign_require("virtual-server", "virtual-server-lib.pl");
 $registrar_accounts_dir = "$module_config_directory/accounts";
 %access = &get_module_acl();

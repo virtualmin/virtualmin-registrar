@@ -36,13 +36,15 @@ return "label";
 # or an error message if not
 sub feature_depends
 {
-local ($d) = @_;
+local ($d, $oldd) = @_;
 # Is DNS enabled?
 $d->{'dns'} || return $text{'feat_edns'};
-# Can we find an account for the domain?
-local $account = &find_registrar_account($d->{'dom'});
-return $text{'feat_edepend'} if (!$account);
-$d->{'dom'} =~ /\./ || $text{'feat_edepend2'};
+if (!$oldd || !$oldd->{$module_name}) {
+	# Can we find an account for the domain?
+	local $account = &find_registrar_account($d->{'dom'});
+	return $text{'feat_edepend'} if (!$account);
+	$d->{'dom'} =~ /\./ || $text{'feat_edepend2'};
+	}
 return undef;
 }
 

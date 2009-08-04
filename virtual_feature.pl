@@ -83,12 +83,25 @@ return scalar(@accounts) ? 1 : 0;
 # Called when this feature is added, with the domain object as a parameter
 sub feature_setup
 {
-# Call the account type's register function
 local ($d) = @_;
 local $account = &find_registrar_account($d->{'dom'});
 local $reg = $account->{'registrar'};
 local $dfunc = "type_".$reg."_desc";
 &$virtual_server::first_print(&text('feat_setup', &$dfunc($account)));
+
+# Check if the domain is already owned by this account
+local $ofunc = "type_".$reg."_check_domain";
+if (defined(&$ofunc)) {
+	local ($o, $id) = &$ofunc($account, $d->{'dom'});
+	if ($o) {
+		$d->{'registrar_account'} = $account->{'id'};
+		$d->{'registrar_id'} = $msg;
+		&$virtual_server::second_print(&text('feat_setupalready'));
+		return 1;
+		}
+	}
+
+# Call the account type's register function
 local $rfunc = "type_".$reg."_create_domain";
 local ($ok, $msg) = &$rfunc($account, $d);
 if (!$ok) {

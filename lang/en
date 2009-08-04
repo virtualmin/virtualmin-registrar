@@ -23,6 +23,7 @@ feat_period=Domain registration period
 feat_perioddef=Registrar default
 feat_periodyears=years
 feat_eperiod=Missing or invalid registration period in years
+feat_setupalready=.. existing registration found
 
 links_contact=Edit Domain Contacts
 links_ns=Edit Nameservers

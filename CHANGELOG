@@ -11,3 +11,5 @@ The automatic renewal page can also be used to configure warning email send befo
 ---- Changes since 1.7 ----
 Contact information for domains hosted with Gandi.net can now be edited.
 Nameservers for registered domains can be viewed and edited after creation, usin the Edit Nameservers link on the left menu.
+---- Changes since 1.9 ----
+When registering a domain, if it is already owned by the chosen account then don't try (and fail) to re-register.

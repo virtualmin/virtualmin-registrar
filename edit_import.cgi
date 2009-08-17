@@ -19,7 +19,8 @@ print &ui_hidden("dom", $in{'dom'});
 print &ui_table_start($text{'import_header'}, undef, 2);
 
 # Account it will be under
-@accounts = &list_registrar_accounts();
+@accounts = sort { lc($a->{'desc'}) cmp lc($b->{'desc'}) }
+		 &list_registrar_accounts();
 $def = &find_registrar_account($d->{'dom'});
 print &ui_table_row($text{'import_account'},
 	&ui_select("account", $def ? $def->{'id'} : undef,

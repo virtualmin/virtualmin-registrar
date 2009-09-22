@@ -4,10 +4,6 @@
 
 BEGIN { push(@INC, ".."); };
 eval "use WebminCore;";
-if ($@) {
-        do '../web-lib.pl';
-        do '../ui-lib.pl';
-        }
 &init_config();
 &foreign_require("virtual-server", "virtual-server-lib.pl");
 $registrar_accounts_dir = "$module_config_directory/accounts";

@@ -145,6 +145,7 @@ feat_period=Domein registratie periode
 feat_perioddef=Registrator standaard
 feat_periodyears=jaren
 feat_setup=Registreren van DNS domein met $1 ..
+feat_setupalready=.. bestaande registratie gevonden
 feat_setupdone=.. klaar. Het registrators ID voor dit domein is $1.
 gandi_account=Account login (zoals <tt>XX5555-GANDI</tt>)
 gandi_association=Associatie

@@ -36,9 +36,10 @@ return undef;
 sub type_gandi_domains
 {
 return (".asia", ".biz", ".com", ".info", ".mobi", ".name", ".net",
-	".org", ".pro", ".at", ".be", ".cc", ".ch", ".cn", ".co.uk",
-	".cz", ".de", ".eu", ".fr", ".in", ".it", ".li", ".lu", ".me",
-	".nu", ".org.uk", ".pl", ".re", ".tv", ".tw", ".us");
+	".org", ".pro", ".tel", ".at", ".be", ".cc", ".ch", ".cn", ".co.uk",
+	".cz", ".de", ".es", ".eu", ".fm", ".fr", ".in", ".it", ".li", ".lu",
+        ".me", ".nu", ".org.uk", ".pl", ".re", ".ru", ".se", ".tv", ".tw",
+        ".us");
 }
 
 # type_gandi_edit_inputs(&account, new?)

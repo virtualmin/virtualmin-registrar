@@ -69,7 +69,7 @@ else {
 	else {
 		@ns = split(/\s+/, $in{'ns'});
 		foreach my $ns (@ns) {
-			gethostbyname($ns) || &error(&text('save_ens', $ns));
+			&to_ipaddress($ns) || &error(&text('save_ens', $ns));
 			&check_ipaddress($ns) &&
 				&error(&text('save_ensip', $ns));
 			}

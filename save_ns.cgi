@@ -25,7 +25,7 @@ else {
 	@$nss || &error($text{'ns_enone'});
 	foreach $ns (@$nss) {
 		&check_ipaddress($ns) && &error(&text('ns_eip', $ns));
-		gethostbyname($ns) || &error(&text('ns_ens', $ns));
+		&to_ipaddress($ns) || &error(&text('ns_ens', $ns));
 		}
 	}
 

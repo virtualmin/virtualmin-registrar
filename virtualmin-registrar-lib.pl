@@ -14,10 +14,13 @@ $auto_cron_cmd = "$module_config_directory/auto.pl";
 # Bring in all register-type specific libraries
 @registrar_types = (
 	{ 'name' => 'rcom',
+	  'disabled' => 0,
 	  'desc' => $text{'type_rcom'} },
 	{ 'name' => 'gandi',
+	  'disabled' => 0,
 	  'desc' => $text{'type_gandi'} },
 	{ 'name' => 'distribute',
+	  'disabled' => 1,
 	  'desc' => $text{'type_distribute'} },
     );
 foreach my $t (@registrar_types) {

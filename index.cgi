@@ -67,14 +67,15 @@ print "<table>\n";
 print &ui_form_start("edit.cgi");
 print "<tr> <td><b>$text{'index_add'}</b></td>\n";
 print "<td>".&ui_select("registrar", undef,
-	[ map { [ $_->{'name'}, $_->{'desc'} ] } @registrar_types ])."</td>\n";
+	[ map { [ $_->{'name'}, $_->{'desc'} ] }
+	      grep { !$_->{'disabled'} } @registrar_types ])."</td>\n";
 print "<td>".&ui_submit($text{'index_addok'})."</td> </tr>\n";
 print &ui_form_end();
 
 # Form to create new registrar account, if any support it
 foreach $r (@registrar_types) {
 	$cfunc = "type_".$r->{'name'}."_create_inputs";
-	push(@create_types, $r) if (defined(&$cfunc));
+	push(@create_types, $r) if (defined(&$cfunc) && !$r->{'disabled'});
 	}
 if (@create_types) {
 	print &ui_form_start("create_form.cgi");

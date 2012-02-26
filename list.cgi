@@ -49,6 +49,7 @@ print &ui_columns_table(
 	[ $text{'list_dom'}, $text{'list_registrar'},
 	  $text{'list_account'}, $text{'list_id'},
 	  $text{'list_expiry'}, ],
-	100, \@table, undef, 0, undef, $text{'list_none'});
+	100, \@table, undef, 0, undef,
+	$in{'id'} ? $text{'list_none2'} : $text{'list_none'});
 
 &ui_print_footer("/", $text{'index'});

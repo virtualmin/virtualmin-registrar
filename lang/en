@@ -57,7 +57,8 @@ index_nonemsg=No Virtual servers using registrar account $1 were found.
 index_listall=List all registered domains.
 
 type_rcom=Register.com
-type_gandi=Gandi.net
+type_gandi=Gandi.net (Old API)
+type_newgandi=Gandi.net
 type_distribute=Distribute.IT
 
 edit_title1=Add Registrar Account
@@ -167,18 +168,21 @@ gandi_account=Account login (like <tt>XX5555-GANDI</tt>)
 gandi_pass=Account password
 gandi_eaccount=Missing or invalid account login
 gandi_epass=Missing or invalid account password
+gandi_eapikey=Missing or invalid API key
 gandi_eperl=The Perl module $1 needed to call the Gandi XML-RPC API is not installed.
 gandi_cpan=However, Webmin can <a href='$1'>automatically install</a> it for you.
 gandi_error=Gandi API error : $1
 gandi_taken=Already registered according to Gandi
 gandi_eexpiry=Could not parse expiry date $1
-gandi_instructions=To sign up for an account with Gandi.net, go to their <a href='$1' target=_new'>resellers site</a> and sign up for an account. You will need to enable XML-RPC on your reseller account, and then switch it from test to production mode to create real Internet domains.
+gandi_instructions=To sign up for an account with Gandi.net, go to their <a href='$1' target=_new>resellers site</a> and sign up for an account. You will need to enable XML-RPC on your reseller account, and then switch it from test to production mode to create real Internet domains.
+gandi_newinstructions=To sign up for an account with Gandi.net, go to their <a href='$1' target=_new'>resellers site</a> and sign up for an account. You will need to enable XML-RPC on your reseller account, request an <a href='$2' target=_new>API key</a>, and then switch it from test to production mode to create real Internet domains.
 gandi_enstwo=Gandi requires that each domain have at least $1 nameservers, but you only have $2
 gandi_individual=Individual
 gandi_company=Company
 gandi_public=Public body
 gandi_association=Association
 gandi_eindivname=Individuals cannot have an organization name
+gandi_apikey=API key
 
 distribute_account=Account number
 distribute_user=Account username
@@ -213,6 +217,7 @@ list_registrar=Registrar name
 list_account=Registrar account
 list_id=ID with registrar
 list_none=No Virtualmin domains have been registered with any DNS registrar yet.
+list_none2=No Virtualmin domains have been registered with this DNS registrar yet.
 list_expiry=Expiry date
 
 contact_err=Failed to edit contact details

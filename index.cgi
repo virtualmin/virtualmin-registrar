@@ -28,6 +28,11 @@ foreach $a (@accounts) {
 		     "$text{'index_actdoms'}</a>");
 	push(@links, "<a href='edit_auto.cgi?id=$a->{'id'}'>".
 		     "$text{'index_actauto'}</a>");
+	$cfunc = "type_".$a->{'registrar'}."_list_contacts";
+	if (defined(&$cfunc)) {
+		push(@links, "<a href='list_contacts.cgi?id=$a->{'id'}'>".
+			     "$text{'index_actcontacts'}</a>");
+		}
 	if ($a->{'autodays'} || $a->{'autowarn'}) {
 		$links[$#links] = "<i>".$links[$#links]."</i>";
 		}

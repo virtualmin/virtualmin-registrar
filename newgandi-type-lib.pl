@@ -48,6 +48,8 @@ sub type_newgandi_edit_inputs
 {
 local ($account, $new) = @_;
 local $rv;
+$rv .= &ui_table_row($text{'gandi_account'},
+	&ui_textbox("gandi_account", $account->{'gandi_account'}, 30));
 $rv .= &ui_table_row($text{'gandi_apikey'},
 	&ui_textbox("gandi_apikey", $account->{'gandi_apikey'}, 30));
 $rv .= &ui_table_row($text{'rcom_years'},
@@ -65,6 +67,8 @@ return $rv;
 sub type_newgandi_edit_parse
 {
 local ($account, $new, $in) = @_;
+$in->{'gandi_account'} =~ /^\S+$/ || return $text{'gandi_eaccount'};
+$account->{'gandi_account'} = $in->{'gandi_account'};
 $in->{'gandi_apikey'} =~ /^\S+$/ || return $text{'gandi_eapikey'};
 $account->{'gandi_apikey'} = $in->{'gandi_apikey'};
 if ($in->{'gandi_years_def'}) {
@@ -110,13 +114,16 @@ sub type_newgandi_check_domain
 local ($account, $dname) = @_;
 local ($server, $sid) = &connect_newgandi_api($account, 1);
 return &text('gandi_error', $sid) if (!$server);
-local $avail;
-eval {
-	$avail = $server->call("domain_available", $sid, [ $dname ]);
-	};
-return &text('gandi_error', $@) if ($@);
-return $avail->{$dname} && $avail->{$dname}->value() ?
-	undef : $text{'gandi_taken'};
+while(1) {
+	local $avail;
+	eval {
+		$avail = $server->call("domain.available", $sid, [ $dname ]);
+		};
+	return &text('gandi_error', "$@") if ($@);
+	next if ($avail->{$dname} eq 'pending');
+	return undef if ($avail->{$dname} eq 'available');
+	return $text{'gandi_taken'};
+	}
 }
 
 # type_newgandi_owned_domain(&account, domain, [id])
@@ -132,9 +139,9 @@ return (0, &text('gandi_error', $sid)) if (!$server);
 # Get the domain list
 local $list;
 eval {
-	$list = $server->call("domain_list", $sid);
+	$list = $server->call("domain.list", $sid);
 	};
-return (0, &text('gandi_error', $@)) if ($@);
+return (0, &text('gandi_error', "$@")) if ($@);
 
 # Check if on list
 foreach my $l (@$list) {
@@ -150,6 +157,7 @@ sub type_newgandi_create_domain
 {
 local ($account, $d) = @_;
 local ($server, $sid) = &connect_newgandi_api($account, 1);
+print STDERR "server=$server sid=$sid\n";
 return (0, &text('gandi_error', $sid)) if (!$server);
 
 # Get the nameservers
@@ -163,22 +171,29 @@ elsif (!@$nss) {
 elsif (@$nss < 2) {
 	return (0, &text('gandi_enstwo', 2, $nss->[0]));
 	}
+print STDERR "nss=",join(" ", @$nss),"\n";
 
 # Call to create
 local $opid;
 eval {
-	$opid = $server->call("domain_create",
+	$opid = $server->call("domain.create",
 			      $sid,
 			      $d->{'dom'},
-			      $d->{'registrar_years'} ||
-				$account->{'gandi_years'} || 1,
-			      $account->{'gandi_account'},
-			      $account->{'gandi_account'},
-			      $account->{'gandi_account'},
-			      $account->{'gandi_account'},
-			      $nss);
+			      { 'duration' => 
+				      $d->{'registrar_years'} ||
+					$account->{'gandi_years'} || 1,
+				'owner' => $account->{'gandi_account'},
+				'admin' => $account->{'gandi_account'},
+				'bill' => $account->{'gandi_account'},
+				'tech' => $account->{'gandi_account'},
+			        'nameservers' => $nss });
 	};
-return (0, &text('gandi_error', $@)) if ($@);
+print STDERR "opid=$opid err=$@\n";
+return (0, &text('gandi_error', "$@")) if ($@);
+
+# Wait for completion
+# XXX
+
 return (1, $d->{'dom'});
 }
 
@@ -193,10 +208,10 @@ return &text('gandi_error', $sid) if (!$server);
 
 local $rv;
 eval {
-	$rv = $server->call("domain_ns_list", $sid, $d->{'dom'});
+	$rv = $server->call("domain.ns.list", $sid, $d->{'dom'});
 	$rv = [ map { $_."" } @$rv ];
 	};
-return $@ ? &text('gandi_error', $@) : $rv;
+return $@ ? &text('gandi_error', "$@") : $rv;
 }
 
 # type_newgandi_set_nameservers(&account, &domain, [&nameservers])
@@ -222,9 +237,9 @@ elsif (@$nss < 2) {
 
 # Call to set nameservers
 eval {
-	$server->call("domain_ns_set", $sid, $d->{'dom'}, $nss);
+	$server->call("domain.ns.set", $sid, $d->{'dom'}, $nss);
 	};
-return $@ ? &text('gandi_error', $@) : undef;
+return $@ ? &text('gandi_error', "$@") : undef;
 }
 
 # type_newgandi_delete_domain(&account, &domain)
@@ -238,9 +253,9 @@ return (0, &text('gandi_error', $sid)) if (!$server);
 # Call to delete
 local $opid;
 eval {
-	$opid = $server->call("domain_del", $sid, $d->{'dom'});
+	$opid = $server->call("domain.del", $sid, $d->{'dom'});
 	};
-return (0, &text('gandi_error', $@)) if ($@);
+return (0, &text('gandi_error', "$@")) if ($@);
 return (1, $opid);
 }
 
@@ -256,15 +271,15 @@ return &text('gandi_error', $sid) if (!$server);
 # Get the contact IDs and contact details
 local $info;
 eval {
-	$info = $server->call("domain_info", $sid, $d->{'dom'});
+	$info = $server->call("domain.info", $sid, $d->{'dom'});
 	};
-return &text('gandi_error', $@) if ($@);
+return &text('gandi_error', "$@") if ($@);
 local @rv;
 foreach my $ct ('admin', 'tech', 'billing') {
 	next if (!$info->{$ct.'_handle'});
 	local $con;
 	eval {
-		$con = $server->call("contact_info", $sid,
+		$con = $server->call("contact.info", $sid,
 				     $info->{$ct.'_handle'});
 		};
 	if (!$@ && $con) {
@@ -324,7 +339,7 @@ foreach my $c (@$cons) {
 					}
 				$params{$c->{'class'}.'_name'} = $c->{'name'};
 				}
-			$c->{'handle'} = $server->call("contact_create", $sid,
+			$c->{'handle'} = $server->call("contact.create", $sid,
 					$c->{'class'},
 					$c->{'firstname'},
 					$c->{'lastname'},
@@ -340,15 +355,15 @@ foreach my $c (@$cons) {
 
 		# Update in the domain
 		if ($c->{'type'} eq 'owner') {
-			$server->call("domain_change_owner", $sid,
+			$server->call("domain.change.owner", $sid,
 				$d->{'dom'}, $c->{'handle'});
 			}
 		else {
-			$server->call("domain_change_contact", $sid,
+			$server->call("domain.change.contact", $sid,
 				$d->{'dom'}, $c->{'type'}, $c->{'handle'});
 			}
 		};
-	return &text('gandi_error', $@) if ($@);
+	return &text('gandi_error', "$@") if ($@);
 	}
 return undef;
 }
@@ -400,6 +415,27 @@ return ( { 'name' => 'handle',
 	);
 }
 
+# type_newgandi_list_contacts(&account)
+# Returns a list of all contacts associated with some Gandi account
+sub type_newgandi_list_contacts
+{
+local ($account) = @_;
+local ($server, $sid) = &connect_newgandi_api($account, 1);
+return (0, &text('gandi_error', $sid)) if (!$server);
+local $list;
+eval {
+	$list = $server->call("contact.list", $sid);
+	};
+return (0, &text('gandi_error', "$@")) if ($@);
+foreach my $con (@$list) {
+	$con->{'name'} = $con->{'company_name'} ||
+                         $con->{'association_name'} ||
+                         $con->{'body_name'};
+	$con->{'name'} = $con->{'handle'};
+	}
+return (1, $list);
+}
+
 # type_newgandi_get_expiry(&account, &domain)
 # Returns either 1 and the expiry time (unix) for a domain, or 0 and an error
 # message.
@@ -412,9 +448,9 @@ return (0, &text('gandi_error', $sid)) if (!$server);
 # Call to get info
 local $info;
 eval {
-	$info = $server->call("domain_info", $sid, $d->{'dom'});
+	$info = $server->call("domain.info", $sid, $d->{'dom'});
 	};
-return (0, &text('gandi_error', $@)) if ($@);
+return (0, &text('gandi_error', "$@")) if ($@);
 local $expirydate = $info->{'registry_expiration_date'}->value();
 if ($expirydate =~ /^(\d{4})(\d\d)(\d\d)T(\d\d):(\d\d):(\d\d)$/) {
 	return (1, timelocal($6, $5, $4, $3, $2-1, $1-1900));
@@ -435,9 +471,9 @@ return (0, &text('gandi_error', $sid)) if (!$server);
 # Call to renew
 local $opid;
 eval {
-	$opid = $server->call("domain_renew", $sid, $d->{'dom'}, $years);
+	$opid = $server->call("domain.renew", $sid, $d->{'dom'}, $years);
 	};
-return (0, &text('gandi_error', $@)) if ($@);
+return (0, &text('gandi_error', "$@")) if ($@);
 return (1, $opid);
 }
 
@@ -477,7 +513,7 @@ elsif (@$nss < 2) {
 # Do the transfer
 local $tid;
 eval {
-	$tid = $server->call("domain_transfer_in", $sid, $d->{'dom'},
+	$tid = $server->call("domain.transfer.in", $sid, $d->{'dom'},
 		$account->{'gandi_account'},
 		$account->{'gandi_account'},
 		$account->{'gandi_account'},
@@ -485,7 +521,7 @@ eval {
 		$nss,
 		$key);
 	};
-return (0, &text('gandi_error', $@)) if ($@);
+return (0, &text('gandi_error', "$@")) if ($@);
 return (1, $tid);
 }
 

@@ -51,6 +51,7 @@ index_return=list of accounts
 index_acts=Actions
 index_actdoms=List domains
 index_actauto=Auto renewal
+index_actcontacts=Contacts
 index_actvirts=List virtual servers
 index_msg=Virtual servers using registrar account $1 ..
 index_nonemsg=No Virtual servers using registrar account $1 were found.
@@ -364,4 +365,13 @@ ns_ens=Nameserver '$1' could not be resolved to an IP address
 ns_reg=Updating nameservers with registrar ..
 ns_failed=.. failed : $1
 ns_syncing=Updating nameservers in DNS domain ..
+
+contacts_eaccount=Account not found!
+contacts_id=Contact ID
+contacts_name=Contact name
+contacts_add=Add a new contact.
+contacts_none=No contacts are associated with this registrar account.
+contacts_elist=Failed to list contacts : $1
+contacts_title=Registrar Contacts
+
 __norefs=1

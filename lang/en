@@ -253,6 +253,12 @@ contact_email=Email address
 contact_zipcode=ZIP or postal code
 contact_class=Contact class
 contact_handle=Contact ID
+contact_type=Contact type
+contact_given=First name
+contact_family=Family name
+contact_streetaddr=Street address
+contact_zip=ZIP or postal code
+contact_password=Password at registrar
 contact_same=Same as the first contact?
 contact_emissing=Missing value for $1
 contact_esave=Failed to update registrar : $1
@@ -373,5 +379,10 @@ contacts_add=Add a new contact.
 contacts_none=No contacts are associated with this registrar account.
 contacts_elist=Failed to list contacts : $1
 contacts_title=Registrar Contacts
+
+onecontact_header=Registrar contact details
+onecontact_err=Failed to save contact
+onecontact_edelete=Deletion failed : $1
+onecontact_esave=Update failed : $1
 
 __norefs=1

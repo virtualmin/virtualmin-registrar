@@ -188,7 +188,6 @@ eval {
 				'tech' => $account->{'gandi_account'},
 			        'nameservers' => $nss });
 	};
-print STDERR "opid=$opid err=$@\n";
 return (0, &text('gandi_error', "$@")) if ($@);
 
 # Wait for completion
@@ -375,23 +374,20 @@ sub type_newgandi_get_contact_schema
 local ($account, $d, $type) = @_;
 return ( { 'name' => 'handle',
 	   'readonly' => 1 },
-         { 'name' => 'class',
-	   'choices' => [ [ 'individual', $text{'gandi_individual'} ],
-			  [ 'company', $text{'gandi_company'} ],
-			  [ 'public', $text{'gandi_public'} ],
-			  [ 'association', $text{'gandi_association'} ] ],
+         { 'name' => 'type',
+	   'choices' => [ [ 0, $text{'gandi_individual'} ],
+			  [ 1, $text{'gandi_company'} ],
+			  [ 2, $text{'gandi_public'} ],
+			  [ 3, $text{'gandi_association'} ] ],
 	   'opt' => 0,
 	 },
-	 { 'name' => 'name',
-	   'size' => 60,
-	   'opt' => 1 },
-	 { 'name' => 'firstname',
+	 { 'name' => 'given',
 	   'size' => 40,
 	   'opt' => 0 },
-	 { 'name' => 'lastname',
+	 { 'name' => 'family',
 	   'size' => 40,
 	   'opt' => 0 },
-	 { 'name' => 'address',
+	 { 'name' => 'streetaddr',
 	   'size' => 60,
 	   'opt' => 0 },
 	 { 'name' => 'city',
@@ -400,8 +396,8 @@ return ( { 'name' => 'handle',
 	 { 'name' => 'state',
 	   'size' => 40,
 	   'opt' => 1 },
-         { 'name' => 'zipcode',
-	   'size' => 20,
+         { 'name' => 'zip',
+	   'size' => 10,
 	   'opt' => 1 },
          { 'name' => 'country',
 	   'choices' => [ map { [ $_->[1], $_->[0] ] } &list_countries() ],
@@ -410,6 +406,9 @@ return ( { 'name' => 'handle',
 	   'size' => 60,
 	   'opt' => 0 },
          { 'name' => 'phone',
+	   'size' => 40,
+	   'opt' => 0 },
+         { 'name' => 'password',
 	   'size' => 40,
 	   'opt' => 0 },
 	);
@@ -434,6 +433,26 @@ foreach my $con (@$list) {
 	$con->{'name'} = $con->{'handle'};
 	}
 return (1, $list);
+}
+
+# type_newgandi_create_one_contact(&account, &contact)
+# Create a single new contact for some account
+sub type_newgandi_create_one_contact
+{
+local ($account, $con) = @_;
+local ($server, $sid) = &connect_newgandi_api($account, 1);
+return &text('gandi_error', $sid) if (!$server);
+
+eval {
+	local $callcon = { %$con };
+	$callcon->{'zip'} = $server->string($con->{'zip'});
+	$callcon->{'phone'} = $server->string($con->{'phone'});
+	local $newcon = $server->call("contact.create", $sid, $callcon);
+	$con->{'id'} = $con->{'handle'} = $newcon->{'handle'};
+	};
+return (0, &text('gandi_error', "$@")) if ($@);
+
+return undef;
 }
 
 # type_newgandi_get_expiry(&account, &domain)

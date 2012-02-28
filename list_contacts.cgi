@@ -20,7 +20,7 @@ $ok || &error(&text('contacts_elist', $contacts));
 @tables = ( );
 foreach $con (@$contacts) {
 	push(@table, [
-		"<a href='edit_contact.cgi?id=$in{'id'}&cid=$con->{'id'}'>".
+		"<a href='edit_onecontact.cgi?id=$in{'id'}&cid=$con->{'id'}'>".
 		  &html_escape($con->{'id'})."</a>",
 		$con->{'name'},
 		]);
@@ -31,7 +31,7 @@ print &ui_columns_table(
 	],
 	100, \@table, undef, 0, undef,
 	$text{'contacts_none'});
-print &ui_links_row([ "<a href='edit_contact.cgi?new=1&id=$in{'id'}'>".
+print &ui_links_row([ "<a href='edit_onecontact.cgi?new=1&id=$in{'id'}'>".
 		      "$text{'contacts_add'}</a>" ]);
 
 &ui_print_footer("/", $text{'index'});

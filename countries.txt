@@ -145,7 +145,7 @@
 229;Moldova;MD;MDA;498;1;1;NULL;md;
 128;Monaco;MC;MCO;492;1;1;NULL;mc;
 129;Mongolia;MN;MNG;496;1;1;NULL;mn;
-249;Montenegro;;;;1;1;NULL;;
+249;Montenegro;ME;MNE;;1;1;NULL;;
 130;Montserrat;MS;MSR;500;0;1;203;ms;
 131;Morocco;MA;MAR;504;1;1;NULL;ma;
 132;Mozambique;MZ;MOZ;508;1;1;NULL;mz;

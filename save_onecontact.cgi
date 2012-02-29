@@ -29,7 +29,7 @@ if ($in{'delete'}) {
 	}
 else {
 	# Validate all input types, and update object
-	@schema = &get_contact_schema($account, $d, $con->{'type'});
+	@schema = &get_contact_schema($account, undef, undef, $in{'new'});
 	foreach my $s (@schema) {
 		$n = $s->{'name'};
 		$fn = $text{'contact_'.$s->{'name'}};

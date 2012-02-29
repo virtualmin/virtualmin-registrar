@@ -10,7 +10,9 @@ require './virtualmin-registrar-lib.pl';
 ($account) = grep { $_->{'id'} eq $in{'id'} } @accounts;
 $account || &error($text{'contacts_eaccount'});
 
-&ui_print_header($account->{'desc'}, $text{'contacts_title'}, "");
+&ui_print_header($account->{'desc'},
+		 $in{'new'} ? $text{'onecontact_create'}
+			    : $text{'onecontact_edit'}, "");
 
 if (!$in{'new'}) {
 	# Get the contacts
@@ -28,13 +30,17 @@ print &ui_hidden("cid", $in{'cid'});
 print &ui_hidden("new", $in{'new'});
 print &ui_table_start($text{'onecontact_header'}, "width=100%", 2);
 
-@schema = &get_contact_schema($account);
+@schema = &get_contact_schema($account, undef, undef, $in{'new'});
 foreach my $s (@schema) {
 	$n = $s->{'name'};
 	if ($s->{'readonly'}) {
 		# Just show value
 		next if ($in{'new'});
 		$field = $con->{$s->{'name'}};
+		if ($s->{'choices'}) {
+			($c) = grep { $_->[0] eq $field } @{$s->{'choices'}};
+			$field = $c->[1] if ($c);
+			}
 		}
 	elsif ($s->{'choices'}) {
 		# Select from menu
@@ -65,8 +71,10 @@ if ($in{'new'}) {
 	print &ui_form_end([ [ undef, $text{'create'} ] ]);
 	}
 else {
+	$dfunc = "type_".$account->{'registrar'}."_delete_one_contact";
 	print &ui_form_end([ [ undef, $text{'save'} ],
-			     [ 'delete', $text{'delete'} ] ]);
+			     defined(&$dfunc) ?
+				[ 'delete', $text{'delete'} ] : undef ]);
 	}
 
 &ui_print_footer(&virtual_server::domain_footer_link($d));

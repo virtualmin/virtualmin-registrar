@@ -48,7 +48,7 @@ sub type_newgandi_edit_inputs
 {
 local ($account, $new) = @_;
 local $rv;
-$rv .= &ui_table_row($text{'gandi_account'},
+$rv .= &ui_table_row($text{'gandi_contact'},
 	&ui_textbox("gandi_account", $account->{'gandi_account'}, 30));
 $rv .= &ui_table_row($text{'gandi_apikey'},
 	&ui_textbox("gandi_apikey", $account->{'gandi_apikey'}, 30));
@@ -157,7 +157,6 @@ sub type_newgandi_create_domain
 {
 local ($account, $d) = @_;
 local ($server, $sid) = &connect_newgandi_api($account, 1);
-print STDERR "server=$server sid=$sid\n";
 return (0, &text('gandi_error', $sid)) if (!$server);
 
 # Get the nameservers
@@ -173,10 +172,25 @@ elsif (@$nss < 2) {
 	}
 print STDERR "nss=",join(" ", @$nss),"\n";
 
-# Call to create
-local $opid;
+# Check if the contact can be used
 eval {
-	$opid = $server->call("domain.create",
+	local $assoc = $server->call("contact.can_associate_domain",
+				     $sid,
+				     $account->{'gandi_account'},
+				     { 'domain' => $d->{'dom'},
+				       'owner' => $server->boolean(1),
+				       'admin' => $server->boolean(1) });
+	use Data::Dumper;
+	print STDERR Dumper($assoc);
+	$assoc || return (0, &text('gandi_eassoc',
+				   $account->{'gandi_account'}));
+	};
+return (0, &text('gandi_error', "$@")) if ($@);
+
+# Call to create
+local $oper;
+eval {
+	$oper = $server->call("domain.create",
 			      $sid,
 			      $d->{'dom'},
 			      { 'duration' => 
@@ -191,7 +205,21 @@ eval {
 return (0, &text('gandi_error', "$@")) if ($@);
 
 # Wait for completion
-# XXX
+local $tries = 0;
+while(1) {
+	sleep(1);
+	local $rv = $server->call("operation.info", $sid, $oper->{'id'});
+	if ($rv->{'step'} eq 'DONE') {
+		last;
+		}
+	elsif ($rv->{'step'} eq 'ERROR') {
+		return (0, &text('gandi_ecreate', $rv->{'last_error'}));
+		}
+	$tries++;
+	if ($tries > 30) {
+		return (0, &text('gandi_etries', $rv->{'step'}, 30));
+		}
+	}
 
 return (1, $d->{'dom'});
 }
@@ -252,7 +280,7 @@ return (0, &text('gandi_error', $sid)) if (!$server);
 # Call to delete
 local $opid;
 eval {
-	$opid = $server->call("domain.del", $sid, $d->{'dom'});
+	$opid = $server->call("domain.delete", $sid, $d->{'dom'});
 	};
 return (0, &text('gandi_error', "$@")) if ($@);
 return (1, $opid);
@@ -367,11 +395,11 @@ foreach my $c (@$cons) {
 return undef;
 }
 
-# type_newgandi_get_contact_schema(&account, &domain, type)
+# type_newgandi_get_contact_schema(&account, &domain, type, new?)
 # Returns a list of fields for domain contacts, as seen by gandi.net
 sub type_newgandi_get_contact_schema
 {
-local ($account, $d, $type) = @_;
+local ($account, $d, $type, $newcontact) = @_;
 return ( { 'name' => 'handle',
 	   'readonly' => 1 },
          { 'name' => 'type',
@@ -380,6 +408,7 @@ return ( { 'name' => 'handle',
 			  [ 2, $text{'gandi_public'} ],
 			  [ 3, $text{'gandi_association'} ] ],
 	   'opt' => 0,
+	   'readonly' => !$newcontact,
 	 },
 	 { 'name' => 'given',
 	   'size' => 40,
@@ -408,9 +437,10 @@ return ( { 'name' => 'handle',
          { 'name' => 'phone',
 	   'size' => 40,
 	   'opt' => 0 },
-         { 'name' => 'password',
-	   'size' => 40,
-	   'opt' => 0 },
+	 $newcontact ? ( { 'name' => 'password',
+		           'size' => 40,
+		           'opt' => 0 } )
+		     : ( ),
 	);
 }
 
@@ -430,7 +460,7 @@ foreach my $con (@$list) {
 	$con->{'name'} = $con->{'company_name'} ||
                          $con->{'association_name'} ||
                          $con->{'body_name'};
-	$con->{'name'} = $con->{'handle'};
+	$con->{'id'} = $con->{'handle'};
 	}
 return (1, $list);
 }
@@ -445,10 +475,39 @@ return &text('gandi_error', $sid) if (!$server);
 
 eval {
 	local $callcon = { %$con };
+	foreach my $k (keys %$callcon) {
+		delete($callcon->{$k}) if ($callcon->{$k} eq '');
+		}
 	$callcon->{'zip'} = $server->string($con->{'zip'});
 	$callcon->{'phone'} = $server->string($con->{'phone'});
 	local $newcon = $server->call("contact.create", $sid, $callcon);
 	$con->{'id'} = $con->{'handle'} = $newcon->{'handle'};
+	};
+return (0, &text('gandi_error', "$@")) if ($@);
+
+return undef;
+}
+
+# type_newgandi_modify_one_contact(&account, &contact)
+# Update a single contact for some account. Doesn't send fields not in the
+# schema, so they are left unchanged.
+sub type_newgandi_modify_one_contact
+{
+local ($account, $con) = @_;
+local ($server, $sid) = &connect_newgandi_api($account, 1);
+return &text('gandi_error', $sid) if (!$server);
+
+eval {
+	local $callcon = { %$con };
+	local @schema = &type_newgandi_get_contact_schema($account);
+	foreach my $k (keys %$callcon) {
+		delete($callcon->{$k}) if ($callcon->{$k} eq '');
+		local ($s) = grep { $_->{'name'} eq $k } @schema;
+		delete($callcon->{$k}) if (!$s || $s->{'readonly'});
+		}
+	$callcon->{'zip'} = $server->string($con->{'zip'});
+	$callcon->{'phone'} = $server->string($con->{'phone'});
+	$server->call("contact.update", $sid, $con->{'handle'}, $callcon);
 	};
 return (0, &text('gandi_error', "$@")) if ($@);
 
@@ -469,8 +528,11 @@ local $info;
 eval {
 	$info = $server->call("domain.info", $sid, $d->{'dom'});
 	};
+use Data::Dumper;
+print STDERR "err=$@\n";
+print STDERR Dumper($info);
 return (0, &text('gandi_error', "$@")) if ($@);
-local $expirydate = $info->{'registry_expiration_date'}->value();
+local $expirydate = $info->{'registry_expiration_date'};
 if ($expirydate =~ /^(\d{4})(\d\d)(\d\d)T(\d\d):(\d\d):(\d\d)$/) {
 	return (1, timelocal($6, $5, $4, $3, $2-1, $1-1900));
 	}

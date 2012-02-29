@@ -120,13 +120,13 @@ foreach my $d (&virtual_server::list_domains()) {
 return @rv;
 }
 
-# get_contact_schema(&account, &domain, type)
+# get_contact_schema(&account, &domain, type, new?)
 # Returns a list of fields for domain contacts
 sub get_contact_schema
 {
-local ($account, $d, $type) = @_;
+local ($account, $d, $type, $newcontact) = @_;
 local $sfunc = "type_".$account->{'registrar'}."_get_contact_schema";
-return &$sfunc($account, $d, $type);
+return &$sfunc($account, $d, $type, $newcontact);
 }
 
 sub can_domain

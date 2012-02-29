@@ -2,7 +2,6 @@
 # Show a list of registered domains accessible to the current user
 
 require 'virtualmin-registrar-lib.pl';
-&ui_print_header(undef, $text{'list_title'}, "");
 &ReadParse();
 
 # Find the domains
@@ -16,6 +15,9 @@ if ($in{'id'}) {
 	# Just one account
 	@accounts = grep { $_->{'id'} eq $in{'id'} } @accounts;
 	}
+
+&ui_print_header($in{'id'} ? $accounts[0]->{'desc'} : undef,
+		 $text{'list_title'}, "");
 
 # Show each domain, with registration info
 @table = ( );

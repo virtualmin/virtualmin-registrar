@@ -167,6 +167,7 @@ rcom_createinfo=Before this account can be used, the following must happen :<br>
 
 gandi_account=Account login (like <tt>XX5555-GANDI</tt>)
 gandi_pass=Account password
+gandi_contact=Contact ID for new domains
 gandi_eaccount=Missing or invalid account login
 gandi_epass=Missing or invalid account password
 gandi_eapikey=Missing or invalid API key
@@ -184,6 +185,9 @@ gandi_public=Public body
 gandi_association=Association
 gandi_eindivname=Individuals cannot have an organization name
 gandi_apikey=API key
+gandi_etries=Domain creation failed to complete after $2 seconds - final status was $1
+gandi_ecreate=Creation status error : $1
+gandi_eassoc=Contact $1 cannot be associated with this domain
 
 distribute_account=Account number
 distribute_user=Account username
@@ -384,5 +388,7 @@ onecontact_header=Registrar contact details
 onecontact_err=Failed to save contact
 onecontact_edelete=Deletion failed : $1
 onecontact_esave=Update failed : $1
+onecontact_create=Create Registrar Contact
+onecontact_edit=Edit Registrar Contact
 
 __norefs=1

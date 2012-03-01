@@ -39,7 +39,15 @@ print &ui_columns_table(
 	],
 	100, \@table, undef, 0, undef,
 	$text{'contacts_none'});
-print &ui_links_row([ "<a href='edit_onecontact.cgi?new=1&id=$in{'id'}'>".
-		      "$text{'contacts_add'}</a>" ]);
+
+# Create links for adding contacts of different types
+@links = ( );
+$cfunc = "type_".$account->{'registrar'}."_get_contact_classes";
+foreach my $c (&$cfunc($account)) {
+	push(@links, "<a href='edit_onecontact.cgi?new=1&id=$in{'id'}".
+		     "&cls=$c->{'id'}'>".&text('contacts_add', $c->{'desc'}).
+		     "</a>");
+	}
+print &ui_links_row(\@links);
 
 &ui_print_footer("", $text{'index_return'});

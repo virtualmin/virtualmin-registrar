@@ -80,7 +80,7 @@ print &ui_hidden_table_start($text{'edit_header2'}, "width=100%", 2, "tlds", 0);
 # Registrar's top-level domains
 $tfunc = "type_".$reg."_domains";
 if (defined(&$tfunc)) {
-	@tlds = &$tfunc();
+	@tlds = &$tfunc($in{'registrar'} ? undef : $account);
 	print &ui_table_row($text{'edit_rdoms'},
 		&ui_grid_table([ map { "<tt>$_</tt>" } @tlds ], 8, 100));
 	}

@@ -18,7 +18,12 @@ if (!$in{'new'}) {
 	($con) = grep { $_->{'id'} eq $in{'cid'} } @$contacts;
 	}
 else {
-	$con = { };
+	# Set type from class
+	$cfunc = "type_".$account->{'registrar'}."_get_contact_classes";
+	($cls) = grep { $_->{'id'} eq $in{'cls'} } &$cfunc($account);
+	if ($cls && $cls->{'field'}) {
+		$con = { $cls->{'field'} => $cls->{'id'} };
+		}
 	}
 
 if ($in{'delete'}) {
@@ -29,7 +34,7 @@ if ($in{'delete'}) {
 	}
 else {
 	# Validate all input types, and update object
-	@schema = &get_contact_schema($account, undef, undef, $in{'new'});
+	@schema = &get_contact_schema($account, undef, undef, $in{'new'}, $in{'cls'});
 	foreach my $s (@schema) {
 		$n = $s->{'name'};
 		$fn = $text{'contact_'.$s->{'name'}};

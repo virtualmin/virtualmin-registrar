@@ -14,12 +14,24 @@ $account || &error($text{'contacts_eaccount'});
 		 $in{'new'} ? $text{'onecontact_create'}
 			    : $text{'onecontact_edit'}, "");
 
+$cfunc = "type_".$account->{'registrar'}."_get_contact_classes";
+@classes = &$cfunc($account);
+
 if (!$in{'new'}) {
-	# Get the contacts
+	# Get the contact
 	$cfunc = "type_".$account->{'registrar'}."_list_contacts";
 	($ok, $contacts) = &$cfunc($account);
 	$ok || &error(&text('contacts_elist', $contacts));
 	($con) = grep { $_->{'id'} eq $in{'cid'} } @$contacts;
+	($cls) = grep { $con->{$_->{'field'}} eq $_->{'id'} } @classes;
+	$in{'cls'} = $cls->{'id'} if ($cls);
+	}
+else {
+	# Set type from class
+	($cls) = grep { $_->{'id'} eq $in{'cls'} } @classes;
+	if ($cls && $cls->{'field'}) {
+		$con = { $cls->{'field'} => $cls->{'id'} };
+		}
 	}
 
 &ui_print_header(undef, $text{'onecontact_title'}, "");
@@ -28,15 +40,17 @@ print &ui_form_start("save_onecontact.cgi", "post");
 print &ui_hidden("id", $in{'id'});
 print &ui_hidden("cid", $in{'cid'});
 print &ui_hidden("new", $in{'new'});
-print &ui_table_start($text{'onecontact_header'}, "width=100%", 2);
+print &ui_hidden("cls", $in{'cls'});
+print &ui_table_start(&text('onecontact_header', $cls->{'desc'}),
+		      "width=100%", 2);
 
-@schema = &get_contact_schema($account, undef, undef, $in{'new'});
+@schema = &get_contact_schema($account, undef, undef, $in{'new'}, $in{'cls'});
 foreach my $s (@schema) {
 	$n = $s->{'name'};
 	if ($s->{'readonly'}) {
 		# Just show value
-		next if ($in{'new'});
 		$field = $con->{$s->{'name'}};
+		next if ($in{'new'} && !$field);
 		if ($s->{'choices'}) {
 			($c) = grep { $_->[0] eq $field } @{$s->{'choices'}};
 			$field = $c->[1] if ($c);

@@ -31,15 +31,38 @@ return undef;
 }
 
 # type_newgandi_domains(&account)
-# Returns a list of TLDs that can be used with gandi.net. Hard-coded for
-# now, as I don't know of any programatic way to get this.
+# Returns a list of TLDs that can be used with gandi.net.
 sub type_newgandi_domains
 {
-return (".asia", ".biz", ".com", ".info", ".mobi", ".name", ".net",
-	".org", ".pro", ".tel", ".at", ".be", ".cc", ".ch", ".cn", ".co.uk",
-	".cz", ".de", ".es", ".eu", ".fm", ".fr", ".in", ".it", ".li", ".lu",
-        ".me", ".nu", ".org.uk", ".pl", ".re", ".ru", ".se", ".tv", ".tw",
-        ".us");
+local ($account) = @_;
+if ($account) {
+	# Try to query gandi API
+	local ($server, $sid) = &connect_newgandi_api($account, 1);
+	if ($server) {
+		local $doms;
+		eval {
+			$doms = $server->call("domain.tld.list", $sid);
+			};
+		if ($doms && !$@) {
+			return map { ".".$_->{'name'} } @$doms;
+			}
+		}
+	}
+# Fall back to hard-coded list
+return (
+	".ae.org", ".aero", ".af", ".ag", ".ar.com", ".asia", ".at", ".be",
+	".biz", ".br.com", ".bz", ".ca", ".cc", ".ch", ".cn", ".cn.com",
+	".co", ".co.uk", ".com", ".com.de", ".coop", ".cx", ".de", ".de.com",
+	".es", ".eu", ".eu.com", ".fm", ".fr", ".gb.com", ".gb.net", ".gr.com",
+	".gs", ".gy", ".hk", ".hn", ".ht", ".hu.com", ".im", ".info",
+	".it", ".jp", ".jpn.com", ".ki", ".kr.com", ".la", ".lc", ".li",
+	".lt", ".lu", ".me", ".me.uk", ".mn", ".mobi", ".mu", ".name",
+	".net", ".nf", ".nl", ".no", ".no.com", ".nu", ".org", ".org.uk",
+	".pl", ".pro", ".pt", ".qc.com", ".re", ".ru", ".ru.com", ".sa.com",
+	".sb", ".sc", ".se", ".se.com", ".se.net", ".tel", ".tl", ".travel",
+	".tv", ".tw", ".uk.com", ".uk.net", ".us", ".us.com", ".us.org",
+	".uy.com", ".vc", ".ws", ".xn--p1ai", ".za.com",
+	);
 }
 
 # type_newgandi_edit_inputs(&account, new?)
@@ -173,19 +196,20 @@ elsif (@$nss < 2) {
 print STDERR "nss=",join(" ", @$nss),"\n";
 
 # Check if the contact can be used
-eval {
-	local $assoc = $server->call("contact.can_associate_domain",
-				     $sid,
-				     $account->{'gandi_account'},
-				     { 'domain' => $d->{'dom'},
-				       'owner' => $server->boolean(1),
-				       'admin' => $server->boolean(1) });
-	use Data::Dumper;
-	print STDERR Dumper($assoc);
-	$assoc || return (0, &text('gandi_eassoc',
-				   $account->{'gandi_account'}));
-	};
-return (0, &text('gandi_error', "$@")) if ($@);
+# Doesn't seem to have any value
+#eval {
+#	local $assoc = $server->call("contact.can_associate_domain",
+#				     $sid,
+#				     $account->{'gandi_account'},
+#				     { 'domain' => $d->{'dom'},
+#				       'owner' => $server->boolean(1),
+#				       'admin' => $server->boolean(1) });
+#	use Data::Dumper;
+#	print STDERR Dumper($assoc);
+#	$assoc || return (0, &text('gandi_eassoc',
+#				   $account->{'gandi_account'}));
+#	};
+#return (0, &text('gandi_error', "$@")) if ($@);
 
 # Call to create
 local $oper;
@@ -209,6 +233,8 @@ local $tries = 0;
 while(1) {
 	sleep(1);
 	local $rv = $server->call("operation.info", $sid, $oper->{'id'});
+	use Data::Dumper;
+	print STDERR Dumper($rv);
 	if ($rv->{'step'} eq 'DONE') {
 		last;
 		}
@@ -395,11 +421,11 @@ foreach my $c (@$cons) {
 return undef;
 }
 
-# type_newgandi_get_contact_schema(&account, &domain, type, new?)
+# type_newgandi_get_contact_schema(&account, &domain, type, new?, class)
 # Returns a list of fields for domain contacts, as seen by gandi.net
 sub type_newgandi_get_contact_schema
 {
-local ($account, $d, $type, $newcontact) = @_;
+local ($account, $d, $type, $newcontact, $cls) = @_;
 return ( { 'name' => 'handle',
 	   'readonly' => 1 },
          { 'name' => 'type',
@@ -408,7 +434,7 @@ return ( { 'name' => 'handle',
 			  [ 2, $text{'gandi_public'} ],
 			  [ 3, $text{'gandi_association'} ] ],
 	   'opt' => 0,
-	   'readonly' => !$newcontact,
+	   'readonly' => 1,
 	 },
 	 { 'name' => 'given',
 	   'size' => 40,
@@ -416,6 +442,13 @@ return ( { 'name' => 'handle',
 	 { 'name' => 'family',
 	   'size' => 40,
 	   'opt' => 0 },
+	 $cls == 1 || $cls == 2 || $cls == 3 ? (
+		 { 'name' => 'orgname',
+		   'size' => 40,
+		   'opt' => 0,
+		   'readonly' => !$newcontact },
+		 ) :
+		 ( ),
 	 { 'name' => 'streetaddr',
 	   'size' => 60,
 	   'opt' => 0 },
@@ -442,6 +475,22 @@ return ( { 'name' => 'handle',
 		           'opt' => 0 } )
 		     : ( ),
 	);
+}
+
+# type_newgandi_get_contact_classes(&account)
+# Returns a list of hash refs with ID and desc fields, for different classes
+# of contacts (individual, business, etc)
+sub type_newgandi_get_contact_classes
+{
+my ($account) = @_;
+return ( { 'id' => 0, 'desc' => $text{'gandi_individual'},
+	   'field' => 'type' },
+	 { 'id' => 1, 'desc' => $text{'gandi_company'},
+	   'field' => 'type' },
+	 { 'id' => 2, 'desc' => $text{'gandi_public'},
+	   'field' => 'type' },
+	 { 'id' => 3, 'desc' => $text{'gandi_association'},
+	   'field' => 'type' } );
 }
 
 # type_newgandi_list_contacts(&account)
@@ -499,7 +548,8 @@ return &text('gandi_error', $sid) if (!$server);
 
 eval {
 	local $callcon = { %$con };
-	local @schema = &type_newgandi_get_contact_schema($account);
+	local @schema = &type_newgandi_get_contact_schema(
+				$account, undef, undef, 0, $con->{'type'});
 	foreach my $k (keys %$callcon) {
 		delete($callcon->{$k}) if ($callcon->{$k} eq '');
 		local ($s) = grep { $_->{'name'} eq $k } @schema;
@@ -507,6 +557,8 @@ eval {
 		}
 	$callcon->{'zip'} = $server->string($con->{'zip'});
 	$callcon->{'phone'} = $server->string($con->{'phone'});
+	use Data::Dumper;
+	print STDERR Dumper($callcon);
 	$server->call("contact.update", $sid, $con->{'handle'}, $callcon);
 	};
 return (0, &text('gandi_error', "$@")) if ($@);

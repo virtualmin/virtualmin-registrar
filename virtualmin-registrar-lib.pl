@@ -17,7 +17,7 @@ $auto_cron_cmd = "$module_config_directory/auto.pl";
 	  'disabled' => 0,
 	  'desc' => $text{'type_rcom'} },
 	{ 'name' => 'gandi',
-	  'disabled' => 1,
+	  'disabled' => 0,
 	  'desc' => $text{'type_gandi'} },
 	{ 'name' => 'newgandi',
 	  'disabled' => 0,
@@ -25,6 +25,9 @@ $auto_cron_cmd = "$module_config_directory/auto.pl";
 	{ 'name' => 'distribute',
 	  'disabled' => 1,
 	  'desc' => $text{'type_distribute'} },
+	{ 'name' => 'namecheap',
+	  'disabled' => 0,
+	  'desc' => $text{'type_namecheap'} },
     );
 foreach my $t (@registrar_types) {
 	do $t->{'name'}.'-type-lib.pl';

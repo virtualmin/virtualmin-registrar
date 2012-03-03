@@ -33,7 +33,7 @@ sub type_namecheap_edit_inputs
 local ($account, $new) = @_;
 local $rv;
 $rv .= &ui_table_row($text{'namecheap_user'},
-	&ui_textbox("namecheap_user", $user->{'namecheap_user'}, 30));
+	&ui_textbox("namecheap_user", $account->{'namecheap_user'}, 30));
 $rv .= &ui_table_row($text{'namecheap_apikey'},
 	&ui_textbox("namecheap_apikey", $account->{'namecheap_apikey'}, 30));
 $rv .= &ui_table_row($text{'rcom_years'},
@@ -52,7 +52,7 @@ sub type_namecheap_edit_parse
 {
 local ($account, $new, $in) = @_;
 $in->{'namecheap_user'} =~ /^\S+$/ || return $text{'namecheap_euser'};
-$user->{'namecheap_user'} = $in->{'namecheap_user'};
+$account->{'namecheap_user'} = $in->{'namecheap_user'};
 $in->{'namecheap_apikey'} =~ /^\S+$/ || return $text{'namecheap_eapikey'};
 $account->{'namecheap_apikey'} = $in->{'namecheap_apikey'};
 if ($in->{'namecheap_years_def'}) {
@@ -73,6 +73,53 @@ sub type_namecheap_renew_years
 {
 local ($account, $d) = @_;
 return $account->{'namecheap_years'} || 2;
+}
+
+# type_namecheap_validate(&account)
+# Checks if an account's details are vaid. Returns undef if OK or an error
+# message if the login or password are wrong.
+sub type_namecheap_validate
+{
+local ($account) = @_;
+local ($server, $sid_or_err) = &call_namecheap_api($account,
+				"namecheap.domains.getList");
+if ($server) {
+	return undef;
+	}
+else {
+	return $sid_or_err;
+	}
+}
+
+# call_namecheap_api(&account, command, &params)
+# Calls the namecheap API, and returns a status code and either error message
+# or a results object.
+sub call_namecheap_api
+{
+local ($account, $cmd, $params) = @_;
+local $url = $account->{'namecheap_test'} ? $namecheap_api_url_test
+					  : $namecheap_api_url;
+local ($host, $port, $page, $ssl) = &parse_http_url($url);
+$page .= "?APIUser=".&urlize($account->{'namecheap_user'}).
+	 "&ApiKey=".&urlize($account->{'namecheap_apikey'}).
+	 "&UserName=".&urlize($account->{'namecheap_user'}).
+	 "&ClientIP=".($account->{'namecheap_ip'} ||
+		       &virtual_server::get_dns_ip() ||
+		       &virtual_server::get_default_ip()).
+	 "&Command=".&urlize($cmd);
+print STDERR $page,"\n";
+if ($params) {
+	foreach my $p (keys %$params) {
+		$page .= "&".$p."=".&urlize($params->{$p});
+		}
+	}
+local ($out, $err);
+&http_download($host, $port, $page, \$out, \$err, undef, $ssl);
+# XXX parse XML
+print STDERR $err,"\n";
+print STDERR $out;
+return (0, $err) if ($err);
+return (1, $out);
 }
 
 1;

@@ -160,17 +160,20 @@ local ($server, $sid) = &connect_newgandi_api($account, 1);
 return (0, &text('gandi_error', $sid)) if (!$server);
 
 # Get the domain list
-local $list;
+local $info;
 eval {
-	$list = $server->call("domain.list", $sid);
+	$info = $server->call("domain.info", $sid, $dname);
 	};
 return (0, &text('gandi_error', "$@")) if ($@);
 
-# Check if on list
-foreach my $l (@$list) {
-	return (1, $l) if ($l eq $dname);
+if ($info) {
+	# Found it
+	return (1, $dname);
 	}
-return (1, undef);
+else {
+	# Not found
+	return (1, undef);
+	}
 }
 
 # type_newgandi_create_domain(&account, &domain)
@@ -193,7 +196,6 @@ elsif (!@$nss) {
 elsif (@$nss < 2) {
 	return (0, &text('gandi_enstwo', 2, $nss->[0]));
 	}
-print STDERR "nss=",join(" ", @$nss),"\n";
 
 # Check if the contact can be used
 # Doesn't seem to have any value
@@ -204,8 +206,6 @@ print STDERR "nss=",join(" ", @$nss),"\n";
 #				     { 'domain' => $d->{'dom'},
 #				       'owner' => $server->boolean(1),
 #				       'admin' => $server->boolean(1) });
-#	use Data::Dumper;
-#	print STDERR Dumper($assoc);
 #	$assoc || return (0, &text('gandi_eassoc',
 #				   $account->{'gandi_account'}));
 #	};
@@ -214,38 +214,20 @@ print STDERR "nss=",join(" ", @$nss),"\n";
 # Call to create
 local $oper;
 eval {
-	$oper = $server->call("domain.create",
-			      $sid,
-			      $d->{'dom'},
-			      { 'duration' => 
-				      $d->{'registrar_years'} ||
-					$account->{'gandi_years'} || 1,
-				'owner' => $account->{'gandi_account'},
-				'admin' => $account->{'gandi_account'},
-				'bill' => $account->{'gandi_account'},
-				'tech' => $account->{'gandi_account'},
-			        'nameservers' => $nss });
+	local $spec = { 'duration' => $d->{'registrar_years'} ||
+				      $account->{'gandi_years'} || 1,
+			'owner' => $account->{'gandi_account'},
+			'admin' => $account->{'gandi_account'},
+			'bill' => $account->{'gandi_account'},
+			'tech' => $account->{'gandi_account'},
+			'nameservers' => $nss };
+	$oper = $server->call("domain.create", $sid, $d->{'dom'}, $spec);
 	};
 return (0, &text('gandi_error', "$@")) if ($@);
 
 # Wait for completion
-local $tries = 0;
-while(1) {
-	sleep(1);
-	local $rv = $server->call("operation.info", $sid, $oper->{'id'});
-	use Data::Dumper;
-	print STDERR Dumper($rv);
-	if ($rv->{'step'} eq 'DONE') {
-		last;
-		}
-	elsif ($rv->{'step'} eq 'ERROR') {
-		return (0, &text('gandi_ecreate', $rv->{'last_error'}));
-		}
-	$tries++;
-	if ($tries > 30) {
-		return (0, &text('gandi_etries', $rv->{'step'}, 30));
-		}
-	}
+local ($ok, $msg) = &wait_for_gandi_operation($sid, $oper);
+return (0, &text('gandi_ecreate', $msg)) if (!$ok);
 
 return (1, $d->{'dom'});
 }
@@ -261,8 +243,8 @@ return &text('gandi_error', $sid) if (!$server);
 
 local $rv;
 eval {
-	$rv = $server->call("domain.ns.list", $sid, $d->{'dom'});
-	$rv = [ map { $_."" } @$rv ];
+	local $info = $server->call("domain.info", $sid, $d->{'dom'});
+	$rv = $info->{'nameservers'};
 	};
 return $@ ? &text('gandi_error', "$@") : $rv;
 }
@@ -270,6 +252,7 @@ return $@ ? &text('gandi_error', "$@") : $rv;
 # type_newgandi_set_nameservers(&account, &domain, [&nameservers])
 # Updates the nameservers for a domain to match DNS. Returns undef on success
 # or an error message on failure.
+# XXX check return code
 sub type_newgandi_set_nameservers
 {
 local ($account, $d, $nss) = @_;
@@ -289,10 +272,18 @@ elsif (@$nss < 2) {
 	}
 
 # Call to set nameservers
+local $oper;
 eval {
-	$server->call("domain.ns.set", $sid, $d->{'dom'}, $nss);
+	$oper = $server->call("domain.nameservers.set",
+			      $sid, $d->{'dom'}, $nss);
 	};
-return $@ ? &text('gandi_error', "$@") : undef;
+return &text('gandi_error', "$@") if ($@);
+
+# Wait for result
+local ($ok, $msg) = &wait_for_gandi_operation($sid, $oper);
+return $msg if (!$ok);
+
+return undef;
 }
 
 # type_newgandi_delete_domain(&account, &domain)
@@ -304,12 +295,17 @@ local ($server, $sid) = &connect_newgandi_api($account, 1);
 return (0, &text('gandi_error', $sid)) if (!$server);
 
 # Call to delete
-local $opid;
+local $oper;
 eval {
-	$opid = $server->call("domain.delete", $sid, $d->{'dom'});
+	$oper = $server->call("domain.delete", $sid, $d->{'dom'});
 	};
 return (0, &text('gandi_error', "$@")) if ($@);
-return (1, $opid);
+
+# Wait for result
+local ($ok, $msg) = &wait_for_gandi_operation($sid, $oper);
+return (0, $msg) if (!$ok);
+
+return (1, $oper->{'id'});
 }
 
 # type_newgandi_get_contact(&account, &domain)
@@ -328,19 +324,16 @@ eval {
 	};
 return &text('gandi_error', "$@") if ($@);
 local @rv;
-foreach my $ct ('admin', 'tech', 'billing') {
-	next if (!$info->{$ct.'_handle'});
+foreach my $ct ('admin', 'tech', 'bill') {
+	next if (!$info->{'contacts'}->{$ct});
 	local $con;
 	eval {
 		$con = $server->call("contact.info", $sid,
-				     $info->{$ct.'_handle'});
+				     $info->{'contacts'}->{$ct}->{'handle'});
 		};
 	if (!$@ && $con) {
 		$con->{'type'} = $ct;
-		$con->{'handle'} ||= $info->{$ct.'_handle'};
-		$con->{'name'} = $con->{'company_name'} ||
-				 $con->{'association_name'} ||
-			         $con->{'body_name'};
+		$con->{'id'} = $con->{'handle'};
 		push(@rv, $con);
 		}
 	}
@@ -350,6 +343,7 @@ return \@rv;
 
 # type_newgandi_save_contact(&&account, &domain, &contacts)
 # Updates contacts from an array of hashes
+# XXX
 sub type_newgandi_save_contact
 {
 local ($account, $d, $cons) = @_;
@@ -506,9 +500,6 @@ eval {
 	};
 return (0, &text('gandi_error', "$@")) if ($@);
 foreach my $con (@$list) {
-	$con->{'name'} = $con->{'company_name'} ||
-                         $con->{'association_name'} ||
-                         $con->{'body_name'};
 	$con->{'id'} = $con->{'handle'};
 	}
 return (1, $list);
@@ -557,8 +548,6 @@ eval {
 		}
 	$callcon->{'zip'} = $server->string($con->{'zip'});
 	$callcon->{'phone'} = $server->string($con->{'phone'});
-	use Data::Dumper;
-	print STDERR Dumper($callcon);
 	$server->call("contact.update", $sid, $con->{'handle'}, $callcon);
 	};
 return (0, &text('gandi_error', "$@")) if ($@);
@@ -580,11 +569,8 @@ local $info;
 eval {
 	$info = $server->call("domain.info", $sid, $d->{'dom'});
 	};
-use Data::Dumper;
-print STDERR "err=$@\n";
-print STDERR Dumper($info);
 return (0, &text('gandi_error', "$@")) if ($@);
-local $expirydate = $info->{'registry_expiration_date'};
+local $expirydate = $info->{'date_registry_end'}->value();
 if ($expirydate =~ /^(\d{4})(\d\d)(\d\d)T(\d\d):(\d\d):(\d\d)$/) {
 	return (1, timelocal($6, $5, $4, $3, $2-1, $1-1900));
 	}
@@ -602,12 +588,20 @@ local ($server, $sid) = &connect_newgandi_api($account, 1);
 return (0, &text('gandi_error', $sid)) if (!$server);
 
 # Call to renew
-local $opid;
+local $oper;
 eval {
-	$opid = $server->call("domain.renew", $sid, $d->{'dom'}, $years);
+	local @tm = localtime(time());
+	$oper = $server->call("domain.renew", $sid, $d->{'dom'},
+			      { 'duration' => $years,
+				'current_year' => $tm[5]+1900 });
 	};
 return (0, &text('gandi_error', "$@")) if ($@);
-return (1, $opid);
+
+# Wait for operation result
+local ($ok, $msg) = &wait_for_gandi_operation($sid, $oper);
+return (0, $msg) if (!$ok);
+
+return (1, $oper->{'id'});
 }
 
 # type_newgandi_add_instructions()
@@ -644,23 +638,33 @@ elsif (@$nss < 2) {
 	}
 
 # Do the transfer
-local $tid;
+local $oper;
 eval {
-	$tid = $server->call("domain.transfer.in", $sid, $d->{'dom'},
-		$account->{'gandi_account'},
-		$account->{'gandi_account'},
-		$account->{'gandi_account'},
-		$account->{'gandi_account'},
-		$nss,
-		$key);
+	$oper = $server->call("domain.transferin.proceed", $sid, $d->{'dom'},
+			     { 'owner' => $account->{'gandi_account'},
+			       'admin' => $account->{'gandi_account'},
+			       'bill' => $account->{'gandi_account'},
+			       'tech' => $account->{'gandi_account'},
+			       'nameservers' => $nss,
+			       'authinfo' => $key,
+			       'duration' => $d->{'registrar_years'} ||
+                                      $account->{'gandi_years'} || 1,
+			     });
 	};
 return (0, &text('gandi_error', "$@")) if ($@);
-return (1, $tid);
+
+# Wait for completion
+local ($ok, $msg) = &wait_for_gandi_operation($sid, $oper);
+return (0, $msg) if (!$ok);
+
+return (1, $oper->{'id'});
 }
 
 # connect_newgandi_api(&account, [return-error])
 # Returns a handle connected to the Gandi XML-RPC API and a session ID,
 # or calls error
+# XXX skip version.info call if already done for this account in this process
+#     and was successful
 sub connect_newgandi_api
 {
 local ($account, $reterr) = @_;
@@ -679,14 +683,49 @@ if ($@) {
 		&error($@);
 		}
 	}
+local $dkey = $account->{'id'}."/".$account->{'gandi_apikey'}."/".
+	      int($account->{'gandi_test'});
+if ($done_connect_newgandi_api{$dkey}) {
+	# Already tested successfully
+	return ($server, $account->{'gandi_apikey'});
+	}
 local $ver;
 eval {
 	$ver = $server->call("version.info", $account->{'gandi_apikey'});
 	};
-return $@ =~ /DataError:\s*(.*)/ ? ( undef, $1 ) :
-       $@ ? (undef, $@) :
-       !$ver ? (undef, "No version returned")
-	     : ($server, $account->{'gandi_apikey'});
+local @rv = $@ =~ /DataError:\s*(.*)/ ? ( undef, $1 ) :
+       	    $@ ? (undef, $@) :
+            !$ver ? (undef, "No version returned")
+	          : ($server, $account->{'gandi_apikey'});
+if ($rv[0]) {
+	$done_connect_newgandi_api{$dkey} = $account->{'gandi_apikey'};
+	}
+return @rv;
+}
+
+# wait_for_gandi_operation(sid, &operation)
+# Poll the Gandi API until some operation completes. Returns 0 and an error
+# message on failure, or 1 and the result structure on success.
+sub wait_for_gandi_operation
+{
+local ($sid, $oper) = @_;
+local $tries = 0;
+while(1) {
+	sleep(1);
+	local $rv = $server->call("operation.info", $sid, $oper->{'id'});
+	use Data::Dumper;
+	print STDERR Dumper($rv);
+	if ($rv->{'step'} eq 'DONE') {
+		return (1, $rv);
+		}
+	elsif ($rv->{'step'} eq 'ERROR') {
+		return (0, $rv->{'last_error'});
+		}
+	$tries++;
+	if ($tries > 30) {
+		return (0, &text('gandi_etries', $rv->{'step'}, 30));
+		}
+	}
 }
 
 1;

@@ -343,7 +343,6 @@ return \@rv;
 
 # type_newgandi_save_contact(&&account, &domain, &contacts)
 # Updates contacts from an array of hashes
-# XXX not working
 sub type_newgandi_save_contact
 {
 local ($account, $d, $cons) = @_;
@@ -356,20 +355,23 @@ local $oldcons = &type_newgandi_get_contact($account, $d);
 return $oldcons if (!ref($oldcons));
 
 # For changed contacts, create a new one and associate with the domain
+local %sets;
 foreach my $c (@$cons) {
 	local $purpose = $c->{'purpose'};
 	local ($oldc) = grep { $_->{'purpose'} eq $purpose } @$oldcons;
 	local $hash = &contact_hash_to_string($c);
 	if ($oldc && $hash eq &contact_hash_to_string($oldc)) {
 		# No change
+		$same{$hash} = $c->{'handle'};
 		next;
 		}
-	# Make the new contact
+
 	if ($same{$hash}) {
-		# Re-use same details
+		# Re-use same contact
 		$c->{'handle'} = $same{$hash};
 		}
 	else {
+		# Make the new contact
 		delete($c->{'handle'});
 		my $pass = $d->{'parent'} ?
 			&virtual_server::get_domain($d->{'parent'})->{'pass'} :
@@ -384,20 +386,22 @@ foreach my $c (@$cons) {
 		return $err if ($err);
 		$same{$hash} = $c->{'handle'};
 		}
+	$sets{$purpose} = $c->{'handle'};
+	}
 
+if (keys %sets) {
 	# Update in the domain
 	local $oper;
 	eval {
 		$oper = $server->call("domain.contacts.set", $sid,
-			      $d->{'dom'},
-			      { $purpose => $c->{'handle'} });
+				      $d->{'dom'}, \%sets);
 		};
-	use Data::Dumper;
-	print STDERR Dumper($oper);
 	return &text('gandi_error', "$@") if ($@);
 
-	# XXX wait for oper?
+	local ($ok, $msg) = &wait_for_gandi_operation($sid, $oper);
+	return (0, $msg) if (!$ok);
 	}
+
 return undef;
 }
 

@@ -272,7 +272,7 @@ foreach my $ct ('admin', 'tech', 'billing') {
 				     $info->{$ct.'_handle'});
 		};
 	if (!$@ && $con) {
-		$con->{'type'} = $ct;
+		$con->{'purpose'} = $ct;
 		$con->{'handle'} ||= $info->{$ct.'_handle'};
 		$con->{'name'} = $con->{'company_name'} ||
 				 $con->{'association_name'} ||
@@ -299,7 +299,7 @@ return $oldcons if (!ref($oldcons));
 
 # For changed contacts, create a new one and associate with the domain
 foreach my $c (@$cons) {
-	local ($oldc) = grep { $_->{'type'} eq $c->{'type'} } @$oldcons;
+	local ($oldc) = grep { $_->{'purpose'} eq $c->{'purpose'} } @$oldcons;
 	local $hash = &contact_hash_to_string($c);
 	if ($oldc && $hash eq &contact_hash_to_string($oldc)) {
 		# No change
@@ -314,7 +314,7 @@ foreach my $c (@$cons) {
 		else {
 			# Keep all original extra parameters the same
 			local %params;
-			local @skip = ( 'id', 'type', 'handle', 'name', 'class', 'firstname', 'lastname', 'address', 'zipcode', 'city', 'country', 'phone', 'email' );
+			local @skip = ( 'id', 'type', 'purpose', 'handle', 'name', 'class', 'firstname', 'lastname', 'address', 'zipcode', 'city', 'country', 'phone', 'email' );
 			foreach my $k (keys %$c) {
 				if (&indexof($k, @skip) < 0 &&
 				    $c->{$k}) {
@@ -343,13 +343,13 @@ foreach my $c (@$cons) {
 			}
 
 		# Update in the domain
-		if ($c->{'type'} eq 'owner') {
+		if ($c->{'purpose'} eq 'owner') {
 			$server->call("domain_change_owner", $sid,
 				$d->{'dom'}, $c->{'handle'});
 			}
 		else {
 			$server->call("domain_change_contact", $sid,
-				$d->{'dom'}, $c->{'type'}, $c->{'handle'});
+				$d->{'dom'}, $c->{'purpose'}, $c->{'handle'});
 			}
 		};
 	return &text('gandi_error', $@) if ($@);

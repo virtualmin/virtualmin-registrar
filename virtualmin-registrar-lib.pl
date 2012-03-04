@@ -278,7 +278,7 @@ sub contact_hash_to_string
 {
 local ($h) = @_;
 local @k = sort { $a cmp $b }
-	        grep { $_ ne "type" && $_ ne "lcmap" && $_ ne "id" &&
+	        grep { $_ ne "purpose" && $_ ne "lcmap" && $_ ne "id" &&
 		       !ref($h->{$_}) } (keys %$h);
 return join(" ", map { $_."=".$h->{$_} } @k);
 }

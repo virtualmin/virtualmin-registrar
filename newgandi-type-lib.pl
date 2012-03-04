@@ -332,7 +332,7 @@ foreach my $ct ('admin', 'tech', 'bill') {
 				     $info->{'contacts'}->{$ct}->{'handle'});
 		};
 	if (!$@ && $con) {
-		$con->{'type'} = $ct;
+		$con->{'purpose'} = $ct;
 		$con->{'id'} = $con->{'handle'};
 		push(@rv, $con);
 		}
@@ -343,7 +343,7 @@ return \@rv;
 
 # type_newgandi_save_contact(&&account, &domain, &contacts)
 # Updates contacts from an array of hashes
-# XXX
+# XXX not working
 sub type_newgandi_save_contact
 {
 local ($account, $d, $cons) = @_;
@@ -357,60 +357,46 @@ return $oldcons if (!ref($oldcons));
 
 # For changed contacts, create a new one and associate with the domain
 foreach my $c (@$cons) {
-	local ($oldc) = grep { $_->{'type'} eq $c->{'type'} } @$oldcons;
+	local $purpose = $c->{'purpose'};
+	local ($oldc) = grep { $_->{'purpose'} eq $purpose } @$oldcons;
 	local $hash = &contact_hash_to_string($c);
 	if ($oldc && $hash eq &contact_hash_to_string($oldc)) {
 		# No change
 		next;
 		}
-	eval {
-		# Make the new contact
-		if ($same{$hash}) {
-			# Re-use same details
-			$c->{'handle'} = $same{$hash};
+	# Make the new contact
+	if ($same{$hash}) {
+		# Re-use same details
+		$c->{'handle'} = $same{$hash};
+		}
+	else {
+		delete($c->{'handle'});
+		my $pass = $d->{'parent'} ?
+			&virtual_server::get_domain($d->{'parent'})->{'pass'} :
+			$d->{'pass'};
+		$pass ||= &virtual_server::random_password(6);
+		if (length($pass) < 6) {
+			$pass .= "12345";
 			}
-		else {
-			# Keep all original extra parameters the same
-			local %params;
-			local @skip = ( 'id', 'type', 'handle', 'name', 'class', 'firstname', 'lastname', 'address', 'zipcode', 'city', 'country', 'phone', 'email' );
-			foreach my $k (keys %$c) {
-				if (&indexof($k, @skip) < 0 &&
-				    $c->{$k}) {
-					$params{$k} = $c->{$k};
-					}
-				}
-			# Convert name param into appropriate for class
-			if ($c->{'name'}) {
-				if ($c->{'class'} eq 'individual') {
-					die $text{'gandi_eindivname'};
-					}
-				$params{$c->{'class'}.'_name'} = $c->{'name'};
-				}
-			$c->{'handle'} = $server->call("contact.create", $sid,
-					$c->{'class'},
-					$c->{'firstname'},
-					$c->{'lastname'},
-					$c->{'address'},
-					$server->string($c->{'zipcode'}),
-					$c->{'city'},
-					$c->{'country'},
-					$server->string($c->{'phone'}),
-					$c->{'email'},
-					\%params);
-			$same{$hash} = $c->{'handle'};
-			}
+		$c->{'password'} = $pass;
+		local $err = &type_newgandi_create_one_contact(
+				$account, $c);
+		return $err if ($err);
+		$same{$hash} = $c->{'handle'};
+		}
 
-		# Update in the domain
-		if ($c->{'type'} eq 'owner') {
-			$server->call("domain.change.owner", $sid,
-				$d->{'dom'}, $c->{'handle'});
-			}
-		else {
-			$server->call("domain.change.contact", $sid,
-				$d->{'dom'}, $c->{'type'}, $c->{'handle'});
-			}
+	# Update in the domain
+	local $oper;
+	eval {
+		$oper = $server->call("domain.contacts.set", $sid,
+			      $d->{'dom'},
+			      { $purpose => $c->{'handle'} });
 		};
+	use Data::Dumper;
+	print STDERR Dumper($oper);
 	return &text('gandi_error', "$@") if ($@);
+
+	# XXX wait for oper?
 	}
 return undef;
 }
@@ -515,15 +501,22 @@ return &text('gandi_error', $sid) if (!$server);
 
 eval {
 	local $callcon = { %$con };
+	local @schema = &type_newgandi_get_contact_schema(
+				$account, undef, undef, 1, $con->{'type'});
 	foreach my $k (keys %$callcon) {
 		delete($callcon->{$k}) if ($callcon->{$k} eq '');
+		local ($s) = grep { $_->{'name'} eq $k } @schema;
+		delete($callcon->{$k}) if (!$s || $s->{'readonly'});
 		}
+	$callcon->{'type'} = $con->{'type'};	# Always set, even though RO
 	$callcon->{'zip'} = $server->string($con->{'zip'});
 	$callcon->{'phone'} = $server->string($con->{'phone'});
+	use Data::Dumper;
+	print STDERR Dumper($callcon);
 	local $newcon = $server->call("contact.create", $sid, $callcon);
 	$con->{'id'} = $con->{'handle'} = $newcon->{'handle'};
 	};
-return (0, &text('gandi_error', "$@")) if ($@);
+return &text('gandi_error', "$@") if ($@);
 
 return undef;
 }

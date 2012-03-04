@@ -601,7 +601,7 @@ foreach my $ct ("Admin", "Tech") {
 		$con{'lcmap'}->{lc($1)} = $1;
 		}
 	if (keys %con) {
-		$con{'type'} = lc($ct);
+		$con{'purpose'} = lc($ct);
 		push(@rv, \%con);
 		}
 	}
@@ -617,10 +617,10 @@ $d->{'dom'} =~ /^([^\.]+)\.(\S+)$/ || return $text{'rcom_etld'};
 local ($sld, $tld) = ($1, $2);
 
 foreach my $ct ("Admin", "Tech") {
-	local ($con) = grep { $_->{'type'} eq lc($ct) } @$cons;
+	local ($con) = grep { $_->{'purpose'} eq lc($ct) } @$cons;
 	next if (!$con);
 	local $args = { 'SLD' => $sld, 'TLD' => $tld,
-			'ContactType' => $ ct };
+			'ContactType' => $ct };
 	foreach my $k (keys %$con) {
 		if ($k ne "type" && $k ne "lcmap" &&
 		    $k ne $ct."PartyID") {

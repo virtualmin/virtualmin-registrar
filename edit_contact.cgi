@@ -34,22 +34,27 @@ foreach my $con (@$cons) {
 			&contact_hash_to_string($con) ? 1 : 0;
 		}
 
-	print &ui_hidden_table_start($text{'contact_header_'.$con->{'type'}},
-				     "width=100%", 2, $con->{'type'}, !$same,
+	print &ui_hidden_table_start($text{'contact_header_'.$con->{'purpose'}},
+				     "width=100%", 2, $con->{'purpose'}, !$same,
 				     [ "width=30%" ]);
 	if (defined($same)) {
 		# Show option to make same as first
 		print &ui_table_row($text{'contact_same'},
-			&ui_yesno_radio($con->{'type'}.'same', $same));
+			&ui_yesno_radio($con->{'purpose'}.'same', $same));
 		print &ui_table_hr();
 		}
 
-	@schema = &get_contact_schema($account, $d, $con->{'type'});
+	@schema = &get_contact_schema($account, $d, $con->{'purpose'});
 	foreach my $s (@schema) {
-		$n = $con->{'type'}.$s->{'name'};
+		$n = $con->{'purpose'}.$s->{'name'};
 		if ($s->{'readonly'}) {
 			# Just show value
 			$field = $con->{$s->{'name'}};
+			if ($s->{'choices'}) {
+				($c) = grep { $_->[0] eq $field }
+					    @{$s->{'choices'}};
+				$field = $c->[1] if ($c);
+				}
 			}
 		elsif ($s->{'choices'}) {
 			# Select from menu

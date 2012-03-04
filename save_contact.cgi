@@ -21,16 +21,16 @@ ref($cons) || &error($cons);
 
 # Validate all input types, and update object
 foreach my $con (@$cons) {
-	if ($in{$con->{'type'}."same"}) {
+	if ($in{$con->{'purpose'}."same"}) {
 		# Same as first one
-		$ot = $con->{'type'};
+		$ot = $con->{'purpose'};
 		%$con = %{$cons->[0]};
-		$con->{'type'} = $ot;
+		$con->{'purpose'} = $ot;
 		next;
 		}
-	@schema = &get_contact_schema($account, $d, $con->{'type'});
+	@schema = &get_contact_schema($account, $d, $con->{'purpose'});
 	foreach my $s (@schema) {
-		$n = $con->{'type'}.$s->{'name'};
+		$n = $con->{'purpose'}.$s->{'name'};
 		$fn = $text{'contact_'.$s->{'name'}};
 		if ($s->{'readonly'}) {
 			# No need to save

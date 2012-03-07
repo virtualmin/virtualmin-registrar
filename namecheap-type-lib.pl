@@ -150,6 +150,298 @@ else {
 	}
 }
 
+# type_namecheap_create_domain(&account, &domain)
+# Actually register a domain, if possible. Returns 0 and an error message if
+# it failed, or 1 and an ID for the domain on success.
+sub type_namecheap_create_domain
+{
+local ($account, $d) = @_;
+
+# Get the nameservers
+local $nss = &get_domain_nameservers($account, $d);
+if (!ref($nss)) {
+        return (0, $nss);
+        }
+elsif (!@$nss) {
+        return (0, $text{'rcom_ensrecords'});
+        }
+elsif (@$nss < 2) {
+	return (0, &text('namecheap_enstwo', 2, $nss->[0]));
+	}
+
+# Get the domain to copy contacts from
+local ($ok, $xml) = &call_namecheap_api($account,
+		"namecheap.domains.getContacts",
+		{ 'DomainName' => $account->{'namecheap_srcdom'} });
+$ok || return &text('namecheap_error', $xml);
+
+# Build list of params
+local %params = ( 'Nameservers' => join(",", @$nss),
+		  'DomainName' => $d->{'dom'},
+		  'Years' => $d->{'registrar_years'} ||
+                             $account->{'namecheap_years'} || 1,
+		);
+foreach my $t (keys %{$xml->{'DomainContactsResult'}}) {
+	my $con = $xml->{'DomainContactsResult'}->{$t};
+	next if (!$con->{'FirstName'});
+	foreach my $ck (keys %$con) {
+		$params{$t.$ck} = $con->{$ck};
+		}
+	}
+
+# Call to create
+local ($ok, $xml) = &call_namecheap_api($account,
+	"namecheap.domains.create", \%params);
+return (0, &text('namecheap_error', $xml)) if (!$ok);
+
+return (1, $xml->{'DomainCreateResult'}->{'DomainID'});
+}
+
+# type_namecheap_get_nameservers(&account, &domain)
+# Returns a array ref list of nameserver hostnames for some domain, or
+# an error message on failure.
+sub type_namecheap_get_nameservers
+{
+local ($account, $d) = @_;
+$d->{'dom'} =~ /^([^\.]+)\.(\S+)$/ || return "Invalid domain name $d->{'dom'}";
+local ($sld, $tld) = ($1, $2);
+local ($ok, $xml) = &call_namecheap_api($account,
+	"namecheap.domains.dns.getList",
+	{ 'SLD' => $sld, 'TLD' => $tld });
+return &text('namecheap_error', $xml) if (!$ok);
+return $xml->{'DomainDNSGetListResult'}->{'Nameserver'};
+}
+
+# type_namecheap_set_nameservers(&account, &domain, [&nameservers])
+# Updates the nameservers for a domain to match DNS. Returns undef on success
+# or an error message on failure.
+sub type_namecheap_set_nameservers
+{
+local ($account, $d, $nss) = @_;
+
+# Get nameservers in DNS
+$nss ||= &get_domain_nameservers($account, $d);
+if (!ref($nss)) {
+	return $nss;
+	}
+elsif (!@$nss) {
+	return $text{'rcom_ensrecords'};
+	}
+elsif (@$nss < 2) {
+	return (0, &text('namecheap_enstwo', 2, $nss->[0]));
+	}
+
+# Set the nameservers
+$d->{'dom'} =~ /^([^\.]+)\.(\S+)$/ || return "Invalid domain name $d->{'dom'}";
+local ($sld, $tld) = ($1, $2);
+local ($ok, $xml) = &call_namecheap_api($account,
+	"namecheap.domains.dns.setCustom",
+	{ 'SLD' => $sld, 'TLD' => $tld,
+	  'Nameservers' => join(",", @$nss) });
+
+return $ok ? undef : $xml;
+}
+
+# type_namecheap_get_expiry(&account, &domain)
+# Returns either 1 and the expiry time (unix) for a domain, or 0 and an error
+# message.
+sub type_namecheap_get_expiry
+{
+local ($account, $d) = @_;
+local ($ok, $xml) = &call_namecheap_api($account,
+	"namecheap.domains.getinfo",
+	{ 'DomainName' => $d->{'dom'} });
+return (0, &text('namecheap_error', $xml)) if (!$ok);
+
+my $t = $xml->{'DomainGetInfoResult'}->{'DomainDetails'}->{'ExpiredDate'};
+if ($t =~ /(\d+)\/(\d+)\/(\d+)/) {
+	return (1, timelocal(0, 0, 0, $2, $1-1, $3-1900));
+	}
+return (0, &text('gandi_eexpiry', $t));
+}
+
+# type_namecheap_renew_domain(&account, &domain, years)
+# Attempts to renew a domain for the specified period. Returns 1 and the
+# registrars confirmation code on success, or 0 and an error message on
+# failure.
+sub type_namecheap_renew_domain
+{
+local ($account, $d, $years) = @_;
+local ($ok, $xml) = &call_namecheap_api($account,
+	"namecheap.domains.renew",
+	{ 'DomainName' => $d->{'dom'},
+	  'Years' => $years });
+return (0, &text('namecheap_error', $xml)) if (!$ok);
+return (1, $xml->{'DomainRenewResult'}->{'OrderID'});
+}
+
+# type_namecheap_add_instructions()
+# Returns HTML for instructions to be shown on the account adding form, such
+# as where to create one.
+sub type_namecheap_add_instructions
+{
+return &text('namecheap_instructions',
+	     'https://www.namecheap.com/myaccount/signup.aspx',
+	     'http://developer.namecheap.com/docs/');
+}
+
+# type_namecheap_transfer_domain(&account, &domain, key)
+# Transfer a domain from whatever registrar it is currently hosted with to
+# this Namecheap account. Returns 1 and an order ID on succes, or 0
+# and an error mesasge on failure. If a number of years is given, also renews
+# the domain for that period.
+sub type_namecheap_transfer_domain
+{
+local ($account, $d, $key) = @_;
+
+# Get my nameservers
+local $nss = &get_domain_nameservers($account, $d);
+if (!ref($nss)) {
+        return (0, $nss);
+        }
+elsif (!@$nss) {
+        return (0, $text{'rcom_ensrecords'});
+        }
+elsif (@$nss < 2) {
+	return (0, &text('namecheap_enstwo', 2, $nss->[0]));
+	}
+
+# Start the transfer
+local ($ok, $xml) = &call_namecheap_api($account,
+	"namecheap.domains.transfer.create",
+	{ 'DomainName' => $d->{'dom'},
+	  'Years' => $years,
+	  'EPPCode' => $key });
+return (0, &text('namecheap_error', $xml)) if (!$ok);
+local $tid = $xml->{'DomainTransferCreateResult'}->{'TransferID'};
+
+# Poll for completion
+local $tries = 0;
+local $t;
+while($tries++ < 300) {
+	sleep(1);
+	local ($ok, $xml) = &call_namecheap_api($account,
+		"namecheap.domains.transfer.getList");
+	next if (!$ok);
+	($t) = grep { $_->{'Domainname'} eq $d->{'dom'} }
+		    @{$xml->{'TransferGetListResult'}->{'Transfer'}};
+	next if (!$t);
+	if ($t->{'Status'} eq 'CANCELLED') {
+		return (0, $t->{'StatusDescription'});
+		}
+	elsif ($t->{'Status'} eq 'COMPLETED') {
+		return (1, $t->{'OrderID'});
+		}
+	}
+
+# Timed out
+return (0, $t ? &text('namecheap_etransfer', $t->{'StatusDescription'})
+	      : $text{'namecheap_etransfer2'});
+}
+
+# type_namecheap_delete_domain(&account, &domain)
+# Deletes a domain previously created with this registrar
+sub type_namecheap_delete_domain
+{
+local ($account, $d) = @_;
+
+local ($ok, $xml) = &call_namecheap_api($account,
+	"namecheap.domains.delete", { 'DomainName' => $d->{'dom'} });
+return (0, &text('namecheap_error', $xml)) if (!$ok);
+
+return (1, $d->{'dom'});
+}
+
+# type_namecheap_get_contact(&account, &domain)
+# Returns a array containing hashes of domain contact information, or an error
+# message if it could not be found.
+sub type_namecheap_get_contact
+{
+local ($account, $d) = @_;
+
+local ($ok, $xml) = &call_namecheap_api($account,
+		"namecheap.domains.getContacts",
+		{ 'DomainName' => $d->{'dom'} });
+$ok || return &text('namecheap_error', $xml);
+
+local @rv;
+local @schema = &type_namecheap_get_contact_schema($account, $d);
+foreach my $t (keys %{$xml->{'DomainContactsResult'}}) {
+	my $con = $xml->{'DomainContactsResult'}->{$t};
+        next if (!$con->{'FirstName'});
+	$con->{'purpose'} = $t;
+	foreach my $s (@schema) {
+		my $v = $con->{$s->{'name'}};
+		if (ref($v) eq 'HASH') {
+			$v = join(",", keys %$v);
+			}
+		elsif (ref($v) eq 'ARRAY') {
+			$v = @$v;
+			}
+		$con->{$s->{'name'}} = $v;
+		}
+	push(@rv, $con);
+	}
+
+return \@rv;
+}
+
+# type_namecheap_get_contact_schema(&account, &domain, type)
+# Returns a list of fields for domain contacts, as seen by register.com
+sub type_namecheap_get_contact_schema
+{
+local ($account, $d, $type) = @_;
+return ( 
+	      { 'name' => 'FirstName',
+		'size' => 40,
+		'opt' => 0 },
+	      { 'name' => 'LastName',
+		'size' => 40,
+		'opt' => 0 },
+	      { 'name' => 'OrganizationName',
+		'size' => 60,
+		'opt' => 1 },
+	      { 'name' => 'JobTitle',
+		'size' => 60,
+		'opt' => 1 },
+	      { 'name' => 'Address1',
+		'size' => 60,
+		'opt' => 0 },
+	      { 'name' => 'Address2',
+		'size' => 60,
+		'opt' => 2 },
+	      { 'name' => 'City',
+		'size' => 40,
+		'opt' => 0 },
+	      { 'name' => 'StateProvinceChoice',
+		'choices' => [ [ 'S', 'State' ], [ 'P', 'Province' ] ],
+		'opt' => 1 },
+	      { 'name' => 'StateProvince',
+		'size' => 40,
+		'opt' => 1 },
+	      { 'name' => 'PostalCode',
+		'size' => 20,
+		'opt' => 1 },
+	      { 'name' => 'Country',
+		'choices' => [ map { [ $_->[1], $_->[0] ] } &list_countries() ],
+		'opt' => 0 },
+	      { 'name' => 'EmailAddress',
+		'size' => 60,
+		'opt' => 0 },
+	      { 'name' => 'Phone',
+		'size' => 40,
+		'opt' => 0 },
+	      { 'name' => 'PhoneExt',
+		'size' => 40,
+		'opt' => 0 },
+	      { 'name' => 'Fax',
+		'size' => 40,
+		'opt' => 1 },
+	);
+}
+
+
+
 # call_namecheap_api(&account, command, &params)
 # Calls the namecheap API, and returns a status code and either error message
 # or a results object.
@@ -168,9 +460,17 @@ $page .= "?APIUser=".&urlize($account->{'namecheap_user'}).
 	 "&Command=".&urlize($cmd);
 if ($params) {
 	foreach my $p (keys %$params) {
-		$page .= "&".$p."=".&urlize($params->{$p});
+		my $v = $params->{$p};
+		if (ref($v) eq 'HASH') {
+			$v = join(",", keys %$v);
+			}
+		elsif (ref($rv) eq 'ARRAY') {
+			$v = @$v;
+			}
+		$page .= "&".$p."=".&urlize($v);
 		}
 	}
+print STDERR "page=$page\n";
 local ($out, $err);
 &http_download($host, $port, $page, \$out, \$err, undef, $ssl);
 return (0, $err) if ($err);

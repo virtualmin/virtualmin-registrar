@@ -94,7 +94,7 @@ print &ui_hidden_table_end("tlds");
 
 $ifunc = "type_".$reg."_add_instructions";
 if ($in{'registrar'} && defined(&$ifunc)) {
-	print &ui_hidden_table_start($text{'edit_header3'}, undef, 2,
+	print &ui_hidden_table_start($text{'edit_header3'}, "width=100%", 2,
 				     "instructions", 1);
 	print &ui_table_row(undef, &$ifunc(), 2);
 	print &ui_hidden_table_end("instructions");

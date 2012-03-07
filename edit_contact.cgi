@@ -34,7 +34,9 @@ foreach my $con (@$cons) {
 			&contact_hash_to_string($con) ? 1 : 0;
 		}
 
-	print &ui_hidden_table_start($text{'contact_header_'.$con->{'purpose'}},
+	print &ui_hidden_table_start($text{'contact_header_'.
+					   lc($con->{'purpose'})} ||
+					$con->{'purpose'},
 				     "width=100%", 2, $con->{'purpose'}, !$same,
 				     [ "width=30%" ]);
 	if (defined($same)) {
@@ -77,7 +79,7 @@ foreach my $con (@$cons) {
 			$field = &ui_textbox($n,
 				$con->{$s->{'name'}}, $s->{'size'});
 			}
-		print &ui_table_row($text{'contact_'.$s->{'name'}}, $field);
+		print &ui_table_row($text{'contact_'.lc($s->{'name'})}, $field);
 		}
 
 	print &ui_hidden_table_end();

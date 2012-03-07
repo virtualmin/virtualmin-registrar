@@ -31,7 +31,7 @@ foreach my $con (@$cons) {
 	@schema = &get_contact_schema($account, $d, $con->{'purpose'});
 	foreach my $s (@schema) {
 		$n = $con->{'purpose'}.$s->{'name'};
-		$fn = $text{'contact_'.$s->{'name'}};
+		$fn = $text{'contact_'.lc($s->{'name'})};
 		if ($s->{'readonly'}) {
 			# No need to save
 			next;

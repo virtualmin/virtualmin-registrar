@@ -386,6 +386,25 @@ foreach my $t (keys %{$xml->{'DomainContactsResult'}}) {
 return \@rv;
 }
 
+# type_namecheap_save_contact(&account, &domain, &contacts)
+# Updates contacts from an array of hashes
+sub type_namecheap_save_contact
+{
+local ($account, $d, $cons) = @_;
+local %params = ( 'DomainName' => $d->{'dom'} );
+foreach my $con (@$cons) {
+	foreach my $k (keys %$con) {
+		next if ($k eq 'purpose');
+		$params{$con->{'purpose'}.$k} = $con->{$k};
+		}
+	}
+local ($ok, $xml) = &call_namecheap_api($account,
+                "namecheap.domains.setContacts", \%params);
+$ok || return &text('namecheap_error', $xml);
+
+return undef;
+}
+
 # type_namecheap_get_contact_schema(&account, &domain, type)
 # Returns a list of fields for domain contacts, as seen by register.com
 sub type_namecheap_get_contact_schema
@@ -433,7 +452,7 @@ return (
 		'opt' => 0 },
 	      { 'name' => 'PhoneExt',
 		'size' => 40,
-		'opt' => 0 },
+		'opt' => 1 },
 	      { 'name' => 'Fax',
 		'size' => 40,
 		'opt' => 1 },

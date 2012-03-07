@@ -209,7 +209,17 @@ distribute_ebase=Failed to get details for domain $1
 distribute_eowner=Failed to get owner contact ID for domain $1
 
 namecheap_user=Namecheap username
+namecheap_euser=Missing or invalid-looking Namecheap username
 namecheap_apikey=Namecheap API key
+namecheap_eapikey=Missing or invalid-looking Namecheap API key
+namecheap_srcdom=Copy contacts from domain
+namecheap_esrcdom=Missing or invalid-looking domain to copy contacts from
+namecheap_esrcdom2=Domain to copy contacts from is not associated with this account
+namecheap_esrcdom3=Failed to check domain to copy contacts from : $1
+namecheap_eperl=The Perl module $1 needed to call the namecheap API is not installed.
+namecheap_error=Namecheap API error : $1
+namecheap_taken=Already registered according to Namecheap
+namecheap_unknown=Registration status could not be fetched from Namecheap
 
 delete_err1=Failed to disable accounts
 delete_err2=Failed to enable accounts

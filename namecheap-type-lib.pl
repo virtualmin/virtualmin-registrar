@@ -3,6 +3,10 @@
 $namecheap_api_url_test = "https://api.sandbox.namecheap.com/xml.response";
 $namecheap_api_url = "https://api.namecheap.com/xml.response";
 
+$@ = undef;
+eval "use XML::Simple";
+$xml_simple_err = $@;
+
 # Returns the name of this registrar
 sub type_namecheap_desc
 {
@@ -12,6 +16,17 @@ return $text{'type_namecheap'};
 # Returns an error message if needed dependencies are missing
 sub type_namecheap_check
 {
+if ($xml_simple_err) {
+	local $rv = &text('namecheap_eperl', "<tt>XML::Simple</tt>",
+		     "<tt>".&html_escape($frontier_client_err)."</tt>");
+	if (&foreign_available("cpan")) {
+		$rv .= "\n".&text('gandi_cpan',
+			"../cpan/download.cgi?source=3&cpan=XML::Simple&".
+			"return=../$module_name/&".
+			"returndesc=".&urlize($text{'index_return'}));
+		}
+	return $rv;
+	}
 return undef;
 }
 
@@ -20,6 +35,14 @@ return undef;
 # From : http://www.namecheap.com/domains/domain-pricing.aspx
 sub type_namecheap_domains
 {
+local ($account) = @_;
+if ($account) {
+	local ($ok, $xml) = &call_namecheap_api(
+				$account, "namecheap.domains.getTldList");
+	if ($ok) {
+		return map { ".".$_->{'Name'} } @{$xml->{'Tlds'}->{'Tld'}};
+		}
+	}
 return ( ".com", ".net", ".org", ".info", ".co.uk", ".us", ".me",
 	 ".co", ".ca", ".mobi", ".biz", ".xxx", ".de". ".tv",
 	 ".eu", ".in", ".org.uk", ".me.uk", ".cc", ".asia", ".ws",
@@ -36,6 +59,8 @@ $rv .= &ui_table_row($text{'namecheap_user'},
 	&ui_textbox("namecheap_user", $account->{'namecheap_user'}, 30));
 $rv .= &ui_table_row($text{'namecheap_apikey'},
 	&ui_textbox("namecheap_apikey", $account->{'namecheap_apikey'}, 30));
+$rv .= &ui_table_row($text{'namecheap_srcdom'},
+	&ui_textbox("namecheap_srcdom", $account->{'namecheap_srcdom'}, 30));
 $rv .= &ui_table_row($text{'rcom_years'},
 	&ui_opt_textbox("namecheap_years", $account->{'namecheap_years'},
 			4, $text{'rcom_yearsdef'}));
@@ -55,6 +80,8 @@ $in->{'namecheap_user'} =~ /^\S+$/ || return $text{'namecheap_euser'};
 $account->{'namecheap_user'} = $in->{'namecheap_user'};
 $in->{'namecheap_apikey'} =~ /^\S+$/ || return $text{'namecheap_eapikey'};
 $account->{'namecheap_apikey'} = $in->{'namecheap_apikey'};
+$in->{'namecheap_srcdom'} =~ /^\S+$/ || return $text{'namecheap_esrcdom'};
+$account->{'namecheap_srcdom'} = $in->{'namecheap_srcdom'};
 if ($in->{'namecheap_years_def'}) {
 	delete($account->{'namecheap_years'});
 	}
@@ -81,13 +108,45 @@ return $account->{'namecheap_years'} || 2;
 sub type_namecheap_validate
 {
 local ($account) = @_;
-local ($server, $sid_or_err) = &call_namecheap_api($account,
-				"namecheap.domains.getList");
-if ($server) {
-	return undef;
+local ($ok, $xml) = &call_namecheap_api($account,
+			"namecheap.domains.getList");
+if ($ok) {
+	# Connected OK .. but does the source domain exist?
+	local ($ok, $xml) = &call_namecheap_api($account,
+			"namecheap.domains.getContacts",
+			{ 'DomainName' => $account->{'namecheap_srcdom'} });
+	if (!$ok && $xml =~ /Domain Name not found/i) {
+		return $text{'namecheap_esrcdom2'};
+		}
+	elsif (!$ok) {
+		return &text('namecheap_esrcdom3', $xml);
+		}
+	else {
+		return undef;
+		}
 	}
 else {
-	return $sid_or_err;
+	return $xml;
+	}
+}
+
+# type_namecheap_check_domain(&account, domain)
+# Checks if some domain name is available for registration, returns undef if
+# yes, or an error message if not.
+sub type_namecheap_check_domain
+{
+local ($account, $dname) = @_;
+local ($ok, $xml) = &call_namecheap_api($account, "namecheap.domains.check",
+					{ 'DomainList' => $dname });
+return &text('namecheap_error', $xml) if (!$ok);
+if ($xml->{'DomainCheckResult'}->{'Available'} eq 'true') {
+	return undef;
+	}
+elsif ($xml->{'DomainCheckResult'}->{'Available'}) {
+	return $text{'namecheap_taken'};
+	}
+else {
+	return $text{'namecheap_unknown'};
 	}
 }
 
@@ -107,7 +166,6 @@ $page .= "?APIUser=".&urlize($account->{'namecheap_user'}).
 		       &virtual_server::get_dns_ip() ||
 		       &virtual_server::get_default_ip()).
 	 "&Command=".&urlize($cmd);
-print STDERR $page,"\n";
 if ($params) {
 	foreach my $p (keys %$params) {
 		$page .= "&".$p."=".&urlize($params->{$p});
@@ -115,11 +173,17 @@ if ($params) {
 	}
 local ($out, $err);
 &http_download($host, $port, $page, \$out, \$err, undef, $ssl);
-# XXX parse XML
-print STDERR $err,"\n";
-print STDERR $out;
 return (0, $err) if ($err);
-return (1, $out);
+local $xml;
+eval {
+	$xml = XMLin(\$out);
+	};
+return (0, "Invalid response XML : $@") if ($@);
+use Data::Dumper;
+print STDERR Dumper($xml);
+return (0, "API command failed : $xml->{'Errors'}->{'Error'}->{'content'}")
+	if ($xml->{'Status'} ne 'OK');
+return (1, $xml->{'CommandResponse'});
 }
 
 1;

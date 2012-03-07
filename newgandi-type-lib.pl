@@ -252,7 +252,6 @@ return $@ ? &text('gandi_error', "$@") : $rv;
 # type_newgandi_set_nameservers(&account, &domain, [&nameservers])
 # Updates the nameservers for a domain to match DNS. Returns undef on success
 # or an error message on failure.
-# XXX check return code
 sub type_newgandi_set_nameservers
 {
 local ($account, $d, $nss) = @_;
@@ -660,8 +659,6 @@ return (1, $oper->{'id'});
 # connect_newgandi_api(&account, [return-error])
 # Returns a handle connected to the Gandi XML-RPC API and a session ID,
 # or calls error
-# XXX skip version.info call if already done for this account in this process
-#     and was successful
 sub connect_newgandi_api
 {
 local ($account, $reterr) = @_;

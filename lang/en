@@ -96,6 +96,7 @@ save_dok=Yes, Remove It
 save_ens=Failed to lookup IP address for nameserver '$1'
 save_ensip=Nameserver '$1' must be entered as a hostname, not an IP address
 save_enss=No nameservers entered
+save_transfer=This account was used to create $1 domains.<br>Select the registrar account that can be used to manage these domains instead :
 
 rcom_account=Account login ID
 rcom_pass=Account password

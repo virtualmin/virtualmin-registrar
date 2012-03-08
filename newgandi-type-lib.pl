@@ -1,7 +1,7 @@
 # Functions for talking to gandi.net with the new API
 
-$gandi_api_url_test = "https://rpc.ote.gandi.net/xmlrpc/";
-$gandi_api_url = "https://rpc.gandi.net/xmlrpc/";
+$newgandi_api_url_test = "https://rpc.ote.gandi.net/xmlrpc/";
+$newgandi_api_url = "https://rpc.gandi.net/xmlrpc/";
 
 $@ = undef;
 eval "use Frontier::Client";
@@ -707,8 +707,8 @@ local ($account, $reterr) = @_;
 local $server;
 eval {
 	$server = Frontier::Client->new(
-		'url' => $account->{'gandi_test'} ? $gandi_api_url_test
-					          : $gandi_api_url,
+		'url' => $account->{'gandi_test'} ? $newgandi_api_url_test
+					          : $newgandi_api_url,
 		'debug' => 0);
 	};
 if ($@) {

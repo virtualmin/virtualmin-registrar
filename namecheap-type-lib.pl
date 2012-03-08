@@ -489,7 +489,6 @@ if ($params) {
 		$page .= "&".$p."=".&urlize($v);
 		}
 	}
-print STDERR "page=$page\n";
 local ($out, $err);
 &http_download($host, $port, $page, \$out, \$err, undef, $ssl);
 return (0, $err) if ($err);
@@ -498,8 +497,6 @@ eval {
 	$xml = XMLin(\$out);
 	};
 return (0, "Invalid response XML : $@") if ($@);
-use Data::Dumper;
-print STDERR Dumper($xml);
 return (0, "API command failed : $xml->{'Errors'}->{'Error'}->{'content'}")
 	if ($xml->{'Status'} ne 'OK');
 return (1, $xml->{'CommandResponse'});

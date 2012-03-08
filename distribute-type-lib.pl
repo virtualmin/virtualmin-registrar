@@ -153,7 +153,6 @@ local ($ok, $out) = &call_distribute_api(
 			 'Object' => 'Domain',
 			 'Action' => 'Availability',
 			 'Domain' => $dname });
-print STDERR "ok=$ok out=$out\n";
 return &text('distribute_taken', "$1") if (!$ok && $out =~ /304,(.*)/);
 return &text('distribute_error', $out) if (!$ok);
 return undef;
@@ -467,9 +466,7 @@ foreach my $k (keys %$params) {
 	}
 $page .= "?".join("&", @params);
 local ($out, $err);
-print STDERR "page=$page\n";
 &http_download($host, $port, $page, \$out, \$err, undef, $ssl);
-print STDERR "err=$err out=$out\n";
 if ($err =~ /403/) {
 	# Bad IP .. warn specifically
 	return (0, $text{'distribute_eip'});

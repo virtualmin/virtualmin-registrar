@@ -289,6 +289,9 @@ contact_password=Password at registrar
 contact_same=Same as the first contact?
 contact_emissing=Missing value for $1
 contact_esave=Failed to update registrar : $1
+contact_createtab=Create contacts
+contact_selecttab=Select contacts
+contact_efind=No contact with ID $1 found
 
 import_title=Associate Domain Registration
 import_header=Details of existing domain registrar

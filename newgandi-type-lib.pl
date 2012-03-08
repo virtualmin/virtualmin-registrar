@@ -460,6 +460,25 @@ return ( { 'name' => 'handle',
 	);
 }
 
+# type_newgandi_nice_contact_name(&contact)
+# Returns a contact type and name string
+sub type_newgandi_nice_contact_name
+{
+local ($con) = @_;
+if ($con->{'type'} == 0) {
+	return $con->{'handle'}." - ".
+	       $con->{'given'}." ".$con->{'family'}.
+	       " (".$text{'gandi_individual'}.")";
+	}
+else {
+	return $con->{'handle'}." - ".
+	       $con->{'orgname'}." (".
+	       ($con->{'type'} == 1 ? $text{'gandi_company'} :
+		$con->{'type'} == 2 ? $text{'gandi_public'} :
+		$con->{'type'} == 3 ? $text{'gandi_association'} : "???").")";
+	}
+}
+
 # type_newgandi_get_contact_classes(&account)
 # Returns a list of hash refs with ID and desc fields, for different classes
 # of contacts (individual, business, etc)
@@ -514,8 +533,6 @@ eval {
 	$callcon->{'type'} = $con->{'type'};	# Always set, even though RO
 	$callcon->{'zip'} = $server->string($con->{'zip'});
 	$callcon->{'phone'} = $server->string($con->{'phone'});
-	use Data::Dumper;
-	print STDERR Dumper($callcon);
 	local $newcon = $server->call("contact.create", $sid, $callcon);
 	$con->{'id'} = $con->{'handle'} = $newcon->{'handle'};
 	};
@@ -547,6 +564,31 @@ eval {
 	$server->call("contact.update", $sid, $con->{'handle'}, $callcon);
 	};
 return (0, &text('gandi_error', "$@")) if ($@);
+
+return undef;
+}
+
+# type_newgandi_update_contacts(&account, &domain, &contacts)
+# Sets the contacts used by some domain.
+sub type_newgandi_update_contacts
+{
+local ($account, $d, $cons) = @_;
+local ($server, $sid) = &connect_newgandi_api($account, 1);
+return &text('gandi_error', $sid) if (!$server);
+
+local $oper;
+eval {
+	local %cspec;
+	foreach my $con (@$cons) {
+		$cspec{$con->{'purpose'}} = $con->{'handle'};
+		}
+	$oper = $server->call("domain.contacts.set", $sid, $d->{'dom'}, \%cspec);
+	};
+return (0, &text('gandi_error', "$@")) if ($@);
+
+# Wait for completion
+local ($ok, $msg) = &wait_for_gandi_operation($sid, $oper);
+return (0, &text('gandi_ecreate', $msg)) if (!$ok);
 
 return undef;
 }
@@ -707,8 +749,6 @@ local $tries = 0;
 while(1) {
 	sleep(1);
 	local $rv = $server->call("operation.info", $sid, $oper->{'id'});
-	use Data::Dumper;
-	print STDERR Dumper($rv);
 	if ($rv->{'step'} eq 'DONE') {
 		return (1, $rv);
 		}

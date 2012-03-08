@@ -9,7 +9,8 @@ require './virtualmin-registrar-lib.pl';
 &can_domain($in{'dom'}) || &error($text{'contact_ecannot'});
 $d = &virtual_server::get_domain_by("dom", $in{'dom'});
 $d || &error(&text('contact_edom', $in{'dom'}));
-&can_contacts($d) == 1 || &error(&text('contact_edom', $in{'dom'}));
+&can_contacts($d) == 1 || can_contacts($d) == 3 ||
+	&error(&text('contact_edom', $in{'dom'}));
 ($account) = grep { $_->{'id'} eq $d->{'registrar_account'} }
 		  &list_registrar_accounts();
 $account || &error(&text('contact_eaccount', $in{'dom'}));
@@ -22,6 +23,17 @@ ref($cons) || &error($cons);
 &ui_print_header(&virtual_server::domain_in($d), $text{'contact_title'}, "",
 		 "contact");
 
+$lfunc = "type_".$account->{'registrar'}."_list_contacts";
+if (can_contacts($d) == 3 && defined(&$lfunc)) {
+	# Start of tabs for contact selection mode
+	@tabs = ( [ 'create', $text{'contact_createtab'} ],
+		  [ 'select', $text{'contact_selecttab'} ] );
+	print &ui_tabs_start(\@tabs, 'mode', $in{'mode'} || 'create', 1);
+	$tabbed = 1;
+	}
+
+# Start section for new contact creation
+print &ui_tabs_start_tab('mode', 'create') if ($tabbed);
 print &ui_form_start("save_contact.cgi", "post");
 print &ui_hidden("dom", $in{'dom'});
 
@@ -86,6 +98,34 @@ foreach my $con (@$cons) {
 	}
 
 print &ui_form_end([ [ "save", $text{'save'} ] ]);
+print &ui_tabs_end_tab('mode', 'create') if ($tabbed);
+
+if ($tabbed) {
+	# Start section for existing contact selection
+	print &ui_tabs_start_tab('mode', 'select');
+	print &ui_form_start("update_contacts.cgi", "post");
+	print &ui_hidden("dom", $in{'dom'});
+	print &ui_table_start($text{'contact_sheader'}, undef, 2);
+
+	# Find all contacts the account has
+	($ok, $allcons) = &$lfunc($account);
+
+	# Show selector for each contact type for the domain
+	foreach my $con (@$cons) {
+		print &ui_table_row(
+			$text{'contact_header_'.lc($con->{'purpose'})} ||
+			    $con->{'purpose'},
+			&ui_select($con->{'purpose'}, $con->{'id'},
+			    [ map { [ $_->{'id'},
+				      &nice_contact_name($_, $account,) ] }
+				  @$allcons ]));
+		}
+
+	print &ui_table_end();
+	print &ui_form_end([ [ undef, $text{'save'} ] ]);
+	print &ui_tabs_end_tab('mode', 'select');
+	print &ui_tabs_end(1);
+	}
 
 &ui_print_footer(&virtual_server::domain_footer_link($d));
 

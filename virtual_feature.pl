@@ -311,9 +311,10 @@ if ($d->{$module_name}) {
 	local $cm = &can_contacts($d);
 	if ($cm && defined(&$cfunc)) {
 		push(@rv, { 'mod' => $module_name,
-			    'desc' => $cm == 1 ? $text{'links_contact'}
-					       : $text{'links_contactv'},
-			    'page' => $cm == 1 ? 
+			    'desc' => $cm == 1 || $cm == 3 ?
+					$text{'links_contact'} :
+					$text{'links_contactv'},
+			    'page' => $cm == 1 || $cm == 3 ? 
 				'edit_contact.cgi?dom='.$d->{'dom'} :
 				'view_contact.cgi?dom='.$d->{'dom'},
 			    'cat' => 'dns' });

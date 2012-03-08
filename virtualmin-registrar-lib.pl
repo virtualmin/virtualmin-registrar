@@ -141,10 +141,11 @@ return &indexof($dname, @doms) >= 0;
 }
 
 # can_contacts(&domain)
-# Returns 1 if the current user is allowed to edit contacts for a domain
+# Returns 1 if the current user is allowed to edit contacts for a domain, 
+# 2 for view only, 3 if selection of other contacts is also allowed
 sub can_contacts
 {
-return &virtual_server::master_admin() ? 1 : $config{'can_contacts'};
+return &virtual_server::master_admin() ? 3 : $config{'can_contacts'};
 }
 
 # can_nameservers(&domain)
@@ -281,6 +282,20 @@ local @k = sort { $a cmp $b }
 	        grep { $_ ne "purpose" && $_ ne "lcmap" && $_ ne "id" &&
 		       !ref($h->{$_}) } (keys %$h);
 return join(" ", map { $_."=".$h->{$_} } @k);
+}
+
+# nice_contact_name(&contact, &account)
+# Returns a human-readable name for a contact
+sub nice_contact_name
+{
+local ($con, $account) = @_;
+local $nfunc = "type_".$account->{'registrar'}."_nice_contact_name";
+if (defined(&$nfunc)) {
+	return &$nfunc($con);
+	}
+return $con->{'id'}." ".
+       ($con->{'firstname'} || $con->{'FirstName'})." ".
+       ($con->{'lastname'} || $con->{'LastName'});
 }
 
 1;

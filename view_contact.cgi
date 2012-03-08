@@ -19,11 +19,12 @@ $cfunc = "type_".$account->{'registrar'}."_get_contact";
 $cons = &$cfunc($account, $d);
 ref($cons) || &error($cons);
 
-&ui_print_header(&virtual_server::domain_in($d), $text{'contact2_title'}, "");
+&ui_print_header(&virtual_server::domain_in($d), $text{'contact_title2'}, "");
 
 # Show fields for each contact type
 foreach my $con (@$cons) {
-	print &ui_hidden_table_start($text{'contact_header_'.$con->{'type'}},
+	print &ui_hidden_table_start($text{'contact_header_'.
+					   lc($con->{'purpose'})},
 				     "width=100%", 2, $con->{'type'}, !$same,
 				     [ "width=30%" ]);
 
@@ -32,9 +33,9 @@ foreach my $con (@$cons) {
 		$v = $con->{$s->{'name'}};
 		if ($s->{'choices'}) {
 			($ch) = grep { $_->[0] eq $v } @{$s->{'choices'}};
-			$v = $ch->[1] if ($v);
+			$v = $ch->[1] if ($ch);
 			}
-		print &ui_table_row($text{'contact_'.$s->{'name'}}, $v);
+		print &ui_table_row($text{'contact_'.lc($s->{'name'})}, $v);
 		}
 
 	print &ui_hidden_table_end();

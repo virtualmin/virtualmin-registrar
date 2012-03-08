@@ -9,7 +9,8 @@ require './virtualmin-registrar-lib.pl';
 &can_domain($in{'dom'}) || &error($text{'contact_ecannot'});
 $d = &virtual_server::get_domain_by("dom", $in{'dom'});
 $d || &error(&text('contact_edom', $in{'dom'}));
-&can_contacts($d) == 1 || &error(&text('contact_edom', $in{'dom'}));
+&can_contacts($d) == 1 || &can_contacts($d) == 3 ||
+	&error(&text('contact_edom', $in{'dom'}));
 ($account) = grep { $_->{'id'} eq $d->{'registrar_account'} }
 		  &list_registrar_accounts();
 $account || &error(&text('contact_eaccount', $in{'dom'}));

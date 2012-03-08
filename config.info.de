@@ -1,1 +1,1 @@
-can_contacts=Erlaube Serveradministratoren die Kontakte zu editieren?,1,1-Ja,0-Nein,2-Nur Lesen
+can_contacts=Erlaube Serveradministratoren die Kontakte zu editieren?,1,1-Ja,3-Yes and can select existing contacts,0-Nein,2-Nur Lesen

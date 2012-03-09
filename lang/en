@@ -11,6 +11,7 @@ feat_failed=.. failed : $1
 feat_setupdone=.. done. The registrar's ID for this domain is $1.
 feat_modifydons=.. done. The new registrar's ID for this domain is $1
 feat_delete=De-registering DNS domain with $1 ..
+feat_delete2=De-registering DNS domain ..
 feat_modify1=De-registering old DNS domain $1 with $2 ..
 feat_modify2=Re-registering new DNS domain $1 with $2 ..
 feat_modify=Changing registered DNS domain from $1 to $2 with $3 ..

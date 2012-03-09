@@ -150,6 +150,26 @@ else {
 	}
 }
 
+# type_namecheap_owned_domain(&account, domain)
+# Checks if some domain is owned by the given account. If so, returns the
+# 1 and the registrar's ID - if not, returns 1 and undef, on failure returns
+# 0 and an error message.
+sub type_namecheap_owned_domain
+{
+local ($account, $dname) = @_;
+local ($ok, $xml) = &call_namecheap_api($account, "namecheap.domains.getinfo",
+					{ 'DomainName' => $dname });
+if (!$ok && $xml =~ /Domain Name not found/i) {
+	return (1, undef);
+	}
+elsif (!$ok) {
+	return (0, &text('namecheap_error', $xml));
+	}
+else {
+	return (1, $xml->{'DomainGetInfoResult'}->{'ID'});
+	}
+}
+
 # type_namecheap_create_domain(&account, &domain)
 # Actually register a domain, if possible. Returns 0 and an error message if
 # it failed, or 1 and an ID for the domain on success.
@@ -173,7 +193,7 @@ elsif (@$nss < 2) {
 local ($ok, $xml) = &call_namecheap_api($account,
 		"namecheap.domains.getContacts",
 		{ 'DomainName' => $account->{'namecheap_srcdom'} });
-$ok || return &text('namecheap_error', $xml);
+$ok || return (0, &text('namecheap_error', $xml));
 
 # Build list of params
 local %params = ( 'Nameservers' => join(",", @$nss),
@@ -209,7 +229,9 @@ local ($ok, $xml) = &call_namecheap_api($account,
 	"namecheap.domains.dns.getList",
 	{ 'SLD' => $sld, 'TLD' => $tld });
 return &text('namecheap_error', $xml) if (!$ok);
-return $xml->{'DomainDNSGetListResult'}->{'Nameserver'};
+local $nss = $xml->{'DomainDNSGetListResult'}->{'Nameserver'};
+$nss = [ $nss ] if (!ref($nss));
+return $nss;
 }
 
 # type_namecheap_set_nameservers(&account, &domain, [&nameservers])
@@ -228,7 +250,7 @@ elsif (!@$nss) {
 	return $text{'rcom_ensrecords'};
 	}
 elsif (@$nss < 2) {
-	return (0, &text('namecheap_enstwo', 2, $nss->[0]));
+	return &text('namecheap_enstwo', 2, $nss->[0]);
 	}
 
 # Set the nameservers
@@ -489,12 +511,15 @@ if ($params) {
 		$page .= "&".$p."=".&urlize($v);
 		}
 	}
+print STDERR $page,"\n";
 local ($out, $err);
 &http_download($host, $port, $page, \$out, \$err, undef, $ssl);
 return (0, $err) if ($err);
+return (0, "Invalid response : $out") if ($out !~ /^\s*</);
+print STDERR $out,"\n";
 local $xml;
 eval {
-	$xml = XMLin(\$out);
+	$xml = XMLin($out);
 	};
 return (0, "Invalid response XML : $@") if ($@);
 return (0, "API command failed : $xml->{'Errors'}->{'Error'}->{'content'}")

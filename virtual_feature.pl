@@ -105,6 +105,7 @@ if (defined(&$ofunc)) {
 local $rfunc = "type_".$reg."_create_domain";
 local ($ok, $msg) = &$rfunc($account, $d);
 if (!$ok) {
+	&$virtual_server::second_print(&text('feat_failed', $msg));
 	&error(&text('feat_failed', $msg));
 	}
 $d->{'registrar_account'} = $account->{'id'};
@@ -220,6 +221,8 @@ local ($d) = @_;
 local ($account) = grep { $_->{'id'} eq $d->{'registrar_account'} }
 			&list_registrar_accounts();
 if (!$account) {
+	&$virtual_server::first_print(&text('feat_delete2'));
+	&$virtual_server::second_print($text{'feat_noaccount'});
 	&error($text{'feat_noaccount'});
 	return 0;
 	}
@@ -229,6 +232,7 @@ local $dfunc = "type_".$reg."_desc";
 local $ufunc = "type_".$reg."_delete_domain";
 local ($ok, $msg) = &$ufunc($account, $d);
 if (!$ok) {
+	&$virtual_server::second_print(&text('feat_failed', $msg));
 	&error(&text('feat_failed', $msg));
         return 0;
 	}

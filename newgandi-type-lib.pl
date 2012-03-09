@@ -475,7 +475,8 @@ else {
 	       $con->{'orgname'}." (".
 	       ($con->{'type'} == 1 ? $text{'gandi_company'} :
 		$con->{'type'} == 2 ? $text{'gandi_public'} :
-		$con->{'type'} == 3 ? $text{'gandi_association'} : "???").")";
+		$con->{'type'} == 3 ? $text{'gandi_association'} :
+				      "Type $con->{'type'}").")";
 	}
 }
 
@@ -508,6 +509,14 @@ eval {
 	};
 return (0, &text('gandi_error', "$@")) if ($@);
 foreach my $con (@$list) {
+	if (!defined($con->{'type'})) {
+		# Not complete .. need to re-query this contact explicitly
+		my $newcon = $server->call("contact.info", $sid,
+                                     $con->{'handle'});
+		foreach my $k (keys %$newcon) {
+			$con->{$k} = $newcon->{$k};
+			}
+		}
 	$con->{'id'} = $con->{'handle'};
 	}
 return (1, $list);

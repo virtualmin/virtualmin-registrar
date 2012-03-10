@@ -32,6 +32,10 @@ print &ui_form_start("save_ns.cgi", "post");
 print &ui_hidden("dom", $in{'dom'});
 print &ui_table_start($text{'ns_header'}, undef, 2);
 
+# Show registrar account
+print &ui_table_row($text{'ns_account'},
+		    $account->{'desc'});
+
 # Show nameservers with registrar
 print &ui_table_row($text{'ns_ns'},
 	&ui_radio_table("same", $same_nss, 

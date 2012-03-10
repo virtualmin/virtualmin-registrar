@@ -58,6 +58,12 @@ foreach my $con (@$cons) {
 		print &ui_table_hr();
 		}
 
+	if ($count++ == 0) {
+		# Show registrar account
+		print &ui_table_row($text{'ns_account'},
+				    $account->{'desc'});
+		}
+
 	@schema = &get_contact_schema($account, $d, $con->{'purpose'});
 	foreach my $s (@schema) {
 		$n = $con->{'purpose'}.$s->{'name'};
@@ -109,6 +115,8 @@ if ($tabbed) {
 
 	# Find all contacts the account has
 	($ok, $allcons) = &$lfunc($account);
+	print &ui_table_row($text{'ns_account'},
+			    $account->{'desc'});
 
 	# Show selector for each contact type for the domain
 	foreach my $con (@$cons) {

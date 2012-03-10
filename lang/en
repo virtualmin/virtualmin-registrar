@@ -393,6 +393,7 @@ ns_ecannot=You are not allowed to edit contacts for this domain
 ns_title=Edit Nameservers
 ns_header=Registrar nameserver details
 ns_ns=Nameservers used by registrar
+ns_account=Registrar account
 ns_same=Same as Virtualmin expects
 ns_diff=Different nameservers
 ns_bind=Nameservers in local DNS zone

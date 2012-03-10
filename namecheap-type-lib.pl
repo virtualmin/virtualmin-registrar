@@ -511,12 +511,10 @@ if ($params) {
 		$page .= "&".$p."=".&urlize($v);
 		}
 	}
-print STDERR $page,"\n";
 local ($out, $err);
 &http_download($host, $port, $page, \$out, \$err, undef, $ssl);
 return (0, $err) if ($err);
 return (0, "Invalid response : $out") if ($out !~ /^\s*</);
-print STDERR $out,"\n";
 local $xml;
 eval {
 	$xml = XMLin($out);

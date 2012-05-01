@@ -223,7 +223,7 @@ namecheap_error=Namecheap API error : $1
 namecheap_taken=Already registered according to Namecheap
 namecheap_unknown=Registration status could not be fetched from Namecheap
 namecheap_enstwo=Namecheap requires that each domain have at least $1 nameservers, but you only have $2
-namecheap_instructions=To sign up for an account with Namecheap, go to their website and <a href='$1' target=_new'>and sign up for an account</a>. You will need to enable API access on your account, as documented on <a href='$2' target=_new>Namecheap API page</a>.
+namecheap_instructions=To sign up for an account with Namecheap, go to their website and <a href='$1' target=_new'>sign up for an account</a>. You will need to enable API access on your account, as documented on <a href='$2' target=_new>Namecheap API page</a>.
 namecheap_etransfer=Transfer failed to complete after 5 minutes : $1
 namecheap_etransfer2=Transfer failed to complete after 5 minutes, and no status information is available
 

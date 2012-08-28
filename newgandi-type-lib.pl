@@ -4,7 +4,7 @@ $newgandi_api_url_test = "https://rpc.ote.gandi.net/xmlrpc/";
 $newgandi_api_url = "https://rpc.gandi.net/xmlrpc/";
 
 $@ = undef;
-eval "use Frontier::Client";
+eval "use XML::RPC";
 $frontier_client_err = $@;
 
 # Returns the name of this registrar
@@ -17,11 +17,11 @@ return $text{'type_newgandi'};
 sub type_newgandi_check
 {
 if ($frontier_client_err) {
-	local $rv = &text('gandi_eperl', "<tt>Frontier::Client</tt>",
+	local $rv = &text('gandi_eperl', "<tt>XML::RPC</tt>",
 		     "<tt>".&html_escape($frontier_client_err)."</tt>");
 	if (&foreign_available("cpan")) {
 		$rv .= "\n".&text('gandi_cpan',
-			"../cpan/download.cgi?source=3&cpan=Frontier::Client&".
+			"../cpan/download.cgi?source=3&cpan=XML::RPC&".
 			"return=../$module_name/&".
 			"returndesc=".&urlize($text{'index_return'}));
 		}
@@ -507,6 +507,7 @@ local $list;
 eval {
 	$list = $server->call("contact.list", $sid);
 	};
+print STDERR "error=$@\n";
 return (0, &text('gandi_error', "$@")) if ($@);
 foreach my $con (@$list) {
 	if (!defined($con->{'type'})) {
@@ -617,7 +618,7 @@ eval {
 	$info = $server->call("domain.info", $sid, $d->{'dom'});
 	};
 return (0, &text('gandi_error', "$@")) if ($@);
-local $expirydate = $info->{'date_registry_end'}->value();
+local $expirydate = $info->{'date_registry_end'};
 if ($expirydate =~ /^(\d{4})(\d\d)(\d\d)T(\d\d):(\d\d):(\d\d)$/) {
 	return (1, timelocal($6, $5, $4, $3, $2-1, $1-1900));
 	}
@@ -715,10 +716,9 @@ sub connect_newgandi_api
 local ($account, $reterr) = @_;
 local $server;
 eval {
-	$server = Frontier::Client->new(
-		'url' => $account->{'gandi_test'} ? $newgandi_api_url_test
-					          : $newgandi_api_url,
-		'debug' => 0);
+	$server = XML::RPC->new(
+		$account->{'gandi_test'} ? $newgandi_api_url_test
+					 : $newgandi_api_url);
 	};
 if ($@) {
 	if ($reterr) {

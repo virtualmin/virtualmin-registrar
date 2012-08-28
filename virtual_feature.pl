@@ -53,10 +53,23 @@ return undef;
 # an error message if so
 sub feature_clash
 {
-# Is this domain already registered?
 local ($d) = @_;
+
+# Get registrar account
 local $account = &find_registrar_account($d->{'dom'});
 return $text{'feat_edepend'} if (!$account);
+
+# Check if the domain is already owned by this account
+local $ofunc = "type_".$account->{'registrar'}."_owned_domain";
+if (defined(&$ofunc)) {
+	local ($o, $id) = &$ofunc($account, $d->{'dom'});
+	if ($o) {
+		# Yes, so that's not a clash
+		return undef;
+		}
+	}
+
+# Is this domain already registered by someone else?
 local $cfunc = "type_".$account->{'registrar'}."_check_domain";
 if (defined(&$cfunc)) {
 	local $cerr = &$cfunc($account, $d->{'dom'});
@@ -90,7 +103,7 @@ local $dfunc = "type_".$reg."_desc";
 &$virtual_server::first_print(&text('feat_setup', &$dfunc($account)));
 
 # Check if the domain is already owned by this account
-local $ofunc = "type_".$reg."_check_domain";
+local $ofunc = "type_".$reg."_owned_domain";
 if (defined(&$ofunc)) {
 	local ($o, $id) = &$ofunc($account, $d->{'dom'});
 	if ($o) {

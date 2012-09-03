@@ -21,7 +21,8 @@ return $text{'feat_losing'};
 # editing form
 sub feature_label
 {
-return $text{'feat_label'};
+local ($edit) = @_;
+return $edit ? $text{'feat_label2'} : $text{'feat_label'};
 }
 
 # feature_hlink(in-edit-form)

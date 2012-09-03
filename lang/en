@@ -2,6 +2,7 @@ feat_name=DNS Domain Registration
 feat_losing=The DNS domain will be de-registered
 feat_disabling=The DNS domain will be temporarily disabled
 feat_label=Register DNS domain?
+feat_label2=Register DNS domain
 feat_edepend=No registrar account that be used to create the domain was found
 feat_edepend2=Only real DNS domain names like <i>foo.com</i> can be registered
 feat_eclash=The domain $1 cannot be registered : $2

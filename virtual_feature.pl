@@ -232,6 +232,11 @@ else {
 sub feature_delete
 {
 local ($d) = @_;
+if (!$config{'deregister'}) {
+	&$virtual_server::first_print(&text('feat_delete2'));
+	&$virtual_server::second_print($text{'feat_noderegister'});
+	return 1;
+	}
 local ($account) = grep { $_->{'id'} eq $d->{'registrar_account'} }
 			&list_registrar_accounts();
 if (!$account) {

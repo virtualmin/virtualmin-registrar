@@ -118,7 +118,7 @@ local $avail;
 eval {
 	$avail = $server->call("domain_available", $sid, [ $dname ]);
 	};
-return &text('gandi_error', $@) if ($@);
+return &text('gandi_error', "$@") if ($@);
 return $avail->{$dname} && $avail->{$dname}->value() ?
 	undef : $text{'gandi_taken'};
 }
@@ -138,7 +138,7 @@ local $list;
 eval {
 	$list = $server->call("domain_list", $sid);
 	};
-return (0, &text('gandi_error', $@)) if ($@);
+return (0, &text('gandi_error', "$@")) if ($@);
 
 # Check if on list
 foreach my $l (@$list) {
@@ -182,7 +182,7 @@ eval {
 			      $account->{'gandi_account'},
 			      $nss);
 	};
-return (0, &text('gandi_error', $@)) if ($@);
+return (0, &text('gandi_error', "$@")) if ($@);
 return (1, $d->{'dom'});
 }
 
@@ -200,7 +200,7 @@ eval {
 	$rv = $server->call("domain_ns_list", $sid, $d->{'dom'});
 	$rv = [ map { $_."" } @$rv ];
 	};
-return $@ ? &text('gandi_error', $@) : $rv;
+return $@ ? &text('gandi_error', "$@") : $rv;
 }
 
 # type_gandi_set_nameservers(&account, &domain, [&nameservers])
@@ -228,7 +228,7 @@ elsif (@$nss < 2) {
 eval {
 	$server->call("domain_ns_set", $sid, $d->{'dom'}, $nss);
 	};
-return $@ ? &text('gandi_error', $@) : undef;
+return $@ ? &text('gandi_error', "$@") : undef;
 }
 
 # type_gandi_delete_domain(&account, &domain)
@@ -244,7 +244,7 @@ local $opid;
 eval {
 	$opid = $server->call("domain_del", $sid, $d->{'dom'});
 	};
-return (0, &text('gandi_error', $@)) if ($@);
+return (0, &text('gandi_error', "$@")) if ($@);
 return (1, $opid);
 }
 
@@ -262,7 +262,7 @@ local $info;
 eval {
 	$info = $server->call("domain_info", $sid, $d->{'dom'});
 	};
-return &text('gandi_error', $@) if ($@);
+return &text('gandi_error', "$@") if ($@);
 local @rv;
 foreach my $ct ('admin', 'tech', 'billing') {
 	next if (!$info->{$ct.'_handle'});
@@ -352,7 +352,7 @@ foreach my $c (@$cons) {
 				$d->{'dom'}, $c->{'purpose'}, $c->{'handle'});
 			}
 		};
-	return &text('gandi_error', $@) if ($@);
+	return &text('gandi_error', "$@") if ($@);
 	}
 return undef;
 }
@@ -418,7 +418,7 @@ local $info;
 eval {
 	$info = $server->call("domain_info", $sid, $d->{'dom'});
 	};
-return (0, &text('gandi_error', $@)) if ($@);
+return (0, &text('gandi_error', "$@")) if ($@);
 local $expirydate = $info->{'registry_expiration_date'}->value();
 if ($expirydate =~ /^(\d{4})(\d\d)(\d\d)T(\d\d):(\d\d):(\d\d)$/) {
 	return (1, timelocal($6, $5, $4, $3, $2-1, $1-1900));
@@ -441,7 +441,7 @@ local $opid;
 eval {
 	$opid = $server->call("domain_renew", $sid, $d->{'dom'}, $years);
 	};
-return (0, &text('gandi_error', $@)) if ($@);
+return (0, &text('gandi_error', "$@")) if ($@);
 return (1, $opid);
 }
 
@@ -488,7 +488,7 @@ eval {
 		$nss,
 		$key);
 	};
-return (0, &text('gandi_error', $@)) if ($@);
+return (0, &text('gandi_error', "$@")) if ($@);
 return (1, $tid);
 }
 

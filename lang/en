@@ -15,6 +15,7 @@ feat_delete=De-registering DNS domain with $1 ..
 feat_delete2=De-registering DNS domain ..
 feat_modify1=De-registering old DNS domain $1 with $2 ..
 feat_modify2=Re-registering new DNS domain $1 with $2 ..
+feat_noderegister=.. de-registration has been disabled in the plugin configuration
 feat_modify=Changing registered DNS domain from $1 to $2 with $3 ..
 feat_noaccount=No DNS register account information was found!
 feat_copy=Copying domain contacts from $1 ..

@@ -541,8 +541,8 @@ eval {
 		delete($callcon->{$k}) if (!$s || $s->{'readonly'});
 		}
 	$callcon->{'type'} = $con->{'type'};	# Always set, even though RO
-	$callcon->{'zip'} = $server->string($con->{'zip'});
-	$callcon->{'phone'} = $server->string($con->{'phone'});
+	$callcon->{'zip'} = $con->{'zip'};
+	$callcon->{'phone'} = $con->{'phone'};
 	local $newcon = $server->call("contact.create", $sid, $callcon);
 	$con->{'id'} = $con->{'handle'} = $newcon->{'handle'};
 	};
@@ -569,8 +569,8 @@ eval {
 		local ($s) = grep { $_->{'name'} eq $k } @schema;
 		delete($callcon->{$k}) if (!$s || $s->{'readonly'});
 		}
-	$callcon->{'zip'} = $server->string($con->{'zip'});
-	$callcon->{'phone'} = $server->string($con->{'phone'});
+	$callcon->{'zip'} = $con->{'zip'};
+	$callcon->{'phone'} = $con->{'phone'};
 	$server->call("contact.update", $sid, $con->{'handle'}, $callcon);
 	};
 return (0, &text('gandi_error', "$@")) if ($@);

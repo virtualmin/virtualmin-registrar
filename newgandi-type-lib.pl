@@ -42,6 +42,8 @@ if ($account) {
 		local $doms;
 		eval {
 			$doms = $server->call("domain.tld.list", $sid);
+			die $doms->{'faultString'} if (ref($doms) eq 'HASH' &&
+						       $doms->{'faultString'});
 			};
 		if ($doms && !$@) {
 			return map { ".".$_->{'name'} } @$doms;
@@ -141,6 +143,7 @@ while(1) {
 	local $avail;
 	eval {
 		$avail = $server->call("domain.available", $sid, [ $dname ]);
+		die $avail->{'faultString'} if ($avail->{'faultString'});
 		};
 	return &text('gandi_error', "$@") if ($@);
 	next if ($avail->{$dname} eq 'pending');
@@ -163,6 +166,7 @@ return (0, &text('gandi_error', $sid)) if (!$server);
 local $info;
 eval {
 	$info = $server->call("domain.info", $sid, $dname);
+	die $info->{'faultString'} if ($info->{'faultString'});
 	};
 return (0, &text('gandi_error', "$@")) if ($@);
 
@@ -222,6 +226,7 @@ eval {
 			'tech' => $account->{'gandi_account'},
 			'nameservers' => $nss };
 	$oper = $server->call("domain.create", $sid, $d->{'dom'}, $spec);
+	die $oper->{'faultString'} if ($oper->{'faultString'});
 	};
 return (0, &text('gandi_error', "$@")) if ($@);
 
@@ -244,6 +249,7 @@ return &text('gandi_error', $sid) if (!$server);
 local $rv;
 eval {
 	local $info = $server->call("domain.info", $sid, $d->{'dom'});
+	die $info->{'faultString'} if ($info->{'faultString'});
 	$rv = $info->{'nameservers'};
 	};
 return $@ ? &text('gandi_error', "$@") : $rv;
@@ -275,6 +281,7 @@ local $oper;
 eval {
 	$oper = $server->call("domain.nameservers.set",
 			      $sid, $d->{'dom'}, $nss);
+	die $oper->{'faultString'} if ($oper->{'faultString'});
 	};
 return &text('gandi_error', "$@") if ($@);
 
@@ -297,6 +304,7 @@ return (0, &text('gandi_error', $sid)) if (!$server);
 local $oper;
 eval {
 	$oper = $server->call("domain.delete", $sid, $d->{'dom'});
+	die $oper->{'faultString'} if ($oper->{'faultString'});
 	};
 return (0, &text('gandi_error', "$@")) if ($@);
 
@@ -320,6 +328,7 @@ return &text('gandi_error', $sid) if (!$server);
 local $info;
 eval {
 	$info = $server->call("domain.info", $sid, $d->{'dom'});
+	die $info->{'faultString'} if ($info->{'faultString'});
 	};
 return &text('gandi_error', "$@") if ($@);
 local @rv;
@@ -329,6 +338,7 @@ foreach my $ct ('admin', 'tech', 'bill') {
 	eval {
 		$con = $server->call("contact.info", $sid,
 				     $info->{'contacts'}->{$ct}->{'handle'});
+		die $con->{'faultString'} if ($con->{'faultString'});
 		};
 	if (!$@ && $con) {
 		$con->{'purpose'} = $ct;
@@ -394,6 +404,7 @@ if (keys %sets) {
 	eval {
 		$oper = $server->call("domain.contacts.set", $sid,
 				      $d->{'dom'}, \%sets);
+		die $oper->{'faultString'} if ($oper->{'faultString'});
 		};
 	return &text('gandi_error', "$@") if ($@);
 
@@ -506,8 +517,9 @@ return (0, &text('gandi_error', $sid)) if (!$server);
 local $list;
 eval {
 	$list = $server->call("contact.list", $sid);
+	die $list->{'faultString'} if (ref($list) eq 'HASH' &&
+				       $list->{'faultString'});
 	};
-print STDERR "error=$@\n";
 return (0, &text('gandi_error', "$@")) if ($@);
 foreach my $con (@$list) {
 	if (!defined($con->{'type'})) {
@@ -541,9 +553,10 @@ eval {
 		delete($callcon->{$k}) if (!$s || $s->{'readonly'});
 		}
 	$callcon->{'type'} = $con->{'type'};	# Always set, even though RO
-	$callcon->{'zip'} = $con->{'zip'};
-	$callcon->{'phone'} = $con->{'phone'};
+	$callcon->{'zip'} = &as_string($con->{'zip'});
+	$callcon->{'phone'} = &as_string($con->{'phone'});
 	local $newcon = $server->call("contact.create", $sid, $callcon);
+	die $newcon->{'faultString'} if ($newcon->{'faultString'});
 	$con->{'id'} = $con->{'handle'} = $newcon->{'handle'};
 	};
 return &text('gandi_error', "$@") if ($@);
@@ -569,9 +582,11 @@ eval {
 		local ($s) = grep { $_->{'name'} eq $k } @schema;
 		delete($callcon->{$k}) if (!$s || $s->{'readonly'});
 		}
-	$callcon->{'zip'} = $con->{'zip'};
-	$callcon->{'phone'} = $con->{'phone'};
-	$server->call("contact.update", $sid, $con->{'handle'}, $callcon);
+	$callcon->{'zip'} = &as_string($con->{'zip'});
+	$callcon->{'phone'} = &as_string($con->{'phone'});
+	my $newcon = $server->call("contact.update", $sid, $con->{'handle'},
+				   $callcon);
+	die $newcon->{'faultString'} if ($newcon->{'faultString'});
 	};
 return (0, &text('gandi_error', "$@")) if ($@);
 
@@ -593,6 +608,7 @@ eval {
 		$cspec{$con->{'purpose'}} = $con->{'handle'};
 		}
 	$oper = $server->call("domain.contacts.set", $sid, $d->{'dom'}, \%cspec);
+	die $oper->{'faultString'} if ($oper->{'faultString'});
 	};
 return (0, &text('gandi_error', "$@")) if ($@);
 
@@ -616,6 +632,7 @@ return (0, &text('gandi_error', $sid)) if (!$server);
 local $info;
 eval {
 	$info = $server->call("domain.info", $sid, $d->{'dom'});
+	die $info->{'faultString'} if ($info->{'faultString'});
 	};
 return (0, &text('gandi_error', "$@")) if ($@);
 local $expirydate = $info->{'date_registry_end'};
@@ -642,6 +659,7 @@ eval {
 	$oper = $server->call("domain.renew", $sid, $d->{'dom'},
 			      { 'duration' => $years,
 				'current_year' => $tm[5]+1900 });
+	die $oper->{'faultString'} if ($oper->{'faultString'});
 	};
 return (0, &text('gandi_error', "$@")) if ($@);
 
@@ -698,6 +716,7 @@ eval {
 			       'duration' => $d->{'registrar_years'} ||
                                       $account->{'gandi_years'} || 1,
 			     });
+	die $oper->{'faultString'} if ($oper->{'faultString'});
 	};
 return (0, &text('gandi_error', "$@")) if ($@);
 
@@ -737,6 +756,7 @@ if ($done_connect_newgandi_api{$dkey}) {
 local $ver;
 eval {
 	$ver = $server->call("version.info", $account->{'gandi_apikey'});
+	die $ver->{'faultString'} if ($ver->{'faultString'});
 	};
 local @rv = $@ =~ /DataError:\s*(.*)/ ? ( undef, $1 ) :
        	    $@ ? (undef, $@) :
@@ -762,13 +782,22 @@ while(1) {
 		return (1, $rv);
 		}
 	elsif ($rv->{'step'} eq 'ERROR') {
-		return (0, $rv->{'last_error'});
+		return (0, $rv->{'last_error'} || $rv->{'faultString'});
+		}
+	elsif ($rv->{'faultString'}) {
+		return (0, $rv->{'faultString'});
 		}
 	$tries++;
 	if ($tries > 30) {
 		return (0, &text('gandi_etries', $rv->{'step'}, 30));
 		}
 	}
+}
+
+sub as_string
+{
+my ($val) = @_;
+return sub { { string => $val }; };
 }
 
 1;

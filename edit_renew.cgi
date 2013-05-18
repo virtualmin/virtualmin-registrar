@@ -27,7 +27,7 @@ print &ui_hidden("dom", $in{'dom'});
 print &ui_table_start($text{'renew_header'}, undef, 2);
 
 # Account
-print &ui_table_row($text{'ns_desc'},
+print &ui_table_row($text{'edit_desc'},
 	$account->{'desc'});
 
 # Expiry date

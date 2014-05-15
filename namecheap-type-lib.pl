@@ -539,7 +539,7 @@ if (!ref($h)) {
 &write_http_connection($h, "Host: $host\r\n");
 &write_http_connection($h, "User-agent: Webmin\r\n");
 &write_http_connection($h, "Content-type: application/x-www-form-urlencoded\r\n");
-&write_http_connection($h, "Content-length: ".length($data)."\r\n");
+&write_http_connection($h, "Content-length: ".(length($data)+2)."\r\n");
 &write_http_connection($h, "\r\n");
 &write_http_connection($h, "$data\r\n");
 &complete_http_download($h, $out, $err, undef, 0, $host, $port, undef, $ssl, 1);

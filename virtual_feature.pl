@@ -49,12 +49,13 @@ if (!$oldd || !$oldd->{$module_name}) {
 return undef;
 }
 
-# feature_clash(&domain)
+# feature_clash(&domain, [field])
 # Returns undef if there is no clash for this domain for this feature, or
 # an error message if so
 sub feature_clash
 {
-local ($d) = @_;
+local ($d, $field) = @_;
+return undef if ($field && $field ne "dom");
 
 # Get registrar account
 local $account = &find_registrar_account($d->{'dom'});

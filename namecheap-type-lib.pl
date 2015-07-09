@@ -314,7 +314,7 @@ return &text('namecheap_instructions',
 # the domain for that period.
 sub type_namecheap_transfer_domain
 {
-local ($account, $d, $key) = @_;
+local ($account, $d, $key, $years) = @_;
 
 # Get my nameservers
 local $nss = &get_domain_nameservers($account, $d);

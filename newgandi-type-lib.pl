@@ -236,7 +236,7 @@ eval {
 return (0, &text('gandi_error', "$@")) if ($@);
 
 # Wait for completion
-my ($ok, $msg) = &wait_for_gandi_operation($sid, $oper);
+my ($ok, $msg) = &wait_for_gandi_operation($sid, $oper, $server);
 return (0, &text('gandi_ecreate', $msg)) if (!$ok);
 
 return (1, $d->{'dom'});
@@ -291,7 +291,7 @@ eval {
 return &text('gandi_error', "$@") if ($@);
 
 # Wait for result
-my ($ok, $msg) = &wait_for_gandi_operation($sid, $oper);
+my ($ok, $msg) = &wait_for_gandi_operation($sid, $oper, $server);
 return $msg if (!$ok);
 
 return undef;
@@ -314,7 +314,7 @@ eval {
 return (0, &text('gandi_error', "$@")) if ($@);
 
 # Wait for result
-my ($ok, $msg) = &wait_for_gandi_operation($sid, $oper);
+my ($ok, $msg) = &wait_for_gandi_operation($sid, $oper, $server);
 return (0, $msg) if (!$ok);
 
 return (1, $oper->{'id'});
@@ -414,7 +414,7 @@ if (keys %sets) {
 		};
 	return &text('gandi_error', "$@") if ($@);
 
-	my ($ok, $msg) = &wait_for_gandi_operation($sid, $oper);
+	my ($ok, $msg) = &wait_for_gandi_operation($sid, $oper, $server);
 	return (0, $msg) if (!$ok);
 	}
 
@@ -619,7 +619,7 @@ eval {
 return (0, &text('gandi_error', "$@")) if ($@);
 
 # Wait for completion
-my ($ok, $msg) = &wait_for_gandi_operation($sid, $oper);
+my ($ok, $msg) = &wait_for_gandi_operation($sid, $oper, $server);
 return (0, &text('gandi_ecreate', $msg)) if (!$ok);
 
 return undef;
@@ -670,7 +670,7 @@ eval {
 return (0, &text('gandi_error', "$@")) if ($@);
 
 # Wait for operation result
-my ($ok, $msg) = &wait_for_gandi_operation($sid, $oper);
+my ($ok, $msg) = &wait_for_gandi_operation($sid, $oper, $server);
 return (0, $msg) if (!$ok);
 
 return (1, $oper->{'id'});
@@ -727,7 +727,7 @@ eval {
 return (0, &text('gandi_error', "$@")) if ($@);
 
 # Wait for completion
-my ($ok, $msg) = &wait_for_gandi_operation($sid, $oper);
+my ($ok, $msg) = &wait_for_gandi_operation($sid, $oper, $server);
 return (0, $msg) if (!$ok);
 
 return (1, $oper->{'id'});
@@ -775,18 +775,15 @@ if ($rv[0]) {
 return @rv;
 }
 
-# wait_for_gandi_operation(sid, &operation)
+# wait_for_gandi_operation(sid, &operation, &server)
 # Poll the Gandi API until some operation completes. Returns 0 and an error
 # message on failure, or 1 and the result structure on success.
 sub wait_for_gandi_operation
 {
-my ($sid, $oper) = @_;
+my ($sid, $oper, $server) = @_;
 my $tries = 0;
 while(1) {
 	sleep(1);
-	my ($server, $sid) = &connect_newgandi_api($account, 1);
-	return (0, &text('gandi_error', $sid)) if (!$server);
-
 	my $rv = $server->call("operation.info", $sid, $oper->{'id'});
 	if ($rv->{'step'} eq 'DONE') {
 		return (1, $rv);

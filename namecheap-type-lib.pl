@@ -1,11 +1,15 @@
 # Functions for talking to namecheap
+use strict;
+use warnings;
+our (%text);
+our $module_name;
 
-$namecheap_api_url_test = "https://api.sandbox.namecheap.com/xml.response";
-$namecheap_api_url = "https://api.namecheap.com/xml.response";
+my $namecheap_api_url_test = "https://api.sandbox.namecheap.com/xml.response";
+my $namecheap_api_url = "https://api.namecheap.com/xml.response";
 
 $@ = undef;
 eval "use XML::Simple";
-$xml_simple_err = $@;
+my $xml_simple_err = $@;
 
 # Returns the name of this registrar
 sub type_namecheap_desc
@@ -17,8 +21,8 @@ return $text{'type_namecheap'};
 sub type_namecheap_check
 {
 if ($xml_simple_err) {
-	local $rv = &text('namecheap_eperl', "<tt>XML::Simple</tt>",
-		     "<tt>".&html_escape($frontier_client_err)."</tt>");
+	my $rv = &text('namecheap_eperl', "<tt>XML::Simple</tt>",
+		     "<tt>".&html_escape($xml_simple_err)."</tt>");
 	if (&foreign_available("cpan")) {
 		$rv .= "\n".&text('gandi_cpan',
 			"../cpan/download.cgi?source=3&cpan=XML::Simple&".
@@ -35,9 +39,9 @@ return undef;
 # From : http://www.namecheap.com/domains/domain-pricing.aspx
 sub type_namecheap_domains
 {
-local ($account) = @_;
+my ($account) = @_;
 if ($account) {
-	local ($ok, $xml) = &call_namecheap_api(
+	my ($ok, $xml) = &call_namecheap_api(
 				$account, "namecheap.domains.getTldList");
 	if ($ok) {
 		return map { ".".$_->{'Name'} } @{$xml->{'Tlds'}->{'Tld'}};
@@ -53,8 +57,8 @@ return ( ".com", ".net", ".org", ".info", ".co.uk", ".us", ".me",
 # Returns table fields for entering the account login details
 sub type_namecheap_edit_inputs
 {
-local ($account, $new) = @_;
-local $rv;
+my ($account, $new) = @_;
+my $rv;
 $rv .= &ui_table_row($text{'namecheap_user'},
 	&ui_textbox("namecheap_user", $account->{'namecheap_user'}, 30));
 $rv .= &ui_table_row($text{'namecheap_apikey'},
@@ -75,7 +79,7 @@ return $rv;
 # an error message on failure.
 sub type_namecheap_edit_parse
 {
-local ($account, $new, $in) = @_;
+my ($account, $new, $in) = @_;
 $in->{'namecheap_user'} =~ /^\S+$/ || return $text{'namecheap_euser'};
 $account->{'namecheap_user'} = $in->{'namecheap_user'};
 $in->{'namecheap_apikey'} =~ /^\S+$/ || return $text{'namecheap_eapikey'};
@@ -98,7 +102,7 @@ return undef;
 # Returns the number of years by default to renew a domain for
 sub type_namecheap_renew_years
 {
-local ($account, $d) = @_;
+my ($account, $d) = @_;
 return $account->{'namecheap_years'} || 2;
 }
 
@@ -107,12 +111,12 @@ return $account->{'namecheap_years'} || 2;
 # message if the login or password are wrong.
 sub type_namecheap_validate
 {
-local ($account) = @_;
-local ($ok, $xml) = &call_namecheap_api($account,
+my ($account) = @_;
+my ($ok, $xml) = &call_namecheap_api($account,
 			"namecheap.domains.getList");
 if ($ok) {
 	# Connected OK .. but does the source domain exist?
-	local ($ok, $xml) = &call_namecheap_api($account,
+	my ($ok, $xml) = &call_namecheap_api($account,
 			"namecheap.domains.getContacts",
 			{ 'DomainName' => $account->{'namecheap_srcdom'} });
 	if (!$ok && $xml =~ /Domain Name not found/i) {
@@ -135,8 +139,8 @@ else {
 # yes, or an error message if not.
 sub type_namecheap_check_domain
 {
-local ($account, $dname) = @_;
-local ($ok, $xml) = &call_namecheap_api($account, "namecheap.domains.check",
+my ($account, $dname) = @_;
+my ($ok, $xml) = &call_namecheap_api($account, "namecheap.domains.check",
 					{ 'DomainList' => $dname });
 return &text('namecheap_error', $xml) if (!$ok);
 if ($xml->{'DomainCheckResult'}->{'Available'} eq 'true') {
@@ -156,8 +160,8 @@ else {
 # 0 and an error message.
 sub type_namecheap_owned_domain
 {
-local ($account, $dname) = @_;
-local ($ok, $xml) = &call_namecheap_api($account, "namecheap.domains.getinfo",
+my ($account, $dname) = @_;
+my ($ok, $xml) = &call_namecheap_api($account, "namecheap.domains.getinfo",
 					{ 'DomainName' => $dname });
 if (!$ok && $xml =~ /Domain Name not found/i) {
 	return (1, undef);
@@ -175,10 +179,10 @@ else {
 # it failed, or 1 and an ID for the domain on success.
 sub type_namecheap_create_domain
 {
-local ($account, $d) = @_;
+my ($account, $d) = @_;
 
 # Get the nameservers
-local $nss = &get_domain_nameservers($account, $d);
+my $nss = &get_domain_nameservers($account, $d);
 if (!ref($nss)) {
         return (0, $nss);
         }
@@ -190,13 +194,13 @@ elsif (@$nss < 2) {
 	}
 
 # Get the domain to copy contacts from
-local ($ok, $xml) = &call_namecheap_api($account,
+my ($ok, $xml) = &call_namecheap_api($account,
 		"namecheap.domains.getContacts",
 		{ 'DomainName' => $account->{'namecheap_srcdom'} });
 $ok || return (0, &text('namecheap_error', $xml));
 
 # Build list of params
-local %params = ( 'Nameservers' => join(",", @$nss),
+my %params = ( 'Nameservers' => join(",", @$nss),
 		  'DomainName' => $d->{'dom'},
 		  'Years' => $d->{'registrar_years'} ||
                              $account->{'namecheap_years'} || 1,
@@ -210,7 +214,7 @@ foreach my $t (keys %{$xml->{'DomainContactsResult'}}) {
 	}
 
 # Call to create
-local ($ok, $xml) = &call_namecheap_api($account,
+($ok, $xml) = &call_namecheap_api($account,
 	"namecheap.domains.create", \%params);
 return (0, &text('namecheap_error', $xml)) if (!$ok);
 
@@ -222,14 +226,14 @@ return (1, $xml->{'DomainCreateResult'}->{'DomainID'});
 # an error message on failure.
 sub type_namecheap_get_nameservers
 {
-local ($account, $d) = @_;
+my ($account, $d) = @_;
 $d->{'dom'} =~ /^([^\.]+)\.(\S+)$/ || return "Invalid domain name $d->{'dom'}";
-local ($sld, $tld) = ($1, $2);
-local ($ok, $xml) = &call_namecheap_api($account,
+my ($sld, $tld) = ($1, $2);
+my ($ok, $xml) = &call_namecheap_api($account,
 	"namecheap.domains.dns.getList",
 	{ 'SLD' => $sld, 'TLD' => $tld });
 return &text('namecheap_error', $xml) if (!$ok);
-local $nss = $xml->{'DomainDNSGetListResult'}->{'Nameserver'};
+my $nss = $xml->{'DomainDNSGetListResult'}->{'Nameserver'};
 $nss = [ $nss ] if (!ref($nss));
 return $nss;
 }
@@ -239,7 +243,7 @@ return $nss;
 # or an error message on failure.
 sub type_namecheap_set_nameservers
 {
-local ($account, $d, $nss) = @_;
+my ($account, $d, $nss) = @_;
 
 # Get nameservers in DNS
 $nss ||= &get_domain_nameservers($account, $d);
@@ -255,8 +259,8 @@ elsif (@$nss < 2) {
 
 # Set the nameservers
 $d->{'dom'} =~ /^([^\.]+)\.(\S+)$/ || return "Invalid domain name $d->{'dom'}";
-local ($sld, $tld) = ($1, $2);
-local ($ok, $xml) = &call_namecheap_api($account,
+my ($sld, $tld) = ($1, $2);
+my ($ok, $xml) = &call_namecheap_api($account,
 	"namecheap.domains.dns.setCustom",
 	{ 'SLD' => $sld, 'TLD' => $tld,
 	  'Nameservers' => join(",", @$nss) });
@@ -269,8 +273,8 @@ return $ok ? undef : $xml;
 # message.
 sub type_namecheap_get_expiry
 {
-local ($account, $d) = @_;
-local ($ok, $xml) = &call_namecheap_api($account,
+my ($account, $d) = @_;
+my ($ok, $xml) = &call_namecheap_api($account,
 	"namecheap.domains.getinfo",
 	{ 'DomainName' => $d->{'dom'} });
 return (0, &text('namecheap_error', $xml)) if (!$ok);
@@ -288,8 +292,8 @@ return (0, &text('gandi_eexpiry', $t));
 # failure.
 sub type_namecheap_renew_domain
 {
-local ($account, $d, $years) = @_;
-local ($ok, $xml) = &call_namecheap_api($account,
+my ($account, $d, $years) = @_;
+my ($ok, $xml) = &call_namecheap_api($account,
 	"namecheap.domains.renew",
 	{ 'DomainName' => $d->{'dom'},
 	  'Years' => $years });
@@ -314,10 +318,10 @@ return &text('namecheap_instructions',
 # the domain for that period.
 sub type_namecheap_transfer_domain
 {
-local ($account, $d, $key, $years) = @_;
+my ($account, $d, $key, $years) = @_;
 
 # Get my nameservers
-local $nss = &get_domain_nameservers($account, $d);
+my $nss = &get_domain_nameservers($account, $d);
 if (!ref($nss)) {
         return (0, $nss);
         }
@@ -329,20 +333,20 @@ elsif (@$nss < 2) {
 	}
 
 # Start the transfer
-local ($ok, $xml) = &call_namecheap_api($account,
+my ($ok, $xml) = &call_namecheap_api($account,
 	"namecheap.domains.transfer.create",
 	{ 'DomainName' => $d->{'dom'},
 	  'Years' => $years,
 	  'EPPCode' => $key });
 return (0, &text('namecheap_error', $xml)) if (!$ok);
-local $tid = $xml->{'DomainTransferCreateResult'}->{'TransferID'};
+my $tid = $xml->{'DomainTransferCreateResult'}->{'TransferID'};
 
 # Poll for completion
-local $tries = 0;
-local $t;
+my $tries = 0;
+my $t;
 while($tries++ < 300) {
 	sleep(1);
-	local ($ok, $xml) = &call_namecheap_api($account,
+	my ($ok, $xml) = &call_namecheap_api($account,
 		"namecheap.domains.transfer.getList");
 	next if (!$ok);
 	($t) = grep { $_->{'Domainname'} eq $d->{'dom'} }
@@ -365,9 +369,9 @@ return (0, $t ? &text('namecheap_etransfer', $t->{'StatusDescription'})
 # Deletes a domain previously created with this registrar
 sub type_namecheap_delete_domain
 {
-local ($account, $d) = @_;
+my ($account, $d) = @_;
 
-local ($ok, $xml) = &call_namecheap_api($account,
+my ($ok, $xml) = &call_namecheap_api($account,
 	"namecheap.domains.delete", { 'DomainName' => $d->{'dom'} });
 return (0, &text('namecheap_error', $xml)) if (!$ok);
 
@@ -379,15 +383,15 @@ return (1, $d->{'dom'});
 # message if it could not be found.
 sub type_namecheap_get_contact
 {
-local ($account, $d) = @_;
+my ($account, $d) = @_;
 
-local ($ok, $xml) = &call_namecheap_api($account,
+my ($ok, $xml) = &call_namecheap_api($account,
 		"namecheap.domains.getContacts",
 		{ 'DomainName' => $d->{'dom'} });
 $ok || return &text('namecheap_error', $xml);
 
-local @rv;
-local @schema = &type_namecheap_get_contact_schema($account, $d);
+my @rv;
+my @schema = &type_namecheap_get_contact_schema($account, $d);
 foreach my $t (keys %{$xml->{'DomainContactsResult'}}) {
 	my $con = $xml->{'DomainContactsResult'}->{$t};
         next if (!$con->{'FirstName'});
@@ -412,15 +416,15 @@ return \@rv;
 # Updates contacts from an array of hashes
 sub type_namecheap_save_contact
 {
-local ($account, $d, $cons) = @_;
-local %params = ( 'DomainName' => $d->{'dom'} );
+my ($account, $d, $cons) = @_;
+my %params = ( 'DomainName' => $d->{'dom'} );
 foreach my $con (@$cons) {
 	foreach my $k (keys %$con) {
 		next if ($k eq 'purpose');
 		$params{$con->{'purpose'}.$k} = $con->{$k};
 		}
 	}
-local ($ok, $xml) = &call_namecheap_api($account,
+my ($ok, $xml) = &call_namecheap_api($account,
                 "namecheap.domains.setContacts", \%params);
 $ok || return &text('namecheap_error', $xml);
 
@@ -431,8 +435,8 @@ return undef;
 # Returns a list of fields for domain contacts, as seen by register.com
 sub type_namecheap_get_contact_schema
 {
-local ($account, $d, $type) = @_;
-return ( 
+my ($account, $d, $type) = @_;
+return (
 	      { 'name' => 'FirstName',
 		'size' => 40,
 		'opt' => 0 },
@@ -488,10 +492,10 @@ return (
 # or a results object.
 sub call_namecheap_api
 {
-local ($account, $cmd, $params) = @_;
-local $url = $account->{'namecheap_test'} ? $namecheap_api_url_test
+my ($account, $cmd, $params) = @_;
+my $url = $account->{'namecheap_test'} ? $namecheap_api_url_test
 					  : $namecheap_api_url;
-local ($host, $port, $page, $ssl) = &parse_http_url($url);
+my ($host, $port, $page, $ssl) = &parse_http_url($url);
 $page .= "?APIUser=".&urlize($account->{'namecheap_user'}).
 	 "&ApiKey=".&urlize($account->{'namecheap_apikey'}).
 	 "&UserName=".&urlize($account->{'namecheap_user'}).
@@ -499,25 +503,25 @@ $page .= "?APIUser=".&urlize($account->{'namecheap_user'}).
 		       &virtual_server::get_dns_ip() ||
 		       &virtual_server::get_default_ip()).
 	 "&Command=".&urlize($cmd);
-local $data;
+my $data;
 if ($params) {
 	foreach my $p (keys %$params) {
 		my $v = $params->{$p};
 		if (ref($v) eq 'HASH') {
 			$v = join(",", keys %$v);
 			}
-		elsif (ref($rv) eq 'ARRAY') {
+		elsif (ref($v) eq 'ARRAY') {
 			$v = @$v;
 			}
 		$data .= "&".$p."=".&urlize($v);
 		}
 	}
 $data =~ s/^\&//;
-local ($out, $err);
+my ($out, $err);
 &http_post_download($host, $port, $page, \$out, \$err, $data, $ssl);
 return (0, $err) if ($err);
 return (0, "Invalid response : $out") if ($out !~ /^\s*</);
-local $xml;
+my $xml;
 eval {
 	$xml = XMLin($out);
 	};
@@ -530,8 +534,8 @@ return (1, $xml->{'CommandResponse'});
 # http_post_download(host, port, page, &out, &err, post-data, ssl)
 sub http_post_download
 {
-local ($host, $port, $page, $out, $err, $data, $ssl) = @_;
-local $h = &make_http_connection($host, $port, $ssl, "POST", $page);
+my ($host, $port, $page, $out, $err, $data, $ssl) = @_;
+my $h = &make_http_connection($host, $port, $ssl, "POST", $page);
 if (!ref($h)) {
 	$$err = $h;
 	return 0;

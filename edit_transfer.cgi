@@ -1,5 +1,9 @@
 #!/usr/local/bin/perl
 # Show a form for initiating a domain transfer
+use strict;
+use warnings;
+our (%access, %text, %in);
+our $module_name;
 
 require './virtualmin-registrar-lib.pl';
 &ReadParse();
@@ -7,7 +11,7 @@ require './virtualmin-registrar-lib.pl';
 $access{'registrar'} || &error($text{'transfer_ecannot'});
 
 # Get the Virtualmin domain
-$d = &virtual_server::get_domain_by("dom", $in{'dom'});
+my $d = &virtual_server::get_domain_by("dom", $in{'dom'});
 $d || &error(&text('contact_edom', $in{'dom'}));
 $d->{$module_name} && &error($text{'import_ealready'});
 
@@ -19,9 +23,9 @@ print &ui_hidden("dom", $in{'dom'});
 print &ui_table_start($text{'transfer_header'}, undef, 2);
 
 # Account it will be under
-@accounts = grep { $tfunc = "type_".$_->{'registrar'}."_transfer_domain";
+my @accounts = grep { my $tfunc = "type_".$_->{'registrar'}."_transfer_domain";
 		   defined(&$tfunc) } &list_registrar_accounts();
-$def = &find_registrar_account($d->{'dom'});
+my $def = &find_registrar_account($d->{'dom'});
 print &ui_table_row($text{'transfer_account'},
 	&ui_select("account", $def ? $def->{'id'} : undef,
 		[ map { [ $_->{'id'}, $_->{'desc'} ] } @accounts ]));
@@ -40,4 +44,3 @@ print &ui_table_end();
 print &ui_form_end([ [ undef, $text{'transfer_ok'} ] ]);
 
 &ui_print_footer(&virtual_server::domain_footer_link($d));
-

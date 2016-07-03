@@ -1,16 +1,20 @@
 #!/usr/local/bin/perl
 # Show a list of registered domains accessible to the current user
+use strict;
+use warnings;
+our (%text, %in);
+our $module_name;
 
 require 'virtualmin-registrar-lib.pl';
 &ReadParse();
 
 # Find the domains
-@doms = grep { $_->{$module_name} &&
+my @doms = grep { $_->{$module_name} &&
 	       &virtual_server::can_edit_domain($_) }
 	     &virtual_server::list_domains();
 
 # Get relevant accounts
-@accounts = &list_registrar_accounts();
+my @accounts = &list_registrar_accounts();
 if ($in{'id'}) {
 	# Just one account
 	@accounts = grep { $_->{'id'} eq $in{'id'} } @accounts;
@@ -20,22 +24,22 @@ if ($in{'id'}) {
 		 $text{'list_title'}, "");
 
 # Show each domain, with registration info
-@table = ( );
-foreach $d (@doms) {
-	$url = &virtual_server::can_config_domain($d) ?
+my @table;
+foreach my $d (@doms) {
+	my $url = &virtual_server::can_config_domain($d) ?
 		"../virtual-server/edit_domain.cgi?dom=$d->{'id'}" :
 		"../virtual-server/view_domain.cgi?dom=$d->{'id'}";
-	($account) = grep { $_->{'id'} eq $d->{'registrar_account'} }
+	my ($account) = grep { $_->{'id'} eq $d->{'registrar_account'} }
 			  @accounts;
 	next if (!$account);
-	$rfunc = "type_".$account->{'registrar'}."_desc";
-	$dname = &virtual_server::show_domain_name($d);
+	my $rfunc = "type_".$account->{'registrar'}."_desc";
+	my $dname = &virtual_server::show_domain_name($d);
 
 	# Get expiry date, if possible
-	$efunc = "type_".$account->{'registrar'}."_get_expiry";
-	$expiry = undef;
+	my $efunc = "type_".$account->{'registrar'}."_get_expiry";
+	my $expiry = undef;
 	if (defined(&$efunc)) {
-		($ok, $expiry) = &$efunc($account, $d);
+		(my $ok, $expiry) = &$efunc($account, $d);
 		$expiry = undef if (!$ok);
 		}
 	push(@table, [

@@ -1,5 +1,8 @@
 #!/usr/local/bin/perl
 # Show a form for adding or editing an existing registrar account
+use strict;
+use warnings;
+our (%access, %text, %in);
 
 require './virtualmin-registrar-lib.pl';
 $access{'registrar'} || &error($text{'edit_ecannot'});
@@ -9,11 +12,13 @@ $access{'registrar'} || &error($text{'edit_ecannot'});
 		        $in{'registrar'} ? "add" : "edit");
 
 # Get registrar and account
+my $reg;
+our $account;
 if ($in{'registrar'}) {
 	$reg = $in{'registrar'};
-	$cfunc = "type_".$reg."_check";
+	my $cfunc = "type_".$reg."_check";
 	if (defined(&$cfunc)) {
-		$err = &$cfunc();
+		my $err = &$cfunc();
 		if ($err) {
 			&ui_print_endpage($err);
 			}
@@ -31,7 +36,7 @@ print &ui_hidden("id", $in{'id'});
 print &ui_hidden_table_start($text{'edit_header'}, "width=100%", 2, "main", 1);
 
 # Registrar type
-$dfunc = "type_".$reg."_desc";
+my $dfunc = "type_".$reg."_desc";
 print &ui_table_row($text{'edit_registrar'}, &$dfunc($account));
 
 # Description
@@ -44,7 +49,7 @@ print &ui_table_row($text{'edit_enabled'},
 			$in{'registrar'} ? 1 : $account->{'enabled'}));
 
 # Nameservers
-@defns = &get_default_nameservers();
+my @defns = &get_default_nameservers();
 print &ui_table_row($text{'edit_ns'},
 	&ui_radio("ns_def", $account->{'ns'} ? 0 : 1,
 	   [ [ 1, &text('edit_ns1',
@@ -53,13 +58,13 @@ print &ui_table_row($text{'edit_ns'},
 			&ui_textbox("ns", $account->{'ns'}, 50) ] ]));
 
 # Registrar-specific fields
-$efunc = "type_".$reg."_edit_inputs";
+my $efunc = "type_".$reg."_edit_inputs";
 print &$efunc($account, $in{'registrar'} ? 1 : 0);
 
 if (!$in{'registrar'}) {
 	# Used for domains
-	@doms = &find_account_domains($account);
-	@links = ( );
+	my @doms = &find_account_domains($account);
+	my @links;
 	foreach my $d (@doms) {
 		if (&virtual_server::can_config_domain($d)) {
 			push(@links, "<a href='../virtual-server/edit_domain.cgi?dom=$d->{'id'}'>$d->{'dom'}</a>");
@@ -78,9 +83,9 @@ print &ui_hidden_table_end("main");
 print &ui_hidden_table_start($text{'edit_header2'}, "width=100%", 2, "tlds", 0);
 
 # Registrar's top-level domains
-$tfunc = "type_".$reg."_domains";
+my $tfunc = "type_".$reg."_domains";
 if (defined(&$tfunc)) {
-	@tlds = &$tfunc($in{'registrar'} ? undef : $account);
+	my @tlds = &$tfunc($in{'registrar'} ? undef : $account);
 	print &ui_table_row($text{'edit_rdoms'},
 		&ui_grid_table([ map { "<tt>$_</tt>" } @tlds ], 8, 100));
 	}
@@ -92,7 +97,7 @@ print &ui_table_row($text{'edit_doms'},
 
 print &ui_hidden_table_end("tlds");
 
-$ifunc = "type_".$reg."_add_instructions";
+my $ifunc = "type_".$reg."_add_instructions";
 if ($in{'registrar'} && defined(&$ifunc)) {
 	print &ui_hidden_table_start($text{'edit_header3'}, "width=100%", 2,
 				     "instructions", 1);
@@ -109,4 +114,3 @@ else {
 	}
 
 &ui_print_footer("", $text{'index_return'});
-

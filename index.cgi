@@ -1,5 +1,9 @@
 #!/usr/local/bin/perl
 # Show a list of accounts, and a menu to add a new one
+use strict;
+use warnings;
+our (%access, %text);
+our @registrar_types;
 
 require 'virtualmin-registrar-lib.pl';
 if (!$access{'registrar'}) {
@@ -11,14 +15,14 @@ if (!$access{'registrar'}) {
 &ui_print_header(undef, $text{'index_title'}, "", "intro", 0, 1);
 
 # Build table of existing accounts
-@accounts = &list_registrar_accounts();
-@table = ( );
-foreach $a (sort { $a->{'desc'} cmp $b->{'desc'} } @accounts) {
-	$dfunc = "type_".$a->{'registrar'}."_desc";
-	$desc = &$dfunc($a);
-	@links = ( );
-	$msg = &text('index_msg', "<i>$a->{'desc'}</i>");
-	$nonemsg = &text('index_nonemsg', "<i>$a->{'desc'}</i>");
+my @accounts = &list_registrar_accounts();
+my @table;
+foreach my $a (sort { $a->{'desc'} cmp $b->{'desc'} } @accounts) {
+	my $dfunc = "type_".$a->{'registrar'}."_desc";
+	my $desc = &$dfunc($a);
+	my @links;
+	my $msg = &text('index_msg', "<i>$a->{'desc'}</i>");
+	my $nonemsg = &text('index_nonemsg', "<i>$a->{'desc'}</i>");
 	push(@links, "<a href='../virtual-server/search.cgi?".
 		     "field=registrar_account&what=$a->{'id'}&".
 		     "msg=".&urlize($msg)."&".
@@ -28,7 +32,7 @@ foreach $a (sort { $a->{'desc'} cmp $b->{'desc'} } @accounts) {
 		     "$text{'index_actdoms'}</a>");
 	push(@links, "<a href='edit_auto.cgi?id=$a->{'id'}'>".
 		     "$text{'index_actauto'}</a>");
-	$cfunc = "type_".$a->{'registrar'}."_list_contacts";
+	my $cfunc = "type_".$a->{'registrar'}."_list_contacts";
 	if (defined(&$cfunc)) {
 		push(@links, "<a href='list_contacts.cgi?id=$a->{'id'}'>".
 			     "$text{'index_actcontacts'}</a>");
@@ -95,4 +99,3 @@ print &ui_form_end();
 print "</table>\n";
 
 &ui_print_footer("/", $text{'index'});
-

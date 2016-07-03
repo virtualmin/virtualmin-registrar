@@ -1,11 +1,15 @@
 # Functions for talking to gandi.net
+use strict;
+use warnings;
+our (%text);
+our $module_name;
 
-$gandi_api_url_test = "https://api.ote.gandi.net/xmlrpc/";
-$gandi_api_url = "https://api.gandi.net/xmlrpc/";
+my $gandi_api_url_test = "https://api.ote.gandi.net/xmlrpc/";
+my $gandi_api_url = "https://api.gandi.net/xmlrpc/";
 
 $@ = undef;
 eval "use Frontier::Client";
-$frontier_client_err = $@;
+my $frontier_client_err = $@;
 
 # Returns the name of this registrar
 sub type_gandi_desc
@@ -17,7 +21,7 @@ return $text{'type_gandi'};
 sub type_gandi_check
 {
 if ($frontier_client_err) {
-	local $rv = &text('gandi_eperl', "<tt>Frontier::Client</tt>",
+	my $rv = &text('gandi_eperl', "<tt>Frontier::Client</tt>",
 		     "<tt>".&html_escape($frontier_client_err)."</tt>");
 	if (&foreign_available("cpan")) {
 		$rv .= "\n".&text('gandi_cpan',
@@ -46,8 +50,8 @@ return (".asia", ".biz", ".com", ".info", ".mobi", ".name", ".net",
 # Returns table fields for entering the account login details
 sub type_gandi_edit_inputs
 {
-local ($account, $new) = @_;
-local $rv;
+my ($account, $new) = @_;
+my $rv;
 $rv .= &ui_table_row($text{'gandi_account'},
 	&ui_textbox("gandi_account", $account->{'gandi_account'}, 30));
 $rv .= &ui_table_row($text{'gandi_pass'},
@@ -66,7 +70,7 @@ return $rv;
 # an error message on failure.
 sub type_gandi_edit_parse
 {
-local ($account, $new, $in) = @_;
+my ($account, $new, $in) = @_;
 $in->{'gandi_account'} =~ /^\S+$/ || return $text{'gandi_eaccount'};
 $account->{'gandi_account'} = $in->{'gandi_account'};
 $in->{'gandi_pass'} =~ /^\S+$/ || return $text{'gandi_epass'};
@@ -87,7 +91,7 @@ return undef;
 # Returns the number of years by default to renew a domain for
 sub type_gandi_renew_years
 {
-local ($account, $d) = @_;
+my ($account, $d) = @_;
 return $account->{'gandi_years'} || 2;
 }
 
@@ -96,8 +100,8 @@ return $account->{'gandi_years'} || 2;
 # message if the login or password are wrong.
 sub type_gandi_validate
 {
-local ($account) = @_;
-local ($server, $sid) = &connect_gandi_api($account, 1);
+my ($account) = @_;
+my ($server, $sid) = &connect_gandi_api($account, 1);
 if ($server) {
 	return undef;
 	}
@@ -111,10 +115,10 @@ else {
 # yes, or an error message if not.
 sub type_gandi_check_domain
 {
-local ($account, $dname) = @_;
-local ($server, $sid) = &connect_gandi_api($account, 1);
+my ($account, $dname) = @_;
+my ($server, $sid) = &connect_gandi_api($account, 1);
 return &text('gandi_error', $sid) if (!$server);
-local $avail;
+my $avail;
 eval {
 	$avail = $server->call("domain_available", $sid, [ $dname ]);
 	};
@@ -129,12 +133,12 @@ return $avail->{$dname} && $avail->{$dname}->value() ?
 # 0 and an error message.
 sub type_gandi_owned_domain
 {
-local ($account, $dname, $id) = @_;
-local ($server, $sid) = &connect_gandi_api($account, 1);
+my ($account, $dname, $id) = @_;
+my ($server, $sid) = &connect_gandi_api($account, 1);
 return (0, &text('gandi_error', $sid)) if (!$server);
 
 # Get the domain list
-local $list;
+my $list;
 eval {
 	$list = $server->call("domain_list", $sid);
 	};
@@ -152,12 +156,12 @@ return (1, undef);
 # it failed, or 1 and an ID for the domain on success.
 sub type_gandi_create_domain
 {
-local ($account, $d) = @_;
-local ($server, $sid) = &connect_gandi_api($account, 1);
+my ($account, $d) = @_;
+my ($server, $sid) = &connect_gandi_api($account, 1);
 return (0, &text('gandi_error', $sid)) if (!$server);
 
 # Get the nameservers
-local $nss = &get_domain_nameservers($account, $d);
+my $nss = &get_domain_nameservers($account, $d);
 if (!ref($nss)) {
         return (0, $nss);
         }
@@ -169,7 +173,7 @@ elsif (@$nss < 2) {
 	}
 
 # Call to create
-local $opid;
+my $opid;
 eval {
 	$opid = $server->call("domain_create",
 			      $sid,
@@ -191,11 +195,11 @@ return (1, $d->{'dom'});
 # an error message on failure.
 sub type_gandi_get_nameservers
 {
-local ($account, $d) = @_;
-local ($server, $sid) = &connect_gandi_api($account, 1);
+my ($account, $d) = @_;
+my ($server, $sid) = &connect_gandi_api($account, 1);
 return &text('gandi_error', $sid) if (!$server);
 
-local $rv;
+my $rv;
 eval {
 	$rv = $server->call("domain_ns_list", $sid, $d->{'dom'});
 	$rv = [ map { $_."" } @$rv ];
@@ -208,8 +212,8 @@ return $@ ? &text('gandi_error', "$@") : $rv;
 # or an error message on failure.
 sub type_gandi_set_nameservers
 {
-local ($account, $d, $nss) = @_;
-local ($server, $sid) = &connect_gandi_api($account, 1);
+my ($account, $d, $nss) = @_;
+my ($server, $sid) = &connect_gandi_api($account, 1);
 return (0, &text('gandi_error', $sid)) if (!$server);
 
 # Get nameservers in DNS
@@ -235,12 +239,12 @@ return $@ ? &text('gandi_error', "$@") : undef;
 # Deletes a domain previously created with this registrar
 sub type_gandi_delete_domain
 {
-local ($account, $d) = @_;
-local ($server, $sid) = &connect_gandi_api($account, 1);
+my ($account, $d) = @_;
+my ($server, $sid) = &connect_gandi_api($account, 1);
 return (0, &text('gandi_error', $sid)) if (!$server);
 
 # Call to delete
-local $opid;
+my $opid;
 eval {
 	$opid = $server->call("domain_del", $sid, $d->{'dom'});
 	};
@@ -253,20 +257,20 @@ return (1, $opid);
 # message if it could not be found.
 sub type_gandi_get_contact
 {
-local ($account, $d) = @_;
-local ($server, $sid) = &connect_gandi_api($account, 1);
+my ($account, $d) = @_;
+my ($server, $sid) = &connect_gandi_api($account, 1);
 return &text('gandi_error', $sid) if (!$server);
 
 # Get the contact IDs and contact details
-local $info;
+my $info;
 eval {
 	$info = $server->call("domain_info", $sid, $d->{'dom'});
 	};
 return &text('gandi_error', "$@") if ($@);
-local @rv;
+my @rv;
 foreach my $ct ('admin', 'tech', 'billing') {
 	next if (!$info->{$ct.'_handle'});
-	local $con;
+	my $con;
 	eval {
 		$con = $server->call("contact_info", $sid,
 				     $info->{$ct.'_handle'});
@@ -288,19 +292,20 @@ return \@rv;
 # Updates contacts from an array of hashes
 sub type_gandi_save_contact
 {
-local ($account, $d, $cons) = @_;
+my ($account, $d, $cons) = @_;
 
-local ($server, $sid) = &connect_gandi_api($account, 1);
+my ($server, $sid) = &connect_gandi_api($account, 1);
 return &text('gandi_error', $sid) if (!$server);
 
 # Get existing contacts
-local $oldcons = &type_gandi_get_contact($account, $d);
+my $oldcons = &type_gandi_get_contact($account, $d);
 return $oldcons if (!ref($oldcons));
 
 # For changed contacts, create a new one and associate with the domain
+my %same;
 foreach my $c (@$cons) {
-	local ($oldc) = grep { $_->{'purpose'} eq $c->{'purpose'} } @$oldcons;
-	local $hash = &contact_hash_to_string($c);
+	my ($oldc) = grep { $_->{'purpose'} eq $c->{'purpose'} } @$oldcons;
+	my $hash = &contact_hash_to_string($c);
 	if ($oldc && $hash eq &contact_hash_to_string($oldc)) {
 		# No change
 		next;
@@ -313,8 +318,8 @@ foreach my $c (@$cons) {
 			}
 		else {
 			# Keep all original extra parameters the same
-			local %params;
-			local @skip = ( 'id', 'type', 'purpose', 'handle', 'name', 'class', 'firstname', 'lastname', 'address', 'zipcode', 'city', 'country', 'phone', 'email' );
+			my %params;
+			my @skip = ( 'id', 'type', 'purpose', 'handle', 'name', 'class', 'firstname', 'lastname', 'address', 'zipcode', 'city', 'country', 'phone', 'email' );
 			foreach my $k (keys %$c) {
 				if (&indexof($k, @skip) < 0 &&
 				    $c->{$k}) {
@@ -361,7 +366,7 @@ return undef;
 # Returns a list of fields for domain contacts, as seen by gandi.net
 sub type_gandi_get_contact_schema
 {
-local ($account, $d, $type) = @_;
+my ($account, $d, $type) = @_;
 return ( { 'name' => 'handle',
 	   'readonly' => 1 },
          { 'name' => 'class',
@@ -409,17 +414,17 @@ return ( { 'name' => 'handle',
 # message.
 sub type_gandi_get_expiry
 {
-local ($account, $d) = @_;
-local ($server, $sid) = &connect_gandi_api($account, 1);
+my ($account, $d) = @_;
+my ($server, $sid) = &connect_gandi_api($account, 1);
 return (0, &text('gandi_error', $sid)) if (!$server);
 
 # Call to get info
-local $info;
+my $info;
 eval {
 	$info = $server->call("domain_info", $sid, $d->{'dom'});
 	};
 return (0, &text('gandi_error', "$@")) if ($@);
-local $expirydate = $info->{'registry_expiration_date'}->value();
+my $expirydate = $info->{'registry_expiration_date'}->value();
 if ($expirydate =~ /^(\d{4})(\d\d)(\d\d)T(\d\d):(\d\d):(\d\d)$/) {
 	return (1, timelocal($6, $5, $4, $3, $2-1, $1-1900));
 	}
@@ -432,12 +437,12 @@ return (0, &text('gandi_eexpiry', $expirydate));
 # failure.
 sub type_gandi_renew_domain
 {
-local ($account, $d, $years) = @_;
-local ($server, $sid) = &connect_gandi_api($account, 1);
+my ($account, $d, $years) = @_;
+my ($server, $sid) = &connect_gandi_api($account, 1);
 return (0, &text('gandi_error', $sid)) if (!$server);
 
 # Call to renew
-local $opid;
+my $opid;
 eval {
 	$opid = $server->call("domain_renew", $sid, $d->{'dom'}, $years);
 	};
@@ -460,13 +465,13 @@ return &text('gandi_instructions', 'https://www.gandi.net/resellers/');
 # the domain for that period.
 sub type_gandi_transfer_domain
 {
-local ($account, $d, $key) = @_;
+my ($account, $d, $key) = @_;
 
-local ($server, $sid) = &connect_gandi_api($account, 1);
+my ($server, $sid) = &connect_gandi_api($account, 1);
 return (0, &text('gandi_error', $sid)) if (!$server);
 
 # Get my nameservers
-local $nss = &get_domain_nameservers($account, $d);
+my $nss = &get_domain_nameservers($account, $d);
 if (!ref($nss)) {
         return (0, $nss);
         }
@@ -478,7 +483,7 @@ elsif (@$nss < 2) {
 	}
 
 # Do the transfer
-local $tid;
+my $tid;
 eval {
 	$tid = $server->call("domain_transfer_in", $sid, $d->{'dom'},
 		$account->{'gandi_account'},
@@ -497,8 +502,8 @@ return (1, $tid);
 # or calls error
 sub connect_gandi_api
 {
-local ($account, $reterr) = @_;
-local $server;
+my ($account, $reterr) = @_;
+my $server;
 eval {
 	$server = Frontier::Client->new(
 		'url' => $account->{'gandi_test'} ? $gandi_api_url_test
@@ -513,9 +518,9 @@ if ($@) {
 		&error($@);
 		}
 	}
-local $sid;
+my $sid;
 eval {
-	local $safe = $server->boolean(0);
+	my $safe = $server->boolean(0);
 	$sid = $server->call("login", $account->{'gandi_account'},
 				      $account->{'gandi_pass'}, $safe);
 	};
@@ -524,4 +529,3 @@ return $@ =~ /DataError:\s*(.*)/ ? ( undef, $1 ) :
 }
 
 1;
-

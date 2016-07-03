@@ -1,5 +1,9 @@
 #!/usr/local/bin/perl
 # Try to associate a domain registration with this server
+use strict;
+use warnings;
+our (%access, %text, %in);
+our $module_name;
 
 require './virtualmin-registrar-lib.pl';
 &ReadParse();
@@ -7,13 +11,13 @@ require './virtualmin-registrar-lib.pl';
 $access{'registrar'} || &error($text{'import_ecannot'});
 
 # Get the Virtualmin domain and account
-$d = &virtual_server::get_domain_by("dom", $in{'dom'});
+my $d = &virtual_server::get_domain_by("dom", $in{'dom'});
 $d || &error(&text('contact_edom', $in{'dom'}));
 $d->{$module_name} && &error($text{'import_ealready'});
-($account) = grep { $_->{'id'} eq $in{'account'} }
+my ($account) = grep { $_->{'id'} eq $in{'account'} }
 		  &list_registrar_accounts();
 $account || &error(&text('contact_eaccount', $in{'dom'}));
-$oldd = { %$d };
+my $oldd = { %$d };
 
 # Show import progress
 &ui_print_unbuffered_header(&virtual_server::domain_in($d),
@@ -21,8 +25,8 @@ $oldd = { %$d };
 
 print &text('import_doing', "<tt>$d->{'dom'}</tt>",
 			    "<i>$account->{'desc'}</i>"),"<br>\n";
-$ifunc = "type_".$account->{'registrar'}."_owned_domain";
-($ok, $msg) = &$ifunc($account, $d->{'dom'},
+my $ifunc = "type_".$account->{'registrar'}."_owned_domain";
+my ($ok, $msg) = &$ifunc($account, $d->{'dom'},
 		      $in{'id_def'} ? undef : $in{'id'});
 if (!$ok) {
 	print &text('import_failed', $msg),"<p>\n";
@@ -42,13 +46,15 @@ else {
 	# Set nameservers to match this system
 	if ($in{'ns'}) {
 		print $text{'import_nsing'},"<br>\n";
-		$nfunc = "type_".$account->{'registrar'}."_set_nameservers";
-		$err = &$nfunc($account, $d);
+		my $nfunc = "type_".$account->{'registrar'}."_set_nameservers";
+		my $err = &$nfunc($account, $d);
 		if ($err) {
 			print &text('import_failed', $err),"<p>\n";
 			}
 		else {
+			no warnings "once";
 			print $virtual_server::text{'setup_done'},"<p>\n";
+			use warnings "once";
 			}
 		}
 

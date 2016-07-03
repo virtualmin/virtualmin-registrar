@@ -1,5 +1,10 @@
 #!/usr/local/bin/perl
 # Save automatic renewal
+use strict;
+use warnings;
+our (%access, %text, %in);
+our $auto_cron_cmd;
+our $module_name;
 
 require './virtualmin-registrar-lib.pl';
 &foreign_require("cron", "cron-lib.pl");
@@ -8,7 +13,7 @@ require './virtualmin-registrar-lib.pl';
 $access{'registrar'} || &error($text{'auto_ecannot'});
 
 # Get the account
-($account) = grep { $_->{'id'} eq $in{'id'}} &list_registrar_accounts();
+my ($account) = grep { $_->{'id'} eq $in{'id'}} &list_registrar_accounts();
 $account || &error($text{'edit_egone'});
 
 # Validate inputs
@@ -39,9 +44,9 @@ $account->{'autoowner'} = $in{'owner'};
 
 # Save the account, and create the cron job if needed
 &save_registrar_account($account);
-($job) = grep { $_->{'command'} eq $auto_cron_cmd &&
+my ($job) = grep { $_->{'command'} eq $auto_cron_cmd &&
 		$_->{'user'} eq 'root' } &cron::list_cron_jobs();
-@anyauto = grep { $_->{'autodays'} || $_->{'autowarn'} }
+my @anyauto = grep { $_->{'autodays'} || $_->{'autowarn'} }
 		&list_registrar_accounts();
 if (@anyauto && !$job) {
 	# Create the job
@@ -66,4 +71,3 @@ elsif (!@anyauto && $job) {
 &cron::create_wrapper($auto_cron_cmd, $module_name, "auto.pl");
 
 &redirect("");
-

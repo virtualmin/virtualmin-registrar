@@ -1,18 +1,24 @@
 # Common functions for domain registration
 # XXX - List all domains from registrar
 # XXX - OpenSRS support - FS#5098
+use strict;
+use warnings;
+our (%text, %config);
+our $module_name;
+our $module_config_directory;
+our $module_root_directory;
 
 BEGIN { push(@INC, ".."); };
 eval "use WebminCore;";
 &init_config();
 &foreign_require("virtual-server", "virtual-server-lib.pl");
-$registrar_accounts_dir = "$module_config_directory/accounts";
-%access = &get_module_acl();
-$auto_cron_cmd = "$module_config_directory/auto.pl";
-($input_name = $module_name) =~ s/[^A-Za-z0-9]/_/g;
+our $registrar_accounts_dir = "$module_config_directory/accounts";
+our %access = &get_module_acl();
+our $auto_cron_cmd = "$module_config_directory/auto.pl";
+our $input_name = $module_name =~ s/[^A-Za-z0-9]/_/g;
 
 # Bring in all register-type specific libraries
-@registrar_types = (
+our @registrar_types = (
 	{ 'name' => 'rcom',
 	  'disabled' => 0,
 	  'desc' => $text{'type_rcom'} },
@@ -38,11 +44,11 @@ foreach my $t (@registrar_types) {
 # this module.
 sub list_registrar_accounts
 {
-local @rv;
+my @rv;
 opendir(DIR, $registrar_accounts_dir);
 foreach my $f (readdir(DIR)) {
 	next if ($f eq "." || $f eq "..");
-	local %account;
+	my %account;
 	&read_file("$registrar_accounts_dir/$f", \%account);
 	$account{'id'} = $f;
 	$account{'file'} = "$registrar_accounts_dir/$f";
@@ -56,7 +62,7 @@ return @rv;
 # Create or update a registrar account
 sub save_registrar_account
 {
-local ($account) = @_;
+my ($account) = @_;
 if (!-d $registrar_accounts_dir) {
 	&make_dir($registrar_accounts_dir, 0700);
 	}
@@ -69,7 +75,7 @@ $account->{'file'} = "$registrar_accounts_dir/$account->{'id'}";
 # Mark an existing registrar account as deleted
 sub delete_registrar_account
 {
-local ($account) = @_;
+my ($account) = @_;
 &unlink_file("$registrar_accounts_dir/$account->{'id'}");
 }
 
@@ -77,18 +83,19 @@ local ($account) = @_;
 # Returns the best registrar account for some domain
 sub find_registrar_account
 {
-local ($dname) = @_;
+my ($dname) = @_;
 foreach my $a (grep { $_->{'enabled'} } &list_registrar_accounts()) {
 	# Does the registrar support this domain?
-	local $tfunc = "type_".$a->{'registrar'}."_domains";
+	my $tfunc = "type_".$a->{'registrar'}."_domains";
 	if (defined(&$tfunc)) {
-		local @doms = &$tfunc($account);
+		# XXX Is $dname right? Was $account.
+		my @doms = &$tfunc($dname);
 		if (@doms) {
 			next if (!&in_tld_list($dname, \@doms));
 			}
 		}
 	# Does the account want it?
-	local @doms = split(/\s+/, $a->{'doms'});
+	my @doms = split(/\s+/, $a->{'doms'});
 	if (@doms) {
 		next if (!&in_tld_list($dname, \@doms));
 		}
@@ -101,7 +108,7 @@ return undef;
 # Checks if a domain ends with any of the given suffixes, like .com and .org.au
 sub in_tld_list
 {
-local ($dname, $doms) = @_;
+my ($dname, $doms) = @_;
 foreach my $d (@$doms) {
 	if ($dname =~ /\Q$d\E$/i) {
 		return 1;
@@ -114,8 +121,8 @@ return 0;
 # Returns a list of Virtualmin domains using some account
 sub find_account_domains
 {
-local ($account) = @_;
-local @rv;
+my ($account) = @_;
+my @rv;
 foreach my $d (&virtual_server::list_domains()) {
 	push(@rv, $d) if ($d->{$module_name} &&
 			  $d->{'registrar_account'} eq $account->{'id'});
@@ -127,21 +134,21 @@ return @rv;
 # Returns a list of fields for domain contacts
 sub get_contact_schema
 {
-local ($account, $d, $type, $newcontact, $cls) = @_;
-local $sfunc = "type_".$account->{'registrar'}."_get_contact_schema";
+my ($account, $d, $type, $newcontact, $cls) = @_;
+my $sfunc = "type_".$account->{'registrar'}."_get_contact_schema";
 return &$sfunc($account, $d, $type, $newcontact, $cls);
 }
 
 sub can_domain
 {
-local ($dname) = @_;
+my ($dname) = @_;
 return 1 if ($access{'registrar'});
-local @doms = split(/\s+/, $access{'doms'});
+my @doms = split(/\s+/, $access{'doms'});
 return &indexof($dname, @doms) >= 0;
 }
 
 # can_contacts(&domain)
-# Returns 1 if the current user is allowed to edit contacts for a domain, 
+# Returns 1 if the current user is allowed to edit contacts for a domain,
 # 2 for view only, 3 if selection of other contacts is also allowed
 sub can_contacts
 {
@@ -160,26 +167,26 @@ return &virtual_server::master_admin() ? 1 : $config{'can_nameservers'};
 # message
 sub get_domain_nameservers
 {
-local ($account, $d) = @_;
+my ($account, $d) = @_;
 if ($account && $account->{'ns'}) {
 	# Account-specific override given .. use it
 	return [ split(/\s+/, $account->{'ns'}) ];
 	}
 
-local $z = &virtual_server::get_bind_zone($d->{'dom'});
+my $z = &virtual_server::get_bind_zone($d->{'dom'});
 if (!$z) {
 	return $text{'rcom_ezone'};
 	}
-local $file = &bind8::find("file", $z->{'members'});
-local @recs = &bind8::read_zone_file($file->{'values'}->[0], $d->{'dom'});
+my $file = &bind8::find("file", $z->{'members'});
+my @recs = &bind8::read_zone_file($file->{'values'}->[0], $d->{'dom'});
 if (!@recs) {
 	return &text('rcom_ezonefile', $file->{'values'}->[0]);
 	}
-local @ns;
+my @ns;
 foreach my $r (@recs) {
 	if ($r->{'type'} eq 'NS' &&
 	    $r->{'name'} eq $d->{'dom'}.".") {
-		local $ns = $r->{'values'}->[0];
+		my $ns = $r->{'values'}->[0];
 		if ($ns !~ /\.$/) {
 			$ns .= ".".$d->{'dom'};
 			}
@@ -197,23 +204,23 @@ return \@ns;
 # an error message on failure.
 sub set_domain_nameservers
 {
-local ($d, $nss) = @_;
+my ($d, $nss) = @_;
 &virtual_server::require_bind();
 
 # Find the zone and records
-local $z = &virtual_server::get_bind_zone($d->{'dom'});
+my $z = &virtual_server::get_bind_zone($d->{'dom'});
 if (!$z) {
         return $text{'rcom_ezone'};
         }
-local $file = &bind8::find("file", $z->{'members'});
-local $fn = $file->{'values'}->[0];
-local @recs = &bind8::read_zone_file($file->{'values'}->[0], $d->{'dom'});
+my $file = &bind8::find("file", $z->{'members'});
+my $fn = $file->{'values'}->[0];
+my @recs = &bind8::read_zone_file($file->{'values'}->[0], $d->{'dom'});
 if (!@recs) {
         return &text('rcom_ezonefile', $file->{'values'}->[0]);
         }
 
 # Remove existing NS records
-local @oldns = grep { $_->{'type'} eq 'NS' &&
+my @oldns = grep { $_->{'type'} eq 'NS' &&
 		      $_->{'name'} eq $d->{'dom'}."." } @recs;
 foreach my $r (reverse(@oldns)) {
 	&bind8::delete_record($fn, $r);
@@ -235,17 +242,17 @@ return undef;
 # From: http://schmidt.devlib.org/data/countries.txt
 sub list_countries
 {
-local @rv;
-open(COUNTRIES, "$module_root_directory/countries.txt");
-while(<COUNTRIES>) {
+my @rv;
+open(my $COUNTRIES, "<", "$module_root_directory/countries.txt");
+while(<$COUNTRIES>) {
 	s/\r|\n//g;
-	local ($n, $name, $two, $three, $un, $sov, $exists, $owner, $tld) =
+	my ($n, $name, $two, $three, $un, $sov, $exists, $owner, $tld) =
 		split(/;/, $_);
 	if ($exists) {
 		push(@rv, [ $name, $two, $three, $tld ]);
 		}
 	}
-close(COUNTRIES);
+close($COUNTRIES);
 return sort { $a->[0] cmp $b->[0] } @rv;
 }
 
@@ -255,18 +262,20 @@ return sort { $a->[0] cmp $b->[0] } @rv;
 sub get_default_nameservers
 {
 &virtual_server::require_bind();
-local $tmpl = &virtual_server::get_template(0);
-local $tmaster = $tmpl->{'dns_master'} eq 'none' ? undef :
+my $tmpl = &virtual_server::get_template(0);
+my $tmaster = $tmpl->{'dns_master'} eq 'none' ? undef :
                                         $tmpl->{'dns_master'};
-local $master = $tmaster ||
+no warnings "once";
+my $master = $tmaster ||
 		$bind8::config{'default_prins'} ||
 		&get_system_hostname();
+use warnings "once";
 $master =~ s/\.$//;
-local @rv;
+my @rv;
 push(@rv, $master);
-local @slaves = &bind8::list_slave_servers();
+my @slaves = &bind8::list_slave_servers();
 foreach my $slave (@slaves) {
-	local @bn = $slave->{'nsname'} ? ( $slave->{'nsname'} )
+	my @bn = $slave->{'nsname'} ? ( $slave->{'nsname'} )
 				       : gethostbyname($slave->{'host'});
 	push(@rv, $bn[0]);
 	}
@@ -277,8 +286,8 @@ return @rv;
 # Returns a string version of a contact hash, for comparisons
 sub contact_hash_to_string
 {
-local ($h) = @_;
-local @k = sort { $a cmp $b }
+my ($h) = @_;
+my @k = sort { $a cmp $b }
 	        grep { $_ ne "purpose" && $_ ne "lcmap" && $_ ne "id" &&
 		       !ref($h->{$_}) } (keys %$h);
 return join(" ", map { $_."=".$h->{$_} } @k);
@@ -288,8 +297,8 @@ return join(" ", map { $_."=".$h->{$_} } @k);
 # Returns a human-readable name for a contact
 sub nice_contact_name
 {
-local ($con, $account) = @_;
-local $nfunc = "type_".$account->{'registrar'}."_nice_contact_name";
+my ($con, $account) = @_;
+my $nfunc = "type_".$account->{'registrar'}."_nice_contact_name";
 if (defined(&$nfunc)) {
 	return &$nfunc($con);
 	}
@@ -299,4 +308,3 @@ return $con->{'id'}." ".
 }
 
 1;
-

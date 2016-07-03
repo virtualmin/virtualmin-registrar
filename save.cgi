@@ -1,13 +1,19 @@
 #!/usr/local/bin/perl
 # Create, update or delete a registrar account
+use strict;
+use warnings;
+our (%access, %text, %in);
+our $registrar_accounts_dir;
 
 require './virtualmin-registrar-lib.pl';
 $access{'registrar'} || &error($text{'edit_ecannot'});
 &ReadParse();
 &error_setup($text{'save_err'});
-@accounts = &list_registrar_accounts();
+my @accounts = &list_registrar_accounts();
 
 # Get the account object and registrar type
+my $account;
+my $reg;
 if ($in{'registrar'}) {
 	$reg = $in{'registrar'};
 	$account = { 'id' => time().$$,
@@ -22,7 +28,7 @@ else {
 if ($in{'delete'}) {
 	# Check if in use by any Virtualmin domains - if so, we can't delete
 	&error_setup($text{'save_err2'});
-	@doms = &find_account_domains($account);
+	my @doms = &find_account_domains($account);
 	if (@doms && @accounts < 2) {
 		&error(&text('save_edoms',
 			join(" ", map { "<tt>$_->{'dom'}</tt>" } @doms)));
@@ -35,7 +41,7 @@ if ($in{'delete'}) {
 		&unlock_file($account->{'file'});
 
 		# Update domains to new use registrar
-		foreach $d (@doms) {
+		foreach my $d (@doms) {
 			$d->{'registrar_account'} = $in{'transfer'};
 			&virtual_server::save_domain($d);
 			}
@@ -75,7 +81,7 @@ else {
 		}
 	else {
 		$in{'doms'} =~ /\S/ || &error($text{'save_etopdoms'});
-		foreach $tld (split(/\s+/, $in{'doms'})) {
+		foreach my $tld (split(/\s+/, $in{'doms'})) {
 			$tld =~ /^\.[a-z0-9\.\-]+$/ ||
 				&error(&text('save_etopdoms2', $tld));
 			}
@@ -85,7 +91,7 @@ else {
 		delete($account->{'ns'});
 		}
 	else {
-		@ns = split(/\s+/, $in{'ns'});
+		my @ns = split(/\s+/, $in{'ns'});
 		foreach my $ns (@ns) {
 			&to_ipaddress($ns) ||
 				&error(&text('save_ens', $ns));
@@ -95,13 +101,13 @@ else {
 		@ns || &error(&text('save_enss'));
 		$account->{'ns'} = join(" ", @ns);
 		}
-	$pfunc = "type_".$reg."_edit_parse";
-	$perr = &$pfunc($account, $in{'registrar'}, \%in);
+	my $pfunc = "type_".$reg."_edit_parse";
+	my $perr = &$pfunc($account, $in{'registrar'}, \%in);
 	&error($perr) if ($perr);
 
 	# Make sure the login actually works
-	$vfunc = "type_".$reg."_validate";
-	$verr = &$vfunc($account);
+	my $vfunc = "type_".$reg."_validate";
+	my $verr = &$vfunc($account);
 	&error($verr) if ($verr);
 
 	# Save or create
@@ -111,4 +117,3 @@ else {
 	&unlock_file($account->{'file'});
 	&redirect("index.cgi");
 	}
-

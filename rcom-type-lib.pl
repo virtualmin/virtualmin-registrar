@@ -1,17 +1,20 @@
 # Functions for talking to register.com
+use strict;
+use warnings;
+our (%text, %in);
 
-$rcom_api_hostname = "partner.rcomexpress.com";
-$rcom_test_api_hostname = "partnertest.rcomexpress.com";
-$rcom_api_port = 80;
-$rcom_api_ssl = 0;
-$rcom_api_page = "/interface.asp";
+my $rcom_api_hostname = "partner.rcomexpress.com";
+my $rcom_test_api_hostname = "partnertest.rcomexpress.com";
+my $rcom_api_port = 80;
+my $rcom_api_ssl = 0;
+my $rcom_api_page = "/interface.asp";
 
-@rcom_card_types = ( "visa", "amex", "mastercard" );
-$rcom_create_hostname = "www.virtualmin.com";
-$rcom_create_port = 443;
-$rcom_create_ssl = 1;
-$rcom_create_page = "/cgi-bin/rcom.cgi";
-@rcom_account_params = ( 
+my @rcom_card_types = ( "visa", "amex", "mastercard" );
+my $rcom_create_hostname = "www.virtualmin.com";
+my $rcom_create_port = 443;
+my $rcom_create_ssl = 1;
+my $rcom_create_page = "/cgi-bin/rcom.cgi";
+my @rcom_account_params = (
     "NewUID",
     "NewPW",
     "ConfirmPW",
@@ -106,8 +109,8 @@ return (".com",
 # Returns table fields for entering the account login details
 sub type_rcom_edit_inputs
 {
-local ($account, $new) = @_;
-local $rv;
+my ($account, $new) = @_;
+my $rv;
 $rv .= &ui_table_row($text{'rcom_account'},
 	&ui_textbox("rcom_account", $account->{'rcom_account'}, 30));
 $rv .= &ui_table_row($text{'rcom_pass'},
@@ -126,7 +129,7 @@ return $rv;
 # an error message on failure.
 sub type_rcom_edit_parse
 {
-local ($account, $new, $in) = @_;
+my ($account, $new, $in) = @_;
 $in->{'rcom_account'} =~ /^\S+$/ || return $text{'rcom_eaccount'};
 $account->{'rcom_account'} = $in->{'rcom_account'};
 $in->{'rcom_pass'} =~ /^\S+$/ || return $text{'rcom_epass'};
@@ -144,12 +147,12 @@ return undef;
 }
 
 # type_rcom_create_inputs()
-# Returns HTML for creating a new register.com sub-account. 
+# Returns HTML for creating a new register.com sub-account.
 sub type_rcom_create_inputs
 {
-local $rv;
-local @countries = &list_countries();
-local ($defc) = grep { $_->[1] eq "US" } @countries;
+my $rv;
+my @countries = &list_countries();
+my ($defc) = grep { $_->[1] eq "US" } @countries;
 
 # Account login and password
 $rv .= &ui_table_row($text{'rcom_newuid'},
@@ -226,7 +229,7 @@ return $rv;
 # OK, or an error message on failure.
 sub type_rcom_create_parse
 {
-local ($account, $in) = @_;
+my ($account, $in) = @_;
 
 # Username and password
 $in->{'newuid'} =~ /^[a-z0-9\.\-\_]+$/ || return $text{'rcom_enewuid'};
@@ -267,8 +270,8 @@ $in->{'emailaddress'} =~ /^\S+\@\S+$/ || return $text{'rcom_eemailaddress'};
 $account->{'rcom_emailaddress'} = $in->{'emailaddress'};
 
 # Credit card
-local @tm = localtime(time());
-local $y = $tm[5]+1900;
+my @tm = mytime(time());
+my $y = $tm[5]+1900;
 $account->{'rcom_cardtype'} = $in->{'cardtype'};
 $in->{'ccname'} =~ /\S/ || return $text{'rcom_eccname'};
 $account->{'rcom_ccname'} = $in->{'ccname'};
@@ -298,14 +301,14 @@ return undef;
 # warnings on success.
 sub type_rcom_create_account
 {
-local ($account) = @_;
+my ($account) = @_;
 
 # Make HTTP request to virtualmin.com, where a CGI knows our master password
-local $id;
+my $id;
 $account->{'rcom_confirmpw'} = $account->{'rcom_newpw'};	# Same
 $account->{'rcom_authquestionanswer'} = 'none';			# Not needed?
 $account->{'rcom_reseller'} = 1;				# Needed
-local $page = $rcom_create_page."?".
+my $page = $rcom_create_page."?".
       join("&", map { my $p = lc($_);
 		      $p =~ s/^registrant//;
 		      $p = "rcom_".$p;
@@ -313,11 +316,12 @@ local $page = $rcom_create_page."?".
 if ($account->{'rcom_test'}) {
 	$page .= "&test=1";
 	}
+my ($out, $err);
 &http_download($rcom_create_hostname,
 	       $rcom_create_port,
 	       $page,
 	       \$out, \$err, undef, $rcom_create_ssl);
-local $warn;
+my $warn;
 if ($err) {
 	# HTTP error
 	return (0, $err);
@@ -336,9 +340,9 @@ else {
 	}
 
 # If OK, clear un-needed details from the account object
-local $a = $account->{'rcom_newuid'};
-local $p = $account->{'rcom_newpw'};
-local $t = $account->{'rcom_test'};
+my $a = $account->{'rcom_newuid'};
+my $p = $account->{'rcom_newpw'};
+my $t = $account->{'rcom_test'};
 foreach my $k (keys %$account) {
 	delete($account->{$k}) if ($k =~ /^rcom_/);
 	}
@@ -353,7 +357,7 @@ return (1, $id, $warn, $text{'rcom_createinfo'});
 # Returns the number of years by default to renew a domain for
 sub type_rcom_renew_years
 {
-local ($account, $d) = @_;
+my ($account, $d) = @_;
 return $account->{'rcom_years'} || 2;
 }
 
@@ -362,17 +366,17 @@ return $account->{'rcom_years'} || 2;
 # message if the login or password are wrong.
 sub type_rcom_validate
 {
-local ($account) = @_;
-local ($ok, $msg) = &call_rcom_api($account, "GetDomainCount", { });
+my ($account) = @_;
+my ($ok, $msg) = &call_rcom_api($account, "GetDomainCount", { });
 if ($ok) {
 	return undef;
 	}
 else {
 	if ($account->{'rcom_test'}) {
 		# Test mode, but perhaps it should have been real
-		local $realaccount = { %$account };
+		my $realaccount = { %$account };
 		$realaccount->{'rcom_test'} = 0;
-		local ($realok, $realmsg) =
+		my ($realok, $realmsg) =
 			&call_rcom_api($realaccount, "GetDomainCount", { });
 		if ($realok) {
 			return $text{'rcom_ereal'};
@@ -387,10 +391,10 @@ else {
 # yes, or an error message if not.
 sub type_rcom_check_domain
 {
-local ($account, $dname) = @_;
+my ($account, $dname) = @_;
 $dname =~ /^([^\.]+)\.(\S+)$/ || return 0;
-local ($sld, $tld) = ($1, $2);
-local ($ok, $out, $resp) = &call_rcom_api($account, "Check",
+my ($sld, $tld) = ($1, $2);
+my ($ok, $out, $resp) = &call_rcom_api($account, "Check",
 				{ 'SLD' => $sld, 'TLD' => $tld });
 if (!$ok) {
 	return $out;
@@ -412,10 +416,10 @@ else {
 # 0 and an error message.
 sub type_rcom_owned_domain
 {
-local ($account, $dname, $id) = @_;
+my ($account, $dname, $id) = @_;
 $dname =~ /^([^\.]+)\.(\S+)$/ || return (0, $text{'rcom_etld'});
-local ($sld, $tld) = ($1, $2);
-local ($ok, $out, $resp) = &call_rcom_api($account, "GetDomainInfo",
+my ($sld, $tld) = ($1, $2);
+my ($ok, $out, $resp) = &call_rcom_api($account, "GetDomainInfo",
 					  { 'SLD' => $sld, 'TLD' => $tld });
 if (!$ok) {
 	if ($out eq "Domain name not found") {
@@ -438,16 +442,16 @@ else {
 # or an error mesage on failure.
 sub type_rcom_ensure_nameservers
 {
-local ($account, $d, $nss) = @_;
+my ($account, $d, $nss) = @_;
 foreach my $ns (&unique(@$nss)) {
-	local ($ok, $out, $resp) = &call_rcom_api($account, "checknsstatus",
+	my ($ok, $out, $resp) = &call_rcom_api($account, "checknsstatus",
 					{ 'checknsname' => $ns });
 	next if ($ok);
 
 	# need to add it
-	local $nsip = &to_ipaddress($ns);
+	my $nsip = &to_ipaddress($ns);
 	$nsip || return (0, &text('rcom_elookupns', $ns));
-	local ($ok, $out, $resp) = &call_rcom_api($account,
+	($ok, $out, $resp) = &call_rcom_api($account,
 					"registernameserver",
 					{ 'add' => 'true',
 					  'nsname' => $ns,
@@ -464,13 +468,13 @@ return undef;
 # it failed, or 1 and an ID for the domain on success.
 sub type_rcom_create_domain
 {
-local ($account, $d) = @_;
+my ($account, $d) = @_;
 $d->{'dom'} =~ /^([^\.]+)\.(\S+)$/ || return (0, $text{'rcom_etld'});
-local ($sld, $tld) = ($1, $2);
+my ($sld, $tld) = ($1, $2);
 
 # NS records come from the DNS domain
-local $args = { 'SLD' => $sld, 'TLD' => $tld };
-local $nss = &get_domain_nameservers($account, $d);
+my $args = { 'SLD' => $sld, 'TLD' => $tld };
+my $nss = &get_domain_nameservers($account, $d);
 if (!ref($nss)) {
 	return (0, $nss);
 	}
@@ -483,7 +487,7 @@ foreach my $ns (@$nss) {
 	}
 
 # Check the if the nameservers have been added, and try to add them. This
-local $err = &type_rcom_ensure_nameservers($account, $d, $nss);
+my $err = &type_rcom_ensure_nameservers($account, $d, $nss);
 #return (0, $err) if ($err);
 
 # Call the API to create
@@ -496,7 +500,7 @@ elsif ($account->{'rcom_years'}) {
 if ($tld eq "eu") {
 	$args->{'EU_WhoisPolicy'} = "I Agree";
 	}
-local ($ok, $out, $resp) = &call_rcom_api($account, "Purchase", $args);
+my ($ok, $out, $resp) = &call_rcom_api($account, "Purchase", $args);
 if (!$ok) {
 	return (0, $out);
 	}
@@ -513,7 +517,7 @@ else {
 # or an error message on failure.
 sub type_rcom_set_nameservers
 {
-local ($account, $d, $nss) = @_;
+my ($account, $d, $nss) = @_;
 
 # Get nameservers in DNS
 $nss ||= &get_domain_nameservers($account, $d);
@@ -525,17 +529,17 @@ elsif (!@$nss) {
 	}
 
 # Make sure they are all available
-local $err = &type_rcom_ensure_nameservers($account, $d, $nss);
+my $err = &type_rcom_ensure_nameservers($account, $d, $nss);
 return $err if ($err);
 
 # Update for the domain
 $d->{'dom'} =~ /^([^\.]+)\.(\S+)$/ || return $text{'rcom_etld'};
-local $args = { 'SLD' => $1, 'TLD' => $2 };
+my $args = { 'SLD' => $1, 'TLD' => $2 };
 my $nscount = 1;
 foreach my $ns (@$nss) {
 	$args->{'NS'.$nscount++} = $ns;
 	}
-local ($ok, $out, $resp) = &call_rcom_api($account, "ModifyNS", $args);
+my ($ok, $out, $resp) = &call_rcom_api($account, "ModifyNS", $args);
 return $ok ? undef : $out;
 }
 
@@ -543,12 +547,12 @@ return $ok ? undef : $out;
 # Returns an array ref of nameserver hosts, or an error message
 sub type_rcom_get_nameservers
 {
-local ($account, $d) = @_;
+my ($account, $d) = @_;
 $d->{'dom'} =~ /^([^\.]+)\.(\S+)$/ || return $text{'rcom_etld'};
-local $args = { 'SLD' => $1, 'TLD' => $2 };
-local ($ok, $out, $resp) = &call_rcom_api($account, "GetDNS", $args);
+my $args = { 'SLD' => $1, 'TLD' => $2 };
+my ($ok, $out, $resp) = &call_rcom_api($account, "GetDNS", $args);
 return $out if (!$ok);
-local @rv;
+my @rv;
 for(my $i=1; $i<=$resp->{'NSCount'}; $i++) {
 	push(@rv, $resp->{'DNS'.$i});
 	}
@@ -559,13 +563,13 @@ return \@rv;
 # Deletes a domain previously created with this registrar
 sub type_rcom_delete_domain
 {
-local ($account, $d) = @_;
+my ($account, $d) = @_;
 $d->{'dom'} =~ /^([^\.]+)\.(\S+)$/ || return (0, $text{'rcom_etld'});
-local ($sld, $tld) = ($1, $2);
-local $args = { 'SLD' => $sld, 'TLD' => $tld,
+my ($sld, $tld) = ($1, $2);
+my $args = { 'SLD' => $sld, 'TLD' => $tld,
 		'EndUserIP' => $ENV{'REMOTE_ADDR'} ||
 			       &virtual_server::get_default_ip() };
-local ($ok, $out, $resp) = &call_rcom_api($account, "DeleteRegistration",$args);
+my ($ok, $out, $resp) = &call_rcom_api($account, "DeleteRegistration",$args);
 if (!$ok) {
 	return (0, $out);
 	}
@@ -583,17 +587,17 @@ else {
 # message if it could not be found.
 sub type_rcom_get_contact
 {
-local ($account, $d) = @_;
+my ($account, $d) = @_;
 $d->{'dom'} =~ /^([^\.]+)\.(\S+)$/ || return $text{'rcom_etld'};
-local ($sld, $tld) = ($1, $2);
-local ($ok, $out, $resp) = &call_rcom_api($account, "GetContacts",
+my ($sld, $tld) = ($1, $2);
+my ($ok, $out, $resp) = &call_rcom_api($account, "GetContacts",
 				{ 'SLD' => $sld, 'TLD' => $tld });
 if (!$ok) {
 	return $out;
 	}
-local @rv;
+my @rv;
 foreach my $ct ("Admin", "Tech") {
-	local %con;
+	my %con;
 	foreach my $k (keys %$resp) {
 		next if ($k !~ /^\Q$ct\E(.*)$/);
 		next if ($1 eq "PartyID");	# Don't ever touch this
@@ -612,14 +616,14 @@ return \@rv;
 # Updates contacts from an array of hashes
 sub type_rcom_save_contact
 {
-local ($account, $d, $cons) = @_;
+my ($account, $d, $cons) = @_;
 $d->{'dom'} =~ /^([^\.]+)\.(\S+)$/ || return $text{'rcom_etld'};
-local ($sld, $tld) = ($1, $2);
+my ($sld, $tld) = ($1, $2);
 
 foreach my $ct ("Admin", "Tech") {
-	local ($con) = grep { $_->{'purpose'} eq lc($ct) } @$cons;
+	my ($con) = grep { $_->{'purpose'} eq lc($ct) } @$cons;
 	next if (!$con);
-	local $args = { 'SLD' => $sld, 'TLD' => $tld,
+	my $args = { 'SLD' => $sld, 'TLD' => $tld,
 			'ContactType' => $ct };
 	foreach my $k (keys %$con) {
 		if ($k ne "type" && $k ne "lcmap" &&
@@ -627,7 +631,7 @@ foreach my $ct ("Admin", "Tech") {
 			$args->{$ct.$con->{'lcmap'}->{$k}} = $con->{$k};
 			}
 		}
-	local ($ok, $out, $resp) = &call_rcom_api($account, "Contacts", $args);
+	my ($ok, $out, $resp) = &call_rcom_api($account, "Contacts", $args);
 	if (!$ok) {
 		return $out;
 		}
@@ -639,7 +643,7 @@ return undef;
 # Returns a list of fields for domain contacts, as seen by register.com
 sub type_rcom_get_contact_schema
 {
-local ($account, $d, $type) = @_;
+my ($account, $d, $type) = @_;
 return (      { 'name' => 'organizationname',
 		'size' => 60,
 		'opt' => 0 },
@@ -690,10 +694,10 @@ return (      { 'name' => 'organizationname',
 # message.
 sub type_rcom_get_expiry
 {
-local ($account, $d) = @_;
+my ($account, $d) = @_;
 $d->{'dom'} =~ /^([^\.]+)\.(\S+)$/ || return (0, $text{'rcom_etld'});
-local ($sld, $tld) = ($1, $2);
-local ($ok, $out, $resp) = &call_rcom_api($account, "GetDomainExp",
+my ($sld, $tld) = ($1, $2);
+my ($ok, $out, $resp) = &call_rcom_api($account, "GetDomainExp",
 				{ 'SLD' => $sld, 'TLD' => $tld });
 if (!$ok) {
 	return (0, $out);
@@ -714,11 +718,10 @@ else {
 # failure.
 sub type_rcom_renew_domain
 {
-local ($account, $d, $years) = @_;
-local ($account, $d) = @_;
+my ($account, $d, $years) = @_;
 $d->{'dom'} =~ /^([^\.]+)\.(\S+)$/ || return (0, $text{'rcom_etld'});
-local ($sld, $tld) = ($1, $2);
-local ($ok, $out, $resp) = &call_rcom_api($account, "Extend",
+my ($sld, $tld) = ($1, $2);
+my ($ok, $out, $resp) = &call_rcom_api($account, "Extend",
 				{ 'SLD' => $sld, 'TLD' => $tld,
 				  'NumYears' => $years });
 if (!$ok) {
@@ -746,8 +749,8 @@ return &text('rcom_instructions',
 # for error), the response text, and the response hash
 sub call_rcom_api
 {
-local ($account, $cmd, $args) = @_;
-local ($out, $err);
+my ($account, $cmd, $args) = @_;
+my ($out, $error);
 &http_download($account->{'rcom_test'} ? $rcom_test_api_hostname
 				       : $rcom_api_hostname,
 	       $rcom_api_port,
@@ -762,7 +765,7 @@ if ($error) {
 	return (0, $error, undef);
 	}
 # Parse response lines
-local %resp;
+my %resp;
 foreach my $l (split(/\r?\n/, $out)) {
 	$l =~ s/^\s*;.*//;
 	if ($l =~ /^([^=]+)=(.*)/) {
@@ -772,7 +775,7 @@ foreach my $l (split(/\r?\n/, $out)) {
 	}
 if ($resp{'ErrCount'}) {
 	# Some error was returned
-	local @errs;
+	my @errs;
 	for(my $i=1; $i<=$resp{'ErrCount'}; $i++) {
 		push(@errs, $resp{'Err'.$i});
 		}
@@ -782,4 +785,3 @@ return (1, $out, \%resp);
 }
 
 1;
-

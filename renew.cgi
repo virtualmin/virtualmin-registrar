@@ -1,5 +1,8 @@
 #!/usr/local/bin/perl
 # Actually perform domain renewal
+use strict;
+use warnings;
+our (%text, %in);
 
 require './virtualmin-registrar-lib.pl';
 &ReadParse();
@@ -8,9 +11,9 @@ require './virtualmin-registrar-lib.pl';
 # Get the Virtualmin domain
 &can_domain($in{'dom'}) && &virtual_server::can_use_feature($module_name) ||
 	&error($text{'renew_ecannot'});
-$d = &virtual_server::get_domain_by("dom", $in{'dom'});
+my $d = &virtual_server::get_domain_by("dom", $in{'dom'});
 $d || &error(&text('contact_edom', $in{'dom'}));
-($account) = grep { $_->{'id'} eq $d->{'registrar_account'} }
+my ($account) = grep { $_->{'id'} eq $d->{'registrar_account'} }
 		  &list_registrar_accounts();
 $account || &error(&text('contact_eaccount', $in{'dom'}));
 
@@ -24,8 +27,8 @@ $in{'years'} =~ /^\d+$/ && $in{'years'} > 0 && $in{'years'} <= 10 ||
 
 print &text('renew_doing', "<tt>$d->{'dom'}</tt>", "<i>$account->{'desc'}</i>",
 	    $in{'years'}),"<br>\n";
-$rfunc = "type_".$account->{'registrar'}."_renew_domain";
-($ok, $msg) = &$rfunc($account, $d, $in{'years'});
+my $rfunc = "type_".$account->{'registrar'}."_renew_domain";
+my ($ok, $msg) = &$rfunc($account, $d, $in{'years'});
 if ($ok) {
 	print &text('renew_done', $msg),"<p>\n";
 	}

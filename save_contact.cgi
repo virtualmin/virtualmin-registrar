@@ -1,5 +1,8 @@
 #!/usr/local/bin/perl
 # Update contact details for some domain
+use strict;
+use warnings;
+our (%text, %in);
 
 require './virtualmin-registrar-lib.pl';
 &ReadParse();
@@ -7,32 +10,32 @@ require './virtualmin-registrar-lib.pl';
 
 # Get the Virtualmin domain
 &can_domain($in{'dom'}) || &error($text{'contact_ecannot'});
-$d = &virtual_server::get_domain_by("dom", $in{'dom'});
+my $d = &virtual_server::get_domain_by("dom", $in{'dom'});
 $d || &error(&text('contact_edom', $in{'dom'}));
 &can_contacts($d) == 1 || &can_contacts($d) == 3 ||
 	&error(&text('contact_edom', $in{'dom'}));
-($account) = grep { $_->{'id'} eq $d->{'registrar_account'} }
+my ($account) = grep { $_->{'id'} eq $d->{'registrar_account'} }
 		  &list_registrar_accounts();
 $account || &error(&text('contact_eaccount', $in{'dom'}));
 
 # Get contact info from registrar
-$cfunc = "type_".$account->{'registrar'}."_get_contact";
-$cons = &$cfunc($account, $d);
+my $cfunc = "type_".$account->{'registrar'}."_get_contact";
+my $cons = &$cfunc($account, $d);
 ref($cons) || &error($cons);
 
 # Validate all input types, and update object
 foreach my $con (@$cons) {
 	if ($in{$con->{'purpose'}."same"}) {
 		# Same as first one
-		$ot = $con->{'purpose'};
+		my $ot = $con->{'purpose'};
 		%$con = %{$cons->[0]};
 		$con->{'purpose'} = $ot;
 		next;
 		}
-	@schema = &get_contact_schema($account, $d, $con->{'purpose'});
+	my @schema = &get_contact_schema($account, $d, $con->{'purpose'});
 	foreach my $s (@schema) {
-		$n = $con->{'purpose'}.$s->{'name'};
-		$fn = $text{'contact_'.lc($s->{'name'})};
+		my $n = $con->{'purpose'}.$s->{'name'};
+		my $fn = $text{'contact_'.lc($s->{'name'})};
 		if ($s->{'readonly'}) {
 			# No need to save
 			next;
@@ -66,10 +69,9 @@ foreach my $con (@$cons) {
 	}
 
 # Save the contact
-$sfunc = "type_".$account->{'registrar'}."_save_contact";
-$err = &$sfunc($account, $d, $cons);
+my $sfunc = "type_".$account->{'registrar'}."_save_contact";
+my $err = &$sfunc($account, $d, $cons);
 &error(&text('contact_esave', $err)) if ($err);
 
 # Redirect to Virtualmin post-save page
 &virtual_server::domain_redirect($d);
-

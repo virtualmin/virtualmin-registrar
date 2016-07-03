@@ -1,26 +1,30 @@
 #!/usr/local/bin/perl
 # Create, update or delete one contact
+use strict;
+use warnings;
+our (%text, %in);
 
 require './virtualmin-registrar-lib.pl';
 &ReadParse();
 &error_setup($text{'onecontact_err'});
 
 # Get the account
-@accounts = &list_registrar_accounts();
-($account) = grep { $_->{'id'} eq $in{'id'} } @accounts;
+my @accounts = &list_registrar_accounts();
+my ($account) = grep { $_->{'id'} eq $in{'id'} } @accounts;
 $account || &error($text{'contacts_eaccount'});
 
+my $con;
 if (!$in{'new'}) {
 	# Get the contacts
-	$cfunc = "type_".$account->{'registrar'}."_list_contacts";
-	($ok, $contacts) = &$cfunc($account);
+	my $cfunc = "type_".$account->{'registrar'}."_list_contacts";
+	my ($ok, $contacts) = &$cfunc($account);
 	$ok || &error(&text('contacts_elist', $contacts));
 	($con) = grep { $_->{'id'} eq $in{'cid'} } @$contacts;
 	}
 else {
 	# Set type from class
-	$cfunc = "type_".$account->{'registrar'}."_get_contact_classes";
-	($cls) = grep { $_->{'id'} eq $in{'cls'} } &$cfunc($account);
+	my $cfunc = "type_".$account->{'registrar'}."_get_contact_classes";
+	my ($cls) = grep { $_->{'id'} eq $in{'cls'} } &$cfunc($account);
 	if ($cls && $cls->{'field'}) {
 		$con = { $cls->{'field'} => $cls->{'id'} };
 		}
@@ -28,16 +32,16 @@ else {
 
 if ($in{'delete'}) {
 	# Remove the contact
-	$dfunc = "type_".$account->{'registrar'}."_delete_one_contact";
-	$err = &$dfunc($account, $con);
+	my $dfunc = "type_".$account->{'registrar'}."_delete_one_contact";
+	my $err = &$dfunc($account, $con);
 	&error(&text('onecontact_edelete', $err)) if ($err);
 	}
 else {
 	# Validate all input types, and update object
-	@schema = &get_contact_schema($account, undef, undef, $in{'new'}, $in{'cls'});
+	my @schema = &get_contact_schema($account, undef, undef, $in{'new'}, $in{'cls'});
 	foreach my $s (@schema) {
-		$n = $s->{'name'};
-		$fn = $text{'contact_'.$s->{'name'}};
+		my $n = $s->{'name'};
+		my $fn = $text{'contact_'.$s->{'name'}};
 		if ($s->{'readonly'}) {
 			# No need to save
 			next;
@@ -70,16 +74,16 @@ else {
 		}
 
 	# Save the contact
+	my $sfunc;
 	if ($in{'new'}) {
 		$sfunc = "type_".$account->{'registrar'}."_create_one_contact";
 		}
 	else {
 		$sfunc = "type_".$account->{'registrar'}."_modify_one_contact";
 		}
-	$err = &$sfunc($account, $con);
+	my $err = &$sfunc($account, $con);
 	&error(&text('onecontact_esave', $err)) if ($err);
 	}
 
 # Return to contacts list
 &redirect("list_contacts.cgi?id=$in{'id'}");
-

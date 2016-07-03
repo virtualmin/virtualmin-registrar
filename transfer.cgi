@@ -1,5 +1,9 @@
 #!/usr/local/bin/perl
 # Request a domain transfer to a registrar account
+use strict;
+use warnings;
+our (%access, %text, %in);
+our $module_name;
 
 require './virtualmin-registrar-lib.pl';
 &ReadParse();
@@ -7,10 +11,10 @@ require './virtualmin-registrar-lib.pl';
 $access{'registrar'} || &error($text{'transfer_ecannot'});
 
 # Get the Virtualmin domain and account
-$d = &virtual_server::get_domain_by("dom", $in{'dom'});
+my $d = &virtual_server::get_domain_by("dom", $in{'dom'});
 $d || &error(&text('contact_edom', $in{'dom'}));
 $d->{$module_name} && &error($text{'import_ealready'});
-($account) = grep { $_->{'id'} eq $in{'account'} }
+my ($account) = grep { $_->{'id'} eq $in{'account'} }
 		  &list_registrar_accounts();
 $account || &error(&text('contact_eaccount', $in{'dom'}));
 
@@ -24,8 +28,8 @@ $in{'years_def'} || $in{'years'} =~ /^\d+$/ ||
 			    $text{'transfer_title'}, "");
 
 print $text{'transfer_transferring'},"<br>\n";
-$tfunc = "type_".$account->{'registrar'}."_transfer_domain";
-($ok, $msg) = &$tfunc($account, $d, $in{'transfer'},
+my $tfunc = "type_".$account->{'registrar'}."_transfer_domain";
+my ($ok, $msg) = &$tfunc($account, $d, $in{'transfer'},
 	$in{'years_def'} ? undef : $in{'years'});
 if ($ok) {
 	print &text('transfer_done', $msg),"<p>\n";
@@ -38,4 +42,3 @@ else {
 	}
 
 &ui_print_footer(&virtual_server::domain_footer_link($d));
-

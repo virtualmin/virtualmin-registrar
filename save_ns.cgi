@@ -1,5 +1,8 @@
 #!/usr/local/bin/perl
 # Update nameservers for some domain
+use strict;
+use warnings;
+our (%text, %in);
 
 require './virtualmin-registrar-lib.pl';
 &ReadParse();
@@ -7,15 +10,16 @@ require './virtualmin-registrar-lib.pl';
 
 # Get the Virtualmin domain
 &can_domain($in{'dom'}) || &error($text{'ns_ecannot'});
-$d = &virtual_server::get_domain_by("dom", $in{'dom'});
+my $d = &virtual_server::get_domain_by("dom", $in{'dom'});
 $d || &error(&text('contact_edom', $in{'dom'}));
 &can_nameservers($d) || &error($text{'ns_ecannot'});
-($account) = grep { $_->{'id'} eq $d->{'registrar_account'} }
+my ($account) = grep { $_->{'id'} eq $d->{'registrar_account'} }
 		  &list_registrar_accounts();
 $account || &error(&text('contact_eaccount', $in{'dom'}));
 &virtual_server::obtain_lock_dns($d);
 
 # Validate and parse inputs
+my $nss;
 if ($in{'same'}) {
 	# Nameservers some from Virtualmin
 	$nss = &get_domain_nameservers($account, $d);
@@ -23,7 +27,7 @@ if ($in{'same'}) {
 else {
 	$nss = [ split(/\s+/, $in{'ns'}) ];
 	@$nss || &error($text{'ns_enone'});
-	foreach $ns (@$nss) {
+	foreach my $ns (@$nss) {
 		&check_ipaddress($ns) && &error(&text('ns_eip', $ns));
 		&to_ipaddress($ns) || &error(&text('ns_ens', $ns));
 		}
@@ -35,8 +39,8 @@ else {
 # Update registrar
 &$virtual_server::first_print(
 	&text('ns_reg', join(" , ", map { "<tt>$_</tt>" } @$nss)));
-$sfunc = "type_".$account->{'registrar'}."_set_nameservers";
-$err = &$sfunc($account, $d, $nss);
+my $sfunc = "type_".$account->{'registrar'}."_set_nameservers";
+my $err = &$sfunc($account, $d, $nss);
 if ($err) {
 	&$virtual_server::second_print(&text('ns_failed', $err));
 	}
@@ -54,4 +58,3 @@ if ($in{'sync'} && !$err) {
 &virtual_server::release_lock_dns($d);
 &virtual_server::run_post_actions();
 &ui_print_footer(&virtual_server::domain_footer_link($d));
-

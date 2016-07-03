@@ -1,5 +1,8 @@
 #!/usr/local/bin/perl
 # Show a form to edit contact details for some domain
+use strict;
+use warnings;
+our (%text, %in);
 
 require './virtualmin-registrar-lib.pl';
 &ReadParse();
@@ -7,26 +10,27 @@ require './virtualmin-registrar-lib.pl';
 
 # Get the Virtualmin domain
 &can_domain($in{'dom'}) || &error($text{'contact_ecannot'});
-$d = &virtual_server::get_domain_by("dom", $in{'dom'});
+my $d = &virtual_server::get_domain_by("dom", $in{'dom'});
 $d || &error(&text('contact_edom', $in{'dom'}));
 &can_contacts($d) == 1 || can_contacts($d) == 3 ||
 	&error(&text('contact_edom', $in{'dom'}));
-($account) = grep { $_->{'id'} eq $d->{'registrar_account'} }
+my ($account) = grep { $_->{'id'} eq $d->{'registrar_account'} }
 		  &list_registrar_accounts();
 $account || &error(&text('contact_eaccount', $in{'dom'}));
 
 # Get contact info from registrar
-$cfunc = "type_".$account->{'registrar'}."_get_contact";
-$cons = &$cfunc($account, $d);
+my $cfunc = "type_".$account->{'registrar'}."_get_contact";
+my $cons = &$cfunc($account, $d);
 ref($cons) || &error($cons);
 
 &ui_print_header(&virtual_server::domain_in($d), $text{'contact_title'}, "",
 		 "contact");
 
-$lfunc = "type_".$account->{'registrar'}."_list_contacts";
+my $lfunc = "type_".$account->{'registrar'}."_list_contacts";
+my $tabbed;
 if (can_contacts($d) == 3 && defined(&$lfunc)) {
 	# Start of tabs for contact selection mode
-	@tabs = ( [ 'create', $text{'contact_createtab'} ],
+	my @tabs = ( [ 'create', $text{'contact_createtab'} ],
 		  [ 'select', $text{'contact_selecttab'} ] );
 	print &ui_tabs_start(\@tabs, 'mode', $in{'mode'} || 'create', 1);
 	$tabbed = 1;
@@ -38,9 +42,10 @@ print &ui_form_start("save_contact.cgi", "post");
 print &ui_hidden("dom", $in{'dom'});
 
 # Show fields for each contact type
+my $count;
 foreach my $con (@$cons) {
 	# Is this the same as the first one?
-	$same = undef;
+	my $same = undef;
 	if ($con ne $cons->[0]) {
 		$same = &contact_hash_to_string($cons->[0]) eq
 			&contact_hash_to_string($con) ? 1 : 0;
@@ -64,21 +69,22 @@ foreach my $con (@$cons) {
 				    $account->{'desc'});
 		}
 
-	@schema = &get_contact_schema($account, $d, $con->{'purpose'});
+	my @schema = &get_contact_schema($account, $d, $con->{'purpose'});
 	foreach my $s (@schema) {
-		$n = $con->{'purpose'}.$s->{'name'};
+		my $field;
+		my $n = $con->{'purpose'}.$s->{'name'};
 		if ($s->{'readonly'}) {
 			# Just show value
 			$field = $con->{$s->{'name'}};
 			if ($s->{'choices'}) {
-				($c) = grep { $_->[0] eq $field }
+				my ($c) = grep { $_->[0] eq $field }
 					    @{$s->{'choices'}};
 				$field = $c->[1] if ($c);
 				}
 			}
 		elsif ($s->{'choices'}) {
 			# Select from menu
-			@choices = @{$s->{'choices'}};
+			my @choices = @{$s->{'choices'}};
 			if ($s->{'opt'}) {
 				unshift(@choices,
 					[ undef, $text{'contact_default'} ]);
@@ -114,7 +120,7 @@ if ($tabbed) {
 	print &ui_table_start($text{'contact_sheader'}, undef, 2);
 
 	# Find all contacts the account has
-	($ok, $allcons) = &$lfunc($account);
+	my ($ok, $allcons) = &$lfunc($account);
 	print &ui_table_row($text{'ns_account'},
 			    $account->{'desc'});
 
@@ -136,4 +142,3 @@ if ($tabbed) {
 	}
 
 &ui_print_footer(&virtual_server::domain_footer_link($d));
-

@@ -1,25 +1,30 @@
 #!/usr/local/bin/perl
 # Automatically renew domains close to expiry
+use strict;
+use warnings;
+our (%text);
 
 package virtualmin_registrar;
+no warnings "once";
 $main::no_acl_check++;
+use warnings "once";
 require './virtualmin-registrar-lib.pl';
 &foreign_require("mailboxes", "mailboxes-lib.pl");
 
 # Do accounts with renewal
-foreach $account (grep { $_->{'autodays'} ||
+foreach my $account (grep { $_->{'autodays'} ||
 			 $_->{'autowarn'} } &list_registrar_accounts()) {
 	# Find domains, and get expiry for each
-	@rv = ( );
-	@wrv = ( );
-	$warncount = $donecount = 0;
-	@doms = &find_account_domains($account);
-	$efunc = "type_".$account->{'registrar'}."_get_expiry";
-	$rfunc = "type_".$account->{'registrar'}."_renew_domain";
-	foreach $d (@doms) {
-		$msg = undef;
-		$wmsg = undef;
-		($ok, $exp) = &$efunc($account, $d);
+	my @rv;
+	my @wrv;
+	my $warncount = my $donecount = 0;
+	my @doms = &find_account_domains($account);
+	my $efunc = "type_".$account->{'registrar'}."_get_expiry";
+	my $rfunc = "type_".$account->{'registrar'}."_renew_domain";
+	foreach my $d (@doms) {
+		my $msg;
+		my $wmsg;
+		my ($ok, $exp) = &$efunc($account, $d);
 		if (!$ok) {
 			# Couldn't get it!
 			$msg = &text('auto_eget', $exp);
@@ -28,7 +33,7 @@ foreach $account (grep { $_->{'autodays'} ||
 		       $exp - time() < $account->{'autodays'}*24*60*60) {
 			# Time to renew!
 			$account->{'rcom_account'} = "xxx";
-			($ok, $rmsg) = &$rfunc($account, $d,
+			my ($ok, $rmsg) = &$rfunc($account, $d,
 					      $account->{'autoyears'});
 			if ($ok) {
 				$msg = &text('auto_done',
@@ -65,8 +70,8 @@ foreach $account (grep { $_->{'autodays'} ||
 					 $text{'auto_results'});
 			}
 		if ($account->{'autoowner'}) {
-			foreach $e (&unique(map { $_->[1]->{'emailto'} } @rv)) {
-				@rve = grep { $_->[1]->{'emailto'} eq $e } @rv;
+			foreach my $e (&unique(map { $_->[1]->{'emailto'} } @rv)) {
+				my @rve = grep { $_->[1]->{'emailto'} eq $e } @rv;
 				&send_auto_email(\@rve, $e,
 						 $text{'auto_subject'},
 						 $text{'auto_results'});
@@ -82,8 +87,8 @@ foreach $account (grep { $_->{'autodays'} ||
 					 $text{'auto_wresults'});
 			}
 		if ($account->{'autoowner'}) {
-			foreach $e (&unique(map { $_->[1]->{'emailto'}} @wrv)) {
-				@rve = grep { $_->[1]->{'emailto'} eq $e } @wrv;
+			foreach my $e (&unique(map { $_->[1]->{'emailto'}} @wrv)) {
+				my @rve = grep { $_->[1]->{'emailto'} eq $e } @wrv;
 				&send_auto_email(\@rve, $e,
 						 $text{'auto_wsubject'},
 						 $text{'auto_wresults'});
@@ -96,7 +101,7 @@ foreach $account (grep { $_->{'autodays'} ||
 # Send email about some renewals or warnings to an address
 sub send_auto_email
 {
-local ($rv, $email, $subject, $heading) = @_;
+my ($rv, $email, $subject, $heading) = @_;
 my $msg = join("\n", &mailboxes::wrap_lines($heading, 70))."\n\n";
 my $fmt = "%-40.40s %-39.39s\n";
 $msg .= sprintf $fmt, $text{'auto_rdom'}, $text{'auto_rmsg'};

@@ -1,5 +1,8 @@
 #!/usr/local/bin/perl
 # Show a form for editing nameservers for a domain
+use strict;
+use warnings;
+our (%text, %in);
 
 require './virtualmin-registrar-lib.pl';
 &ReadParse();
@@ -7,23 +10,23 @@ require './virtualmin-registrar-lib.pl';
 
 # Get the Virtualmin domain
 &can_domain($in{'dom'}) || &error($text{'ns_ecannot'});
-$d = &virtual_server::get_domain_by("dom", $in{'dom'});
+my $d = &virtual_server::get_domain_by("dom", $in{'dom'});
 $d || &error(&text('contact_edom', $in{'dom'}));
 &can_nameservers($d) || &error($text{'ns_ecannot'});
-($account) = grep { $_->{'id'} eq $d->{'registrar_account'} }
+my ($account) = grep { $_->{'id'} eq $d->{'registrar_account'} }
 		  &list_registrar_accounts();
 $account || &error(&text('contact_eaccount', $in{'dom'}));
 
 # Get nameserver info from registrar
-$cfunc = "type_".$account->{'registrar'}."_get_nameservers";
-$nss = &$cfunc($account, $d);
+my $cfunc = "type_".$account->{'registrar'}."_get_nameservers";
+my $nss = &$cfunc($account, $d);
 ref($nss) || &error($nss);
 
 # Get nameservers Virtualmin expects, and in BIND zone
-$enss = &get_domain_nameservers($account, $d);
-$znss = &get_domain_nameservers(undef, $d);
-$same_nss = &ns_list_to_string(@$nss) eq &ns_list_to_string(@$enss) ? 1 : 0;
-$sync_nss = &ns_list_to_string(@$nss) eq &ns_list_to_string(@$znss) ? 1 : 0;
+my $enss = &get_domain_nameservers($account, $d);
+my $znss = &get_domain_nameservers(undef, $d);
+my $same_nss = &ns_list_to_string(@$nss) eq &ns_list_to_string(@$enss) ? 1 : 0;
+my $sync_nss = &ns_list_to_string(@$nss) eq &ns_list_to_string(@$znss) ? 1 : 0;
 
 &ui_print_header(&virtual_server::domain_in($d), $text{'ns_title'}, "", "ns");
 
@@ -38,7 +41,7 @@ print &ui_table_row($text{'ns_account'},
 
 # Show nameservers with registrar
 print &ui_table_row($text{'ns_ns'},
-	&ui_radio_table("same", $same_nss, 
+	&ui_radio_table("same", $same_nss,
 		[ [ 1, $text{'ns_same'},
 		       join(" , ", map { "<tt>$_</tt>" } @$enss) ],
 		  [ 0, $text{'ns_diff'},

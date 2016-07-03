@@ -1,26 +1,36 @@
 #!/usr/local/bin/perl
 # Show a form to edit a single contact associated with a registrar
+use strict;
+use warnings;
+our (%text, %in);
+our $module_name;
 
 require './virtualmin-registrar-lib.pl';
 &ReadParse();
 &error_setup($text{'onecontact_err'});
 
+# Get the Virtualmin domain
+my $d = &virtual_server::get_domain_by("dom", $in{'dom'});
+$d || &error(&text('contact_edom', $in{'dom'}));
+$d->{$module_name} || &error($text{'dereg_ealready'});
+
 # Get the account
-@accounts = &list_registrar_accounts();
-($account) = grep { $_->{'id'} eq $in{'id'} } @accounts;
+my @accounts = &list_registrar_accounts();
+my ($account) = grep { $_->{'id'} eq $in{'id'} } @accounts;
 $account || &error($text{'contacts_eaccount'});
 
 &ui_print_header($account->{'desc'},
 		 $in{'new'} ? $text{'onecontact_create'}
 			    : $text{'onecontact_edit'}, "");
 
-$cfunc = "type_".$account->{'registrar'}."_get_contact_classes";
-@classes = &$cfunc($account);
-
+my $cfunc = "type_".$account->{'registrar'}."_get_contact_classes";
+my @classes = &$cfunc($account);
+my $cls;
+my $con;
 if (!$in{'new'}) {
 	# Get the contact
 	$cfunc = "type_".$account->{'registrar'}."_list_contacts";
-	($ok, $contacts) = &$cfunc($account);
+	my ($ok, $contacts) = &$cfunc($account);
 	$ok || &error(&text('contacts_elist', $contacts));
 	($con) = grep { $_->{'id'} eq $in{'cid'} } @$contacts;
 	($cls) = grep { $con->{$_->{'field'}} eq $_->{'id'} } @classes;
@@ -44,21 +54,22 @@ print &ui_hidden("cls", $in{'cls'});
 print &ui_table_start(&text('onecontact_header', $cls->{'desc'}),
 		      "width=100%", 2);
 
-@schema = &get_contact_schema($account, undef, undef, $in{'new'}, $in{'cls'});
+my @schema = &get_contact_schema($account, undef, undef, $in{'new'}, $in{'cls'});
 foreach my $s (@schema) {
-	$n = $s->{'name'};
+	my $n = $s->{'name'};
+	my $field;
 	if ($s->{'readonly'}) {
 		# Just show value
 		$field = $con->{$s->{'name'}};
 		next if ($in{'new'} && !$field);
 		if ($s->{'choices'}) {
-			($c) = grep { $_->[0] eq $field } @{$s->{'choices'}};
+			my ($c) = grep { $_->[0] eq $field } @{$s->{'choices'}};
 			$field = $c->[1] if ($c);
 			}
 		}
 	elsif ($s->{'choices'}) {
 		# Select from menu
-		@choices = @{$s->{'choices'}};
+		my @choices = @{$s->{'choices'}};
 		if ($s->{'opt'}) {
 			unshift(@choices,
 				[ undef, $text{'contact_default'} ]);
@@ -85,11 +96,10 @@ if ($in{'new'}) {
 	print &ui_form_end([ [ undef, $text{'create'} ] ]);
 	}
 else {
-	$dfunc = "type_".$account->{'registrar'}."_delete_one_contact";
+	my $dfunc = "type_".$account->{'registrar'}."_delete_one_contact";
 	print &ui_form_end([ [ undef, $text{'save'} ],
 			     defined(&$dfunc) ?
 				[ 'delete', $text{'delete'} ] : undef ]);
 	}
 
 &ui_print_footer(&virtual_server::domain_footer_link($d));
-

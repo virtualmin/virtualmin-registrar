@@ -1,5 +1,8 @@
 #!/usr/local/bin/perl
 # Show a form to setup automatic renewal for some account
+use strict;
+use warnings;
+our (%access, %text, %in);
 
 require './virtualmin-registrar-lib.pl';
 &ReadParse();
@@ -7,7 +10,7 @@ require './virtualmin-registrar-lib.pl';
 $access{'registrar'} || &error($text{'auto_ecannot'});
 
 # Get the account
-($account) = grep { $_->{'id'} eq $in{'id'}} &list_registrar_accounts();
+my ($account) = grep { $_->{'id'} eq $in{'id'}} &list_registrar_accounts();
 $account || &error($text{'edit_egone'});
 
 &ui_print_header(undef, $text{'auto_title'}, "", "auto");
@@ -20,7 +23,7 @@ print &ui_hidden_table_start($text{'auto_header1'}, undef, 2, "main", 1,
 # Account details
 print &ui_table_row($text{'auto_account'},
 	$account->{'desc'});
-$dfunc = "type_".$account->{'registrar'}."_desc";
+my $dfunc = "type_".$account->{'registrar'}."_desc";
 print &ui_table_row($text{'edit_registrar'},
 	&$dfunc($account));
 
@@ -39,7 +42,7 @@ print &ui_table_row($text{'auto_warn'},
 		       &ui_textbox("warn", $account->{'autowarn'}, 5)) ] ]));
 
 # How long to renew for
-$yfunc = "type_".$account->{'registrar'}."_renew_years";
+my $yfunc = "type_".$account->{'registrar'}."_renew_years";
 print &ui_table_row($text{'auto_years'},
 	&ui_textbox("years", $account->{'autoyears'} || &$yfunc($account), 5));
 

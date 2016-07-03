@@ -1,11 +1,17 @@
+use strict;
+use warnings;
+our %access;
+our $module_name;
 
 do 'virtualmin-registrar-lib.pl';
 
 sub cgi_args
 {
 my ($cgi) = @_;
+no warnings "once";
 my ($d) = grep { &virtual_server::can_edit_domain($_) &&
 	         $_->{$module_name} } &virtual_server::list_domains();
+use warnings "once";
 if ($cgi eq 'edit_contact.cgi' || $cgi eq 'edit_dereg.cgi' ||
     $cgi eq 'edit_ns.cgi' || $cgi eq 'edit_renew.cgi') {
 	# Domain-based form

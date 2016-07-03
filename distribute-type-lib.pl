@@ -1,7 +1,11 @@
 # Functions for talking to the Distribute.IT API
+use strict;
+use warnings;
+our (%text);
+our $account;
 
-$distribute_api_url = "https://www.distributeit.com.au/api/";
-%distribute_error_map = (
+my $distribute_api_url = "https://www.distributeit.com.au/api/";
+my %distribute_error_map = (
 	"100", "Missing parameters",
 	"101", "API Site not currently functioning",
 	"102", "Authentication Failure",
@@ -67,8 +71,8 @@ return (".com", ".net", ".org", ".biz", ".info", ".com.au", ".net.au",
 # Returns table fields for entering the account login details
 sub type_distribute_edit_inputs
 {
-local ($account, $new) = @_;
-local $rv;
+my ($account, $new) = @_;
+my $rv;
 $rv .= &ui_table_row($text{'distribute_account'},
 	&ui_textbox("distribute_account",
 		    $account->{'distribute_account'}, 10));
@@ -89,7 +93,7 @@ return $rv;
 # an error message on failure.
 sub type_distribute_edit_parse
 {
-local ($account, $new, $in) = @_;
+my ($account, $new, $in) = @_;
 $in->{'distribute_account'} =~ /^\d+$/ || return $text{'distribute_eaccount'};
 $account->{'distribute_account'} = $in->{'distribute_account'};
 $in->{'distribute_user'} =~ /^\S+$/ || return $text{'distribute_euser'};
@@ -114,7 +118,7 @@ return undef;
 # Returns the number of years by default to renew a domain for
 sub type_distribute_renew_years
 {
-local ($account, $d) = @_;
+my ($account, $d) = @_;
 return $account->{'distribute_years'} || 2;
 }
 
@@ -123,14 +127,14 @@ return $account->{'distribute_years'} || 2;
 # message if the login or password are wrong.
 sub type_distribute_validate
 {
-local ($account) = @_;
+my ($account) = @_;
 
 # Try to login
-local ($ok, $sid) = &connect_distribute_api($account, 1);
+my ($ok, $sid) = &connect_distribute_api($account, 1);
 return $sid if (!$ok);
 
 # Validate the template domain
-local ($ok, $out) = &call_distribute_api(
+($ok, my $out) = &call_distribute_api(
 	$sid, "query", { 'Type' => 'Domains',
 			 'Object' => 'Domain',
 			 'Action' => 'Details',
@@ -145,10 +149,10 @@ return undef;
 # yes, or an error message if not.
 sub type_distribute_check_domain
 {
-local ($account, $dname) = @_;
-local ($ok, $sid) = &connect_distribute_api($account, 1);
+my ($account, $dname) = @_;
+my ($ok, $sid) = &connect_distribute_api($account, 1);
 return &text('distribute_error', $sid) if (!$ok);
-local ($ok, $out) = &call_distribute_api(
+($ok, my $out) = &call_distribute_api(
 	$sid, "query", { 'Type' => 'Domains',
 			 'Object' => 'Domain',
 			 'Action' => 'Availability',
@@ -164,10 +168,11 @@ return undef;
 # 0 and an error message.
 sub type_distribute_owned_domain
 {
-local ($account, $dname, $id) = @_;
-local ($ok, $sid) = &connect_distribute_api($account, 1);
+my ($account, $dname, $id) = @_;
+my ($ok, $sid) = &connect_distribute_api($account, 1);
 return &text('distribute_error', $sid) if (!$ok);
-local ($ok, $out) = &call_distribute_api(
+my $out;
+($ok, $out) = &call_distribute_api(
 	 $sid, "query", { 'Type' => 'Domains',
                           'Object' => 'Domain',
                           'Action' => 'Details',
@@ -181,12 +186,12 @@ return !$ok && $out =~ /310/ ? (1, undef) :
 # it failed, or 1 and an ID for the domain on success.
 sub type_distribute_create_domain
 {
-local ($account, $d) = @_;
-local ($ok, $sid) = &connect_distribute_api($account, 1);
+my ($account, $d) = @_;
+my ($ok, $sid) = &connect_distribute_api($account, 1);
 return &text('distribute_error', $sid) if (!$ok);
 
 # NS records come from the DNS domain
-local $nss = &get_domain_nameservers($account, $d);
+my $nss = &get_domain_nameservers($account, $d);
 if (!ref($nss)) {
 	return (0, $nss);
 	}
@@ -198,12 +203,13 @@ elsif (@$nss < 2) {
 	}
 
 # Get contact ID from the base domain
-local ($ok, $ownerid, $adminid, $techid, $billingid) =
+my ($ownerid, $adminid, $techid, $billingid);
+($ok, $ownerid, $adminid, $techid, $billingid) =
 	&get_distribute_contact_ids($account, $sid);
 $ok || return (0, $ownerid);
 
 # Create parameters
-local %params = ( 'Type' => 'Domains',
+my %params = ( 'Type' => 'Domains',
 		  'Object' => 'Domain',
 		  'Action' => 'Create',
 		  'Domain' => $d->{'dom'},
@@ -223,7 +229,8 @@ elsif ($account->{'distribute_years'}) {
 	}
 
 # Create it
-local ($ok, $out) = &call_distribute_api($sid, "order", \%params);
+my $out;
+($ok, $out) = &call_distribute_api($sid, "order", \%params);
 if ($ok) {
 	# Done, and got order ID
 	return (1, $out);
@@ -238,14 +245,14 @@ else {
 # or an error message
 sub get_distribute_contact_ids
 {
-local ($account, $sid) = @_;
-local ($ok, $out) = &call_distribute_api(
+my ($account, $sid) = @_;
+my ($ok, $out) = &call_distribute_api(
 	$sid, "query", { 'Type' => 'Domains',
 			 'Object' => 'Domain',
 			 'Action' => 'Details',
 			 'Domain' => $account->{'distribute_dom'} });
 $ok || return (0, &text('distribute_ebase', $account->{'distribute_dom'}));
-local ($ownerid, $adminid, $techid, $billingid);
+my ($ownerid, $adminid, $techid, $billingid);
 if ($out =~ /Owner-ContactID=(\S+)/) {
 	$ownerid = $1;
 	}
@@ -267,8 +274,8 @@ return (1, $ownerid, $adminid, $techid, $billingid);
 # or an error message on failure.
 sub type_distribute_set_nameservers
 {
-local ($account, $d, $nss) = @_;
-local ($ok, $sid) = &connect_distribute_api($account, 1);
+my ($account, $d, $nss) = @_;
+my ($ok, $sid) = &connect_distribute_api($account, 1);
 return &text('distribute_error', $sid) if (!$ok);
 
 # Get nameservers in DNS
@@ -284,7 +291,7 @@ elsif (@$nss < 2) {
 	}
 
 # Set nameservers
-local ($ok, $out) = &call_distribute_api(
+($ok, my $out) = &call_distribute_api(
 	$sid, "order", { 'Type' => 'Domains',
                           'Object' => 'Domain',
                           'Action' => 'UpdateHosts',
@@ -299,17 +306,17 @@ return $ok ? undef : $out;
 # an error message on failure.
 sub type_distribute_get_nameservers
 {
-local ($account, $d, $nss) = @_;
-local ($ok, $sid) = &connect_distribute_api($account, 1);
+my ($account, $d, $nss) = @_;
+my ($ok, $sid) = &connect_distribute_api($account, 1);
 return &text('distribute_error', $sid) if (!$ok);
 
-local ($ok, $out) = &call_distribute_api(
+($ok, my $out) = &call_distribute_api(
 	$sid, "query", { 'Type' => 'Domains',
 			 'Object' => 'Domain',
 			 'Action' => 'Details',
 			 'Domain' => $d->{'dom'} });
 $ok || return $out;
-local @rv;
+my @rv;
 foreach my $l (split(/\r?\n/, $out)) {
 	if ($l =~ /^Nameserver=(\S+)/) {
 		push(@rv, $1);
@@ -322,11 +329,11 @@ return \@rv;
 # Deletes a domain previously created with this registrar
 sub type_distribute_delete_domain
 {
-local ($account, $d) = @_;
-local ($ok, $sid) = &connect_distribute_api($account, 1);
+my ($account, $d) = @_;
+my ($ok, $sid) = &connect_distribute_api($account, 1);
 return &text('distribute_error', $sid) if (!$ok);
 
-local ($ok, $out) = &call_distribute_api(
+($ok, my $out) = &call_distribute_api(
 	$sid, "order", { 'Type' => 'Domains',
 			 'Object' => 'Domain',
 			 'Action' => 'Cancel',
@@ -339,12 +346,12 @@ return ($ok, $out);
 # message.
 sub type_distribute_get_expiry
 {
-local ($account, $d) = @_;
-local ($ok, $sid) = &connect_distribute_api($account, 1);
+my ($account, $d) = @_;
+my ($ok, $sid) = &connect_distribute_api($account, 1);
 return &text('distribute_error', $sid) if (!$ok);
-local $os = &check_distribute_order_status($sid, $d->{'registrar_id'});
+my $os = &check_distribute_order_status($sid, $d->{'registrar_id'});
 return (0, $os) if ($os);
-local ($ok, $out) = &call_distribute_api(
+($ok, my $out) = &call_distribute_api(
 	 $sid, "query", { 'Type' => 'Domains',
                           'Object' => 'Domain',
                           'Action' => 'Details',
@@ -369,12 +376,12 @@ else {
 # failure.
 sub type_distribute_renew_domain
 {
-local ($account, $d, $years) = @_;
-local ($ok, $sid) = &connect_distribute_api($account, 1);
+my ($account, $d, $years) = @_;
+my ($ok, $sid) = &connect_distribute_api($account, 1);
 return &text('distribute_error', $sid) if (!$ok);
-local $os = &check_distribute_order_status($sid, $d->{'registrar_id'});
+my $os = &check_distribute_order_status($sid, $d->{'registrar_id'});
 return (0, $os) if ($os);
-local ($ok, $out) = &call_distribute_api(
+($ok, my $out) = &call_distribute_api(
 	$sid, "order", { 'Type' => 'Domains',
                           'Object' => 'Domain',
                           'Action' => 'Renewal',
@@ -390,16 +397,17 @@ return ($ok, $out);
 # the domain for that period.
 sub type_distribute_transfer_domain
 {
-local ($account, $d, $key, $years) = @_;
-local ($ok, $sid) = &connect_distribute_api($account, 1);
+my ($account, $d, $key, $years) = @_;
+my ($ok, $sid) = &connect_distribute_api($account, 1);
 return &text('distribute_error', $sid) if (!$ok);
 
 # Get contact ID from the base domain
-local ($ok, $ownerid, $adminid, $techid, $billingid) =
+my ($ownerid, $adminid, $techid, $billingid);
+($ok, $ownerid, $adminid, $techid, $billingid) =
 	&get_distribute_contact_ids($account, $sid);
 $ok || return (0, $ownerid);
 
-local ($ok, $out) = &call_distribute_api(
+($ok, my $out) = &call_distribute_api(
 	$sid, "order", { 'Type' => 'Domains',
                          'Object' => 'Domain',
                          'Action' => 'TransferRequest',
@@ -419,9 +427,9 @@ return ($ok, $out);
 # Returns an error message if a domain order is pending, undef if not
 sub check_distribute_order_status
 {
-local ($sid, $orderid) = @_;
+my ($sid, $orderid) = @_;
 return undef if ($orderid !~ /^\d+$/);		# Don't know it
-local ($ok, $out) = &call_distribute_api(
+my ($ok, $out) = &call_distribute_api(
          $sid, "query", { 'Type' => 'Domains',
                           'Object' => 'Order',
 			  'Action' => 'OrderStatus',
@@ -436,8 +444,8 @@ return !$ok ? &text('distribute_estatus2', $out) :
 # Login to the API, and return 1 and a session ID or 0 and an error message
 sub connect_distribute_api
 {
-local ($account, $reterr) = @_;
-local ($ok, $sid) = &call_distribute_api(
+my ($account, $reterr) = @_;
+my ($ok, $sid) = &call_distribute_api(
 	undef, "auth", { 'AccountNo' => $account->{'distribute_account'},
 			 'UserId' => $account->{'distribute_user'},
 			 'Password' => $account->{'distribute_pass'} });
@@ -450,14 +458,14 @@ return ($ok, $sid);
 # 0 and an error message
 sub call_distribute_api
 {
-local ($sid, $prog, $params) = @_;
-local ($host, $port, $page, $ssl) = &parse_http_url($distribute_api_url);
+my ($sid, $prog, $params) = @_;
+my ($host, $port, $page, $ssl) = &parse_http_url($distribute_api_url);
 $params ||= { };
 if ($sid) {
 	$params->{'SessionID'} = $sid;
 	}
 $page .= $prog.".pl";
-local @params;
+my @params;
 foreach my $k (keys %$params) {
 	my $v = $params->{$k};
 	foreach my $vv (ref($v) ? @$v : ( $v )) {
@@ -465,7 +473,7 @@ foreach my $k (keys %$params) {
 		}
 	}
 $page .= "?".join("&", @params);
-local ($out, $err);
+my ($out, $err);
 &http_download($host, $port, $page, \$out, \$err, undef, $ssl);
 if ($err =~ /403/) {
 	# Bad IP .. warn specifically
@@ -481,7 +489,7 @@ if ($out =~ /^((\S+):\s+)?OK:\s*([\000-\377]*)/) {
 	}
 elsif ($out =~ /^((\S+):\s+)?ERR:\s*([\000-\377]*)/) {
 	# Valid error
-	local ($ecode, $dname) = ($3, $2);
+	my ($ecode, $dname) = ($3, $2);
 	if ($ecode =~ /^(\d+)(.*)$/ && $distribute_error_map{$1}) {
 		$ecode = $1." - ".$distribute_error_map{$1}.$2;
 		}
@@ -495,8 +503,8 @@ else {
 
 sub distribute_username
 {
-local ($d) = @_;
-local $rv = $d->{'dom'};
+my ($d) = @_;
+my $rv = $d->{'dom'};
 $rv =~ s/[^a-z0-9]//gi;
 $rv = substr($rv, 0, 16) if (length($rv) > 16);
 return $rv;
@@ -504,10 +512,9 @@ return $rv;
 
 sub distribute_password
 {
-local ($d) = @_;
-local $rv = $d->{'pass'} || &virtual_server::random_password(8);
+my ($d) = @_;
+my $rv = $d->{'pass'} || &virtual_server::random_password(8);
 return $rv;
 }
 
 1;
-

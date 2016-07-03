@@ -11,8 +11,6 @@ require './virtualmin-registrar-lib.pl';
 
 # Get the Virtualmin domain
 my $d = &virtual_server::get_domain_by("dom", $in{'dom'});
-$d || &error(&text('contact_edom', $in{'dom'}));
-$d->{$module_name} || &error($text{'dereg_ealready'});
 
 # Get the account
 my @accounts = &list_registrar_accounts();

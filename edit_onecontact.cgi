@@ -10,6 +10,7 @@ require './virtualmin-registrar-lib.pl';
 &error_setup($text{'onecontact_err'});
 
 # Get the Virtualmin domain
+&can_domain($in{'dom'}) || &error($text{'contact_ecannot'});
 my $d = &virtual_server::get_domain_by("dom", $in{'dom'});
 
 # Get the account

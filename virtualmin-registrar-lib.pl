@@ -88,8 +88,7 @@ foreach my $a (grep { $_->{'enabled'} } &list_registrar_accounts()) {
 	# Does the registrar support this domain?
 	my $tfunc = "type_".$a->{'registrar'}."_domains";
 	if (defined(&$tfunc)) {
-		# XXX Is $dname right? Was $account.
-		my @doms = &$tfunc($dname);
+		my @doms = &$tfunc($a);
 		if (@doms) {
 			next if (!&in_tld_list($dname, \@doms));
 			}

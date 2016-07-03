@@ -115,7 +115,6 @@ if (defined(&$ofunc)) {
 	my ($o, $id) = &$ofunc($account, $d->{'dom'});
 	if ($o) {
 		$d->{'registrar_account'} = $account->{'id'};
-		# XXX Is $id right here? Was undefined $msg.
 		$d->{'registrar_id'} = $id;
 		&$virtual_server::second_print(&text('feat_setupalready'));
 		return 1;

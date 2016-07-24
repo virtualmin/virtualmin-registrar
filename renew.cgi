@@ -2,7 +2,7 @@
 # Actually perform domain renewal
 use strict;
 use warnings;
-our (%text, %in);
+our (%text, %in, $module_name);
 
 require './virtualmin-registrar-lib.pl';
 &ReadParse();

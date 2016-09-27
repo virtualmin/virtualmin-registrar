@@ -69,8 +69,8 @@ return $text{'feat_edepend'} if (!$account);
 # Check if the domain is already owned by this account
 my $ofunc = "type_".$account->{'registrar'}."_owned_domain";
 if (defined(&$ofunc)) {
-	my ($o, $id) = &$ofunc($account, $d->{'dom'});
-	if ($o) {
+	my ($ok, $id) = &$ofunc($account, $d->{'dom'});
+	if ($ok && $id) {
 		# Yes, so that's not a clash
 		return undef;
 		}
@@ -112,8 +112,8 @@ my $dfunc = "type_".$reg."_desc";
 # Check if the domain is already owned by this account
 my $ofunc = "type_".$reg."_owned_domain";
 if (defined(&$ofunc)) {
-	my ($o, $id) = &$ofunc($account, $d->{'dom'});
-	if ($o) {
+	my ($ok, $id) = &$ofunc($account, $d->{'dom'});
+	if ($ok && $id) {
 		$d->{'registrar_account'} = $account->{'id'};
 		$d->{'registrar_id'} = $id;
 		&$virtual_server::second_print(&text('feat_setupalready'));

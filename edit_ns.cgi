@@ -1,6 +1,7 @@
 #!/usr/local/bin/perl
 # Show a form for editing nameservers for a domain
 use strict;
+no strict 'refs';
 use warnings;
 our (%text, %in);
 

@@ -1,6 +1,7 @@
 #!/usr/local/bin/perl
 # Actually perform domain renewal
 use strict;
+no strict 'refs';
 use warnings;
 our (%text, %in, $module_name);
 

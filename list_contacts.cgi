@@ -1,6 +1,7 @@
 #!/usr/local/bin/perl
 # Show a list of contacts associated with some account
 use strict;
+no strict 'refs';
 use warnings;
 our (%text, %in);
 

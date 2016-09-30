@@ -1,6 +1,7 @@
 #!/usr/local/bin/perl
 # Show a form to setup automatic renewal for some account
 use strict;
+no strict 'refs';
 use warnings;
 our (%access, %text, %in);
 

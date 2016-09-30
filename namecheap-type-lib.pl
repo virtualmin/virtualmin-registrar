@@ -1,5 +1,6 @@
 # Functions for talking to namecheap
 use strict;
+no strict 'refs';
 use warnings;
 our (%text);
 our $module_name;

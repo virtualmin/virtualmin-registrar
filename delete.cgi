@@ -1,6 +1,7 @@
 #!/usr/local/bin/perl
 # Enable, disable or delete a bunch of accounts
 use strict;
+no strict 'refs';
 use warnings;
 our (%access, %text, %in);
 

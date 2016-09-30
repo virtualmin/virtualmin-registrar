@@ -1,6 +1,7 @@
 #!/usr/local/bin/perl
 # Save automatic renewal
 use strict;
+no strict 'refs';
 use warnings;
 our (%access, %text, %in);
 our $auto_cron_cmd;

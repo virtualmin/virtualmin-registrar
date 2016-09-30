@@ -1,6 +1,7 @@
 #!/usr/local/bin/perl
 # Create a new registrar account
 use strict;
+no strict 'refs';
 use warnings;
 our (%access, %text, %in);
 

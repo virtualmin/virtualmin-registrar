@@ -1,5 +1,6 @@
 # Functions for talking to the Distribute.IT API
 use strict;
+no strict 'refs';
 use warnings;
 our (%text);
 our $account;

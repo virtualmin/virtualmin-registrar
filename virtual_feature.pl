@@ -1,5 +1,6 @@
 # Defines functions for this feature
 use strict;
+no strict 'refs';
 use warnings;
 our (%access, %text, %config, %gconfig);
 our $module_name;

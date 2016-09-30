@@ -1,6 +1,7 @@
 #!/usr/local/bin/perl
 # Show a form to edit contact details for some domain
 use strict;
+no strict 'refs';
 use warnings;
 our (%text, %in);
 

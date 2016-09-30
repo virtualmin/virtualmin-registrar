@@ -1,6 +1,7 @@
 #!/usr/local/bin/perl
 # Create, update or delete a registrar account
 use strict;
+no strict 'refs';
 use warnings;
 our (%access, %text, %in);
 our $registrar_accounts_dir;

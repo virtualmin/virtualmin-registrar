@@ -1,6 +1,7 @@
 #!/usr/local/bin/perl
 # Show a form to renew a domain registration
 use strict;
+no strict 'refs';
 use warnings;
 our (%text, %in);
 our $module_name;

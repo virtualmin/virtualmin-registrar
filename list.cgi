@@ -1,6 +1,7 @@
 #!/usr/local/bin/perl
 # Show a list of registered domains accessible to the current user
 use strict;
+no strict 'refs';
 use warnings;
 our (%text, %in);
 our $module_name;

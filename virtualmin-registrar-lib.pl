@@ -2,6 +2,7 @@
 # XXX - List all domains from registrar
 # XXX - OpenSRS support - FS#5098
 use strict;
+no strict 'refs';
 use warnings;
 our (%text, %config);
 our $module_name;

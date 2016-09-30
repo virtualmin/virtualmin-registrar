@@ -1,6 +1,7 @@
 #!/usr/local/bin/perl
 # Show a form for associating a domain registration with this server
 use strict;
+no strict 'refs';
 use warnings;
 our (%access, %text, %in);
 our $module_name;

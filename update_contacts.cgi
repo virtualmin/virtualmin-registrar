@@ -1,6 +1,7 @@
 #!/usr/local/bin/perl
 # Select existing contacts for a domain
 use strict;
+no strict 'refs';
 use warnings;
 our (%text, %in);
 

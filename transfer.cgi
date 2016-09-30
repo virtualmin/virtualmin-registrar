@@ -1,6 +1,7 @@
 #!/usr/local/bin/perl
 # Request a domain transfer to a registrar account
 use strict;
+no strict 'refs';
 use warnings;
 our (%access, %text, %in);
 our $module_name;

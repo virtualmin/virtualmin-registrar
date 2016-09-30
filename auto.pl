@@ -1,6 +1,8 @@
 #!/usr/local/bin/perl
 # Automatically renew domains close to expiry
+
 use strict;
+no strict 'refs';
 use warnings;
 our (%text);
 

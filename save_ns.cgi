@@ -1,6 +1,7 @@
 #!/usr/local/bin/perl
 # Update nameservers for some domain
 use strict;
+no strict 'refs';
 use warnings;
 our (%text, %in);
 

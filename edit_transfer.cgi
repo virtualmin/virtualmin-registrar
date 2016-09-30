@@ -1,6 +1,7 @@
 #!/usr/local/bin/perl
 # Show a form for initiating a domain transfer
 use strict;
+no strict 'refs';
 use warnings;
 our (%access, %text, %in);
 our $module_name;

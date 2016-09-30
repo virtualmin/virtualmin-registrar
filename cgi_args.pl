@@ -1,4 +1,5 @@
 use strict;
+no strict 'refs';
 use warnings;
 our %access;
 our $module_name;

@@ -1,5 +1,6 @@
 # Functions for talking to register.com
 use strict;
+no strict 'refs';
 use warnings;
 our (%text, %in);
 

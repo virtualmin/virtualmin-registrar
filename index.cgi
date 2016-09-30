@@ -1,6 +1,8 @@
 #!/usr/local/bin/perl
 # Show a list of accounts, and a menu to add a new one
+
 use strict;
+no strict 'refs';
 use warnings;
 our (%access, %text);
 our @registrar_types;

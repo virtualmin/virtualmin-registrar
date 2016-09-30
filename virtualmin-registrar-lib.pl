@@ -16,7 +16,8 @@ eval "use WebminCore;";
 our $registrar_accounts_dir = "$module_config_directory/accounts";
 our %access = &get_module_acl();
 our $auto_cron_cmd = "$module_config_directory/auto.pl";
-our $input_name = $module_name =~ s/[^A-Za-z0-9]/_/g;
+our $input_name = $module_name;
+$input_name =~ s/[^A-Za-z0-9]/_/g;
 
 # Bring in all register-type specific libraries
 our @registrar_types = (

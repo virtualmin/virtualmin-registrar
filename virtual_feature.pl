@@ -433,7 +433,7 @@ return undef;
 # element must be a hash ref containing link, title, icon and cat keys.
 sub settings_links
 {
-return ( { "link" => "$module_name/index.cgi",
+return ( { "link" => "/$module_name/index.cgi",
 	   "title" => $text{"index_title"},
 	   "icon" => "$gconfig{'webprefix'}/$module_name/images/icon.gif",
 	   "cat" => "ip" } );

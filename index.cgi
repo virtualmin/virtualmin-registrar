@@ -74,30 +74,13 @@ print &ui_form_columns_table(
 
 # Form to add existing registrar account
 print &ui_hr();
-print "<table>\n";
+
 print &ui_form_start("edit.cgi");
-print "<tr> <td><b>$text{'index_add'}</b></td>\n";
-print "<td>".&ui_select("registrar", undef,
+print "<b>$text{'index_add'}</b>\n";
+print &ui_select("registrar", undef,
 	[ map { [ $_->{'name'}, $_->{'desc'} ] }
-	      grep { !$_->{'disabled'} } @registrar_types ])."</td>\n";
-print "<td>".&ui_submit($text{'index_addok'})."</td> </tr>\n";
+	      grep { !$_->{'disabled'} } @registrar_types ]),"\n";
+print &ui_submit($text{'index_addok'});
 print &ui_form_end();
-
-# Form to create new registrar account, if any support it
-# Disabled, as this only worked for Register.com and was pretty sketchy
-#foreach $r (@registrar_types) {
-#	$cfunc = "type_".$r->{'name'}."_create_inputs";
-#	push(@create_types, $r) if (defined(&$cfunc) && !$r->{'disabled'});
-#	}
-#if (@create_types) {
-#	print &ui_form_start("create_form.cgi");
-#	print "<tr> <td><b>$text{'index_create'}</b></td>\n";
-#	print "<td>".&ui_select("registrar", undef,
-#	    [ map { [ $_->{'name'}, $_->{'desc'} ] } @create_types ])."</td>\n";
-#	print "<td>".&ui_submit($text{'index_createok'})."</td> </tr>\n";
-#	print &ui_form_end();
-#	}
-
-print "</table>\n";
 
 &ui_print_footer("/", $text{'index'});

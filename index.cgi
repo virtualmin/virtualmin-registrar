@@ -7,7 +7,7 @@ use warnings;
 our (%access, %text);
 our @registrar_types;
 
-require 'virtualmin-registrar-lib.pl';
+require './virtualmin-registrar-lib.pl';
 if (!$access{'registrar'}) {
 	# Non-admin users who access this page should be shown a list
 	# of their registered domains instead

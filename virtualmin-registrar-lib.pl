@@ -47,7 +47,7 @@ foreach my $t (@registrar_types) {
 sub list_registrar_accounts
 {
 my @rv;
-opendir(DIR, $registrar_accounts_dir);
+opendir(DIR, $registrar_accounts_dir) || return ();
 foreach my $f (readdir(DIR)) {
 	next if ($f eq "." || $f eq "..");
 	my %account;

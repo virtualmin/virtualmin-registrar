@@ -6,7 +6,7 @@ use warnings;
 our (%text, %in);
 our $module_name;
 
-require 'virtualmin-registrar-lib.pl';
+require './virtualmin-registrar-lib.pl';
 &ReadParse();
 
 # Find the domains

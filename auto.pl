@@ -11,7 +11,7 @@ no warnings "once";
 $main::no_acl_check++;
 use warnings "once";
 require './virtualmin-registrar-lib.pl';
-&foreign_require("mailboxes", "mailboxes-lib.pl");
+&foreign_require("mailboxes");
 
 # Do accounts with renewal
 foreach my $account (grep { $_->{'autodays'} ||
@@ -24,9 +24,11 @@ foreach my $account (grep { $_->{'autodays'} ||
 	my $efunc = "type_".$account->{'registrar'}."_get_expiry";
 	my $rfunc = "type_".$account->{'registrar'}."_renew_domain";
 	foreach my $d (@doms) {
+		&virtual_server::lock_domain($d);
 		my $msg;
 		my $wmsg;
 		my ($ok, $exp) = &$efunc($account, $d);
+		my $renewed = 0;
 		if (!$ok) {
 			# Couldn't get it!
 			$msg = &text('auto_eget', $exp);
@@ -40,6 +42,7 @@ foreach my $account (grep { $_->{'autodays'} ||
 			if ($ok) {
 				$msg = &text('auto_done',
 					     $account->{'autoyears'});
+				$renewed++;
 				}
 			else {
 				$msg = &text('auto_failed', $rmsg);
@@ -61,6 +64,13 @@ foreach my $account (grep { $_->{'autodays'} ||
 		if ($wmsg) {
 			push(@wrv, [ $account, $d, $wmsg ]);
 			}
+
+		# Clear any cache of registrar expiry time
+		if ($renewed) {
+			delete($d->{'whois_next'});
+			&save_domain($d);
+			}
+		&virtual_server::unlock_domain($d);
 		}
 
 	# Send email to master admin and possibly domain owners if any

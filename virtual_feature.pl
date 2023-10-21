@@ -348,7 +348,7 @@ if ($d->{$module_name}) {
 			    'page' => $cm == 1 || $cm == 3 ?
 				'edit_contact.cgi?dom='.$d->{'dom'} :
 				'view_contact.cgi?dom='.$d->{'dom'},
-			    'cat' => 'dns' });
+			    'cat' => 'dnsreg' });
 		}
 
 	# Show and allow editing of nameservers
@@ -358,7 +358,7 @@ if ($d->{$module_name}) {
 		push(@rv, { 'mod' => $module_name,
 			    'desc' => $text{'links_ns'},
 			    'page' => 'edit_ns.cgi?dom='.$d->{'dom'},
-			    'cat' => 'dns' });
+			    'cat' => 'dnsreg' });
 		}
 
 	# Renew domain (if allowed to create)
@@ -366,7 +366,7 @@ if ($d->{$module_name}) {
 		push(@rv, { 'mod' => $module_name,
 			    'desc' => $text{'links_renew'},
 			    'page' => 'edit_renew.cgi?dom='.$d->{'dom'},
-			    'cat' => 'dns' });
+			    'cat' => 'dnsreg' });
 		}
 
 	# Dis-associate
@@ -374,7 +374,7 @@ if ($d->{$module_name}) {
 		push(@rv, { 'mod' => $module_name,
 			    'desc' => $text{'links_rereg'},
 			    'page' => 'edit_dereg.cgi?dom='.$d->{'dom'},
-			    'cat' => 'dns' });
+			    'cat' => 'dnsreg' });
 		}
 	}
 else {
@@ -384,7 +384,7 @@ else {
 		push(@rv, { 'mod' => $module_name,
 			    'desc' => $text{'links_import'},
 			    'page' => 'edit_import.cgi?dom='.$d->{'dom'},
-			    'cat' => 'dns' });
+			    'cat' => 'dnsreg' });
 		}
 
 	# Can request a domain transfer
@@ -398,7 +398,7 @@ else {
 		push(@rv, { 'mod' => $module_name,
 			    'desc' => $text{'links_transfer'},
 			    'page' => 'edit_transfer.cgi?dom='.$d->{'dom'},
-			    'cat' => 'dns' });
+			    'cat' => 'dnsreg' });
 		}
 	}
 return @rv;

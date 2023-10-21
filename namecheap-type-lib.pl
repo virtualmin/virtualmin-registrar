@@ -309,7 +309,7 @@ sub type_namecheap_add_instructions
 {
 return &text('namecheap_instructions',
 	     'https://www.namecheap.com/myaccount/signup.aspx',
-	     'http://developer.namecheap.com/docs/');
+	     'https://www.namecheap.com/support/api/api.aspx');
 }
 
 # type_namecheap_transfer_domain(&account, &domain, key)

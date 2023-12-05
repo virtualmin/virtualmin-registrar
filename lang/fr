@@ -1,23 +1,11 @@
-feat_name=Enregistrement de domaine DNS
-feat_losing=Le domaine DNS sera désenregistré
 feat_disabling=Le domaine DNS sera temporairement désactivé
-feat_label=Enregistrer un domaine DNS?
-feat_label2=Enregistrer un domaine DNS
 feat_edepend=Aucun compte de registraire à utiliser pour créer le domaine n'a été trouvé
-feat_edepend2=Seuls les vrais noms de domaine DNS comme <i>foo.com</i> peuvent être enregistrés
 feat_eclash=Le domaine $1 ne peut pas être enregistré : $2 
 feat_edns=Un domaine ne peut être enregistré que si la fonction DNS est activée
-feat_setup=Enregistrement d'un domaine DNS avec $1 ..
 feat_failed=.. a échoué : $1 
 feat_setupdone=.. terminé. L'ID du registraire pour ce domaine est $1.
 feat_modifydons=.. terminé. L'ID du nouveau registraire pour ce domaine est $1 
-feat_delete=Désenregistrement d'un domaine DNS avec $1 ..
-feat_delete2=Désenregistrement d'un domaine DNS ..
-feat_modify1=Désenregistrement de l'ancien domaine DNS $1 avec $2 ..
-feat_modify2=Réenregistrement du nouveau domaine DNS $1 avec $2 ..
 feat_noderegister=.. la désinscription a été désactivée dans la configuration du plugin
-feat_modify=Modification du domaine DNS enregistré de $1 à $2 avec $3 ..
-feat_noaccount=Aucune information de compte de registre DNS n'a été trouvée!
 feat_copy=Copie des contacts de domaine à partir de $1 ..
 feat_ecopy=.. échec de la récupération des contacts : $1 
 feat_nocopy=.. aucune copie trouvée
@@ -36,7 +24,6 @@ links_import=Domaine associé
 links_renew=Renouveler le domaine
 links_transfer=Domaine de transfert
 
-index_title=Registraires de domaine DNS
 index_registrar=Greffier
 index_desc=Description du compte
 index_enabled=Activée?
@@ -68,7 +55,6 @@ type_namecheap=Namecheap
 
 edit_title1=Ajouter un compte de registraire
 edit_title2=Modifier le compte du registraire
-edit_header=Détails du compte du registraire DNS
 edit_header2=Options de domaine de premier niveau
 edit_header3=Instructions pour un nouveau compte
 edit_egone=Le compte n'existe plus!
@@ -243,8 +229,6 @@ list_dom=Nom de domaine
 list_registrar=Nom du registraire
 list_account=Compte de registraire
 list_id=ID avec registraire
-list_none=Aucun domaine Virtualmin n'a encore été enregistré auprès d'un registraire DNS.
-list_none2=Aucun domaine Virtualmin n'a encore été enregistré auprès de ce registraire DNS.
 list_expiry=Date d'expiration
 
 contact_err=Impossible de modifier les détails du contact
@@ -328,7 +312,6 @@ transfer_transferring=Transfert depuis le bureau d'enregistrement actuel.
 transfer_done=.. terminé. L'ID du registraire est $1.
 transfer_done2=D'autres étapes peuvent être nécessaires auprès du registraire d'origine avant la fin du transfert, et ce domaine peut être <a href='$1'>importé dans Virtualmin</a>.
 
-
 dereg_err=Impossible de dissocier le domaine
 dereg_ealready=Ce domaine n'est associé à aucun registraire
 dereg_title=Enregistrement de domaine dissocié
@@ -381,14 +364,12 @@ auto_eyears=Années manquantes ou non numériques à renouveler pour
 auto_eget=Échec d'obtention de l'expiration : $1 
 auto_done=Renouvelé pour $1 ans
 auto_failed=Échec : $1 
-auto_results=Les serveurs virtuels suivants ont vu leurs domaines DNS automatiquement renouvelés par Virtualmin :
 auto_raccount=Compte de registraire
 auto_rdom=Nom de domaine
 auto_rmsg=Statut de renouvellement
 auto_subject=Renouvellement automatique de domaine Virtualmin
 auto_warnmsg=Expirera dans $1 jours
 auto_wsubject=Notification d'expiration du domaine Virtualmin
-auto_wresults=Les serveurs virtuels suivants verront leurs domaines DNS expirer bientôt :
 
 ns_err=Impossible de modifier les serveurs de noms
 ns_ecannot=Vous n'êtes pas autorisé à modifier les contacts de ce domaine
@@ -405,7 +386,6 @@ ns_eip=Le serveur de noms '$1' est une adresse IP, pas un nom d'hôte
 ns_ens=Le serveur de noms '$1' n'a pas pu être résolu en une adresse IP
 ns_reg=Mise à jour des serveurs de noms avec le registraire ...
 ns_failed=.. a échoué : $1 
-ns_syncing=Mise à jour des serveurs de noms dans le domaine DNS ...
 
 contacts_eaccount=Compte non trouvé!
 contacts_id=Identifiant du contact
@@ -421,5 +401,3 @@ onecontact_edelete=La suppression a échoué : $1
 onecontact_esave=Échec de la mise à jour : $1 
 onecontact_create=Créer un contact de registraire
 onecontact_edit=Modifier le contact du registraire
-
-__norefs=1

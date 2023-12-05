@@ -1,23 +1,23 @@
-feat_name=DNS domēna reģistrācija
-feat_losing=DNS domēns tiks reģistrēts
+feat_name=Domēna reģistrācija
+feat_losing=Domēns tiks dereģistrēts
 feat_disabling=DNS domēns tiks īslaicīgi atspējots
-feat_label=Reģistrēt DNS domēnu?
-feat_label2=Reģistrējiet DNS domēnu
+feat_label=Reģistrēt domēnu?
+feat_label2=Reģistrēt domēnu
 feat_edepend=Netika atrasts reģistrētāja konts, kas tiktu izmantots domēna izveidošanai
-feat_edepend2=Var reģistrēt tikai reālus DNS domēna vārdus, piemēram, <i>foo.com</i>
+feat_edepend2=Var reģistrēt tikai tādus īstus domēna vārdus kā <i>foo.com</i>
 feat_eclash=Domēnu $1 nevar reģistrēt : $2 
 feat_edns=Domēnu nevar reģistrēt, ja nav iespējota DNS funkcija
-feat_setup=Reģistrējot DNS domēnu ar $1.
+feat_setup=Notiek domēna reģistrēšana ar $1 ..
 feat_failed=.. neizdevās : $1 
 feat_setupdone=.. darīts. Šī domēna reģistratūras ID ir $1.
 feat_modifydons=.. darīts. Jaunā reģistratūras ID šim domēnam ir $1 
-feat_delete=DNS domēna reģistrēšana no $1.
-feat_delete2=DNS domēna reģistrēšana.
-feat_modify1=Veca DNS domēna $1 atreģistrēšana ar $2.
-feat_modify2=Jauna DNS domēna $1 pārreģistrēšana ar $2.
+feat_delete=Notiek domēna reģistrācijas atcelšana ar $1 ..
+feat_delete2=Notiek domēna reģistrācijas atcelšana. ..
+feat_modify1=Notiek vecā domēna $1 reģistrācija ar $2 ..
+feat_modify2=Notiek jauna domēna $1 pārreģistrācija ar $2 ..
 feat_noderegister=.. spraudņa konfigurācijā ir atspējota reģistrācijas atcelšana
-feat_modify=Reģistrētā DNS domēna nomaiņa no $1 uz $2 ar $3.
-feat_noaccount=Netika atrasta DNS reģistra konta informācija.
+feat_modify=Notiek reģistrētā domēna maiņa no $1 uz $2 ar $3 ..
+feat_noaccount=Reģistra konta informācija netika atrasta!
 feat_copy=Domēna kontaktu kopēšana no $1.
 feat_ecopy=.. neizdevās atnest kontaktpersonas : $1 
 feat_nocopy=.. neviens neatrada kopēšanu
@@ -27,6 +27,7 @@ feat_perioddef=Reģistratūras noklusējums
 feat_periodyears=gados
 feat_eperiod=Trūkst vai ir nederīgs reģistrācijas periods gados
 feat_setupalready=.. atrasta esošā reģistrācija
+
 links_contact=Rediģēt domēna kontaktpersonas
 links_ns=Rediģēt vārdu serverus
 links_contactv=Skatīt domēna kontaktpersonas
@@ -34,7 +35,8 @@ links_rereg=Atsaistītais domēns
 links_import=Saistītais domēns
 links_renew=Atjaunot domēnu
 links_transfer=Pārsūtīt domēnu
-index_title=DNS domēna reģistratori
+
+index_title=Domēnu reģistratori
 index_registrar=Sekretārs
 index_desc=Konta apraksts
 index_enabled=Iespējots?
@@ -57,14 +59,16 @@ index_actvirts=Uzskaitiet virtuālos serverus
 index_msg=Virtuālie serveri, kas izmanto reģistratūras kontu $1.
 index_nonemsg=Netika atrasts neviens virtuālais serveris, kas izmanto reģistratūras kontu $1.
 index_listall=Uzskaitiet visus reģistrētos domēnus.
+
 type_rcom=Reģistrēties.com
 type_gandi=Gandi.net (vecā API)
 type_newgandi=Gandi.net (jauna API)
 type_distribute=Izplatīt.IT
 type_namecheap=Nosaukums
+
 edit_title1=Pievienojiet reģistratūras kontu
 edit_title2=Rediģēt reģistratūras kontu
-edit_header=DNS reģistratūras konta informācija
+edit_header=Reģistratūras konta informācija
 edit_header2=Augstākā līmeņa domēna opcijas
 edit_header3=Jauni konta norādījumi
 edit_egone=Konta vairs nav!
@@ -82,6 +86,7 @@ edit_all=Visi domēni
 edit_suffixes=Sarakstā iekļautie TLD
 edit_delete=Noņemt
 edit_ecannot=Jums nav atļauts rediģēt reģistratūru kontus
+
 save_err=Neizdevās saglabāt kontu
 save_err2=Neizdevās noņemt kontu
 save_edoms=To lieto šādos Virtualmin domēnos : $1 
@@ -95,6 +100,7 @@ save_ens=Neizdevās meklēt IP servera serveri '$1'
 save_ensip=Nosaukuma serveris “$1” jāievada kā resursdators, nevis IP adrese
 save_enss=Neviens vārda serveris nav ievadīts
 save_transfer=Šis konts tika izmantots, lai izveidotu $1 domēnus. <br> Izvēlieties reģistratūras kontu, kuru var izmantot šo domēnu pārvaldīšanai :
+
 rcom_account=Konta pieteikšanās ID
 rcom_pass=Konta parole
 rcom_eaccount=Trūkst vai nav derīgs pieteikšanās ID
@@ -163,6 +169,7 @@ rcom_eccaddress=Trūkst kredītkartes norēķinu adreses
 rcom_ecczip=Trūkst kredītkartes norēķinu pasta koda
 rcom_instructions=Lai reģistrētos kontā vietnē Register.com ar piekļuvi viņu API, dodieties uz viņu <a href='$1' target=_new'>jaunā partnera konta lapu</a> un aizpildiet tur esošo veidlapu. Pēc konta izveidošanas un pieteikšanās viņu vietnē jums būs jāpieskaita tam līdzekļi, izmantojot kredītkarti, pirms to var izmantot jebkuru domēnu reģistrēšanai.
 rcom_createinfo=Lai izmantotu šo kontu, ir jānotiek šādiem gadījumiem: <br><ul> <li>Jūsu sistēmas IP adresei ir jābūt baltā saraksta reģistrētājam.com, kas var aizņemt vairākas stundas.<br> <li>Kredīts jāpievieno vietnei savu kontu, ko var izdarīt vietnē<a href=http://www.rcomexpress.com/> http://www.rcomexpress.com/ </a>, piesakoties ar izvēlēto lietotājvārdu un paroli. ></ul>
+
 gandi_account=Konta pieteikšanās (piemēram, <tt>XX5555-GANDI</tt>)
 gandi_pass=Konta parole
 gandi_contact=Jaunu domēnu kontaktpersonas ID
@@ -186,6 +193,7 @@ gandi_apikey=API atslēga
 gandi_etries=Gandi API darbību neizdevās pabeigt pēc $2 sekundēm - gala statuss bija $1 
 gandi_ecreate=Izveidošanas statusa kļūda : $1 
 gandi_eassoc=Kontaktpersonu $1 nevar saistīt ar šo domēnu
+
 distribute_account=Konta numurs
 distribute_user=Konta lietotājvārds
 distribute_pass=Konta parole
@@ -203,6 +211,7 @@ distribute_edom=Trūkst vai nederīga izskata esošs domēna vārds, ar kuru sai
 distribute_edom2=Neizdevās iegūt informāciju par esošo domēnu : $1 
 distribute_ebase=Neizdevās iegūt sīkāku informāciju par domēnu $1 
 distribute_eowner=Neizdevās iegūt domēna $1 īpašnieka kontaktinformāciju
+
 namecheap_user=Namecheap lietotājvārds
 namecheap_euser=Trūkst vai nederīgi izskatās Namecheap lietotājvārds
 namecheap_apikey=Namecheap API atslēga
@@ -219,6 +228,7 @@ namecheap_enstwo=Namecheap pieprasa, lai katrā domēnā būtu vismaz $1 vārda 
 namecheap_instructions=Lai reģistrētos kontā, izmantojot Namecheap, dodieties uz viņu vietni un <a href='$1' target=_new'>reģistrējieties kontam</a>. Jums kontā būs jāatspējo API piekļuve, kā tas ir dokumentēts <a href='$2' target=_new>Namecheap API lapā</a>.
 namecheap_etransfer=Pārsūtīšana neizdevās pabeigt pēc 5 minūtēm : $1 
 namecheap_etransfer2=Pārsūtīšana netika pabeigta pēc 5 minūtēm, un informācija par statusu nav pieejama
+
 delete_err1=Neizdevās atspējot kontus
 delete_err2=Neizdevās iespējot kontus
 delete_err3=Neizdevās noņemt kontus
@@ -227,14 +237,16 @@ delete_title=Noņemt kontus
 delete_rusure=Vai tiešām vēlaties noņemt atlasītos kontus $1 ? Tie joprojām pastāvēs kopā ar reģistratūrām, bet Virtualmin tos vairs nevarēs izmantot.
 delete_ok=Jā, noņemiet tos
 delete_edoms=Kontu $1 joprojām izmanto šādos Virtualmin domēnos : $2 
+
 list_title=Reģistrētie domēni
 list_dom=Domēna vārds
 list_registrar=Reģistratūras nosaukums
 list_account=Reģistratūras konts
 list_id=ID ar reģistratūru
-list_none=Neviens DNS reģistrators pagaidām nav reģistrējis nevienu Virtualmin domēnu.
-list_none2=Šajā DNS reģistratūrā vēl nav reģistrēti Virtualmin domēni.
+list_none=Nevienā reģistratūrā vēl nav reģistrēts neviens Virtualmin domēns.
+list_none2=Šajā reģistratūrā vēl nav reģistrēts neviens Virtualmin domēns.
 list_expiry=Derīguma termiņš
+
 contact_err=Neizdevās rediģēt kontaktinformāciju
 contact_ecannot=Jums nav atļauts rediģēt šī domēna kontaktpersonas
 contact_edom=Netika atrasts Virtualmin serveris $1 
@@ -284,6 +296,7 @@ contact_esave=Neizdevās atjaunināt reģistratūru : $1
 contact_createtab=Izveidojiet kontaktpersonas
 contact_selecttab=Atlasiet kontaktpersonas
 contact_efind=Nav atrasts neviens kontakts ar ID $1 
+
 import_title=Saistītā domēna reģistrācija
 import_header=Sīkāka informācija par esošo domēna reģistratūru
 import_ecannot=Jums nav atļauts saistīt domēnus
@@ -303,6 +316,7 @@ import_transfer=Pārsūtīšana no cita reģistratūras?
 import_transferyes=Jā, ar atslēgu
 import_renew=Atjaunot arī pārejot?
 import_renewyes=Jā, par
+
 transfer_title=Nodot domēna reģistrāciju
 transfer_header=Sīkāka informācija par pārsūtīšanas pieprasījumu
 transfer_account=Pārskaitījums uz kontu
@@ -313,12 +327,14 @@ transfer_ecannot=Jums nav atļauts pārsūtīt domēnus
 transfer_transferring=Notiek pārsūtīšana no pašreizējā reģistratūras.
 transfer_done=.. darīts. Reģistratūras ID ir $1.
 transfer_done2=Pirms pārsūtīšanas pabeigšanas sākotnējā reģistratūrā var būt vajadzīgas citas darbības, un šo domēnu var <a href='$1'>importēt Virtualmin</a>.
+
 dereg_err=Neizdevās atdalīt domēnu
 dereg_ealready=Šis domēns nav saistīts ar nevienu reģistratūru
 dereg_title=Atvienota domēna reģistrācija
 dereg_rusure=Vai tiešām vēlaties noņemt saistību starp šo Virtualmin domēnu un tā reģistrāciju $1 ? Ja tas tiek izdzēsts Virtualmin, domēns netiks noņemts no reģistratūras.
 dereg_ok=Atsaistītais domēns
 dereg_doing=Domēna reģistrācijas atdalīšana no konta $1.
+
 renew_title=Atjaunot domēna reģistrāciju
 renew_err=Atjaunošana neizdevās
 renew_ecannot=Jums nav atļauts atjaunot reģistrāciju
@@ -333,6 +349,7 @@ renew_doing=Atjaunojot domēnu $1 ar $2 uz $3 gadiem ..
 renew_failed=.. atjaunošana neizdevās : $1 
 renew_done=.. atjaunošana pabeigta - reģistratūras kods bija $1 
 renew_account=Atjaunošana ar kontu
+
 create_title=Izveidot reģistratūras kontu
 create_header=Jauna reģistratūras konta informācija
 create_ecannot=Jums nav atļauts izveidot jaunus kontus
@@ -341,6 +358,7 @@ create_doing=Izveido jaunu kontu ar $1.
 create_done=.. izveidots veiksmīgi! Jūsu konta ID reģistratūrā ir $1 
 create_warn=.. izveidots, bet ar brīdinājumiem: $2. Jūsu konta ID reģistratūrā ir $1 
 create_failed=.. izveidošana neizdevās : $1 
+
 auto_err=Neizdevās saglabāt automātisko atjaunošanu
 auto_ecannot=Jums nav atļauts pārvaldīt automātisko atjaunošanu
 auto_title=Automātiska domēna atjaunošana
@@ -362,14 +380,15 @@ auto_eyears=Trūkstoši vai skaitļi bez skaitļiem, kurus atjaunot
 auto_eget=Neizdevās iegūt derīguma termiņu : $1 
 auto_done=Atjaunots par $1 gadiem
 auto_failed=Neizdevās : $1 
-auto_results=Šiem virtuālajiem serveriem to DNS domēnus ir automātiski atjauninājis Virtualmin :
+auto_results=Virtualmin ir automātiski atjaunojis šādu virtuālo serveru domēnus :
 auto_raccount=Reģistratūras konts
 auto_rdom=Domēna vārds
 auto_rmsg=Atjaunošanas statuss
 auto_subject=Virtualmin automātiska domēna atjaunošana
 auto_warnmsg=Derīgums beigsies pēc $1 dienām
 auto_wsubject=Paziņojums par Virtualmin domēna derīguma termiņu
-auto_wresults=Šiem virtuālajiem serveriem to DNS domēnu darbības termiņš drīz beigsies :
+auto_wresults=Šo virtuālo serveru domēni drīz beigsies :
+
 ns_err=Neizdevās rediģēt vārdu serverus
 ns_ecannot=Jums nav atļauts rediģēt šī domēna kontaktpersonas
 ns_title=Rediģēt vārdu serverus
@@ -385,7 +404,8 @@ ns_eip=Nosaukuma serveris “$1” ir IP adrese, nevis resursdatora nosaukums
 ns_ens=Nosaukuma servera “$1” nevarēja atšķirt uz IP adresi
 ns_reg=Vārdu serveru atjaunināšana ar reģistratūru.
 ns_failed=.. neizdevās : $1 
-ns_syncing=DNS domēna vārda serveru atjaunināšana ..
+ns_syncing=Notiek domēna nosaukumu serveru atjaunināšana ..
+
 contacts_eaccount=Konts nav atrasts.
 contacts_id=Kontaktpersonas ID
 contacts_name=Kontakta vārds
@@ -393,6 +413,7 @@ contacts_add=Pievienojiet jaunu $1 kontaktpersonu.
 contacts_none=Ar šo reģistratūras kontu nav saistīta neviena kontaktpersona.
 contacts_elist=Neizdevās uzskaitīt kontaktpersonas : $1 
 contacts_title=Reģistratūras kontakti
+
 onecontact_header=Reģistratūras kontaktinformācija $1 
 onecontact_err=Neizdevās saglabāt kontaktpersonu
 onecontact_edelete=Dzēšana neizdevās : $1 

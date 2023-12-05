@@ -1,23 +1,23 @@
-feat_name=Înregistrare domeniu DNS
-feat_losing=Domeniul DNS va fi anulat
+feat_name=Înregistrarea domeniului
+feat_losing=Domeniul va fi anulat
 feat_disabling=Domeniul DNS va fi temporar dezactivat
-feat_label=Înregistrați domeniul DNS?
-feat_label2=Înregistrează domeniul DNS
+feat_label=Înregistrați un domeniu?
+feat_label2=Inregistreaza un domeniu
 feat_edepend=Nu a fost găsit niciun cont de registru care să fie utilizat pentru crearea domeniului
-feat_edepend2=Doar nume de domeniu DNS reale precum <i>foo.com</i> pot fi înregistrate
+feat_edepend2=Numai nume de domenii reale precum <i>foo.com</i> pot fi înregistrate
 feat_eclash=Domeniul $1 nu poate fi înregistrat : $2 
 feat_edns=Un domeniu nu poate fi înregistrat decât dacă este activată funcția DNS
-feat_setup=Înregistrarea domeniului DNS cu $1 ..
+feat_setup=Se înregistrează domeniul cu $1 ..
 feat_failed=.. eșuat : $1 
 feat_setupdone=.. Terminat. ID-ul registratorului pentru acest domeniu este $1.
 feat_modifydons=.. Terminat. ID-ul noului registrator pentru acest domeniu este $1 
-feat_delete=Înregistrarea domeniului DNS cu $1 ..
-feat_delete2=Înregistrarea domeniului DNS ..
-feat_modify1=Anularea înregistrării domeniului DNS vechi $1 cu $2 ..
-feat_modify2=Reînregistrarea unui nou domeniu DNS $1 cu $2 ..
+feat_delete=Se anulează înregistrarea domeniului cu $1 ..
+feat_delete2=Se anulează înregistrarea domeniului ..
+feat_modify1=Se anulează înregistrarea vechiului domeniu $1 cu $2 ..
+feat_modify2=Se reînregistrează noul domeniu $1 cu $2 ..
 feat_noderegister=.. dezactivarea a fost dezactivată în configurația pluginului
-feat_modify=Schimbarea domeniului DNS înregistrat de la $1 la $2 cu $3 ..
-feat_noaccount=Nu a fost găsită nicio informație despre contul de înregistrare DNS!
+feat_modify=Schimbarea domeniului înregistrat de la $1 la $2 cu $3 ..
+feat_noaccount=Nu au fost găsite informații despre contul de înregistrare!
 feat_copy=Copierea contactelor de domeniu de la $1 ..
 feat_ecopy=.. nu a reușit să preia contactele : $1 
 feat_nocopy=.. nu s-a găsit nimeni de copiat
@@ -27,6 +27,7 @@ feat_perioddef=Înregistrare implicită
 feat_periodyears=ani
 feat_eperiod=Perioada de înregistrare lipsă sau nevalidă în ani
 feat_setupalready=.. înregistrare existentă găsită
+
 links_contact=Editează contacte de domeniu
 links_ns=Editați nameservers
 links_contactv=Vizualizați contacte de domeniu
@@ -34,7 +35,8 @@ links_rereg=Domeniul dis-asociat
 links_import=Domeniul asociat
 links_renew=Reînnoirea domeniului
 links_transfer=Transfer de domeniu
-index_title=Registratori de domeniu DNS
+
+index_title=Registratori de domenii
 index_registrar=Grefier
 index_desc=Descrierea contului
 index_enabled=Activat?
@@ -57,14 +59,16 @@ index_actvirts=Listă servere virtuale
 index_msg=Servere virtuale care utilizează contul de înregistrare $1 ..
 index_nonemsg=Nu au fost găsite servere virtuale care utilizează contul de înregistrare $1.
 index_listall=Enumerați toate domeniile înregistrate.
+
 type_rcom=Register.com
 type_gandi=Gandi.net (API veche)
 type_newgandi=Gandi.net (API nouă)
 type_distribute=Distribute.IT
 type_namecheap=NameCheap
+
 edit_title1=Adăugați Contul Registratorului
 edit_title2=Editați contul de înregistrare
-edit_header=Detaliile contului registratorului DNS
+edit_header=Detaliile contului de registrator
 edit_header2=Opțiuni de domeniu de nivel superior
 edit_header3=Instrucțiuni de cont noi
 edit_egone=Contul nu mai există!
@@ -82,6 +86,7 @@ edit_all=Toate domeniile
 edit_suffixes=TLD-uri listate
 edit_delete=Elimina
 edit_ecannot=Nu aveți voie să editați conturile registratorului
+
 save_err=Nu a putut salva contul
 save_err2=Nu a reușit să elimini contul
 save_edoms=Este utilizat de următoarele domenii Virtualmin : $1 
@@ -95,6 +100,7 @@ save_ens=Eroare la adresa IP de căutare pentru serverul de nume „$1”
 save_ensip=Serverul de nume „$1” trebuie introdus ca nume de gazdă, nu ca adresă IP
 save_enss=Nu au fost introduse numele de server
 save_transfer=Acest cont a fost utilizat pentru a crea domenii $1. <br> Selectați contul de registru care poate fi utilizat pentru a gestiona aceste domenii în loc de :
+
 rcom_account=ID de conectare cont
 rcom_pass=Parola contului
 rcom_eaccount=ID de autentificare lipsă sau nevalid
@@ -163,6 +169,7 @@ rcom_eccaddress=Lipsește adresa de facturare a cardului de credit
 rcom_ecczip=Lipsește codul poștal de facturare a cardului de credit
 rcom_instructions=Pentru a vă înscrie la un cont cu Register.com cu acces la API-ul lor, accesați <a href='$1' target=_new'>noua pagină a contului de partener</a> și completați formularul de acolo. După crearea contului și conectarea la site-ul lor web, va trebui să adăugați fonduri la acesta folosind un card de credit înainte de a putea fi folosit pentru înregistrarea oricăror domenii.
 rcom_createinfo=Înainte de a putea utiliza acest cont, trebuie să se întâmple următoarele: <br><ul> <li>Adresa IP a sistemului dvs. trebuie să fie listată în alb de către Register.com, care poate dura câteva ore.<br> <li>Creditul trebuie adăugat la contul dvs., care poate fi realizat la<a href=http://www.rcomexpress.com/> http://www.rcomexpress.com/ </a>prin logarea cu numele de utilizator și parola selectate.<br > </ul>
+
 gandi_account=Logare cont (cum ar fi <tt>XX5555-GANDI</tt>)
 gandi_pass=Parola contului
 gandi_contact=ID de contact pentru domenii noi
@@ -186,6 +193,7 @@ gandi_apikey=Cheie API
 gandi_etries=Operația API Gandi nu a finalizat după $2 secunde - starea finală a fost $1 
 gandi_ecreate=Eroare de stare a creației : $1 
 gandi_eassoc=Contactul $1 nu poate fi asociat cu acest domeniu
+
 distribute_account=Numar de cont
 distribute_user=numele contului
 distribute_pass=Parola contului
@@ -203,6 +211,7 @@ distribute_edom=Numele de domeniu existent care lipsește sau are aspect nevalab
 distribute_edom2=Nu a reușit să obțineți detalii despre domeniul existent : $1 
 distribute_ebase=Nu a reușit să obțineți detalii pentru domeniul $1 
 distribute_eowner=Eroare la obținerea ID-ului de contact al proprietarului pentru domeniul $1 
+
 namecheap_user=Numele de utilizator Namecheap
 namecheap_euser=Nume de utilizator Namecheap care lipsește sau are aspect nevalid
 namecheap_apikey=Cheia API Namecheap
@@ -219,6 +228,7 @@ namecheap_enstwo=Namecheap necesită ca fiecare domeniu să aibă cel puțin $1 
 namecheap_instructions=Pentru a vă înscrie la un cont cu Namecheap, accesați site-ul web și <a href='$1' target=_new'>înscrieți-vă pentru un cont</a>. Va trebui să activați accesul API pe contul dvs., așa cum este documentat în <a href='$2' target=_new>pagina Namecheap API</a>.
 namecheap_etransfer=Transferul nu a finalizat după 5 minute : $1 
 namecheap_etransfer2=Transferul nu a finalizat după 5 minute și nu există informații despre stare
+
 delete_err1=Nu a reușit să dezactiveze conturile
 delete_err2=Eroare la activarea conturilor
 delete_err3=Nu a reușit să elimine conturile
@@ -227,14 +237,16 @@ delete_title=Eliminați conturile
 delete_rusure=Sigur doriți să eliminați conturile selectate $1 ? Ele vor exista în continuare cu registrele, dar nu vor mai fi utilizate de Virtualmin.
 delete_ok=Da, Eliminați-le
 delete_edoms=Contul $1 este încă utilizat de următoarele domenii Virtualmin : $2 
+
 list_title=Domenii înregistrate
 list_dom=Numele domeniului
 list_registrar=Numele registratorului
 list_account=Contul registratorului
 list_id=ID cu registrator
-list_none=Încă nu au fost înregistrate domenii Virtualmin la un registrator DNS.
-list_none2=Nu au fost înregistrate încă domenii Virtualmin la acest registrator DNS.
+list_none=Niciun domeniu Virtualmin nu a fost încă înregistrat la niciun registrator.
+list_none2=Niciun domeniu Virtualmin nu a fost încă înregistrat la acest registrator.
 list_expiry=Data expirarii
+
 contact_err=Nu a reușit să editeze datele de contact
 contact_ecannot=Nu aveți voie să editați contacte pentru acest domeniu
 contact_edom=Nu a fost găsit niciun server Virtualmin pentru $1 
@@ -284,6 +296,7 @@ contact_esave=Eroare la actualizarea registratorului : $1
 contact_createtab=Creați contacte
 contact_selecttab=Selectați contacte
 contact_efind=Nu s-a găsit contact cu ID $1 
+
 import_title=Înregistrare domeniu asociat
 import_header=Detalii despre registrul de domeniu existent
 import_ecannot=Nu aveți voie să asociați domenii
@@ -303,6 +316,7 @@ import_transfer=Transfer de la un alt registrator?
 import_transferyes=Da, cu cheie
 import_renew=De asemenea, reînnoiți la transfer?
 import_renewyes=Da, pentru
+
 transfer_title=Înregistrarea domeniului de transfer
 transfer_header=Detalii despre cererea de transfer
 transfer_account=Transfer la cont
@@ -313,12 +327,14 @@ transfer_ecannot=Nu aveți voie să transferați domenii
 transfer_transferring=Transferul de la registratorul curent ..
 transfer_done=.. Terminat. ID-ul registratorului este $1.
 transfer_done2=Alți pași pot fi necesari la registratorul inițial înainte de finalizarea transferului și acest domeniu poate fi <a href='$1'>importat în Virtualmin</a>.
+
 dereg_err=Nu a reușit să asocieze domeniul
 dereg_ealready=Acest domeniu nu este asociat cu niciun registrator
 dereg_title=Distribuie înregistrarea domeniului
 dereg_rusure=Sigur doriți să eliminați această asociere între acest domeniu Virtualmin și înregistrarea acesteia cu $1 ? Dacă este șters în Virtualmin, domeniul nu va fi eliminat din registrator.
 dereg_ok=Domeniul dis-asociat
 dereg_doing=Înregistrarea în asociere a domeniului cu contul $1 ..
+
 renew_title=Reînnoirea înregistrării domeniului
 renew_err=Reînnoirea a eșuat
 renew_ecannot=Nu aveți voie să reînnoiți înregistrările
@@ -333,6 +349,7 @@ renew_doing=Reînnoirea domeniului $1 cu $2 pentru $3 ani ..
 renew_failed=.. reînnoirea a eșuat : $1 
 renew_done=.. reînnoirea completă - codul registratorului a fost $1 
 renew_account=Reînnoire cu cont
+
 create_title=Creați un cont de registrator
 create_header=Detaliile contului de registru nou
 create_ecannot=Nu aveți voie să creați conturi noi
@@ -341,6 +358,7 @@ create_doing=Crearea unui cont nou cu $1 ..
 create_done=.. creat cu succes! ID-ul contului dvs. cu registratorul este $1 
 create_warn=.. creat, dar cu avertismente: $2. ID-ul contului dvs. cu registratorul este $1 
 create_failed=.. crearea nu a reușit : $1 
+
 auto_err=Nu a reușit să salveze reînnoirea automată
 auto_ecannot=Nu aveți voie să gestionați reînnoirea automată
 auto_title=Reînnoirea automată a domeniului
@@ -362,14 +380,15 @@ auto_eyears=Anii care lipsesc sau cei care nu sunt numerici pentru a se reînnoi
 auto_eget=Nu a reușit expirarea : $1 
 auto_done=Reînnoit pentru $1 ani
 auto_failed=Eșuat : $1 
-auto_results=Următoarele servere virtuale au avut domeniile DNS reînnoite automat de Virtualmin :
+auto_results=Următoarele servere virtuale au avut domeniile reînnoite automat de Virtualmin :
 auto_raccount=Contul registratorului
 auto_rdom=Numele domeniului
 auto_rmsg=Starea de reînnoire
 auto_subject=Reînnoirea automată a domeniului virtualmin
 auto_warnmsg=Va expira în $1 zile
 auto_wsubject=Notificare de expirare a domeniului Virtualmin
-auto_wresults=Următoarele servere virtuale vor avea ca domenii DNS să expire curând :
+auto_wresults=Domeniile următoarelor servere virtuale vor expira în curând :
+
 ns_err=Eroare la editarea serverelor de nume
 ns_ecannot=Nu aveți voie să editați contacte pentru acest domeniu
 ns_title=Editați nameservers
@@ -385,7 +404,8 @@ ns_eip=Serverul de nume „$1” este o adresă IP, nu un nume de gazdă
 ns_ens=Serverul de nume „$1” nu a putut fi rezolvat la o adresă IP
 ns_reg=Actualizarea serverelor de nume cu registrator ..
 ns_failed=.. eșuat : $1 
-ns_syncing=Actualizarea serverelor de nume în domeniul DNS ..
+ns_syncing=Se actualizează serverele de nume din domeniu ..
+
 contacts_eaccount=Contul nu a fost găsit!
 contacts_id=ID de contact
 contacts_name=Nume de contact
@@ -393,6 +413,7 @@ contacts_add=Adăugați un nou contact $1.
 contacts_none=Nu sunt asociate contacte cu acest cont de înregistrare.
 contacts_elist=Lista de contacte nu a reușit : $1 
 contacts_title=Contacte de înregistrare
+
 onecontact_header=Detalii de contact pentru registrator pentru $1 
 onecontact_err=Nu a reușit să salvezi contactul
 onecontact_edelete=Ștergerea a eșuat : $1 

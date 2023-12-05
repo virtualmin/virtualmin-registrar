@@ -1,23 +1,23 @@
-feat_name=Đăng ký tên miền DNS
-feat_losing=Tên miền DNS sẽ được hủy đăng ký
+feat_name=Đăng ký tên miền
+feat_losing=Tên miền sẽ bị hủy đăng ký
 feat_disabling=Tên miền DNS sẽ tạm thời bị vô hiệu hóa
-feat_label=Đăng ký tên miền DNS?
-feat_label2=Đăng ký tên miền DNS
+feat_label=Đăng ký tên miền?
+feat_label2=Đăng ký tên miền
 feat_edepend=Không tìm thấy tài khoản đăng ký nào được sử dụng để tạo tên miền
-feat_edepend2=Chỉ những tên miền DNS thực như <i>foo.com</i> mới có thể được đăng ký
+feat_edepend2=Chỉ những tên miền thực như <i>foo.com</i> mới có thể được đăng ký
 feat_eclash=Tên miền $1 không thể được đăng ký : $2 
 feat_edns=Một tên miền không thể được đăng ký trừ khi tính năng DNS được bật
-feat_setup=Đăng ký tên miền DNS với $1 ..
+feat_setup=Đăng ký tên miền với $1 ..
 feat_failed=.. thất bại : $1 
 feat_setupdone=.. làm xong. ID của nhà đăng ký cho tên miền này là $1.
 feat_modifydons=.. làm xong. ID của nhà đăng ký mới cho tên miền này là $1 
-feat_delete=Hủy đăng ký tên miền DNS với $1 ..
-feat_delete2=Hủy đăng ký tên miền DNS ..
-feat_modify1=Hủy đăng ký tên miền DNS cũ $1 với $2 ..
-feat_modify2=Đăng ký lại tên miền DNS mới $1 với $2 ..
+feat_delete=Đang hủy đăng ký tên miền với $1 ..
+feat_delete2=Hủy đăng ký tên miền ..
+feat_modify1=Hủy đăng ký tên miền cũ $1 với $2 ..
+feat_modify2=Đăng ký lại tên miền mới $1 với $2 ..
 feat_noderegister=.. đăng ký hủy đã bị vô hiệu hóa trong cấu hình plugin
-feat_modify=Thay đổi tên miền DNS đã đăng ký từ $1 thành $2 bằng $3 ..
-feat_noaccount=Không tìm thấy thông tin tài khoản đăng ký DNS!
+feat_modify=Thay đổi tên miền đã đăng ký từ $1 thành $2 bằng $3 ..
+feat_noaccount=Không tìm thấy thông tin tài khoản đăng ký!
 feat_copy=Sao chép danh bạ tên miền từ $1 ..
 feat_ecopy=.. không thể tìm nạp danh bạ : $1 
 feat_nocopy=.. không tìm thấy để sao chép
@@ -27,6 +27,7 @@ feat_perioddef=Đăng ký mặc định
 feat_periodyears=năm
 feat_eperiod=Thời gian đăng ký bị thiếu hoặc không hợp lệ trong năm
 feat_setupalready=.. đăng ký hiện có
+
 links_contact=Chỉnh sửa tên miền
 links_ns=Chỉnh sửa máy chủ tên
 links_contactv=Xem Danh bạ
@@ -34,7 +35,8 @@ links_rereg=Tên miền không liên kết
 links_import=Liên kết tên miền
 links_renew=Gia hạn tên miền
 links_transfer=Chuyển tên miền
-index_title=Đăng ký tên miền DNS
+
+index_title=Nhà đăng ký tên miền
 index_registrar=Nhà đăng ký
 index_desc=Mô tả tài khoản
 index_enabled=Đã bật?
@@ -57,14 +59,16 @@ index_actvirts=Liệt kê các máy chủ ảo
 index_msg=Máy chủ ảo sử dụng tài khoản đăng ký $1 ..
 index_nonemsg=Không tìm thấy máy chủ ảo nào sử dụng tài khoản đăng ký $1.
 index_listall=Liệt kê tất cả các tên miền đã đăng ký.
+
 type_rcom=Đăng ký.com
 type_gandi=Gandi.net (API cũ)
 type_newgandi=Gandi.net (API mới)
 type_distribute=Phân phối.IT
 type_namecheap=Namecheap
+
 edit_title1=Thêm tài khoản đăng ký
 edit_title2=Chỉnh sửa tài khoản đăng ký
-edit_header=Chi tiết tài khoản đăng ký DNS
+edit_header=Chi tiết tài khoản nhà đăng ký
 edit_header2=Tùy chọn tên miền cấp cao nhất
 edit_header3=Hướng dẫn tài khoản mới
 edit_egone=Tài khoản không còn tồn tại!
@@ -82,6 +86,7 @@ edit_all=Tất cả các miền
 edit_suffixes=Danh sách TLD
 edit_delete=Tẩy
 edit_ecannot=Bạn không được phép chỉnh sửa tài khoản đăng ký
+
 save_err=Không thể lưu tài khoản
 save_err2=Không thể xóa tài khoản
 save_edoms=Nó được sử dụng bởi các miền Virtualmin sau : $1 
@@ -95,6 +100,7 @@ save_ens=Không thể tra cứu địa chỉ IP cho máy chủ tên '$1'
 save_ensip=Máy chủ tên '$1' phải được nhập dưới dạng tên máy chủ, không phải địa chỉ IP
 save_enss=Không có máy chủ tên nào được nhập
 save_transfer=Tài khoản này đã được sử dụng để tạo tên miền $1. <br> Chọn tài khoản đăng ký có thể được sử dụng để quản lý các tên miền này thay thế :
+
 rcom_account=ID đăng nhập tài khoản
 rcom_pass=Mật khẩu tài khoản
 rcom_eaccount=ID đăng nhập bị thiếu hoặc không hợp lệ
@@ -163,6 +169,7 @@ rcom_eccaddress=Thiếu địa chỉ thanh toán thẻ tín dụng
 rcom_ecczip=Thiếu mã bưu điện thanh toán thẻ tín dụng
 rcom_instructions=Để đăng ký tài khoản với Register.com với quyền truy cập vào API của họ, hãy truy cập <a href='$1' target=_new'>trang tài khoản đối tác mới</a> của họ và hoàn thành biểu mẫu tại đó. Sau khi tạo tài khoản và đăng nhập vào trang web của họ, bạn sẽ cần thêm tiền vào tài khoản bằng thẻ tín dụng trước khi có thể sử dụng để đăng ký bất kỳ tên miền nào.
 rcom_createinfo=Trước khi tài khoản này có thể được sử dụng, những điều sau đây phải xảy ra: <br><ul> <li>Địa chỉ IP của hệ thống của bạn phải được Đăng ký danh sách trắng, có thể mất vài giờ.<br> <li>Tín dụng phải được thêm vào tài khoản của bạn, có thể được thực hiện tại<a href=http://www.rcome Express.com/> http: //www.rcome Express.com/ </a>bằng cách đăng nhập bằng tên người dùng và mật khẩu bạn đã chọn.<br > </ul>
+
 gandi_account=Đăng nhập tài khoản (như <tt>XX5555-GANDI</tt>)
 gandi_pass=Mật khẩu tài khoản
 gandi_contact=ID liên hệ cho tên miền mới
@@ -186,6 +193,7 @@ gandi_apikey=Mã API
 gandi_etries=Thao tác API Gandi không hoàn thành sau $2 giây - trạng thái cuối cùng là $1 
 gandi_ecreate=Lỗi trạng thái tạo : $1 
 gandi_eassoc=Liên hệ $1 không thể được liên kết với tên miền này
+
 distribute_account=Số tài khoản
 distribute_user=tài khoản người dùng
 distribute_pass=Mật khẩu tài khoản
@@ -203,6 +211,7 @@ distribute_edom=Tên miền hiện tại bị thiếu hoặc không hợp lệ �
 distribute_edom2=Không thể lấy thông tin chi tiết về tên miền hiện có : $1 
 distribute_ebase=Không thể lấy thông tin chi tiết cho tên miền $1 
 distribute_eowner=Không thể lấy ID liên hệ của chủ sở hữu cho tên miền $1 
+
 namecheap_user=Tên người dùng Namecheap
 namecheap_euser=Tên người dùng Namecheap bị thiếu hoặc không hợp lệ
 namecheap_apikey=Khóa API Namecheap
@@ -219,6 +228,7 @@ namecheap_enstwo=Namecheap yêu cầu mỗi tên miền có ít nhất $1 máy c
 namecheap_instructions=Để đăng ký tài khoản với Namecheap, hãy truy cập trang web của họ và <a href='$1' target=_new'>đăng ký tài khoản</a>. Bạn sẽ cần kích hoạt quyền truy cập API trên tài khoản của mình, như được ghi lại trên <a href='$2' target=_new>trang API Namecheap</a>.
 namecheap_etransfer=Chuyển không hoàn thành sau 5 phút : $1 
 namecheap_etransfer2=Chuyển không hoàn thành sau 5 phút và không có thông tin trạng thái nào
+
 delete_err1=Không thể vô hiệu hóa tài khoản
 delete_err2=Không thể kích hoạt tài khoản
 delete_err3=Không thể xóa tài khoản
@@ -227,14 +237,16 @@ delete_title=Xóa tài khoản
 delete_rusure=Bạn có chắc chắn muốn xóa $1 tài khoản đã chọn không? Chúng vẫn sẽ tồn tại với các nhà đăng ký, nhưng Virtualmin sẽ không còn sử dụng được nữa.
 delete_ok=Vâng, loại bỏ chúng
 delete_edoms=Tài khoản $1 vẫn được sử dụng bởi các miền Virtualmin sau : $2 
+
 list_title=Tên miền đã đăng ký
 list_dom=Tên miền
 list_registrar=Tên nhà đăng ký
 list_account=Tài khoản đăng ký
 list_id=ID với công ty đăng ký
-list_none=Chưa có tên miền Virtualmin nào được đăng ký với bất kỳ nhà đăng ký DNS nào.
-list_none2=Chưa có tên miền Virtualmin nào được đăng ký với nhà đăng ký DNS này.
+list_none=Chưa có miền Virtualmin nào được đăng ký với bất kỳ nhà đăng ký nào.
+list_none2=Chưa có miền Virtualmin nào được đăng ký với nhà đăng ký này.
 list_expiry=Ngày hết hạn
+
 contact_err=Không thể chỉnh sửa chi tiết liên lạc
 contact_ecannot=Bạn không được phép chỉnh sửa danh bạ cho tên miền này
 contact_edom=Không tìm thấy máy chủ Virtualmin cho $1 
@@ -284,6 +296,7 @@ contact_esave=Không thể cập nhật công ty đăng ký : $1
 contact_createtab=Tạo danh bạ
 contact_selecttab=Chọn danh bạ
 contact_efind=Không tìm thấy liên hệ với ID $1 
+
 import_title=Liên kết đăng ký tên miền
 import_header=Chi tiết của công ty đăng ký tên miền hiện có
 import_ecannot=Bạn không được phép liên kết tên miền
@@ -303,6 +316,7 @@ import_transfer=Chuyển từ một công ty đăng ký khác?
 import_transferyes=Vâng, với chìa khóa
 import_renew=Còn gia hạn khi chuyển nhượng?
 import_renewyes=Vâng, cho
+
 transfer_title=Chuyển đăng ký tên miền
 transfer_header=Chi tiết yêu cầu chuyển nhượng
 transfer_account=Chuyển vào tài khoản
@@ -313,12 +327,14 @@ transfer_ecannot=Bạn không được phép chuyển tên miền
 transfer_transferring=Chuyển từ đăng ký hiện tại ..
 transfer_done=.. làm xong. ID của nhà đăng ký là $1.
 transfer_done2=Các bước khác có thể cần thiết tại nhà đăng ký ban đầu trước khi quá trình chuyển hoàn tất và tên miền này có thể được <a href='$1'>nhập vào Virtualmin</a>.
+
 dereg_err=Không thể liên kết miền
 dereg_ealready=Tên miền này không được liên kết với bất kỳ nhà đăng ký
 dereg_title=Đăng ký tên miền liên kết
 dereg_rusure=Bạn có chắc chắn muốn xóa liên kết này giữa tên miền Virtualmin này và đăng ký với $1 không? Nếu nó bị xóa trong Virtualmin, tên miền sẽ không bị xóa khỏi nhà đăng ký.
 dereg_ok=Tên miền liên kết
 dereg_doing=Hủy đăng ký tên miền với tài khoản $1 ..
+
 renew_title=Gia hạn đăng ký tên miền
 renew_err=Gia hạn thất bại
 renew_ecannot=Bạn không được phép gia hạn đăng ký
@@ -333,6 +349,7 @@ renew_doing=Gia hạn tên miền $1 bằng $2 trong $3 năm ..
 renew_failed=.. gia hạn không thành công : $1 
 renew_done=.. gia hạn hoàn tất - mã từ nhà đăng ký là $1 
 renew_account=Gia hạn bằng tài khoản
+
 create_title=Tạo tài khoản đăng ký
 create_header=Chi tiết tài khoản đăng ký mới
 create_ecannot=Bạn không được phép tạo tài khoản mới
@@ -341,6 +358,7 @@ create_doing=Tạo tài khoản mới với $1 ..
 create_done=.. đã tạo thành công! ID tài khoản của bạn với nhà đăng ký là $1 
 create_warn=.. đã tạo, nhưng có cảnh báo: $2. ID tài khoản của bạn với nhà đăng ký là $1 
 create_failed=.. việc tạo không thành công : $1 
+
 auto_err=Không thể lưu gia hạn tự động
 auto_ecannot=Bạn không được phép quản lý gia hạn tự động
 auto_title=Gia hạn tên miền tự động
@@ -362,14 +380,15 @@ auto_eyears=Những năm bị thiếu hoặc không phải là số để gia h�
 auto_eget=Không thể hết hạn : $1 
 auto_done=Gia hạn $1 năm
 auto_failed=Không thành công : $1 
-auto_results=Các máy chủ ảo sau đây đã có tên miền DNS được tự động gia hạn bởi Virtualmin :
+auto_results=Các máy chủ ảo sau đã được Virtualmin tự động gia hạn tên miền :
 auto_raccount=Tài khoản đăng ký
 auto_rdom=Tên miền
 auto_rmsg=Tình trạng gia hạn
 auto_subject=Đổi mới tên miền tự động Virtualmin
 auto_warnmsg=Sẽ hết hạn sau $1 ngày
 auto_wsubject=Thông báo hết hạn tên miền Virtualmin
-auto_wresults=Các máy chủ ảo sau sẽ sớm hết hạn tên miền DNS :
+auto_wresults=Các máy chủ ảo sau sẽ sớm hết hạn miền :
+
 ns_err=Không thể chỉnh sửa máy chủ tên
 ns_ecannot=Bạn không được phép chỉnh sửa danh bạ cho tên miền này
 ns_title=Chỉnh sửa máy chủ tên
@@ -385,7 +404,8 @@ ns_eip=Máy chủ tên '$1' là địa chỉ IP, không phải tên máy chủ
 ns_ens=Máy chủ tên '$1' không thể được giải quyết thành địa chỉ IP
 ns_reg=Cập nhật máy chủ tên với công ty đăng ký ..
 ns_failed=.. thất bại : $1 
-ns_syncing=Cập nhật máy chủ tên miền trong miền DNS ..
+ns_syncing=Cập nhật nameserver trong miền ..
+
 contacts_eaccount=Tài khoản không được tìm thấy!
 contacts_id=ID liên hệ
 contacts_name=Tên Liên lạc
@@ -393,6 +413,7 @@ contacts_add=Thêm liên hệ $1 mới.
 contacts_none=Không có liên hệ được liên kết với tài khoản đăng ký này.
 contacts_elist=Không thể liệt kê danh bạ : $1 
 contacts_title=Đăng ký liên hệ
+
 onecontact_header=Chi tiết liên hệ của nhà đăng ký cho $1 
 onecontact_err=Không thể lưu liên lạc
 onecontact_edelete=Xóa không thành công : $1 

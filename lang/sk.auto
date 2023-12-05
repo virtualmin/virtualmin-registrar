@@ -1,23 +1,23 @@
-feat_name=Registrácia domény DNS
-feat_losing=Doména DNS bude odhlásená
+feat_name=Registrácia domény
+feat_losing=Doména bude odregistrovaná
 feat_disabling=Doména DNS bude dočasne zakázaná
-feat_label=Registrovať doménu DNS?
-feat_label2=Zaregistrujte doménu DNS
+feat_label=Registrovať doménu?
+feat_label2=Zaregistrujte si doménu
 feat_edepend=Nenašiel sa žiadny účet registrátora, ktorý sa použije na vytvorenie domény
-feat_edepend2=Zaregistrovať sa môžu iba skutočné názvy domén DNS, napríklad <i>foo.com</i>
+feat_edepend2=Zaregistrovať sa dajú iba skutočné názvy domén ako <i>foo.com</i>
 feat_eclash=Doménu $1 nie je možné zaregistrovať : $2 
 feat_edns=Doménu nie je možné zaregistrovať, pokiaľ nie je povolená funkcia DNS
-feat_setup=Registrácia domény DNS s $1 ..
+feat_setup=Registrácia domény u $1 ..
 feat_failed=.. zlyhalo : $1 
 feat_setupdone=.. hotový. ID registrátora pre túto doménu je $1.
 feat_modifydons=.. hotový. ID nového registrátora pre túto doménu je $1 
-feat_delete=Zrušenie registrácie domény DNS s $1 ..
-feat_delete2=Zrušenie registrácie domény DNS.
-feat_modify1=Zrušenie registrácie starej domény DNS $1 s $2 ..
-feat_modify2=Opätovná registrácia novej domény DNS $1 s $2 ..
+feat_delete=Ruší sa registrácia domény s $1 ..
+feat_delete2=Ruší sa registrácia domény ..
+feat_modify1=Ruší sa registrácia starej domény $1 s $2 ..
+feat_modify2=Opätovná registrácia novej domény $1 s $2 ..
 feat_noderegister=.. zrušenie registrácie bolo v konfigurácii doplnku zakázané
-feat_modify=Zmena registrovanej domény DNS z $1 na $2 pomocou $3 ..
-feat_noaccount=Nenašli sa žiadne informácie o účte registra DNS!
+feat_modify=Zmena registrovanej domény z $1 na $2 s $3 ..
+feat_noaccount=Nenašli sa žiadne informácie o registračnom účte!
 feat_copy=Kopírujú sa kontakty z domény $1 ..
 feat_ecopy=.. nepodarilo sa načítať kontakty : $1 
 feat_nocopy=.. nikto nenašiel kópiu
@@ -27,6 +27,7 @@ feat_perioddef=Predvolené nastavenie registrátora
 feat_periodyears=leta
 feat_eperiod=Chýbajúce alebo neplatné obdobie registrácie v rokoch
 feat_setupalready=.. nájdená existujúca registrácia
+
 links_contact=Upraviť kontakty domény
 links_ns=Úpravy názvových serverov
 links_contactv=Zobraziť kontakty domény
@@ -34,7 +35,8 @@ links_rereg=Odpojiť doménu
 links_import=Priradiť doménu
 links_renew=Obnoviť doménu
 links_transfer=Prenos domény
-index_title=Registrátori domén DNS
+
+index_title=Registrátori domén
 index_registrar=registrátor
 index_desc=Popis účtu
 index_enabled=Povolené?
@@ -57,14 +59,16 @@ index_actvirts=Zoznam virtuálnych serverov
 index_msg=Virtuálne servery využívajúce účet registrátora $1 ..
 index_nonemsg=Nenašli sa žiadne virtuálne servery používajúce účet registrátora $1.
 index_listall=Zoznam všetkých registrovaných domén.
+
 type_rcom=Register.com
 type_gandi=Gandi.net (staré API)
 type_newgandi=Gandi.net (nové API)
 type_distribute=Distribute.IT
 type_namecheap=Namecheap
+
 edit_title1=Pridať účet registrátora
 edit_title2=Upraviť účet registrátora
-edit_header=Podrobnosti o registrátorskom účte DNS
+edit_header=Podrobnosti o účte registrátora
 edit_header2=Možnosti domény najvyššej úrovne
 edit_header3=Nové pokyny k účtu
 edit_egone=Účet už neexistuje!
@@ -82,6 +86,7 @@ edit_all=Všetky domény
 edit_suffixes=Uvedené TLD
 edit_delete=Remove
 edit_ecannot=Nemáte oprávnenie upravovať účty registrátorov
+
 save_err=Nepodarilo sa uložiť účet
 save_err2=Účet sa nepodarilo odstrániť
 save_edoms=Používajú ho nasledujúce domény Virtualmin : $1 
@@ -95,6 +100,7 @@ save_ens=Nepodarilo sa vyhľadať IP adresu pre nameserver '$1'
 save_ensip=Nameserver '$1' musí byť zadaný ako meno hostiteľa, nie ako IP adresa
 save_enss=Nezadali sa žiadne menné servery
 save_transfer=Tento účet sa použil na vytvorenie domén $1. <br> Vyberte účet registrátora, ktorý môže byť použitý na správu týchto domén :
+
 rcom_account=Prihlasovacie ID účtu
 rcom_pass=Heslo účtu
 rcom_eaccount=Chýbajúce alebo neplatné prihlasovacie ID
@@ -163,6 +169,7 @@ rcom_eccaddress=Chýba fakturačná adresa kreditnej karty
 rcom_ecczip=Chýba poštové smerovacie číslo pre fakturáciu kreditnej karty
 rcom_instructions=Ak sa chcete zaregistrovať na účte Register.com s prístupom k ich rozhraniu API, prejdite na svoju <a href='$1' target=_new'>stránku nového partnerského účtu</a> a vyplňte tam formulár. Po vytvorení účtu a prihlásení na ich webovú stránku budete musieť na kreditnú kartu pridať prostriedky, aby ste ho mohli použiť na registráciu domén.
 rcom_createinfo=Predtým, ako bude možné tento účet použiť, sa musí stať nasledovné: <br><ul> <li>IP adresa vášho systému musí byť na bielej listine zo zoznamu Register.com, čo môže trvať niekoľko hodín.<br> <li>Kredit musí byť pridaný do svoj účet, čo môžete urobiť na adrese<a href=http://www.rcomexpress.com/> http://www.rcomexpress.com/ </a>prihlásením sa pomocou používateľského mena a hesla, ktoré ste vybrali.<br > </ul>
+
 gandi_account=Prihlasovacie údaje účtu (napríklad <tt>XX5555-GANDI</tt>)
 gandi_pass=Heslo účtu
 gandi_contact=Kontaktné ID pre nové domény
@@ -186,6 +193,7 @@ gandi_apikey=Kľúč API
 gandi_etries=Operácia Gandi API sa nepodarilo dokončiť po $2 sekundách - konečný stav bol $1 
 gandi_ecreate=Chyba stavu vytvorenia : $1 
 gandi_eassoc=Kontakt $1 nemôže byť spojený s touto doménou
+
 distribute_account=Číslo účtu
 distribute_user=Používateľské meno účtu
 distribute_pass=Heslo účtu
@@ -203,6 +211,7 @@ distribute_edom=Chýbajúci alebo neplatný názov existujúcej domény, s ktor�
 distribute_edom2=Nepodarilo sa získať podrobnosti o existujúcej doméne : $1 
 distribute_ebase=Nepodarilo sa získať podrobnosti o doméne $1 
 distribute_eowner=Nepodarilo sa získať kontaktné ID vlastníka pre doménu $1 
+
 namecheap_user=Používateľské meno Namecheap
 namecheap_euser=Chýbajúce alebo neplatne vyzerajúce používateľské meno Namecheap
 namecheap_apikey=Kľúč API Namecheap
@@ -219,6 +228,7 @@ namecheap_enstwo=Namecheap vyžaduje, aby každá doména mala aspoň $1 nameser
 namecheap_instructions=Ak sa chcete zaregistrovať na účet v Namecheap, prejdite na jeho webovú stránku a <a href='$1' target=_new'>zaregistrujte sa na účet</a>. Vo svojom účte budete musieť povoliť prístup k rozhraniu API, ako je to dokumentované na stránke <a href='$2' target=_new>Namecheap API</a>.
 namecheap_etransfer=Prevod zlyhal po 5 minútach : $1 
 namecheap_etransfer2=Dokončenie prenosu sa nepodarilo po 5 minútach a nie sú k dispozícii žiadne informácie o stave
+
 delete_err1=Nepodarilo sa deaktivovať účty
 delete_err2=Nepodarilo sa povoliť účty
 delete_err3=Účty sa nepodarilo odstrániť
@@ -227,14 +237,16 @@ delete_title=Odstrániť účty
 delete_rusure=Naozaj chcete odstrániť vybraté účty $1 ? Stále budú existovať s registrátormi, ale Virtualmin ich už nebude môcť použiť.
 delete_ok=Áno, odstrániť ich
 delete_edoms=Účet $1 stále používajú nasledujúce domény Virtualmin : $2 
+
 list_title=Registrované domény
 list_dom=Doménové meno
 list_registrar=Meno registrátora
 list_account=Účet registrátora
 list_id=ID s registrátorom
-list_none=U žiadneho registrátora DNS zatiaľ neboli zaregistrované žiadne domény Virtualmin.
-list_none2=U tohto registrátora DNS zatiaľ neboli zaregistrované žiadne domény Virtualmin.
+list_none=Žiadne domény Virtualmin zatiaľ nie sú zaregistrované u žiadneho registrátora.
+list_none2=U tohto registrátora ešte nie sú zaregistrované žiadne domény Virtualmin.
 list_expiry=Dátum spotreby
+
 contact_err=Kontaktné údaje sa nepodarilo upraviť
 contact_ecannot=Nemáte oprávnenie upravovať kontakty pre túto doménu
 contact_edom=Nenašiel sa žiadny server Virtualmin pre $1 
@@ -284,6 +296,7 @@ contact_esave=Aktualizácia registrátora zlyhala : $1
 contact_createtab=Vytvárajte kontakty
 contact_selecttab=Vyberte kontakty
 contact_efind=Nenašiel sa žiadny kontakt s ID $1 
+
 import_title=Priradiť registráciu domény
 import_header=Podrobnosti o existujúcom registrátorovi domény
 import_ecannot=Nemáte povolenie priradiť domény
@@ -303,6 +316,7 @@ import_transfer=Prevod z iného registrátora?
 import_transferyes=Áno, s kľúčom
 import_renew=Obnoviť aj pri prenose?
 import_renewyes=Áno, pre
+
 transfer_title=Prevod registrácie domén
 transfer_header=Podrobnosti žiadosti o prevod
 transfer_account=Prevod na účet
@@ -313,12 +327,14 @@ transfer_ecannot=Nemáte povolenie na prevod domén
 transfer_transferring=Prevod od súčasného registrátora ..
 transfer_done=.. hotový. ID registrátora je $1.
 transfer_done2=Pred dokončením prenosu môžu byť potrebné ďalšie kroky u pôvodného registrátora a túto doménu možno <a href='$1'>importovať do Virtualmin</a>.
+
 dereg_err=Nepodarilo sa zrušiť priradenie domény
 dereg_ealready=Táto doména nie je spojená so žiadnym registrátorom
 dereg_title=Oddeliť registráciu domény
 dereg_rusure=Naozaj chcete odstrániť toto spojenie medzi touto doménou Virtualmin a jej registráciou s $1 ? Ak je odstránená vo Virtualmin, doména nebude odstránená z registrátora.
 dereg_ok=Dis-pridružená doména
 dereg_doing=Zrušenie priradenia registrácie domény k účtu $1 ..
+
 renew_title=Obnovte registráciu domény
 renew_err=Obnovenie zlyhalo
 renew_ecannot=Nemáte oprávnenie obnovovať registrácie
@@ -333,6 +349,7 @@ renew_doing=Obnovuje sa doména $1 s $2 na $3 rokov.
 renew_failed=.. obnovenie zlyhalo : $1 
 renew_done=.. obnovenie dokončené - kód od registrátora bol $1 
 renew_account=Obnovenie účtu
+
 create_title=Vytvoriť účet registrátora
 create_header=Podrobnosti o novom registračnom účte
 create_ecannot=Nemáte oprávnenie vytvárať nové účty
@@ -341,6 +358,7 @@ create_doing=Vytvorenie nového účtu s $1 ..
 create_done=.. úspešne vytvorené! Vaše ID účtu u registrátora je $1 
 create_warn=.. vytvorené, ale s upozorneniami: $2. Vaše ID účtu u registrátora je $1 
 create_failed=.. vytvorenie zlyhalo : $1 
+
 auto_err=Automatické obnovenie zlyhalo
 auto_ecannot=Nemáte oprávnenie na automatické obnovovanie
 auto_title=Automatické obnovenie domény
@@ -362,14 +380,15 @@ auto_eyears=Chýbajúce alebo nečíselné roky, ktoré sa majú obnoviť
 auto_eget=Nepodarilo sa získať platnosť : $1 
 auto_done=Obnovené na $1 roky
 auto_failed=Zlyhanie : $1 
-auto_results=Nasledujúce virtuálne servery boli automaticky obnovené ich domény DNS serverom Virtualmin :
+auto_results=Nasledujúce virtuálne servery majú svoje domény automaticky obnovené spoločnosťou Virtualmin :
 auto_raccount=Účet registrátora
 auto_rdom=Doménové meno
 auto_rmsg=Stav obnovenia
 auto_subject=Automatické obnovenie domény Virtualmin
 auto_warnmsg=Platnosť vyprší o $1 dní
 auto_wsubject=Oznámenie o uplynutí platnosti domény Virtualmin
-auto_wresults=Čoskoro vyprší platnosť platnosti nasledujúcich virtuálnych serverov :
+auto_wresults=Platnosť domén nasledujúcich virtuálnych serverov čoskoro vyprší :
+
 ns_err=Úpravy menných serverov zlyhalo
 ns_ecannot=Nemáte oprávnenie upravovať kontakty pre túto doménu
 ns_title=Úpravy názvových serverov
@@ -385,7 +404,8 @@ ns_eip=Nameserver '$1' je adresa IP, nie názov hostiteľa
 ns_ens=Nameserver '$1' sa nepodarilo rozlíšiť na IP adresu
 ns_reg=Aktualizácia nameserverov registrátorom ..
 ns_failed=.. zlyhalo : $1 
-ns_syncing=Aktualizácia menných serverov v doméne DNS ..
+ns_syncing=Aktualizácia menných serverov v doméne ..
+
 contacts_eaccount=Účet nebol nájdený!
 contacts_id=Kontaktné ID
 contacts_name=Kontaktné meno
@@ -393,6 +413,7 @@ contacts_add=Pridajte nový kontakt $1.
 contacts_none=S týmto účtom registrátora nie sú spojené žiadne kontakty.
 contacts_elist=Zoznam kontaktov sa nepodaril : $1 
 contacts_title=Kontakty registrátora
+
 onecontact_header=Kontaktné údaje registrátora pre $1 
 onecontact_err=Uloženie kontaktu zlyhalo
 onecontact_edelete=Odstránenie zlyhalo : $1 

@@ -1,23 +1,23 @@
-feat_name=Registro de domínio DNS
-feat_losing=O domínio DNS será cancelado o registro
+feat_name=Registro do Domínio
+feat_losing=O domínio será cancelado
 feat_disabling=O domínio DNS será desativado temporariamente
-feat_label=Registrar domínio DNS?
-feat_label2=Registrar domínio DNS
+feat_label=Registrar domínio?
+feat_label2=Registrar domínio
 feat_edepend=Nenhuma conta de registrador usada para criar o domínio foi encontrada
-feat_edepend2=Somente nomes de domínio DNS reais como <i>foo.com</i> podem ser registrados
+feat_edepend2=Somente nomes de domínio reais como <i>foo.com</i> podem ser registrados
 feat_eclash=O domínio $1 não pode ser registrado : $2 
 feat_edns=Um domínio não pode ser registrado, a menos que o recurso DNS esteja ativado
-feat_setup=Registrando domínio DNS com $1 ..
+feat_setup=Registrando domínio com $1 ..
 feat_failed=.. falhou : $1 
 feat_setupdone=.. feito. O ID do registrador para este domínio é $1.
 feat_modifydons=.. feito. O ID do novo registrador para este domínio é $1 
-feat_delete=Cancelando o registro do domínio DNS com $1 ..
-feat_delete2=Cancelando o registro do domínio DNS.
-feat_modify1=Cancelando o registro do domínio DNS antigo $1 com $2 ..
-feat_modify2=Registrando novamente o novo domínio DNS $1 com $2 ..
+feat_delete=Cancelando o registro do domínio com $1 ..
+feat_delete2=Cancelando o registro do domínio ..
+feat_modify1=Cancelando o registro do domínio antigo $1 com $2 ..
+feat_modify2=Registrando novamente o novo domínio $1 com $2 ..
 feat_noderegister=.. o cancelamento do registro foi desativado na configuração do plug-in
-feat_modify=Alterando o domínio DNS registrado de $1 para $2 com $3 ..
-feat_noaccount=Nenhuma informação da conta de registro DNS foi encontrada!
+feat_modify=Alterando o domínio registrado de $1 para $2 com $3 ..
+feat_noaccount=Nenhuma informação de registro da conta foi encontrada!
 feat_copy=Copiando contatos do domínio de $1 ..
 feat_ecopy=.. falha ao buscar contatos : $1 
 feat_nocopy=.. nenhum encontrado para copiar
@@ -27,6 +27,7 @@ feat_perioddef=Padrão do registrador
 feat_periodyears=anos
 feat_eperiod=Período de registro ausente ou inválido em anos
 feat_setupalready=.. registro existente encontrado
+
 links_contact=Editar contatos do domínio
 links_ns=Editar servidores de nomes
 links_contactv=Exibir contatos do domínio
@@ -34,7 +35,8 @@ links_rereg=Desassociar Domínio
 links_import=Domínio Associado
 links_renew=Renovar Domínio
 links_transfer=Transferir Domínio
-index_title=Registradores de domínio DNS
+
+index_title=Registradores de domínio
 index_registrar=Registrador
 index_desc=Descrição da conta
 index_enabled=Ativado?
@@ -57,14 +59,16 @@ index_actvirts=Listar servidores virtuais
 index_msg=Servidores virtuais usando a conta de registrador $1 ..
 index_nonemsg=Não foram encontrados servidores virtuais usando a conta de registrador $1.
 index_listall=Listar todos os domínios registrados.
+
 type_rcom=Register.com
 type_gandi=Gandi.net (API antiga)
 type_newgandi=Gandi.net (nova API)
 type_distribute=Distribute.IT
 type_namecheap=Namecheap
+
 edit_title1=Adicionar conta de registrador
 edit_title2=Editar conta de registrador
-edit_header=Detalhes da conta do registrador DNS
+edit_header=Detalhes da conta do registrador
 edit_header2=Opções de domínio de nível superior
 edit_header3=Novas instruções da conta
 edit_egone=A conta não existe mais!
@@ -82,6 +86,7 @@ edit_all=Todos os domínios
 edit_suffixes=TLDs listados
 edit_delete=Retirar
 edit_ecannot=Você não tem permissão para editar contas de registrador
+
 save_err=Falha ao salvar a conta
 save_err2=Falha ao remover a conta
 save_edoms=Está em uso pelos seguintes domínios do Virtualmin : $1 
@@ -95,6 +100,7 @@ save_ens=Falha ao procurar o endereço IP do servidor de nomes '$1'
 save_ensip=O servidor de nomes '$1' deve ser inserido como um nome de host, não um endereço IP
 save_enss=Nenhum servidor de nomes inserido
 save_transfer=Esta conta foi usada para criar $1 domínios. <br> Selecione a conta do registrador que pode ser usada para gerenciar esses domínios :
+
 rcom_account=ID de login da conta
 rcom_pass=Senha da conta
 rcom_eaccount=ID de login ausente ou inválido
@@ -163,6 +169,7 @@ rcom_eccaddress=Endereço de cobrança do cartão de crédito ausente
 rcom_ecczip=Código postal de cobrança do cartão de crédito ausente
 rcom_instructions=Para se inscrever em uma conta no Register.com com acesso à API, acesse a <a href='$1' target=_new'>nova página de conta de parceiro</a> e preencha o formulário lá. Depois de criar a conta e fazer login no site deles, você precisará adicionar fundos a ela usando um cartão de crédito antes que ela possa ser usada para registrar quaisquer domínios.
 rcom_createinfo=Antes que essa conta possa ser usada, o seguinte deve acontecer: <br><ul> <li>O endereço IP do seu sistema deve estar na lista de permissões do Register.com, o que pode levar várias horas.<br> <li>O crédito deve ser adicionado a sua conta, o que pode ser feito em<a href=http://www.rcomexpress.com/> http://www.rcomexpress.com/ </a>efetuando login com o nome de usuário e a senha que você selecionou.<br > </ul>
+
 gandi_account=Login da conta (como <tt>XX5555-GANDI</tt>)
 gandi_pass=Senha da conta
 gandi_contact=ID de contato para novos domínios
@@ -186,6 +193,7 @@ gandi_apikey=Chave API
 gandi_etries=Falha na operação da API Gandi após $2 segundos - o status final era $1 
 gandi_ecreate=Erro no status da criação : $1 
 gandi_eassoc=O contato $1 não pode ser associado a este domínio
+
 distribute_account=Número da conta
 distribute_user=Nome de usuário da conta
 distribute_pass=Senha da conta
@@ -203,6 +211,7 @@ distribute_edom=Nome de domínio existente ausente ou com aparência inválida p
 distribute_edom2=Falha ao obter detalhes do domínio existente : $1 
 distribute_ebase=Falha ao obter detalhes do domínio $1 
 distribute_eowner=Falha ao obter o ID do contato do proprietário do domínio $1 
+
 namecheap_user=Nome de usuário da Namecheap
 namecheap_euser=Nome de usuário Namecheap ausente ou com aparência inválida
 namecheap_apikey=Chave da API Namecheap
@@ -219,6 +228,7 @@ namecheap_enstwo=A Namecheap exige que cada domínio tenha pelo menos $1 servido
 namecheap_instructions=Para se inscrever em uma conta na Namecheap, acesse o site deles e <a href='$1' target=_new'>se inscreva em uma conta</a>. Você precisará habilitar o acesso à API em sua conta, conforme documentado na <a href='$2' target=_new>página da API da Namecheap</a>.
 namecheap_etransfer=Falha na conclusão da transferência após 5 minutos : $1 
 namecheap_etransfer2=A transferência falhou ao concluir após 5 minutos e nenhuma informação de status está disponível
+
 delete_err1=Falha ao desativar contas
 delete_err2=Falha ao ativar contas
 delete_err3=Falha ao remover contas
@@ -227,14 +237,16 @@ delete_title=Remover contas
 delete_rusure=Tem certeza de que deseja remover as $1 contas selecionadas? Eles ainda existirão com os registradores, mas não serão mais utilizáveis pelo Virtualmin.
 delete_ok=Sim, remova-os
 delete_edoms=A conta $1 ainda está em uso pelos seguintes domínios do Virtualmin : $2 
+
 list_title=Domínios registrados
 list_dom=Nome do domínio
 list_registrar=Nome do registrador
 list_account=Conta de registrador
 list_id=ID com registrador
-list_none=Ainda não foram registrados domínios Virtualmin em nenhum registrador de DNS.
-list_none2=Ainda não foram registrados domínios Virtualmin neste registrador de DNS.
+list_none=Nenhum domínio Virtualmin foi registrado em nenhum registrador ainda.
+list_none2=Nenhum domínio Virtualmin foi registrado com este registrador ainda.
 list_expiry=Data de validade
+
 contact_err=Falha ao editar os detalhes do contato
 contact_ecannot=Você não tem permissão para editar contatos para este domínio
 contact_edom=Nenhum servidor Virtualmin para $1 foi encontrado
@@ -284,6 +296,7 @@ contact_esave=Falha ao atualizar o registrador : $1
 contact_createtab=Criar contatos
 contact_selecttab=Selecionar contatos
 contact_efind=Nenhum contato com o ID $1 encontrado
+
 import_title=Registro de domínio associado
 import_header=Detalhes do registrador de domínio existente
 import_ecannot=Você não tem permissão para associar domínios
@@ -303,6 +316,7 @@ import_transfer=Transferir de outro registrador?
 import_transferyes=Sim, com chave
 import_renew=Também renovar ao transferir?
 import_renewyes=Sim para
+
 transfer_title=Transferir registro de domínio
 transfer_header=Detalhes da solicitação de transferência
 transfer_account=Transferir para a conta
@@ -313,12 +327,14 @@ transfer_ecannot=Você não tem permissão para transferir domínios
 transfer_transferring=Transferindo do registrador atual ..
 transfer_done=.. feito. O ID do registrador é $1.
 transfer_done2=Outras etapas podem ser necessárias no registrador original antes que a transferência seja concluída e esse domínio pode ser <a href='$1'>importado para o Virtualmin</a>.
+
 dereg_err=Falha ao desassociar o domínio
 dereg_ealready=Este domínio não está associado a nenhum registrador
 dereg_title=Registro de domínio desassociado
 dereg_rusure=Tem certeza de que deseja remover esta associação entre este domínio do Virtualmin e seu registro com $1 ? Se ele for excluído no Virtualmin, o domínio não será removido do registrador.
 dereg_ok=Domínio desassociado
 dereg_doing=Desassociando o registro de domínio com a conta $1 ..
+
 renew_title=Renovar registro de domínio
 renew_err=Falha na renovação
 renew_ecannot=Você não tem permissão para renovar registros
@@ -333,6 +349,7 @@ renew_doing=Renovando o domínio $1 com $2 por $3 anos.
 renew_failed=.. renovação falhou : $1 
 renew_done=.. renovação completa - o código do registrador era $1 
 renew_account=Renovando com a conta
+
 create_title=Criar conta de registrador
 create_header=Detalhes da nova conta de registrador
 create_ecannot=Você não tem permissão para criar novas contas
@@ -341,6 +358,7 @@ create_doing=Criando nova conta com $1 ..
 create_done=.. criado com sucesso! O ID da sua conta no registrador é $1 
 create_warn=.. criado, mas com avisos: $2. O ID da sua conta no registrador é $1 
 create_failed=.. criação falhou : $1 
+
 auto_err=Falha ao salvar a renovação automática
 auto_ecannot=Você não tem permissão para gerenciar a renovação automática
 auto_title=Renovação automática de domínio
@@ -362,14 +380,15 @@ auto_eyears=Anos ausentes ou não numéricos para renovação por
 auto_eget=Falha ao expirar : $1 
 auto_done=Renovado por $1 ano
 auto_failed=Falha : $1 
-auto_results=Os seguintes servidores virtuais tiveram seus domínios DNS renovados automaticamente pelo Virtualmin :
+auto_results=Os seguintes servidores virtuais tiveram seus domínios renovados automaticamente pela Virtualmin :
 auto_raccount=Conta de registrador
 auto_rdom=Nome do domínio
 auto_rmsg=Status de renovação
 auto_subject=Renovação automática de domínio do Virtualmin
 auto_warnmsg=Expirará em $1 dias
 auto_wsubject=Notificação de expiração de domínio do Virtualmin
-auto_wresults=Os seguintes servidores virtuais terão seus domínios DNS expirando em breve :
+auto_wresults=Os seguintes servidores virtuais terão seus domínios expirados em breve :
+
 ns_err=Falha ao editar servidores de nomes
 ns_ecannot=Você não tem permissão para editar contatos para este domínio
 ns_title=Editar servidores de nomes
@@ -385,7 +404,8 @@ ns_eip=O servidor de nomes '$1' é um endereço IP, não um nome de host
 ns_ens=O servidor de nomes '$1' não pôde ser resolvido para um endereço IP
 ns_reg=Atualizando servidores de nomes com o registrador ..
 ns_failed=.. falhou : $1 
-ns_syncing=Atualizando servidores de nomes no domínio DNS.
+ns_syncing=Atualizando servidores de nomes no domínio ..
+
 contacts_eaccount=Conta não encontrada!
 contacts_id=ID do contato
 contacts_name=Nome de contato
@@ -393,6 +413,7 @@ contacts_add=Adicione um novo contato $1.
 contacts_none=Nenhum contato está associado a esta conta de registrador.
 contacts_elist=Falha ao listar contatos : $1 
 contacts_title=Contatos do Registrador
+
 onecontact_header=Detalhes de contato do registrador para $1 
 onecontact_err=Falha ao salvar o contato
 onecontact_edelete=Falha na exclusão : $1 

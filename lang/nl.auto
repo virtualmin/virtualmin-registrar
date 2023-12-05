@@ -1,2 +1,25 @@
-feat_label2=DNS-domein registreren
+feat_name=Domeinregistratie
+feat_losing=Het domein wordt uitgeschreven
+feat_label=Domein registreren?
+feat_label2=Domein registreren
+feat_edepend2=Alleen echte domeinnamen zoals <i>foo.com</i> kunnen worden geregistreerd
+feat_setup=Domein registreren met $1 ..
+feat_delete=Domein uitschrijven met $1 ..
+feat_delete2=Domein uitschrijven ..
+feat_modify1=Oude domein $1 uitschrijven met $2 ..
+feat_modify2=Nieuw domein $1 opnieuw registreren met $2 ..
 feat_noderegister=.. uitschrijving is uitgeschakeld in de plugin configuratie
+feat_modify=Geregistreerd domein wijzigen van $1 naar $2 met $3 ..
+feat_noaccount=Er zijn geen registratie-accountgegevens gevonden!
+
+index_title=Domeinregistreerders
+
+edit_header=Accountgegevens van de registrar
+
+list_none=Er zijn nog geen Virtualmin-domeinen geregistreerd bij een registrar.
+list_none2=Er zijn nog geen Virtualmin-domeinen geregistreerd bij deze registrar.
+
+auto_results=De domeinen van de volgende virtuele servers zijn automatisch vernieuwd door Virtualmin :
+auto_wresults=De domeinen van de volgende virtuele servers verlopen binnenkort :
+
+ns_syncing=Naamservers in domein bijwerken ..

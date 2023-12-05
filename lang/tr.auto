@@ -1,23 +1,23 @@
-feat_name=DNS Alan Adı Kaydı
-feat_losing=DNS etki alanının kaydı kaldırılacak
+feat_name=Alan Adı Tescili
+feat_losing=Alan adının kaydı silinecek
 feat_disabling=DNS etki alanı geçici olarak devre dışı bırakılacak
-feat_label=DNS etki alanı kaydedilsin mi?
-feat_label2=DNS etki alanını kaydetme
+feat_label=Alan adı kaydedilsin mi?
+feat_label2=Alan adını kaydedin
 feat_edepend=Alan adını oluşturmak için kullanılan kayıt şirketi hesabı bulunamadı
-feat_edepend2=Yalnızca <i>foo.com</i> gibi gerçek DNS alan adları kaydedilebilir
+feat_edepend2=Yalnızca <i>foo.com</i> gibi gerçek alan adları kaydedilebilir
 feat_eclash=$1 alan adı kaydedilemiyor : $2 
 feat_edns=DNS özelliği etkinleştirilmedikçe bir etki alanı kaydedilemez
-feat_setup=DNS alan adı $1 ile kaydediliyor.
+feat_setup=Etki alanı $1 ile kaydediliyor ..
 feat_failed=.. başarısız oldu : $1 
 feat_setupdone=.. bitti. Bu alan adı için kayıt şirketinin kimliği $1.
 feat_modifydons=.. bitti. Bu alan adı için yeni kayıt kuruluşunun kimliği $1 
-feat_delete=$1 ile DNS etki alanının kaydı kaldırılıyor.
-feat_delete2=DNS etki alanının kaydı kaldırılıyor ..
-feat_modify1=$1 ile eski DNS etki alanının $2 ile silinmesi ..
-feat_modify2=$1 ile yeni DNS etki alanını $2 ile yeniden kaydettiriyoruz.
+feat_delete=$1 ile etki alanının kaydı siliniyor ..
+feat_delete2=Alan adı kaydı siliniyor ..
+feat_modify1=Eski $1 alan adının $2 ile kaydı siliniyor ..
+feat_modify2=Yeni $1 etki alanı $2 ile yeniden kaydediliyor ..
 feat_noderegister=.. eklenti yapılandırmasında kayıt iptal edildi
-feat_modify=Kayıtlı DNS etki alanını $3 ile $1 'den $2 'ye değiştirme.
-feat_noaccount=DNS kayıt hesabı bilgisi bulunamadı!
+feat_modify=Kayıtlı alan adını $3 ile $1'den $2'ye değiştirme ..
+feat_noaccount=Kayıtlı hesap bilgisi bulunamadı!
 feat_copy=$1 alan adından alan kişisi kopyalanıyor ..
 feat_ecopy=.. kişi getirilemedi : $1 
 feat_nocopy=.. kopyalanacak hiçbiri bulunamadı
@@ -27,6 +27,7 @@ feat_perioddef=Kayıt şirketi varsayılanı
 feat_periodyears=yıl
 feat_eperiod=Yıllar içinde eksik veya geçersiz kayıt süresi
 feat_setupalready=.. mevcut kayıt bulundu
+
 links_contact=Alan Adı Rehberini Düzenle
 links_ns=Ad Sunucularını Düzenle
 links_contactv=Alan Adı Rehberini Görüntüleme
@@ -34,7 +35,8 @@ links_rereg=Alan Adını İlişkilendirme
 links_import=İlişkili Alan Adı
 links_renew=Alan Adını Yenile
 links_transfer=Alan Adını Aktar
-index_title=DNS Alan Adı Kayıt Kuruluşları
+
+index_title=Alan Adı Kayıt Şirketleri
 index_registrar=kayıt memuru
 index_desc=Hesap Açıklaması
 index_enabled=Etkin mi?
@@ -57,14 +59,16 @@ index_actvirts=Sanal sunucuları listele
 index_msg=$1 kayıt şirketi hesabını kullanan sanal sunucular.
 index_nonemsg=$1 kayıt şirketi hesabını kullanan hiçbir Sanal sunucu bulunamadı.
 index_listall=Kayıtlı tüm alanları listeleyin.
+
 type_rcom=Register.com
 type_gandi=Gandi.net (Eski API)
 type_newgandi=Gandi.net (Yeni API)
 type_distribute=Distribute.IT
 type_namecheap=Namecheap
+
 edit_title1=Kayıt Şirketi Hesabı Ekle
 edit_title2=Kayıt Şirketi Hesabını Düzenle
-edit_header=DNS kayıt şirketi hesap bilgileri
+edit_header=Kayıt şirketi hesap ayrıntıları
 edit_header2=Üst düzey alan adı seçenekleri
 edit_header3=Yeni hesap talimatları
 edit_egone=Hesap artık mevcut değil!
@@ -82,6 +86,7 @@ edit_all=Tüm alanlar
 edit_suffixes=Listelenen TLD'ler
 edit_delete=Kaldırmak
 edit_ecannot=Kayıt şirketi hesaplarını düzenleme izniniz yok
+
 save_err=Hesap kaydedilemedi
 save_err2=Hesap kaldırılamadı
 save_edoms=Aşağıdaki Virtualmin etki alanları tarafından kullanılıyor : $1 
@@ -95,6 +100,7 @@ save_ens='$1' ad sunucusu için IP adresi aranamadı
 save_ensip=Ad sunucusu '$1' IP adresi değil ana bilgisayar adı olarak girilmelidir
 save_enss=İsim sunucusu girilmedi
 save_transfer=Bu hesap $1 alan adı oluşturmak için kullanıldı. <br> Bunun yerine bu alan adlarını yönetmek için kullanılabilecek kayıt şirketi hesabını seçin :
+
 rcom_account=Hesap giriş kimliği
 rcom_pass=Hesap şifresi
 rcom_eaccount=Eksik veya geçersiz giriş kimliği
@@ -163,6 +169,7 @@ rcom_eccaddress=Kredi kartı fatura adresi eksik
 rcom_ecczip=Kredi kartı faturalandırma posta kodu eksik
 rcom_instructions=Register.com'da API'larına erişimi olan bir hesaba kaydolmak için <a href='$1' target=_new'>yeni ortak hesabı sayfasına</a> gidin ve oradaki formu doldurun. Hesabı oluşturduktan ve web sitelerine giriş yaptıktan sonra, herhangi bir alan adını kaydettirmek için kullanılabilmesi için önce kredi kartı kullanarak para eklemeniz gerekir.
 rcom_createinfo=Bu hesabın kullanılabilmesi için aşağıdakilerin gerçekleşmesi gerekir: <br><ul> <li>Sisteminizin IP adresi, birkaç saat sürebilen Register.com tarafından beyaz listeye eklenmelidir.<br> <li>Kredi eklenmelidir seçtiğiniz kullanıcı adı ve şifreyle giriş yaparak<a href=http://www.rcomexpress.com/> http://www.rcomexpress.com/ </a>adresinden yapılabilen hesabınız. ></ul>
+
 gandi_account=Hesap girişi (<tt>XX5555-GANDI</tt> gibi)
 gandi_pass=Hesap şifresi
 gandi_contact=Yeni alan adları için iletişim kimliği
@@ -186,6 +193,7 @@ gandi_apikey=API anahtarı
 gandi_etries=Gandi API işlemi $2 saniye sonra tamamlanamadı - son durum $1 idi
 gandi_ecreate=Oluşturma durumu hatası : $1 
 gandi_eassoc=$1 kişisi bu alan adıyla ilişkilendirilemez
+
 distribute_account=Hesap numarası
 distribute_user=Hesap kullanıcı adı
 distribute_pass=Hesap şifresi
@@ -203,6 +211,7 @@ distribute_edom=Bağlanmak için eksik veya geçersiz görünen mevcut alan adı
 distribute_edom2=Mevcut alan adının ayrıntıları alınamadı : $1 
 distribute_ebase=$1 alan adı için ayrıntılar alınamadı
 distribute_eowner=$1 alan adı için sahip iletişim kimliği alınamadı
+
 namecheap_user=Namecheap kullanıcı adı
 namecheap_euser=Eksik veya geçersiz görünen Namecheap kullanıcı adı
 namecheap_apikey=Namecheap API anahtarı
@@ -219,6 +228,7 @@ namecheap_enstwo=Namecheap, her alan adında en az $1 ad sunucusu olmasını ger
 namecheap_instructions=Namecheap ile bir hesaba kaydolmak için web sitelerine gidin ve <a href='$1' target=_new'>bir hesaba kaydolun</a>. <a href='$2' target=_new>Namecheap API sayfasında</a> belgelendiği gibi hesabınızda API erişimini etkinleştirmeniz gerekir.
 namecheap_etransfer=Aktarım 5 dakika sonra tamamlanamadı : $1 
 namecheap_etransfer2=Aktarım 5 dakika sonra tamamlanamadı ve durum bilgisi yok
+
 delete_err1=Hesaplar devre dışı bırakılamadı
 delete_err2=Hesaplar etkinleştirilemedi
 delete_err3=Hesaplar kaldırılamadı
@@ -227,14 +237,16 @@ delete_title=Hesapları Kaldır
 delete_rusure=Seçilen $1 hesabı kaldırmak istediğinizden emin misiniz? Kayıt şirketlerinde hala var olacaklar, ancak Virtualmin tarafından artık kullanılamayacaklar.
 delete_ok=Evet, Kaldır
 delete_edoms=$1 hesabı hala aşağıdaki Virtualmin etki alanları tarafından kullanılıyor : $2 
+
 list_title=Kayıtlı Etki Alanları
 list_dom=Alan adı
 list_registrar=Kayıt şirketi adı
 list_account=Kayıt şirketi hesabı
 list_id=Kayıt şirketi kimliği
-list_none=Henüz hiçbir DNS kayıt kuruluşuna kayıtlı Virtualmin alanı yok.
-list_none2=Bu DNS kayıt kuruluşuna henüz hiç Virtualmin alanı kaydedilmedi.
+list_none=Henüz herhangi bir kayıt kuruluşuna kayıtlı Virtualmin alanı yok.
+list_none2=Bu kayıt kuruluşuna henüz hiçbir Virtualmin alanı kaydedilmedi.
 list_expiry=Son kullanma tarihi
+
 contact_err=Kişi ayrıntıları düzenlenemedi
 contact_ecannot=Bu alan adı için kişileri düzenleme izniniz yok
 contact_edom=$1 için Virtualmin sunucusu bulunamadı
@@ -284,6 +296,7 @@ contact_esave=Kayıt şirketi güncellenemedi : $1
 contact_createtab=Kişi oluştur
 contact_selecttab=Kişileri seçin
 contact_efind=$1 kimliğine sahip kişi bulunamadı
+
 import_title=Ortak Alan Adı Kaydı
 import_header=Mevcut alan adı kayıt kuruluşunun ayrıntıları
 import_ecannot=Alan adlarını ilişkilendirme izniniz yok
@@ -303,6 +316,7 @@ import_transfer=Başka bir kayıt kuruluşundan transfer?
 import_transferyes=Evet, tuşu ile
 import_renew=Aktarırken de yenile?
 import_renewyes=Evet,
+
 transfer_title=Alan Adı Kaydını Aktar
 transfer_header=Transfer talebinin ayrıntıları
 transfer_account=Hesaba aktar
@@ -313,12 +327,14 @@ transfer_ecannot=Alan adlarını transfer etme izniniz yok
 transfer_transferring=Mevcut kayıt kuruluşundan aktarma ..
 transfer_done=.. bitti. Kayıt şirketinin kimliği $1.
 transfer_done2=Aktarım tamamlanmadan önce orijinal kayıt kuruluşunda başka adımlar gerekebilir ve bu alan adı <a href='$1'>Virtualmin'e aktarılabilir</a>.
+
 dereg_err=Alan adı ilişkilendirilemedi
 dereg_ealready=Bu alan adı herhangi bir kayıt kuruluşuyla ilişkili değil
 dereg_title=Alan Adı Kaydının İlişkilendirilmesi
 dereg_rusure=Bu Virtualmin etki alanı ile $1 ile kaydı arasındaki bu ilişkiyi kaldırmak istediğinizden emin misiniz? Virtualmin'de silinirse, alan adı kayıt kuruluşundan kaldırılmaz.
 dereg_ok=Etki Alanını Dağıt
 dereg_doing=Alan adı kaydını $1 hesabıyla ilişkilendirmeme.
+
 renew_title=Alan Adı Kaydını Yenile
 renew_err=Yenileme başarısız oldu
 renew_ecannot=Kayıtları yenileme izniniz yok
@@ -333,6 +349,7 @@ renew_doing=$3 alan adı $1 ile $2 ile yenileniyor ..
 renew_failed=.. yenileme başarısız oldu : $1 
 renew_done=.. yenileme tamamlandı - kayıt kuruluşundan kod $1 idi
 renew_account=Hesapla yenileme
+
 create_title=Kayıt Şirketi Hesabı Oluşturun
 create_header=Yeni kayıt şirketi hesap bilgileri
 create_ecannot=Yeni hesap oluşturmanıza izin verilmiyor
@@ -341,6 +358,7 @@ create_doing=$1 ile yeni hesap oluşturuluyor ..
 create_done=.. başarıyla oluşturuldu! Kayıt şirketi ile hesap kimliğiniz $1 
 create_warn=.. ancak uyarılarla oluşturuldu: $2. Kayıt şirketi ile hesap kimliğiniz $1 
 create_failed=.. oluşturma başarısız : $1 
+
 auto_err=Otomatik yenileme kaydedilemedi
 auto_ecannot=Otomatik yenilemeyi yönetme izniniz yok
 auto_title=Otomatik Alan Adı Yenileme
@@ -362,14 +380,15 @@ auto_eyears=Yenilemek için eksik veya sayısal olmayan yıllar
 auto_eget=Süre sonu alınamadı : $1 
 auto_done=$1 yıl boyunca yenilendi
 auto_failed=Başarısız : $1 
-auto_results=Aşağıdaki sanal sunucular DNS alan adlarını Virtualmin tarafından otomatik olarak yeniledi :
+auto_results=Aşağıdaki sanal sunucuların etki alanları Virtualmin tarafından otomatik olarak yenilenmiştir :
 auto_raccount=Kayıt şirketi hesabı
 auto_rdom=Alan adı
 auto_rmsg=Yenileme durumu
 auto_subject=Virtualmin otomatik alan adı yenilemesi
 auto_warnmsg=Süresi $1 gün içinde dolacak
 auto_wsubject=Virtualmin alanın sona erme bildirimi
-auto_wresults=Aşağıdaki sanal sunucuların DNS etki alanları yakında sona erecek :
+auto_wresults=Aşağıdaki sanal sunucuların etki alanlarının süresi yakında dolacak :
+
 ns_err=Ad sunucuları düzenlenemedi
 ns_ecannot=Bu alan adı için kişileri düzenleme izniniz yok
 ns_title=Ad Sunucularını Düzenle
@@ -385,7 +404,8 @@ ns_eip=Ad sunucusu '$1' bir ana bilgisayar adı değil, bir IP adresidir
 ns_ens='$1' ad sunucusu bir IP adresine çözümlenemedi
 ns_reg=Kayıt sunucularıyla ad sunucuları güncelleniyor.
 ns_failed=.. başarısız oldu : $1 
-ns_syncing=DNS etki alanındaki ad sunucuları güncelleniyor.
+ns_syncing=Etki alanındaki ad sunucuları güncelleniyor ..
+
 contacts_eaccount=Hesap bulunamadı!
 contacts_id=Kişi Kimliği
 contacts_name=Kişi adı
@@ -393,6 +413,7 @@ contacts_add=Yeni bir $1 kişi ekle.
 contacts_none=Bu kayıt şirketi hesabıyla ilişkilendirilmiş kişi yok.
 contacts_elist=Kişiler listelenemedi : $1 
 contacts_title=Kayıt Şirketi Kişileri
+
 onecontact_header=$1 için kayıt şirketi iletişim bilgileri
 onecontact_err=Kişi kaydedilemedi
 onecontact_edelete=Silme başarısız oldu : $1 

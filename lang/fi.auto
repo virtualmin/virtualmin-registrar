@@ -1,23 +1,23 @@
-feat_name=DNS-verkkotunnuksen rekisteröinti
-feat_losing=DNS-verkkotunnus poistetaan rekisteröinnistä
+feat_name=Verkkotunnuksen rekisteröinti
+feat_losing=Verkkotunnuksen rekisteröinti poistetaan
 feat_disabling=DNS-verkkotunnus poistetaan väliaikaisesti
-feat_label=Rekisteröidy DNS-verkkotunnus?
-feat_label2=Rekisteröi DNS-verkkotunnus
+feat_label=Rekisteröi verkkotunnus?
+feat_label2=Rekisteröi verkkotunnus
 feat_edepend=Verkkotunnuksen luomiseen käytettyä rekisteröintitiliä ei löytynyt
-feat_edepend2=Vain oikeita DNS-verkkotunnuksia, kuten <i>foo.com</i>, voidaan rekisteröidä
+feat_edepend2=Vain oikeita verkkotunnuksia, kuten <i>foo.com</i>, voidaan rekisteröidä
 feat_eclash=Verkkotunnusta $1 ei voida rekisteröidä : $2 
 feat_edns=Verkkotunnusta ei voi rekisteröidä, ellei DNS-ominaisuus ole käytössä
-feat_setup=DNS-verkkotunnuksen rekisteröiminen $1 : llä.
+feat_setup=Rekisteröidään verkkotunnusta $1 ..
 feat_failed=.. epäonnistui : $1 
 feat_setupdone=.. valmis. Tämän verkkotunnuksen rekisteröijän tunnus on $1.
 feat_modifydons=.. valmis. Tämän verkkotunnuksen uuden rekisterinpitäjän tunnus on $1 
-feat_delete=Poista DNS-verkkotunnus rekisteröinnistä $1 ..
-feat_delete2=DNS-verkkotunnuksen rekisteröinti
-feat_modify1=Vanhan DNS-verkkotunnuksen $1 rekisteröinti rekisteröidään $2 : lla.
-feat_modify2=Uuden DNS-verkkotunnuksen $1 rekisteröiminen uudelleen nimellä $2.
+feat_delete=Peruutetaan verkkotunnuksen rekisteröintiä $1:lle ..
+feat_delete2=Verkkotunnuksen rekisteröintiä poistetaan ..
+feat_modify1=Poistetaan vanhan verkkotunnuksen $1 rekisteröintiä $2:lle ..
+feat_modify2=Rekisteröidään uudelleen uusi verkkotunnus $1 osoitteeseen $2 ..
 feat_noderegister=.. rekisteröinnin poistaminen on poistettu käytöstä laajennuksen kokoonpanossa
-feat_modify=Rekisteröidyn DNS-verkkotunnuksen muuttaminen $1 : stä $2 : ksi $3 : lla ..
-feat_noaccount=DNS-rekisteritilin tietoja ei löytynyt!
+feat_modify=Muutetaan rekisteröity verkkotunnus $1:stä $2:een $3:lla ..
+feat_noaccount=Rekisterin tilitietoja ei löytynyt!
 feat_copy=Kopioidaan verkkotunnuksen yhteystietoja $1 : stä ..
 feat_ecopy=.. kontaktien nouto epäonnistui : $1 
 feat_nocopy=.. kukaan ei löytänyt kopioimaan
@@ -27,6 +27,7 @@ feat_perioddef=Rekisterinpitäjän oletus
 feat_periodyears=vuotta
 feat_eperiod=Puuttuva tai virheellinen rekisteröintijakso vuosina
 feat_setupalready=.. olemassa oleva rekisteröinti löytyi
+
 links_contact=Muokkaa verkkotunnuksen yhteystietoja
 links_ns=Muokkaa nimipalvelimia
 links_contactv=Näytä verkkotunnuksen yhteystiedot
@@ -34,7 +35,8 @@ links_rereg=Yhdistä verkkotunnus
 links_import=Yhdistetty toimialue
 links_renew=Uusi verkkotunnus
 links_transfer=Siirrä verkkotunnus
-index_title=DNS-verkkotunnuksen rekisteröijät
+
+index_title=Verkkotunnusten rekisteröijät
 index_registrar=Kirjaaja
 index_desc=Tilin kuvaus
 index_enabled=Käytössä?
@@ -57,14 +59,16 @@ index_actvirts=Lista virtuaalipalvelimet
 index_msg=Rekisterinpitäjätiliä $1 käyttävät virtuaalipalvelimet.
 index_nonemsg=Rekisterinpitäjätiliä $1 käyttäviä virtuaalipalvelimia ei löytynyt.
 index_listall=Lista kaikki rekisteröidyt verkkotunnukset.
+
 type_rcom=Register.com
 type_gandi=Gandi.net (vanha sovellusliittymä)
 type_newgandi=Gandi.net (uusi sovellusliittymä)
 type_distribute=Distribute.IT
 type_namecheap=namecheap
+
 edit_title1=Lisää rekisteröijän tili
 edit_title2=Muokkaa kirjaajatiliä
-edit_header=DNS-rekisteröijän tilitiedot
+edit_header=Rekisterinpitäjän tilitiedot
 edit_header2=Ylätason verkkotunnuksen vaihtoehdot
 edit_header3=Uudet tiliohjeet
 edit_egone=Tiliä ei enää ole!
@@ -82,6 +86,7 @@ edit_all=Kaikki verkkotunnukset
 edit_suffixes=Listattu TLD: t
 edit_delete=Poista
 edit_ecannot=Et voi muokata rekisteröintitilejä
+
 save_err=Tilin tallentaminen epäonnistui
 save_err2=Tilin poistaminen epäonnistui
 save_edoms=Sitä käytetään seuraavissa Virtualmin-verkkotunnuksissa : $1 
@@ -95,6 +100,7 @@ save_ens=Nimipalvelimen '$1' IP-osoitteen haku epäonnistui
 save_ensip=Nimipalvelin '$1' on annettava isäntänimänä, ei IP-osoitteena
 save_enss=Nimipalvelimia ei annettu
 save_transfer=Tätä tiliä käytettiin luomaan $1 verkkotunnuksia. <br> Valitse rekisteröintitili, jota voidaan käyttää näiden verkkotunnusten hallintaan :
+
 rcom_account=Tilin kirjautumistunnus
 rcom_pass=Tilin salasana
 rcom_eaccount=Puuttuva tai virheellinen kirjautumistunnus
@@ -163,6 +169,7 @@ rcom_eccaddress=Puuttuu luottokorttilaskutusosoite
 rcom_ecczip=Puuttuu luottokorttilaskutus postinumero
 rcom_instructions=Jos haluat kirjautua tilille Register.com-sivustolla, jolla on pääsy heidän sovellusliittymään, siirry hänen <a href='$1' target=_new'>uuden kumppanitilin sivulle</a> ja täytä lomake siellä. Kun olet luonut tilin ja kirjautunut sisään heidän verkkosivustoilleen, sinun on lisättävä siihen varoja luottokortilla, ennen kuin sitä voidaan käyttää verkkotunnusten rekisteröintiin.
 rcom_createinfo=Ennen kuin tätä tiliä voidaan käyttää, seuraavien on tapahduttava: <br><ul> <li>Register.com on sisällytettävä järjestelmän IP-osoitteeseen valkoisella listalla, mikä voi viedä useita tunteja.<br> <li>Luotto on lisättävä tilisi, joka voidaan tehdä osoitteessa<a href=http://www.rcomexpress.com/> http://www.rcomexpress.com/ </a>kirjautumalla sisään valitsemallasi käyttäjänimellä ja salasanalla. ></ul>
+
 gandi_account=Tilin kirjautuminen (kuten <tt>XX5555-GANDI</tt>)
 gandi_pass=Tilin salasana
 gandi_contact=Uusien verkkotunnusten yhteystiedot
@@ -186,6 +193,7 @@ gandi_apikey=API-avain
 gandi_etries=Gandi API -operaatio epäonnistui $2 sekunnin kuluttua - lopullinen tila oli $1 
 gandi_ecreate=Luomisen tilan virhe : $1 
 gandi_eassoc=Yhteyttä $1 ei voida liittää tähän verkkotunnukseen
+
 distribute_account=Tilinumero
 distribute_user=Tilin käyttäjänimi
 distribute_pass=Tilin salasana
@@ -203,6 +211,7 @@ distribute_edom=Puuttuva tai virheellisen näköinen olemassa oleva verkkotunnus
 distribute_edom2=Olemassa olevan verkkotunnuksen tietojen hankkiminen epäonnistui : $1 
 distribute_ebase=Verkkotunnuksen $1 yksityiskohtien hakeminen epäonnistui
 distribute_eowner=Verkkotunnuksen $1 omistajan yhteystunnusta ei onnistunut saamaan
+
 namecheap_user=Namecheap-käyttäjänimi
 namecheap_euser=Puuttuva tai virheellisen näköinen Namecheap-käyttäjänimi
 namecheap_apikey=Namecheap-API-avain
@@ -219,6 +228,7 @@ namecheap_enstwo=Namecheap vaatii, että jokaisella verkkotunnuksella on vähint
 namecheap_instructions=Jos haluat kirjautua Namecheap-tilille, siirry hänen verkkosivustolleen ja <a href='$1' target=_new'>rekisteröidä tiliä</a>. Sinun on sallittava sovellusliittymän käyttö tililläsi, kuten <a href='$2' target=_new>Namecheap-sovellusliittymäsivulla</a> on dokumentoitu.
 namecheap_etransfer=Siirto epäonnistui 5 minuutin kuluttua : $1 
 namecheap_etransfer2=Siirto epäonnistui 5 minuutin kuluttua, eikä tilaa koskevia tietoja ole saatavana
+
 delete_err1=Tilien poistaminen epäonnistui
 delete_err2=Tilien käyttöönotto epäonnistui
 delete_err3=Tilien poistaminen epäonnistui
@@ -227,14 +237,16 @@ delete_title=Poista tilit
 delete_rusure=Haluatko varmasti poistaa valitut $1 tilit? Ne ovat edelleen olemassa rekisterinpitäjien kanssa, mutta Virtualmin ei enää voi niitä käyttää.
 delete_ok=Kyllä, poista ne
 delete_edoms=Tiliä $1 käytetään edelleen seuraavissa Virtualmin-verkkotunnuksissa : $2 
+
 list_title=Rekisteröidyt verkkotunnukset
 list_dom=Verkkotunnus
 list_registrar=Rekisterinpitäjän nimi
 list_account=Rekisterinpitäjän tili
 list_id=Rekisteröijän henkilöllisyystodistus
-list_none=Mikään DNS-rekisteröijä ei ole vielä rekisteröinyt Virtualmin-verkkotunnuksia.
-list_none2=Tätä DNS-rekisteröijää ei ole vielä rekisteröity Virtualmin-verkkotunnuksia.
+list_none=Virtualmin-verkkotunnuksia ei ole vielä rekisteröity minkään rekisteröijän toimesta.
+list_none2=Tällä rekisteröijällä ei ole vielä rekisteröity Virtualmin-verkkotunnuksia.
 list_expiry=Päättymispäivä
+
 contact_err=Yhteystietojen muokkaaminen epäonnistui
 contact_ecannot=Et voi muokata tämän verkkotunnuksen yhteystietoja
 contact_edom=$1 : n Virtualmin-palvelinta ei löytynyt
@@ -284,6 +296,7 @@ contact_esave=Rekisterinpitäjän päivitys epäonnistui : $1
 contact_createtab=Luo yhteystietoja
 contact_selecttab=Valitse yhteystiedot
 contact_efind=Yhteyttä tunnuksella $1 ei löydy
+
 import_title=Yhdistä verkkotunnuksen rekisteröinti
 import_header=Tiedot nykyisestä verkkotunnuksen rekisteröijästä
 import_ecannot=Et voi yhdistää verkkotunnuksia
@@ -303,6 +316,7 @@ import_transfer=Siirto toiselta rekisterinpitäjältä?
 import_transferyes=Kyllä, avaimella
 import_renew=Uusitaan myös siirtäessäsi?
 import_renewyes=Kyllä
+
 transfer_title=Siirrä verkkotunnuksen rekisteröinti
 transfer_header=Tiedot siirtopyynnöstä
 transfer_account=Siirrä tilille
@@ -313,12 +327,14 @@ transfer_ecannot=Et voi siirtää verkkotunnuksia
 transfer_transferring=Siirtyminen nykyisestä rekisterinpitäjästä ..
 transfer_done=.. valmis. Rekisterinpitäjän tunnus on $1.
 transfer_done2=Alkuperäisessä rekisterinpitäjässä voidaan tarvita muita vaiheita ennen siirron valmistumista, ja tämä verkkotunnus voidaan <a href='$1'>tuoda Virtualminiin</a>.
+
 dereg_err=Verkkotunnuksen yhdistäminen epäonnistui
 dereg_ealready=Tätä verkkotunnusta ei liitetä mihinkään rekisterinpitäjään
 dereg_title=Yhdistä verkkotunnuksen rekisteröinti
 dereg_rusure=Haluatko varmasti poistaa tämän yhteyden tämän Virtualmin-verkkotunnuksen ja sen rekisteröinnin välillä $1 ? Jos se poistetaan Virtualminista, verkkotunnusta ei poisteta rekisterinpitäjästä.
 dereg_ok=Yhdistä verkkotunnus
 dereg_doing=Verkkotunnuksen rekisteröinnin purkaminen tiliin $1.
+
 renew_title=Uusi verkkotunnuksen rekisteröinti
 renew_err=Uusiminen epäonnistui
 renew_ecannot=Et voi uusia rekisteröintejä
@@ -333,6 +349,7 @@ renew_doing=Verkkotunnuksen $1 uusiminen $2 : lla $3 vuotta ..
 renew_failed=.. uusinta epäonnistui : $1 
 renew_done=.. uusinta valmis - rekisterinpitäjän koodi oli $1 
 renew_account=Uusiminen tilillä
+
 create_title=Luo kirjaajatili
 create_header=Uudet rekisteröijän tilitiedot
 create_ecannot=Et voi luoda uusia tilejä
@@ -341,6 +358,7 @@ create_doing=Luodaan uusi tili tilillä $1 ..
 create_done=.. luotu onnistuneesti! Tilitunnuksesi rekisterinpitäjässä on $1 
 create_warn=.. luotu, mutta varoituksin: $2. Tilitunnuksesi rekisterinpitäjässä on $1 
 create_failed=.. luominen epäonnistui : $1 
+
 auto_err=Automaattisen uusinnan tallennus epäonnistui
 auto_ecannot=Et voi hallita automaattista uusimista
 auto_title=Automaattinen verkkotunnuksen uusiminen
@@ -362,14 +380,15 @@ auto_eyears=Puuttuvat tai muut kuin numeroluvut uusittavaksi vuodeksi
 auto_eget=Vanheneminen epäonnistui : $1 
 auto_done=Uusittu $1 vuodeksi
 auto_failed=Epäonnistui : $1 
-auto_results=Seuraavien virtuaalipalvelimien DNS-verkkotunnukset on uusittu automaattisesti Virtualmin :
+auto_results=Virtualmin on uusinut automaattisesti seuraavien virtuaalipalvelimien verkkotunnukset :
 auto_raccount=Rekisterinpitäjän tili
 auto_rdom=Verkkotunnus
 auto_rmsg=Uusimistila
 auto_subject=Virtualmin automaattinen verkkotunnuksen uusiminen
 auto_warnmsg=Vanhenee $1 päivässä
 auto_wsubject=Virtualmin-verkkotunnuksen vanhenemisilmoitus
-auto_wresults=Seuraavien virtuaalipalvelimien DNS-verkkotunnukset vanhenevat pian :
+auto_wresults=Seuraavien virtuaalipalvelimien verkkotunnukset vanhenevat pian :
+
 ns_err=Nimipalvelimien muokkaaminen epäonnistui
 ns_ecannot=Et voi muokata tämän verkkotunnuksen yhteystietoja
 ns_title=Muokkaa nimipalvelimia
@@ -385,7 +404,8 @@ ns_eip=Nimipalvelin '$1' on IP-osoite, ei isäntänimi
 ns_ens=Nimipalvelinta '$1' ei voitu selvittää IP-osoitteeksi
 ns_reg=Päivitetään nimipalvelimia rekisterinpitäjällä ..
 ns_failed=.. epäonnistui : $1 
-ns_syncing=Päivitetään nimipalvelimia DNS-verkkotunnuksessa ..
+ns_syncing=Päivitetään verkkotunnuksen nimipalvelimia ..
+
 contacts_eaccount=Tiliä ei löytynyt!
 contacts_id=Yhteystiedot
 contacts_name=Yhteyshenkilön nimi
@@ -393,6 +413,7 @@ contacts_add=Lisää uusi $1 yhteystieto.
 contacts_none=Tähän rekisteröintitiliin ei ole liitetty yhteystietoja.
 contacts_elist=Yhteystietojen luettelointi epäonnistui : $1 
 contacts_title=Rekisterinpitäjän yhteystiedot
+
 onecontact_header=Rekisterinpitäjän yhteystiedot $1 : lle
 onecontact_err=Yhteyden tallentaminen epäonnistui
 onecontact_edelete=Poisto epäonnistui : $1 

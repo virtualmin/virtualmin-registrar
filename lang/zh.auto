@@ -1,23 +1,23 @@
-feat_name=DNS域注册
-feat_losing=DNS域将被注销
+feat_name=域名注册
+feat_losing=该域名将被取消注册
 feat_disabling=DNS域将被暂时禁用
-feat_label=注册DNS域？
-feat_label2=注册DNS域
+feat_label=注册域名？
+feat_label2=注册域名
 feat_edepend=找不到用于创建域的注册商帐户
-feat_edepend2=只能注册真实的DNS域名，例如<i>foo.com</i>
+feat_edepend2=只能注册<i>foo.com</i>等真实域名
 feat_eclash=域 $1无法注册： $2
 feat_edns=除非启用DNS功能，否则无法注册域
-feat_setup=向 $1..注册DNS域。
+feat_setup=正在向 $1 注册域 ..
 feat_failed=..失败： $1
 feat_setupdone=..完成。该域的注册商ID为 $1。
 feat_modifydons=..完成。该域的新注册商ID为 $1
-feat_delete=用 $1..注销DNS域。
-feat_delete2=注销DNS域 ..
-feat_modify1=用 $2..注销旧的DNS域 $1。
-feat_modify2=用 $2..重新注册新的DNS域 $1。
+feat_delete=正在取消注册域 $1 ..
+feat_delete2=注销域名 ..
+feat_modify1=正在取消注册旧域 $1 与 $2 ..
+feat_modify2=正在向 $2 重新注册新域 $1 ..
 feat_noderegister=..取消注册已在插件配置中禁用
-feat_modify=使用 $3..将注册的DNS域从 $1更改为 $2。
-feat_noaccount=找不到DNS注册帐户信息！
+feat_modify=正在将注册域从 $1 更改为 $2，并使用 $3 ..
+feat_noaccount=没有找到注册账号信息！
 feat_copy=从 $1..复制域联系人
 feat_ecopy=..无法获取联系人： $1
 feat_nocopy=..找不到要复制的
@@ -27,6 +27,7 @@ feat_perioddef=注册服务商默认
 feat_periodyears=年份
 feat_eperiod=缺少注册年份或年份无效
 feat_setupalready=..找到现有注册
+
 links_contact=编辑域联系人
 links_ns=编辑名称服务器
 links_contactv=查看域联系人
@@ -34,7 +35,8 @@ links_rereg=解除关联域
 links_import=关联域
 links_renew=续订网域
 links_transfer=转移域
-index_title=DNS域注册商
+
+index_title=域名注册商
 index_registrar=登记员
 index_desc=帐户说明
 index_enabled=已启用？
@@ -57,14 +59,16 @@ index_actvirts=列出虚拟服务器
 index_msg=使用注册帐户 $1..的虚拟服务器
 index_nonemsg=找不到使用注册器帐户 $1的虚拟服务器。
 index_listall=列出所有注册的域。
+
 type_rcom=Register.com
 type_gandi=Gandi.net（旧API）
 type_newgandi=Gandi.net（新API）
 type_distribute=发行IT
 type_namecheap=便宜货
+
 edit_title1=添加注册商帐户
 edit_title2=编辑注册商帐户
-edit_header=DNS注册商帐户详细信息
+edit_header=注册商帐户详细信息
 edit_header2=顶级域选项
 edit_header3=新帐户说明
 edit_egone=帐户已不存在！
@@ -82,6 +86,7 @@ edit_all=所有领域
 edit_suffixes=列出的顶级域名
 edit_delete=去掉
 edit_ecannot=您无权编辑注册商帐户
+
 save_err=无法保存帐户
 save_err2=无法删除帐户
 save_edoms=以下Virtualmin域正在使用它： $1
@@ -95,6 +100,7 @@ save_ens=查找名称服务器“$1”的IP地址失败
 save_ensip=名称服务器'$1'必须作为主机名而不是IP地址输入
 save_enss=没有输入名称服务器
 save_transfer=该帐户用于创建 $1个域。<br>请选择可用于管理这些域的注册商帐户：
+
 rcom_account=帐户登录ID
 rcom_pass=户口密码
 rcom_eaccount=缺少或无效的登录ID
@@ -163,6 +169,7 @@ rcom_eccaddress=信用卡帐单地址遗失
 rcom_ecczip=信用卡帐单邮递区号遗失
 rcom_instructions=要在Register.com上注册有权访问其API的帐户，请转到其<a href='$1' target=_new'>新合作伙伴帐户页面</a>，并在此处填写表格。创建帐户并登录其网站后，您需要使用信用卡向其添加资金，然后才能用于注册任何域。
 rcom_createinfo=在使用此帐户之前，必须先进行以下操作：<br><ul> <li>您的系统的IP地址必须由Register.com列入白名单，这可能需要几个小时。<br> <li>必须将信用添加您的帐户，可以使用您选择的用户名和密码登录<a href=http://www.rcomexpress.com/> http://www.rcomexpress.com/ </a>。<br > </ul>
+
 gandi_account=帐户登录（例如<tt>XX5555-GANDI</tt>）
 gandi_pass=户口密码
 gandi_contact=新域的联系人ID
@@ -186,6 +193,7 @@ gandi_apikey=API密钥
 gandi_etries=$2秒后，Gandi API操作无法完成-最终状态为 $1
 gandi_ecreate=创建状态错误： $1
 gandi_eassoc=联系人 $1不能与此域关联
+
 distribute_account=账号
 distribute_user=帐号用户名
 distribute_pass=户口密码
@@ -203,6 +211,7 @@ distribute_edom=与之链接的现有域名缺失或外观无效
 distribute_edom2=无法获取现有域的详细信息： $1
 distribute_ebase=无法获取域 $1的详细信息
 distribute_eowner=无法获得域 $1的所有者联系人ID
+
 namecheap_user=Namecheap用户名
 namecheap_euser=Namecheap用户名缺失或外观无效
 namecheap_apikey=Namecheap API密钥
@@ -219,6 +228,7 @@ namecheap_enstwo=Namecheap要求每个域至少有 $1个域名服务器，但您
 namecheap_instructions=要使用Namecheap注册帐户，请访问其网站并<a href='$1' target=_new'>注册帐户</a>。您需要根据<a href='$2' target=_new>Namecheap API页面</a>中的说明，启用帐户的API访问权限。
 namecheap_etransfer=5分钟后传输失败： $1
 namecheap_etransfer2=5分钟后传输无法完成，并且没有可用的状态信息
+
 delete_err1=无法禁用帐户
 delete_err2=无法启用帐户
 delete_err3=无法删除帐户
@@ -227,14 +237,16 @@ delete_title=删除帐号
 delete_rusure=您确定要删除 $1个所选帐户吗？它们仍将与注册服务商一起存在，但Virtualmin将不再可用。
 delete_ok=是的，删除它们
 delete_edoms=以下Virtualmin域仍在使用帐户 $1 : $2
+
 list_title=注册域名
 list_dom=域名
 list_registrar=注册商名称
 list_account=注册商帐户
 list_id=注册商ID
-list_none=尚未在任何DNS注册机构中注册Virtualmin域。
-list_none2=尚未向该DNS注册服务商注册Virtualmin域。
+list_none=尚未向任何注册商注册任何 Virtualmin 域。
+list_none2=尚未向该注册商注册任何 Virtualmin 域。
 list_expiry=到期日
+
 contact_err=无法编辑联系方式
 contact_ecannot=您无权编辑此域的联系人
 contact_edom=找不到 $1的Virtualmin服务器
@@ -284,6 +296,7 @@ contact_esave=无法更新注册商： $1
 contact_createtab=建立联络人
 contact_selecttab=选择联系人
 contact_efind=找不到ID为 $1的联系人
+
 import_title=关联域名注册
 import_header=现有域名注册商的详细信息
 import_ecannot=您无权关联域
@@ -303,6 +316,7 @@ import_transfer=从其他注册商转移？
 import_transferyes=是的，带钥匙
 import_renew=转让时还续约吗？
 import_renewyes=是的，因为
+
 transfer_title=转移域名注册
 transfer_header=转移请求的详细信息
 transfer_account=转入帐户
@@ -313,12 +327,14 @@ transfer_ecannot=您不得转让域名
 transfer_transferring=从当前注册商转移
 transfer_done=..完成。注册服务商的ID为 $1。
 transfer_done2=转移完成之前，原始注册商可能需要其他步骤，并且可以将该域<a href='$1'>导入Virtualmin</a>。
+
 dereg_err=解除关联域失败
 dereg_ealready=此域未与任何注册商相关联
 dereg_title=解除关联域名注册
 dereg_rusure=您确定要删除此Virtualmin域与其在 $1中的注册之间的关联吗？如果在Virtualmin中将其删除，则不会从注册商中删除该域。
 dereg_ok=解除关联域
 dereg_doing=取消域注册与帐户 $1..的关联
+
 renew_title=续订域名注册
 renew_err=续订失败
 renew_ecannot=您不可以续订注册
@@ -333,6 +349,7 @@ renew_doing=将 $1与 $2续订 $3年 ..
 renew_failed=..续订失败： $1
 renew_done=..更新完成-来自注册服务商的代码为 $1
 renew_account=用帐户续订
+
 create_title=创建注册商帐户
 create_header=新注册商帐户详细信息
 create_ecannot=您无权创建新帐户
@@ -341,6 +358,7 @@ create_doing=用 $1..创建一个新帐户
 create_done=..创建成功！您在注册商处的帐户ID为 $1
 create_warn=..创建，但带有警告： $2。您在注册商处的帐户ID为 $1
 create_failed=..创建失败： $1
+
 auto_err=保存自动续订失败
 auto_ecannot=您无权管理自动续订
 auto_title=自动域名续订
@@ -362,14 +380,15 @@ auto_eyears=续约的年份或非数字年份
 auto_eget=无法过期： $1
 auto_done=续约 $1年
 auto_failed=失败： $1
-auto_results=以下虚拟服务器已由Virtualmin自动续订其DNS域：
+auto_results=以下虚拟服务器的域已由 Virtualmin 自动续订：
 auto_raccount=注册商帐户
 auto_rdom=域名
 auto_rmsg=续约状态
 auto_subject=Virtualmin自动域更新
 auto_warnmsg=将在 $1天内过期
 auto_wsubject=Virtualmin域到期通知
-auto_wresults=以下虚拟服务器的DNS域将很快过期：
+auto_wresults=以下虚拟服务器的域名即将过期：
+
 ns_err=无法编辑名称服务器
 ns_ecannot=您无权编辑此域的联系人
 ns_title=编辑名称服务器
@@ -385,7 +404,8 @@ ns_eip=名称服务器“$1”是一个IP地址，而不是主机名
 ns_ens=名称服务器'$1'无法解析为IP地址
 ns_reg=使用注册商..更新名称服务器
 ns_failed=..失败： $1
-ns_syncing=正在DNS域中更新名称服务器。
+ns_syncing=更新域中的名称服务器 ..
+
 contacts_eaccount=找不到帐户！
 contacts_id=联络人编号
 contacts_name=联系人姓名
@@ -393,6 +413,7 @@ contacts_add=添加一个新的 $1联系人。
 contacts_none=没有联系人与此注册商帐户相关联。
 contacts_elist=无法列出联系人： $1
 contacts_title=注册商联系人
+
 onecontact_header=$1的注册商联系方式
 onecontact_err=无法保存联系人
 onecontact_edelete=删除失败： $1

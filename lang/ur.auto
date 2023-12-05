@@ -1,23 +1,23 @@
-feat_name=DNS ڈومین رجسٹریشن
-feat_losing=DNS ڈومین غیر رجسٹرڈ ہوگا
+feat_name=ڈومین رجسٹریشن
+feat_losing=ڈومین کو ڈی رجسٹر کر دیا جائے گا۔
 feat_disabling=DNS ڈومین عارضی طور پر غیر فعال ہوجائے گا
-feat_label=DNS ڈومین رجسٹر کریں؟
-feat_label2=DNS ڈومین رجسٹر کریں
+feat_label=ڈومین رجسٹر کریں؟
+feat_label2=ڈومین رجسٹر کریں۔
 feat_edepend=ڈومین بنانے کے لئے استعمال ہونے والا کوئی رجسٹرار اکاؤنٹ نہیں ملا
-feat_edepend2=Only real DNS domain names like <i>foo.com</i> can be registered
+feat_edepend2=Only real domain names like <i>foo.com</i> can be registered
 feat_eclash=ڈومین$1 کو رجسٹر نہیں کیا جاسکتا :$2
 feat_edns=ڈومین رجسٹر نہیں ہوسکتا جب تک کہ DNS خصوصیت فعال نہ ہو
-feat_setup=$1 کے ساتھ DNS ڈومین کا اندراج کرنا۔
+feat_setup=$1 کے ساتھ ڈومین رجسٹر ہو رہا ہے ..
 feat_failed=.. ناکام :$1
 feat_setupdone=.. ہو گیا۔ اس ڈومین کیلئے رجسٹرار کی شناخت $1 ہے۔
 feat_modifydons=.. ہو گیا۔ اس ڈومین کیلئے نئے رجسٹرار کی شناخت $1 ہے
-feat_delete=$1 کے ساتھ DNS ڈومین کی رجسٹریشن کروائیں۔
-feat_delete2=ڈی این ایس ڈومین کی رجسٹریشن کروائیں ..
-feat_modify1=پرانا DNS ڈومین$1 کی$2 کے ساتھ اندراج کریں۔
-feat_modify2=نئے DNS ڈومین$1 کو$2 کے ساتھ دوبارہ رجسٹر کرنا۔
+feat_delete=$1 کے ساتھ ڈومین کو ڈی رجسٹر کیا جا رہا ہے ..
+feat_delete2=ڈومین کو ڈی رجسٹر کیا جا رہا ہے ..
+feat_modify1=پرانے ڈومین $1 کو $2 کے ساتھ ڈی رجسٹر کیا جا رہا ہے۔
+feat_modify2=نئے ڈومین $1 کو $2 کے ساتھ دوبارہ رجسٹر کیا جا رہا ہے۔
 feat_noderegister=.. پلگ ان کی تشکیل میں غیر رجسٹریشن کو غیر فعال کردیا گیا ہے
-feat_modify=رجسٹرڈ DNS ڈومین کو$1 سے$1 سے$2 میں تبدیل کرنا۔
-feat_noaccount=کسی ڈی این ایس رجسٹر اکاؤنٹ کی معلومات نہیں ملی!
+feat_modify=رجسٹرڈ ڈومین کو $1 سے $2 میں $3 کے ساتھ تبدیل کیا جا رہا ہے۔
+feat_noaccount=کوئی رجسٹر اکاؤنٹ کی معلومات نہیں ملی!
 feat_copy=$1 سے ڈومین رابطوں کی کاپی ہو رہی ہے۔
 feat_ecopy=.. رابطے بازیافت کرنے میں ناکام :$1
 feat_nocopy=.. کوئی بھی کاپی کرنے کے لئے نہیں ملا
@@ -27,6 +27,7 @@ feat_perioddef=رجسٹرار ڈیفالٹ
 feat_periodyears=سال
 feat_eperiod=سالوں میں اندراج کی غلطی یا غلطی
 feat_setupalready=.. موجودہ رجسٹریشن ملی
+
 links_contact=ڈومین رابطوں میں ترمیم کریں
 links_ns=ناماسرور میں ترمیم کریں
 links_contactv=ڈومین رابطے دیکھیں
@@ -34,7 +35,8 @@ links_rereg=منسلک ڈومین
 links_import=ایسوسی ایٹ ڈومین
 links_renew=ڈومین کی تجدید
 links_transfer=ڈومین کی منتقلی کریں
-index_title=DNS ڈومین رجسٹرار
+
+index_title=ڈومین رجسٹرار
 index_registrar=رجسٹرار
 index_desc=اکاؤنٹ کی تفصیل
 index_enabled=قابل کیا گیا؟
@@ -57,14 +59,16 @@ index_actvirts=ورچوئل سرورز کی فہرست بنائیں
 index_msg=مجازی سرور رجسٹرار اکاؤنٹ$1 کا استعمال کرتے ہوئے۔
 index_nonemsg=رجسٹرار اکاؤنٹ$1 کا استعمال کرنے والا کوئی ورچوئل سرور نہیں ملا۔
 index_listall=تمام رجسٹرڈ ڈومینز کی فہرست بنائیں۔
+
 type_rcom=رجسٹر ڈاٹ کام
 type_gandi=Gandi.net (اولڈ API)
 type_newgandi=Gandi.net (نیا API)
 type_distribute=تقسیم کریں۔ IIT
 type_namecheap=نام چیپ
+
 edit_title1=رجسٹرار اکاؤنٹ شامل کریں
 edit_title2=رجسٹرار اکاؤنٹ میں ترمیم کریں
-edit_header=DNS رجسٹرار اکاؤنٹ کی تفصیلات
+edit_header=رجسٹرار اکاؤنٹ کی تفصیلات
 edit_header2=اعلی سطحی ڈومین کے اختیارات
 edit_header3=اکاؤنٹ کی نئی ہدایات
 edit_egone=اکاؤنٹ اب موجود نہیں ہے!
@@ -82,6 +86,7 @@ edit_all=تمام ڈومینز
 edit_suffixes=TLDs کی فہرست دی گئی
 edit_delete=دور
 edit_ecannot=آپ کو رجسٹرار اکاؤنٹس میں ترمیم کرنے کی اجازت نہیں ہے
+
 save_err=اکاؤنٹ محفوظ کرنے میں ناکام
 save_err2=اکاؤنٹ کو ہٹانے میں ناکام
 save_edoms=یہ درج ذیل ورچوئل ڈومین کے استعمال میں ہے :$1
@@ -95,6 +100,7 @@ save_ens=ناماسرور '$1' کیلئے IP ایڈریس تلاش کرنے می
 save_ensip=ناماسرور '$1' میزبان نام کے طور پر درج کیا جانا چاہئے ، IP پتہ نہیں
 save_enss=کوئی ناماسرور داخل نہیں ہوا
 save_transfer=This account was used to create $1 domains.<br>Select the registrar account that can be used to manage these domains instead :
+
 rcom_account=اکاؤنٹ لاگ ان ID
 rcom_pass=خفیہ شناختی لفظ
 rcom_eaccount=لاپتہ یا غلط لاگ ان ID
@@ -163,6 +169,7 @@ rcom_eccaddress=لاپتہ کریڈٹ کارڈ کا بلنگ پتہ
 rcom_ecczip=لاپتہ کریڈٹ کارڈ بلنگ پوسٹل کوڈ
 rcom_instructions=To sign up for an account with Register.com with access to their API, go to their <a href='$1' target=_new'>new partner account page</a> and complete the form there. After creating the account and logging in to their website, you will need to add funds to it using a credit card before it can be used to register any domains.
 rcom_createinfo=Before this account can be used, the following must happen :<br><ul><li>Your system's IP address must be whitelisted by Register.com, which may take several hours.<br><li>Credit must be added to your account, which can be done at <a href=http://www.rcomexpress.com/>http://www.rcomexpress.com/</a> by logging in with the username and password you selected.<br></ul>
+
 gandi_account=Account login (like <tt>XX5555-GANDI</tt>)
 gandi_pass=خفیہ شناختی لفظ
 gandi_contact=نئے ڈومینز کے لئے رابطہ ID
@@ -186,6 +193,7 @@ gandi_apikey=API کلید
 gandi_etries=گاندھی API آپریشن$2 سیکنڈ کے بعد مکمل ہونے میں ناکام رہا - حتمی حیثیت $1 تھی
 gandi_ecreate=تخلیق کی حیثیت میں خرابی :$1
 gandi_eassoc=$1 سے رابطہ اس ڈومین سے وابستہ نہیں ہوسکتا ہے
+
 distribute_account=اکاؤنٹ نمبر
 distribute_user=اکاؤنٹ کا صارف نام
 distribute_pass=خفیہ شناختی لفظ
@@ -203,6 +211,7 @@ distribute_edom=مربوط ہونے کیلئے موجودہ ڈومین نام گ
 distribute_edom2=موجودہ ڈومین کی تفصیلات حاصل کرنے میں ناکام :$1
 distribute_ebase=ڈومین$1 کی تفصیلات حاصل کرنے میں ناکام
 distribute_eowner=ڈومین$1 کیلئے مالک سے رابطہ ID حاصل کرنے میں ناکام
+
 namecheap_user=نام چیپ صارف نام
 namecheap_euser=غائب یا غلط نظر آنے والا نیم چیپ صارف نام
 namecheap_apikey=نام کیپ کی API کلید
@@ -219,6 +228,7 @@ namecheap_enstwo=نیچ شیپ کا تقاضا ہے کہ ہر ڈومین میں 
 namecheap_instructions=To sign up for an account with Namecheap, go to their website and <a href='$1' target=_new'>sign up for an account</a>. You will need to enable API access on your account, as documented on <a href='$2' target=_new>Namecheap API page</a>.
 namecheap_etransfer=منتقلی 5 منٹ کے بعد مکمل ہونے میں ناکام رہی :$1
 namecheap_etransfer2=منتقلی 5 منٹ کے بعد مکمل ہونے میں ناکام رہی ، اور کوئی حیثیت سے متعلق معلومات دستیاب نہیں ہیں
+
 delete_err1=اکاؤنٹس کو غیر فعال کرنے میں ناکام
 delete_err2=اکاؤنٹس کو فعال کرنے میں ناکام
 delete_err3=اکاؤنٹس کو ہٹانے میں ناکام
@@ -227,14 +237,16 @@ delete_title=اکاؤنٹس کو ہٹا دیں
 delete_rusure=کیا آپ واقعی منتخب شدہ $1 اکاؤنٹس کو ختم کرنا چاہتے ہیں؟ وہ اب بھی رجسٹراروں کے ساتھ موجود ہوں گے ، لیکن ورچوئل مین کے ذریعہ اس کے استعمال کے قابل نہیں رہیں گے۔
 delete_ok=ہاں ، انہیں ہٹائیں
 delete_edoms=اکاؤنٹ$1 اب بھی درج ذیل ورچوئل ڈومین کے استعمال میں ہے :$2
+
 list_title=رجسٹرڈ ڈومینز
 list_dom=ڈومین نام
 list_registrar=رجسٹرار کا نام
 list_account=رجسٹرار اکاؤنٹ
 list_id=رجسٹرار کے ساتھ ID
-list_none=ابھی تک کسی بھی DNS رجسٹرار کے ساتھ ورچوئل ڈومین کا اندراج نہیں کیا گیا ہے۔
-list_none2=اس DNS رجسٹرار کے ساتھ ابھی تک کوئی ورچوئل ڈومین رجسٹرڈ نہیں کیا گیا ہے۔
+list_none=ابھی تک کسی بھی رجسٹرار کے ساتھ کوئی Virtualmin ڈومین رجسٹر نہیں ہوا ہے۔
+list_none2=اس رجسٹرار کے ساتھ ابھی تک کوئی Virtualmin ڈومین رجسٹر نہیں ہوا ہے۔
 list_expiry=خاتمے کی تاریخ
+
 contact_err=رابطے کی تفصیلات میں ترمیم کرنے میں ناکام
 contact_ecannot=آپ کو اس ڈومین کیلئے رابطوں میں ترمیم کرنے کی اجازت نہیں ہے
 contact_edom=$1 کیلئے کوئی ورچوئل سرور نہیں ملا
@@ -284,6 +296,7 @@ contact_esave=رجسٹرار کو اپ ڈیٹ کرنے میں ناکام :$1
 contact_createtab=رابطے بنائیں
 contact_selecttab=رابطے منتخب کریں
 contact_efind=ID 1 1 کے ساتھ کوئی رابطہ نہیں ملا
+
 import_title=ایسوسی ایٹ ڈومین رجسٹریشن
 import_header=موجودہ ڈومین رجسٹرار کی تفصیلات
 import_ecannot=آپ کو ڈومین منسلک کرنے کی اجازت نہیں ہے
@@ -303,6 +316,7 @@ import_transfer=کسی دوسرے رجسٹرار سے تبادلہ؟
 import_transferyes=ہاں ، چابی کے ساتھ
 import_renew=منتقلی کرتے وقت بھی تجدید کریں؟
 import_renewyes=ہاں ، کے لئے
+
 transfer_title=ڈومین رجسٹریشن منتقل کریں
 transfer_header=منتقلی کی درخواست کی تفصیلات
 transfer_account=اکاؤنٹ میں منتقل کریں
@@ -313,12 +327,14 @@ transfer_ecannot=آپ کو ڈومین کی منتقلی کی اجازت نہیں
 transfer_transferring=موجودہ رجسٹرار سے تبادلہ کیا جا رہا ہے ..
 transfer_done=.. ہو گیا۔ رجسٹرار کی شناخت $1 ہے۔
 transfer_done2=Other steps may be needed at the original registrar before the transfer is complete, and this domain can be <a href='$1'>imported into Virtualmin</a>.
+
 dereg_err=ڈومین کو منسلک کرنے میں ناکام
 dereg_ealready=یہ ڈومین کسی بھی رجسٹرار کے ساتھ وابستہ نہیں ہے
 dereg_title=ڈومین رجسٹریشن کو منحرف کریں
 dereg_rusure=کیا آپ واقعی اس ورچوئل مین ڈومین اور$1 کے ساتھ اس کی رجسٹریشن کے مابین اس ایسوسی ایشن کو ختم کرنا چاہتے ہیں؟ اگر اسے ورچوئل مین میں حذف کردیا جاتا ہے تو ، ڈومین کو رجسٹرار سے نہیں ہٹایا جائے گا۔
 dereg_ok=ایسوسی ایٹ ڈومین
 dereg_doing=ڈومین رجسٹریشن کو اکاؤنٹ$1 کے ساتھ منسلک کریں۔
+
 renew_title=ڈومین رجسٹریشن کی تجدید کریں
 renew_err=تجدید ناکام ہوگئی
 renew_ecannot=آپ کو رجسٹریشن کی تجدید کی اجازت نہیں ہے
@@ -333,6 +349,7 @@ renew_doing=$2 کے ساتھ$$3 کے لئے$3 ڈومین کی تجدید ..
 renew_failed=.. تجدید ناکام :$1
 renew_done=.. تجدید مکمل - رجسٹرار کا کوڈ$1 تھا
 renew_account=اکاؤنٹ کے ساتھ تجدید
+
 create_title=رجسٹرار اکاؤنٹ بنائیں
 create_header=نئے رجسٹرار اکاؤنٹ کی تفصیلات
 create_ecannot=آپ کو نئے اکاؤنٹ بنانے کی اجازت نہیں ہے
@@ -341,6 +358,7 @@ create_doing=$1 کے ساتھ نیا اکاؤنٹ بنانا۔
 create_done=.. کامیابی کے ساتھ تشکیل دے دیا گیا! آپ کے اکاؤنٹ کی شناخت رجسٹرار کے ساتھ$1 ہے
 create_warn=.. تخلیق کیا ، لیکن انتباہات کے ساتھ:$2۔ آپ کے اکاؤنٹ کی شناخت رجسٹرار کے ساتھ$1 ہے
 create_failed=.. تخلیق ناکام :$1
+
 auto_err=خودکار تجدید کو بچانے میں ناکام
 auto_ecannot=آپ کو خودکار تجدید کا انتظام کرنے کی اجازت نہیں ہے
 auto_title=خودکار ڈومین تجدید
@@ -362,14 +380,15 @@ auto_eyears=تجدید کرنے کے لing یا غیر عددی سال گم ہی
 auto_eget=میعاد ختم ہونے میں ناکام :$1
 auto_done=$1 سال کے لئے تجدید شدہ
 auto_failed=ناکام :$1
-auto_results=ورچوئل مین کے ذریعہ درج ذیل ورچوئل سرورز نے اپنے DNS ڈومین خود بخود تجدید کردیئے ہیں۔
+auto_results=درج ذیل ورچوئل سرورز نے اپنے ڈومینز کو ورچوئل مین کے ذریعہ خود بخود تجدید کرایا ہے۔
 auto_raccount=رجسٹرار اکاؤنٹ
 auto_rdom=ڈومین نام
 auto_rmsg=تجدید کی حیثیت
 auto_subject=ورچوئل مین خودکار ڈومین کی تجدید
 auto_warnmsg=$1 دن میں ختم ہوجائے گی
 auto_wsubject=ورچوئل ڈومین کی میعاد ختم ہونے کی اطلاع
-auto_wresults=درج ذیل ورچوئل سرورز کے DNS ڈومینز کی میعاد جلد ہی ختم ہوجائے گی۔
+auto_wresults=درج ذیل ورچوئل سرورز کے ڈومینز کی میعاد جلد ختم ہو جائے گی۔
+
 ns_err=ناماسرورس میں ترمیم کرنے میں ناکام
 ns_ecannot=آپ کو اس ڈومین کیلئے رابطوں میں ترمیم کرنے کی اجازت نہیں ہے
 ns_title=ناماسرور میں ترمیم کریں
@@ -385,7 +404,8 @@ ns_eip=ناماسرور '$1' ایک IP پتہ ہے ، میزبان نام نہی
 ns_ens=IPserserserser '$1' کو حل نہیں کیا جاسکا
 ns_reg=رجسٹرار کے ساتھ ناماسرورس کی تازہ کاری۔
 ns_failed=.. ناکام :$1
-ns_syncing=ڈی این ایس ڈومین میں نامسرور کی تازہ کاری۔
+ns_syncing=ڈومین میں نیم سرورز کو اپ ڈیٹ کرنا ..
+
 contacts_eaccount=اکاؤنٹ نہیں پایا!
 contacts_id=رابطہ ID
 contacts_name=رابطے کا نام
@@ -393,6 +413,7 @@ contacts_add=نیا$1 رابطہ شامل کریں۔
 contacts_none=اس رجسٹرار اکاؤنٹ سے کوئی رابطہ وابستہ نہیں ہے۔
 contacts_elist=رابطوں کی فہرست میں ناکام :$1
 contacts_title=رجسٹرار رابطے
+
 onecontact_header=$1 کیلئے رجسٹرار سے رابطہ کی تفصیلات
 onecontact_err=رابطہ بچانے میں ناکام
 onecontact_edelete=حذف کرنا ناکام ہوگیا :$1

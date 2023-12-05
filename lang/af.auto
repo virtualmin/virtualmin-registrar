@@ -1,23 +1,23 @@
-feat_name=DNS-domeinregistrasie
-feat_losing=Die DNS-domein sal gederegistreer word
+feat_name=Domeinregistrasie
+feat_losing=Die domein sal gederegistreer word
 feat_disabling=Die DNS-domein sal tydelik gedeaktiveer word
-feat_label=DNS-domein registreer?
-feat_label2=Registreer DNS-domein
+feat_label=Registreer domein?
+feat_label2=Registreer domein
 feat_edepend=Geen registrateurrekening wat gebruik word om die domein te skep, is gevind nie
-feat_edepend2=Slegs regte DNS-domeinname soos <i>foo.com</i> kan geregistreer word
+feat_edepend2=Slegs regte domeinname soos <i>foo.com</i> kan geregistreer word
 feat_eclash=Die domein $1 kan nie geregistreer word nie : $2 
 feat_edns='N Domein kan nie geregistreer word nie, tensy die DNS-funksie aangeskakel is
-feat_setup=Registrasie van DNS-domein met $1.
+feat_setup=Registreer tans domein met $1 ..
 feat_failed=.. misluk : $1 
 feat_setupdone=.. klaar. Die registrateur se ID vir hierdie domein is $1.
 feat_modifydons=.. klaar. Die nuwe registrateur se ID vir hierdie domein is $1 
-feat_delete=Die registrasie van DNS-domein met $1.
-feat_delete2=Die registrasie van DNS-domein ..
-feat_modify1=Registreer ou DNS-domein $1 met $2.
-feat_modify2=Registrasie van nuwe DNS-domein $1 met $2. herregistreer.
+feat_delete=Deregistreer tans domein met $1 ..
+feat_delete2=Deregistreer domein ..
+feat_modify1=Deregistreer tans ou domein $1 met $2 ..
+feat_modify2=Herregistreer tans nuwe domein $1 met $2 ..
 feat_noderegister=.. de-registrasie is gedeaktiveer in die plugin-opset
-feat_modify=Geregistreerde DNS-domein verander van $1 na $2 met $3.
-feat_noaccount=Geen DNS-registerrekeninginligting is gevind nie!
+feat_modify=Verander tans geregistreerde domein van $1 na $2 met $3 ..
+feat_noaccount=Geen registerrekeninginligting is gevind nie!
 feat_copy=Kopieer domeinkontakte vanaf $1.
 feat_ecopy=.. kon kontakte nie haal nie : $1 
 feat_nocopy=.. niemand gevind om te kopieer nie
@@ -27,6 +27,7 @@ feat_perioddef=Registrateur verstek
 feat_periodyears=jaar
 feat_eperiod=Ontbrekende of ongeldige registrasietydperk in jare
 feat_setupalready=.. bestaande registrasie gevind
+
 links_contact=Redigeer domeinkontakte
 links_ns=Nameservers wysig
 links_contactv=Kyk na domeinkontakte
@@ -34,7 +35,8 @@ links_rereg=Ongeassosieerde domein
 links_import=Geassosieerde domein
 links_renew=Vernuwe domein
 links_transfer=Oordrag domein
-index_title=Registrasie van DNS-domeine
+
+index_title=Domeinregistrateurs
 index_registrar=Registrateur
 index_desc=Rekeningbeskrywing
 index_enabled=In staat gestel?
@@ -57,14 +59,16 @@ index_actvirts=Lys virtuele bedieners
 index_msg=Virtuele bedieners wat registratorrekening $1 gebruik.
 index_nonemsg=Geen virtuele bedieners wat registratorrekening $1 gebruik, is gevind nie
 index_listall=Lys alle geregistreerde domeine.
+
 type_rcom=Register.com
 type_gandi=Gandi.net (ou API)
 type_newgandi=Gandi.net (nuwe API)
 type_distribute=Distribute.IT
 type_namecheap=Namecheap
+
 edit_title1=Voeg registrateurrekening by
 edit_title2=Wysig registrateurrekening
-edit_header=DNS-registrateurrekeningbesonderhede
+edit_header=Registrateur rekening besonderhede
 edit_header2=Topvlak domein-opsies
 edit_header3=Nuwe rekeninginstruksies
 edit_egone=Rekening bestaan nie meer nie!
@@ -82,6 +86,7 @@ edit_all=Alle domeine
 edit_suffixes=Genoteerde TLD's
 edit_delete=Verwyder
 edit_ecannot=U mag nie registrateurrekeninge wysig nie
+
 save_err=Kon nie rekening stoor nie
 save_err2=Kon nie rekening verwyder nie
 save_edoms=Dit word gebruik deur die volgende Virtualmin-domeine : $1 
@@ -95,6 +100,7 @@ save_ens=Kon nie die IP-adres op soek na die naambediener '$1' nie
 save_ensip=Naamserver '$1' moet as 'n gasheernaam ingevoer word, nie as 'n IP-adres nie
 save_enss=Geen naambedieners is ingevoer nie
 save_transfer=Hierdie rekening is gebruik om $1 -domeine te skep. <br> Kies die registrateurrekening wat in plaas daarvan gebruik kan word om hierdie domeine te bestuur :
+
 rcom_account=Rekening-aanmeld-ID
 rcom_pass=Rekening wagwoord
 rcom_eaccount=Ontbrekende of ongeldige aanmeld-ID
@@ -163,6 +169,7 @@ rcom_eccaddress=Ontbrekende adres vir kredietkaart
 rcom_ecczip=Poskode vir kredietkaartrekening ontbreek
 rcom_instructions=Om toegang tot hul API aan te meld by Register.com, gaan na hul <a href='$1' target=_new'>bladsy vir nuwe vennootrekeninge</a> en voltooi die vorm daar. Nadat u die rekening geskep het en op hul webwerf aangemeld is, moet u geld met 'n kredietkaart daarvoor voeg voordat dit gebruik kan word om enige domeine te registreer.
 rcom_createinfo=Voordat hierdie rekening gebruik kan word, moet die volgende gebeur: <br><ul> <li>Die IP-adres van u stelsel moet deur die Register.com gelys word, wat 'n paar uur kan duur.<br> <li>Krediet moet bygevoeg word u rekening, wat gedoen kan word op<a href=http://www.rcomexpress.com/> http://www.rcomexpress.com/ </a>deur aan te meld met die gebruikersnaam en wagwoord wat u gekies het.<br > </ul>
+
 gandi_account=Rekeningaanmelding (soos <tt>XX5555-GANDI</tt>)
 gandi_pass=Rekening wagwoord
 gandi_contact=Kontak-ID vir nuwe domeine
@@ -186,6 +193,7 @@ gandi_apikey=API-sleutel
 gandi_etries=Die werking van Gandi API kon nie na $2 sekondes voltooi word nie - die finale status was $1 
 gandi_ecreate=Skeppingstatusfout : $1 
 gandi_eassoc=Kontak $1 kan nie met hierdie domein geassosieer word nie
+
 distribute_account=Rekening nommer
 distribute_user=Rekening gebruikersnaam
 distribute_pass=Rekening wagwoord
@@ -203,6 +211,7 @@ distribute_edom=Die bestaande domeinnaam ontbreek of is ongeldig om mee te skake
 distribute_edom2=Kon nie besonderhede van die bestaande domein kry nie : $1 
 distribute_ebase=Kon nie besonderhede vir domein $1 kry nie
 distribute_eowner=Kon nie ID-eienaar vir domein $1 kry nie
+
 namecheap_user=Gebruik naam van die naam
 namecheap_euser=Namecheap-gebruikersnaam ontbreek of ongeldig
 namecheap_apikey=Namecheap API-sleutel
@@ -219,6 +228,7 @@ namecheap_enstwo=Namecheap vereis dat elke domein ten minste $1 naambedieners he
 namecheap_instructions=Om aan te meld vir 'n rekening by Namecheap, gaan na hul webwerf en <a href='$1' target=_new'>teken aan vir 'n rekening</a>. U moet API-toegang op u rekening inskakel, soos gedokumenteer op <a href='$2' target=_new>Namecheap API-bladsy</a>.
 namecheap_etransfer=Die oordrag kon na 5 minute nie voltooi word nie : $1 
 namecheap_etransfer2=Die oordrag kon na 5 minute nie voltooi word nie, en geen statusinligting is beskikbaar nie
+
 delete_err1=Kon nie rekeninge deaktiveer nie
 delete_err2=Kon nie rekeninge aktiveer nie
 delete_err3=Kon nie rekeninge verwyder nie
@@ -227,14 +237,16 @@ delete_title=Verwyder rekeninge
 delete_rusure=Is u seker dat u die $1 geselekteerde rekeninge wil verwyder? Hulle sal nog steeds by die registrateurs bestaan, maar kan nie meer deur Virtualmin gebruik word nie.
 delete_ok=Ja, verwyder hulle
 delete_edoms=Die rekening $1 word steeds gebruik deur die volgende Virtualmin-domeine : $2 
+
 list_title=Geregistreerde domeine
 list_dom=Domeinnaam
 list_registrar=Registrateur naam
 list_account=Registrateurrekening
 list_id=ID met registrateur
-list_none=Geen Virtualmin-domeine is nog by enige DNS-registrateur geregistreer nie.
-list_none2=Geen Virtualmin-domeine is nog by hierdie DNS-registrateur geregistreer nie.
+list_none=Geen Virtualmin-domeine is nog by enige registrateur geregistreer nie.
+list_none2=Geen Virtualmin-domeine is nog by hierdie registrateur geregistreer nie.
 list_expiry=Verval datum
+
 contact_err=Kon nie kontakbesonderhede wysig nie
 contact_ecannot=U mag nie kontakte vir hierdie domein wysig nie
 contact_edom=Geen Virtualmin-bediener vir $1 is gevind nie
@@ -284,6 +296,7 @@ contact_esave=Kon nie registrateur bywerk : $1
 contact_createtab=Skep kontakte
 contact_selecttab=Kies kontakte
 contact_efind=Geen kontak met ID $1 gevind nie
+
 import_title=Associated Domain Registrasie
 import_header=Besonderhede van die bestaande domeinregistrateur
 import_ecannot=U mag nie domeine assosieer nie
@@ -303,6 +316,7 @@ import_transfer=Oordrag van 'n ander registrateur?
 import_transferyes=Ja, met sleutel
 import_renew=Vernuwe ook wanneer u oordra?
 import_renewyes=Ja, vir
+
 transfer_title=Registrasie van domeinname
 transfer_header=Besonderhede van die oordragversoek
 transfer_account=Oordrag na rekening
@@ -313,12 +327,14 @@ transfer_ecannot=U mag nie domeine oordra nie
 transfer_transferring=Oordrag vanaf huidige registrateur ..
 transfer_done=.. klaar. Die registrateur se ID is $1.
 transfer_done2=Nog stappe kan by die oorspronklike registrateur benodig word voordat die oordrag voltooi is, en hierdie domein kan <a href='$1'>in Virtualmin</a> ingevoer word.
+
 dereg_err=Kon nie domein uitskakel nie
 dereg_ealready=Hierdie domein word nie met 'n registrateur geassosieer nie
 dereg_title=Distrik-registrasie van 'n verbonde domein
 dereg_rusure=Is u seker dat u hierdie verband tussen hierdie Virtualmin-domein en die registrasie daarvan met $1 wil verwyder? As dit in Virtualmin uitgevee word, sal die domein nie van die registrateur verwyder word nie.
 dereg_ok=Ongeassosieerde domein
 dereg_doing=Domeinregistrasie verbonde aan rekening $1.
+
 renew_title=Hernu domeinregistrasie
 renew_err=Hernuwing het misluk
 renew_ecannot=U mag nie registrasies hernu nie
@@ -333,6 +349,7 @@ renew_doing=Vernuwing van domein $1 met $2 vir $3 jaar.
 renew_failed=.. hernuwing misluk : $1 
 renew_done=.. hernuwing voltooi - kode van registrateur was $1 
 renew_account=Vernuwing met rekening
+
 create_title=Skep registrateurrekening
 create_header=Nuwe registrateurrekeningbesonderhede
 create_ecannot=U mag nie nuwe rekeninge skep nie
@@ -341,6 +358,7 @@ create_doing=Skep 'n nuwe rekening met $1.
 create_done=.. suksesvol geskep! U rekening-ID by die registrateur is $1 
 create_warn=.. geskep, maar met waarskuwings: $2. U rekening-ID by die registrateur is $1 
 create_failed=.. skepping misluk : $1 
+
 auto_err=Kon nie outomatiese hernuwing stoor nie
 auto_ecannot=U mag nie outomatiese hernuwing bestuur nie
 auto_title=Outomatiese domeinvernuwing
@@ -362,14 +380,15 @@ auto_eyears=Jare of nie-numeriese jare om te hernu
 auto_eget=Verstryking kon misluk : $1 
 auto_done=Hernoem vir $1 jaar
 auto_failed=Misluk : $1 
-auto_results=Die volgende virtuele bedieners het hul DNS-domeine outomaties deur Virtualmin hernu :
+auto_results=Die volgende virtuele bedieners se domeine is outomaties deur Virtualmin hernu :
 auto_raccount=Registrateurrekening
 auto_rdom=Domeinnaam
 auto_rmsg=Hernuwingstatus
 auto_subject=Outomatiese domeinvernuwing van Virtualmin
 auto_warnmsg=Verval oor $1 dae
 auto_wsubject=Kennisgewing van die verstryking van Virtualmin-domein
-auto_wresults=Die volgende virtuele bedieners sal binnekort hul DNS-domeine verval :
+auto_wresults=Die volgende virtuele bedieners se domeine sal binnekort verval :
+
 ns_err=Kon nie naamsbedieners wysig nie
 ns_ecannot=U mag nie kontakte vir hierdie domein wysig nie
 ns_title=Nameservers wysig
@@ -385,7 +404,8 @@ ns_eip=Naamserver '$1' is 'n IP-adres, nie 'n gasheernaam nie
 ns_ens=Naamserver '$1' kon nie na 'n IP-adres opgelos word nie
 ns_reg=Opdatering van naamborde by die registrateur ..
 ns_failed=.. misluk : $1 
-ns_syncing=Opdatering van naamborde in DNS-domein ..
+ns_syncing=Dateer naambedieners in domein op ..
+
 contacts_eaccount=Rekening nie gevind nie!
 contacts_id=Kontak ID
 contacts_name=Kontak naam
@@ -393,6 +413,7 @@ contacts_add=Voeg 'n nuwe $1 kontak by.
 contacts_none=Geen kontakte word met hierdie registrateurrekening geassosieer nie.
 contacts_elist=Kon nie kontakte lys nie : $1 
 contacts_title=Registrateur Kontakte
+
 onecontact_header=Registrasie kontakbesonderhede vir $1 
 onecontact_err=Kon nie kontak stoor nie
 onecontact_edelete=Kon nie uitvee nie : $1 

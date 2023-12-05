@@ -1,23 +1,23 @@
-feat_name=רישום תחום DNS
-feat_losing=תחום ה- DNS יירשם
+feat_name=רישום דומיין
+feat_losing=הרישום של הדומיין יבוטל
 feat_disabling=תחום ה- DNS יושבת באופן זמני
-feat_label=לרשום תחום DNS?
-feat_label2=רישום תחום DNS
+feat_label=לרשום דומיין?
+feat_label2=רישום דומיין
 feat_edepend=לא נמצא חשבון רשם המשמש ליצירת הדומיין
-feat_edepend2=ניתן לרשום רק שמות תחום DNS אמיתיים כמו <i>foo.com</i>
+feat_edepend2=ניתן לרשום רק שמות דומיין אמיתיים כמו <i>foo.com</i>
 feat_eclash=לא ניתן לרשום את הדומיין $1 : $2 
 feat_edns=לא ניתן לרשום תחום אלא אם תכונת ה- DNS מופעלת
-feat_setup=רישום תחום DNS עם $1 ..
+feat_setup=רישום דומיין עם $1 ..
 feat_failed=.. נכשל : $1 
 feat_setupdone=.. בוצע. מזהה הרשם לתחום זה הוא $1.
 feat_modifydons=.. בוצע. מזהה הרשם החדש לתחום זה הוא $1 
-feat_delete=רישום תחום DNS עם $1 ..
-feat_delete2=רישום תחום DNS ..
-feat_modify1=רישום תחום DNS ישן $1 עם $2.
-feat_modify2=רישום מחדש של תחום DNS חדש $1 עם $2.
+feat_delete=ביטול רישום של דומיין עם $1 ..
+feat_delete2=ביטול רישום של דומיין ..
+feat_modify1=מבטל את הרישום של הדומיין הישן $1 עם $2 ..
+feat_modify2=רישום מחדש של דומיין חדש $1 עם $2 ..
 feat_noderegister=.. ההרשמה הושבתה בתצורת התוסף
-feat_modify=שינוי תחום DNS רשום מ- $1 ל- $2 עם $3.
-feat_noaccount=לא נמצא מידע על חשבון רישום DNS!
+feat_modify=שינוי דומיין רשום מ-$1 ל-$2 עם $3 ..
+feat_noaccount=לא נמצאו פרטי חשבון רישום!
 feat_copy=מעתיק אנשי קשר מתחום מ- $1 ..
 feat_ecopy=.. נכשלה להביא אנשי קשר : $1 
 feat_nocopy=אף אחד לא נמצא להעתקה
@@ -27,6 +27,7 @@ feat_perioddef=ברירת המחדל של הרשם
 feat_periodyears=שנים
 feat_eperiod=תקופת רישום חסרה או לא תקפה מזה שנים
 feat_setupalready=.. נמצא רישום קיים
+
 links_contact=ערוך אנשי קשר בתחום
 links_ns=ערוך שרתי שמות
 links_contactv=הצגת אנשי קשר בתחום
@@ -34,7 +35,8 @@ links_rereg=תחום משויך
 links_import=תחום משויך
 links_renew=חידוש תחום
 links_transfer=העבר דומיין
-index_title=רושמי תחום DNS
+
+index_title=רשמי דומיינים
 index_registrar=רשם
 index_desc=תיאור חשבון
 index_enabled=מופעל?
@@ -57,14 +59,16 @@ index_actvirts=רשימת שרתים וירטואליים
 index_msg=שרתים וירטואליים המשתמשים בחשבון הרשם $1.
 index_nonemsg=לא נמצאו שרתי וירטואלי המשתמשים בחשבון הרשמת $1.
 index_listall=פרט את כל הדומיינים הרשומים.
+
 type_rcom=Register.com
 type_gandi=Gandi.net (API ישן)
 type_newgandi=Gandi.net (API חדש)
 type_distribute=להפיץ
 type_namecheap=Namecheap
+
 edit_title1=הוסף חשבון רשם
 edit_title2=ערוך את חשבון הרשם
-edit_header=פרטי חשבון רשם DNS
+edit_header=פרטי חשבון הרשם
 edit_header2=אפשרויות דומיין ברמה העליונה
 edit_header3=הוראות חשבון חדשות
 edit_egone=החשבון כבר לא קיים!
@@ -82,6 +86,7 @@ edit_all=כל התחומים
 edit_suffixes=TLDs רשומים
 edit_delete=הסר
 edit_ecannot=אינך רשאי לערוך חשבונות רשם
+
 save_err=שמירת החשבון נכשלה
 save_err2=הסרת החשבון נכשלה
 save_edoms=זה נמצא בשימוש על ידי התחומים הבאים של Virtualmin : $1 
@@ -95,6 +100,7 @@ save_ens=חיפוש IP לאיתור שרת השמות '$1' נכשל
 save_ensip=יש להזין את שם השמות '$1' כשם מארח, ולא ככתובת IP
 save_enss=לא נכנסו שרתי שמות
 save_transfer=חשבון זה שימש ליצירת דומיינים של $1. <br> בחרו בחשבון הרשם שיכול לשמש לניהול דומיינים אלה במקום :
+
 rcom_account=מזהה כניסה לחשבון
 rcom_pass=סיסמת החשבון
 rcom_eaccount=מזהה כניסה חסר או לא חוקי
@@ -163,6 +169,7 @@ rcom_eccaddress=כתובת החיוב של כרטיס האשראי חסרה
 rcom_ecczip=קוד מיקוד לחיוב כרטיסי אשראי חסר
 rcom_instructions=כדי להירשם לחשבון ב- Register.com עם גישה לממשק ה- API שלו, עבור אל <a href='$1' target=_new'>דף חשבון השותפים החדש</a> שלהם ושלם את הטופס שם. לאחר יצירת החשבון וכניסה לאתר האינטרנט שלהם, יהיה עליכם להוסיף כספים באמצעות כרטיס אשראי לפני שניתן יהיה להשתמש בו לרישום דומיינים.
 rcom_createinfo=לפני שניתן יהיה להשתמש בחשבון זה, הבא צריך להתרחש: <br><ul> <li>כתובת ה- IP של המערכת שלך חייבת להיות ברשימת ההיתרים של Register.com, שיכולה לקחת מספר שעות.<br> <li>יש להוסיף אשראי ל- חשבונך, שניתן לבצע בכתובת<a href=http://www.rcomexpress.com/> http://www.rcomexpress.com/ </a>על ידי כניסה עם שם המשתמש והסיסמה שבחרת.<br > </ul>
+
 gandi_account=כניסה לחשבון (כמו <tt>XX5555-GANDI</tt>)
 gandi_pass=סיסמת החשבון
 gandi_contact=מזהה איש קשר עבור דומיינים חדשים
@@ -186,6 +193,7 @@ gandi_apikey=מפתח API
 gandi_etries=פעולת ה- API של Gandi לא הצליחה להסתיים לאחר $2 שניות - המצב הסופי היה $1 
 gandi_ecreate=שגיאת מצב יצירה : $1 
 gandi_eassoc=לא ניתן לשייך איש קשר $1 לתחום זה
+
 distribute_account=מספר חשבון
 distribute_user=שם משתמש בחשבון
 distribute_pass=סיסמת החשבון
@@ -203,6 +211,7 @@ distribute_edom=שם דומיין קיים חסר או לא חוקי למראה 
 distribute_edom2=קבלת פרטי הדומיין הקיים נכשלו : $1 
 distribute_ebase=קבלת פרטים עבור הדומיין $1 נכשלה
 distribute_eowner=השגת זיהוי איש הקשר של הבעלים עבור דומיין $1 נכשל
+
 namecheap_user=שם משתמש שם
 namecheap_euser=שם משתמש Namecheap חסר או לא חוקי
 namecheap_apikey=מפתח API של Namecheap
@@ -219,6 +228,7 @@ namecheap_enstwo=Namecheap דורש שלכל תחום יהיו לפחות שרת
 namecheap_instructions=כדי להירשם לחשבון ב- Namecheap, עבור לאתר האינטרנט שלהם ו <a href='$1' target=_new'>הירשם לחשבון</a>. יהיה עליך לאפשר גישה לממשק API בחשבונך, כפי שתועד ב <a href='$2' target=_new>דף API של Namecheap</a>.
 namecheap_etransfer=ההעברה נכשלה לאחר 5 דקות : $1 
 namecheap_etransfer2=ההעברה נכשלה לאחר 5 דקות, ומידע על מצב אינו זמין
+
 delete_err1=השבתת חשבונות נכשלה
 delete_err2=הפעלת חשבונות נכשלה
 delete_err3=הסרת חשבונות נכשלה
@@ -227,14 +237,16 @@ delete_title=הסרת חשבונות
 delete_rusure=האם אתה בטוח שברצונך להסיר את החשבונות $1 שנבחרו? הם עדיין קיימים עם הרשמים, אך Virtualmin לא יוכלו להשתמש בהם עוד.
 delete_ok=כן, הסר אותם
 delete_edoms=החשבון $1 עדיין נמצא בשימוש על ידי התחומים הבאים של Virtualmin : $2 
+
 list_title=דומיינים רשומים
 list_dom=שם דומיין
 list_registrar=שם הרשם
 list_account=חשבון רשם
 list_id=תעודת זהות עם הרשם
-list_none=טרם נרשמו תחומי Virtualmin אצל אף רשם DNS.
-list_none2=טרם נרשמו תחומי Virtualmin אצל רשם ה- DNS הזה.
+list_none=עדיין לא נרשמו דומיינים של Virtualmin אצל אף רשם.
+list_none2=עדיין לא נרשמו דומיינים של Virtualmin אצל רשם זה.
 list_expiry=תאריך תפוגה
+
 contact_err=עריכת פרטי הקשר נכשלה
 contact_ecannot=אינך רשאי לערוך אנשי קשר עבור דומיין זה
 contact_edom=לא נמצא שרת Virtualmin עבור $1 
@@ -284,6 +296,7 @@ contact_esave=עדכון הרשם נכשל : $1
 contact_createtab=צור אנשי קשר
 contact_selecttab=בחר אנשי קשר
 contact_efind=לא נמצא קשר עם מזהה $1 
+
 import_title=רישום דומיין משויך
 import_header=פרטים על רשם הדומיינים הקיים
 import_ecannot=אינך מורשה לשייך תחומים
@@ -303,6 +316,7 @@ import_transfer=להעביר מרשם אחר?
 import_transferyes=כן, עם מפתח
 import_renew=גם להתחדש בעת ההעברה?
 import_renewyes=כן עבור
+
 transfer_title=העבר רישום תחום
 transfer_header=פרטי בקשת ההעברה
 transfer_account=העברה לחשבון
@@ -313,12 +327,14 @@ transfer_ecannot=אינך מורשה להעביר דומיינים
 transfer_transferring=עובר מהרשם הנוכחי ..
 transfer_done=.. בוצע. מזהה הרשם הוא $1.
 transfer_done2=יתכן שיהיה צורך בצעדים אחרים אצל הרשם המקורי לפני השלמת ההעברה, וניתן לייבא <a href='$1'>ל- Virtualmin</a>.
+
 dereg_err=ניתוק השיוך של הדומיין נכשל
 dereg_ealready=תחום זה אינו משויך לרשם כלשהו
 dereg_title=רישום תחום דיס-שותף
 dereg_rusure=האם אתה בטוח שברצונך להסיר את הקשר הזה בין תחום Virtualmin זה לבין רישומו ב- $1 ? אם הוא נמחק ב- Virtualmin, הדומיין לא יוסר מהרשם.
 dereg_ok=תחום Dis-Associate
 dereg_doing=מבטל את הרישום לדומיין לחשבון $1.
+
 renew_title=חידוש רישום תחום
 renew_err=ההתחדשות נכשלה
 renew_ecannot=אינך רשאי לחדש הרשמות
@@ -333,6 +349,7 @@ renew_doing=חידוש תחום $1 עם $2 במשך $3 שנים.
 renew_failed=.. החידוש נכשל : $1 
 renew_done=.. חידוש הושלם - הקוד מהרשם היה $1 
 renew_account=מתחדשת עם חשבון
+
 create_title=צור חשבון רשם
 create_header=פרטי חשבון רשם חדשים
 create_ecannot=אינך מורשה ליצור חשבונות חדשים
@@ -341,6 +358,7 @@ create_doing=יוצר חשבון חדש עם $1 ..
 create_done=.. נוצר בהצלחה! מזהה החשבון שלך עם הרשם הוא $1 
 create_warn=.. נוצר, אך עם אזהרות: $2. מזהה החשבון שלך עם הרשם הוא $1 
 create_failed=.. היצירה נכשלה : $1 
+
 auto_err=שמירת חידוש אוטומטי נכשלה
 auto_ecannot=אינך רשאי לנהל חידוש אוטומטי
 auto_title=חידוש תחום אוטומטי
@@ -362,14 +380,15 @@ auto_eyears=שנים חסרות או לא מספריות לחדש עבורן
 auto_eget=פקיעת התוקף נכשלה : $1 
 auto_done=התחדש ל $1 שנה
 auto_failed=נכשל : $1 
-auto_results=השרתים הווירטואליים הבאים חודשו אוטומטית את תחומי ה- DNS שלהם על ידי Virtualmin :
+auto_results=השרתים הווירטואליים הבאים קיבלו חידוש אוטומטי של הדומיינים על ידי Virtualmin :
 auto_raccount=חשבון רשם
 auto_rdom=שם דומיין
 auto_rmsg=מצב חידוש
 auto_subject=חידוש תחום אוטומטי של Virtualmin
 auto_warnmsg=יפוג בעוד $1 ימים
 auto_wsubject=הודעה על פקיעת פקיעת דומיין של Virtualmin
-auto_wresults=לשרתים הווירטואליים הבאים יפוג בקרוב תחום ה- DNS שלהם :
+auto_wresults=השרתים הווירטואליים הבאים יפוגו בקרוב הדומיינים שלהם :
+
 ns_err=עריכת שרתי השמות נכשלה
 ns_ecannot=אינך רשאי לערוך אנשי קשר עבור דומיין זה
 ns_title=ערוך שרתי שמות
@@ -385,7 +404,8 @@ ns_eip=שרת השמות '$1' הוא כתובת IP ולא שם מארח
 ns_ens=לא ניתן היה לפתור את שרת השמות '$1' לכתובת IP
 ns_reg=מעדכן שרתי שמות אצל הרשם ..
 ns_failed=.. נכשל : $1 
-ns_syncing=מעדכן שרתי שמות בתחום ה- DNS ..
+ns_syncing=עדכון שרתי שמות בדומיין ..
+
 contacts_eaccount=החשבון לא נמצא!
 contacts_id=מזהה איש קשר
 contacts_name=שם איש קשר
@@ -393,6 +413,7 @@ contacts_add=הוסף איש קשר $1 חדש.
 contacts_none=לא קשורים אנשי קשר לחשבון רשם זה.
 contacts_elist=רשימת אנשי הקשר נכשלה : $1 
 contacts_title=אנשי רשם
+
 onecontact_header=פרטי הקשר של הרשם עבור $1 
 onecontact_err=שמירת איש הקשר נכשלה
 onecontact_edelete=המחיקה נכשלה : $1 

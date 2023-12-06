@@ -8,7 +8,7 @@ our (%text, %config);
 our $module_name;
 our $module_config_directory;
 our $module_root_directory;
-use lib "./vendor_perl";
+use lib "$ENV{'DOCUMENT_ROOT'}/virtualmin-registrar/vendor_perl";
 BEGIN { push(@INC, ".."); };
 eval "use WebminCore;";
 &init_config();

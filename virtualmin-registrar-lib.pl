@@ -4,6 +4,7 @@
 use strict;
 no strict 'refs';
 use warnings;
+no warnings 'uninitialized';
 our (%text, %config);
 our $module_name;
 our $module_config_directory;

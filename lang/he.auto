@@ -61,8 +61,7 @@ index_nonemsg=לא נמצאו שרתי וירטואלי המשתמשים בחש�
 index_listall=פרט את כל הדומיינים הרשומים.
 
 type_rcom=Register.com
-type_gandi=Gandi.net (API ישן)
-type_newgandi=Gandi.net (API חדש)
+type_gandi=Gandi.net
 type_distribute=להפיץ
 type_namecheap=Namecheap
 

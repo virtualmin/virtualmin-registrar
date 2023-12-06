@@ -61,8 +61,7 @@ index_nonemsg=Не бяха намерени виртуални сървъри, 
 index_listall=Списък на всички регистрирани домейни.
 
 type_rcom=Register.com
-type_gandi=Gandi.net (стар API)
-type_newgandi=Gandi.net (нов API)
+type_gandi=Gandi.net
 type_distribute=Distribute.IT
 type_namecheap=Namecheap
 

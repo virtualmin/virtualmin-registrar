@@ -61,8 +61,7 @@ index_nonemsg=Ez da $1 erregistratzaile kontua erabiltzen duten zerbitzari birtu
 index_listall=Zerrendan erregistratutako domeinu guztiak
 
 type_rcom=Register.com
-type_gandi=Gandi.net (API zaharra)
-type_newgandi=Gandi.net (API berria)
+type_gandi=Gandi.net
 type_distribute=Distribute.IT
 type_namecheap=NameCheap
 

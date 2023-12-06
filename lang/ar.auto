@@ -61,8 +61,7 @@ index_nonemsg=لم يتم العثور على ملقمات ظاهرية تستخ
 index_listall=سرد كافة المجالات المسجلة.
 
 type_rcom=Register.com
-type_gandi=Gandi.net (واجهة برمجة التطبيقات القديمة)
-type_newgandi=Gandi.net (واجهة برمجة تطبيقات جديدة)
+type_gandi=غاندي.نت
 type_distribute=Distrib.IT
 type_namecheap=ناميشياب
 

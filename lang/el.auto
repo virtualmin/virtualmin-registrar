@@ -61,8 +61,7 @@ index_nonemsg=Δεν βρέθηκαν εικονικοί διακομιστές 
 index_listall=Λίστα όλων των καταχωρημένων τομέων.
 
 type_rcom=Εγγραφείτε.com
-type_gandi=Gandi.net (Παλαιό API)
-type_newgandi=Gandi.net (Νέο API)
+type_gandi=Gandi.net
 type_distribute=Διανομή.IT
 type_namecheap=Όνομα
 

@@ -14,6 +14,8 @@ feat_noaccount=Aucune information de compte d'enregistrement n'a été trouvée�
 
 index_title=Registraires de domaines
 
+type_gandi=Gandi.net
+
 edit_header=Détails du compte du registraire
 
 list_none=Aucun domaine Virtualmin n'a encore été enregistré auprès d'un registraire.

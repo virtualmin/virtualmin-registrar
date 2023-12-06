@@ -61,8 +61,7 @@ index_nonemsg=Nie znaleziono serwerów wirtualnych korzystających z konta rejes
 index_listall=Wyświetl wszystkie zarejestrowane domeny.
 
 type_rcom=Register.com
-type_gandi=Gandi.net (stary interfejs API)
-type_newgandi=Gandi.net (nowy interfejs API)
+type_gandi=Gandi.net
 type_distribute=Distribution.IT
 type_namecheap=Namecheap
 

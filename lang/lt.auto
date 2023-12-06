@@ -61,8 +61,7 @@ index_nonemsg=Nerasta virtualių serverių, naudojančių registratoriaus sąska
 index_listall=Išvardykite visus registruotus domenus.
 
 type_rcom=Registruotis.com
-type_gandi=„Gandi.net“ (senoji API)
-type_newgandi=„Gandi.net“ (nauja API)
+type_gandi=Gandi.net
 type_distribute=Platinti.IT
 type_namecheap=Vardas čekas
 

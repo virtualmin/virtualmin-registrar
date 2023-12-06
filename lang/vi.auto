@@ -61,8 +61,7 @@ index_nonemsg=Không tìm thấy máy chủ ảo nào sử dụng tài khoản �
 index_listall=Liệt kê tất cả các tên miền đã đăng ký.
 
 type_rcom=Đăng ký.com
-type_gandi=Gandi.net (API cũ)
-type_newgandi=Gandi.net (API mới)
+type_gandi=Gandi.net
 type_distribute=Phân phối.IT
 type_namecheap=Namecheap
 

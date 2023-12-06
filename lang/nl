@@ -46,8 +46,6 @@ index_nonemsg=Er zijn geen Virtuele servers gevonden die het registratie account
 index_listall=Lijst van alle geregistreerde domeinen
 
 type_rcom=Register.com
-type_gandi=Gandi.net (Oude API)
-type_newgandi=Gandi.net (Nieuwe API)
 type_distribute=Distribute.IT
 type_namecheap=Namecheap
 

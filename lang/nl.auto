@@ -15,6 +15,8 @@ feat_noaccount=Er zijn geen registratie-accountgegevens gevonden!
 
 index_title=Domeinregistreerders
 
+type_gandi=Gandi.net
+
 edit_header=Accountgegevens van de registrar
 
 list_none=Er zijn nog geen Virtualmin-domeinen geregistreerd bij een registrar.

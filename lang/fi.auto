@@ -61,8 +61,7 @@ index_nonemsg=Rekisterinpitäjätiliä $1 käyttäviä virtuaalipalvelimia ei l�
 index_listall=Lista kaikki rekisteröidyt verkkotunnukset.
 
 type_rcom=Register.com
-type_gandi=Gandi.net (vanha sovellusliittymä)
-type_newgandi=Gandi.net (uusi sovellusliittymä)
+type_gandi=Gandi.net
 type_distribute=Distribute.IT
 type_namecheap=namecheap
 

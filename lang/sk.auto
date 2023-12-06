@@ -61,8 +61,7 @@ index_nonemsg=Nenašli sa žiadne virtuálne servery používajúce účet regis
 index_listall=Zoznam všetkých registrovaných domén.
 
 type_rcom=Register.com
-type_gandi=Gandi.net (staré API)
-type_newgandi=Gandi.net (nové API)
+type_gandi=Gandi.net
 type_distribute=Distribute.IT
 type_namecheap=Namecheap
 

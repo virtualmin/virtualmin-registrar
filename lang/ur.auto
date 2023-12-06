@@ -61,8 +61,7 @@ index_nonemsg=رجسٹرار اکاؤنٹ$1 کا استعمال کرنے وال�
 index_listall=تمام رجسٹرڈ ڈومینز کی فہرست بنائیں۔
 
 type_rcom=رجسٹر ڈاٹ کام
-type_gandi=Gandi.net (اولڈ API)
-type_newgandi=Gandi.net (نیا API)
+type_gandi=Gandi.net
 type_distribute=تقسیم کریں۔ IIT
 type_namecheap=نام چیپ
 

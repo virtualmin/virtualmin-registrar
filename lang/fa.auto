@@ -61,8 +61,7 @@ index_nonemsg=هیچ سرور مجازی با استفاده از حساب ثب�
 index_listall=لیست دامنه های ثبت شده
 
 type_rcom=ثبت نام کنید
-type_gandi=Gandi.net (API قدیمی)
-type_newgandi=Gandi.net (API جدید)
+type_gandi=Gandi.net
 type_distribute=توزیع کنید
 type_namecheap=Namecheap
 

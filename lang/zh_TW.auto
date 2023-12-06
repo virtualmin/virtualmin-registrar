@@ -61,8 +61,7 @@ index_nonemsg=找不到使用註冊器帳戶 $1的虛擬服務器。
 index_listall=列出所有註冊的域。
 
 type_rcom=Register.com
-type_gandi=Gandi.net（舊API）
-type_newgandi=Gandi.net（新API）
+type_gandi=甘地網
 type_distribute=發行IT
 type_namecheap=便宜貨
 

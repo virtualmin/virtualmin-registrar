@@ -61,8 +61,7 @@ index_nonemsg=ไม่พบเซิร์ฟเวอร์เสมือน
 index_listall=รายการโดเมนที่ลงทะเบียนทั้งหมด
 
 type_rcom=Register.com
-type_gandi=Gandi.net (API เก่า)
-type_newgandi=Gandi.net (API ใหม่)
+type_gandi=Gandi.net
 type_distribute=Distribute.IT
 type_namecheap=Namecheap
 

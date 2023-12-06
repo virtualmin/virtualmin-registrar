@@ -47,8 +47,6 @@ index_nonemsg=Aucun serveur virtuel utilisant le compte de registraire $1 n'a é
 index_listall=Liste tous les domaines enregistrés.
 
 type_rcom=Register.com
-type_gandi=Gandi.net (ancienne API)
-type_newgandi=Gandi.net (Nouvelle API)
 type_distribute=Distribute.IT
 type_namecheap=Namecheap
 

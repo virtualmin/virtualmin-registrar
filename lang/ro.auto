@@ -61,8 +61,7 @@ index_nonemsg=Nu au fost găsite servere virtuale care utilizează contul de în
 index_listall=Enumerați toate domeniile înregistrate.
 
 type_rcom=Register.com
-type_gandi=Gandi.net (API veche)
-type_newgandi=Gandi.net (API nouă)
+type_gandi=Gandi.net
 type_distribute=Distribute.IT
 type_namecheap=NameCheap
 

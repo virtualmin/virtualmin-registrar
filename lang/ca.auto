@@ -61,8 +61,7 @@ index_nonemsg=No s'ha trobat servidors virtuals que utilitzin el compte de regis
 index_listall=Llista tots els dominis registrats.
 
 type_rcom=Registrar-se.com
-type_gandi=Gandi.net (API antiga)
-type_newgandi=Gandi.net (nova API)
+type_gandi=Gandi.net
 type_distribute=Distribuir.IT
 type_namecheap=Namecheap
 

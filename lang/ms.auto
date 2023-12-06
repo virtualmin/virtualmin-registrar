@@ -61,8 +61,7 @@ index_nonemsg=Tidak dijumpai pelayan maya yang menggunakan akaun pendaftar $1.
 index_listall=Senaraikan semua domain yang didaftarkan.
 
 type_rcom=Daftar.com
-type_gandi=Gandi.net (API Lama)
-type_newgandi=Gandi.net (API Baru)
+type_gandi=Ganda.net
 type_distribute=Sebarkan.IT
 type_namecheap=Peta Nama
 

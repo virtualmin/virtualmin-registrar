@@ -61,8 +61,7 @@ index_nonemsg=Не знайдено віртуальних серверів, щ�
 index_listall=Список усіх зареєстрованих доменів.
 
 type_rcom=Register.com
-type_gandi=Gandi.net (старий API)
-type_newgandi=Gandi.net (новий API)
+type_gandi=Gandi.net
 type_distribute=Поширювати.IT
 type_namecheap=Ім'ячек
 

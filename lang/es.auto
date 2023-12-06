@@ -61,8 +61,7 @@ index_nonemsg=No se encontraron servidores virtuales con la cuenta de registrado
 index_listall=Lista todos los dominios registrados.
 
 type_rcom=Register.com
-type_gandi=Gandi.net (API antigua)
-type_newgandi=Gandi.net (Nueva API)
+type_gandi=Gandi.net
 type_distribute=Distribuir.IT
 type_namecheap=Namecheap
 

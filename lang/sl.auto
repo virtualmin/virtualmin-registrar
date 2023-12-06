@@ -61,8 +61,7 @@ index_nonemsg=Najdenih ni bilo virtualnih strežnikov z registrskim računom $1.
 index_listall=Seznam vseh registriranih domen.
 
 type_rcom=Register.com
-type_gandi=Gandi.net (stari API)
-type_newgandi=Gandi.net (nov API)
+type_gandi=Gandi.net
 type_distribute=Distribui.IT
 type_namecheap=Imenik
 

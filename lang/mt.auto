@@ -61,8 +61,7 @@ index_nonemsg=Ma nstabu ebda server virtwali li jużaw kont tar-reġistratur $1.
 index_listall=Elenka d-dominji reġistrati kollha.
 
 type_rcom=Register.com
-type_gandi=Gandi.net (API Qadima)
-type_newgandi=Gandi.net (API Ġdida)
+type_gandi=Gandi.net
 type_distribute=Distribute.IT
 type_namecheap=Namecheap
 

@@ -61,8 +61,7 @@ index_nonemsg=No Virtual servers using registrar account $1 were found.
 index_listall=List all registered domains.
 
 type_rcom=Register.com
-type_gandi=Gandi.net (Old API)
-type_newgandi=Gandi.net (New API)
+type_gandi=Gandi.net
 type_distribute=Distribute.IT
 type_namecheap=Namecheap
 

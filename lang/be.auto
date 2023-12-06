@@ -61,8 +61,7 @@ index_nonemsg=Віртуальных сервераў з выкарыстанн�
 index_listall=Пералічыце ўсе зарэгістраваныя дамены.
 
 type_rcom=Register.com
-type_gandi=Gandi.net (стары API)
-type_newgandi=Gandi.net (новы API)
+type_gandi=Gandi.net
 type_distribute=Размяркоўваць.IT
 type_namecheap=Namecheap
 

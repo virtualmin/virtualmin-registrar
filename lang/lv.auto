@@ -61,8 +61,7 @@ index_nonemsg=Netika atrasts neviens virtuālais serveris, kas izmanto reģistra
 index_listall=Uzskaitiet visus reģistrētos domēnus.
 
 type_rcom=Reģistrēties.com
-type_gandi=Gandi.net (vecā API)
-type_newgandi=Gandi.net (jauna API)
+type_gandi=Gandi.net
 type_distribute=Izplatīt.IT
 type_namecheap=Nosaukums
 

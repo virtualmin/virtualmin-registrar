@@ -1,6 +1,6 @@
 feat_name=Đăng ký tên miền
 feat_losing=Tên miền sẽ bị hủy đăng ký
-feat_disabling=Tên miền DNS sẽ tạm thời bị vô hiệu hóa
+feat_disabling=Tên miền sẽ tạm thời bị vô hiệu hóa
 feat_label=Đăng ký tên miền?
 feat_label2=Đăng ký tên miền
 feat_edepend=Không tìm thấy tài khoản đăng ký nào được sử dụng để tạo tên miền

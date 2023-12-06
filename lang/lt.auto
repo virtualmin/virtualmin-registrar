@@ -1,6 +1,6 @@
 feat_name=Domeno registracija
 feat_losing=Domenas bus išregistruotas
-feat_disabling=DNS domenas bus laikinai išjungtas
+feat_disabling=Domenas bus laikinai išjungtas
 feat_label=Užregistruoti domeną?
 feat_label2=Užregistruoti domeną
 feat_edepend=Nerasta registratoriaus paskyros, kuri būtų naudojama domenui sukurti

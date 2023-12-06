@@ -1,6 +1,6 @@
 feat_name=域名注册
 feat_losing=该域名将被取消注册
-feat_disabling=DNS域将被暂时禁用
+feat_disabling=该域名将被暂时禁用
 feat_label=注册域名？
 feat_label2=注册域名
 feat_edepend=找不到用于创建域的注册商帐户

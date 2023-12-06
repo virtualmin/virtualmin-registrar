@@ -1,6 +1,6 @@
 feat_name=Înregistrarea domeniului
 feat_losing=Domeniul va fi anulat
-feat_disabling=Domeniul DNS va fi temporar dezactivat
+feat_disabling=Domeniul va fi dezactivat temporar
 feat_label=Înregistrați un domeniu?
 feat_label2=Inregistreaza un domeniu
 feat_edepend=Nu a fost găsit niciun cont de registru care să fie utilizat pentru crearea domeniului

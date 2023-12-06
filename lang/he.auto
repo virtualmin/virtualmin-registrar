@@ -1,6 +1,6 @@
 feat_name=רישום דומיין
 feat_losing=הרישום של הדומיין יבוטל
-feat_disabling=תחום ה- DNS יושבת באופן זמני
+feat_disabling=הדומיין יושבת באופן זמני
 feat_label=לרשום דומיין?
 feat_label2=רישום דומיין
 feat_edepend=לא נמצא חשבון רשם המשמש ליצירת הדומיין

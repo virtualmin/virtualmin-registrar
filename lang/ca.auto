@@ -1,6 +1,6 @@
 feat_name=Registre de domini
 feat_losing=El domini es donarà de baixa
-feat_disabling=El domini DNS quedarà desactivat temporalment
+feat_disabling=El domini es desactivarà temporalment
 feat_label=Registreu el domini?
 feat_label2=Registre domini
 feat_edepend=No s'ha trobat cap compte de registre que s'utilitzi per crear el domini

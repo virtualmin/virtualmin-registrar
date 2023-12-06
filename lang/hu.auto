@@ -1,6 +1,6 @@
 feat_name=Domain regisztráció
 feat_losing=A domain regisztrációja törlődik
-feat_disabling=A DNS domain ideiglenesen le lesz tiltva
+feat_disabling=A domain ideiglenesen le lesz tiltva
 feat_label=Domain regisztrálása?
 feat_label2=Regisztráljon domaint
 feat_edepend=Nem található a domain létrehozásához használt regisztráló fiók

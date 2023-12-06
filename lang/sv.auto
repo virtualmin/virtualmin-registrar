@@ -1,6 +1,6 @@
 feat_name=Domänregistrering
 feat_losing=Domänen kommer att avregistreras
-feat_disabling=DNS-domänen kommer att tillfälligt inaktiveras
+feat_disabling=Domänen kommer att inaktiveras tillfälligt
 feat_label=Registrera domän?
 feat_label2=Registrera domän
 feat_edepend=Inget registratorkonto som användes för att skapa domänen hittades

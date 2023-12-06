@@ -1,6 +1,6 @@
 feat_name=Domeinu-erregistroa
 feat_losing=Domeinua kenduko da
-feat_disabling=DNS domeinua aldi baterako desgaituta egongo da
+feat_disabling=Domeinua aldi baterako desgaitu egingo da
 feat_label=Domeinua erregistratu?
 feat_label2=Erregistratu domeinua
 feat_edepend=Ez da domeinua sortzeko erabili beharreko erregistratzaile kontua aurkitu

@@ -1,5 +1,6 @@
 feat_name=Domeinregistratie
 feat_losing=Het domein wordt uitgeschreven
+feat_disabling=Het domein wordt tijdelijk uitgeschakeld
 feat_label=Domein registreren?
 feat_label2=Domein registreren
 feat_edepend2=Alleen echte domeinnamen zoals <i>foo.com</i> kunnen worden geregistreerd

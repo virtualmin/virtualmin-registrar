@@ -1,6 +1,6 @@
 feat_name=تسجيل النطاقات
 feat_losing=سيتم إلغاء تسجيل النطاق
-feat_disabling=سيتم تعطيل مجال DNS بشكل مؤقت
+feat_disabling=سيتم تعطيل النطاق مؤقتًا
 feat_label=تسجيل المجال؟
 feat_label2=تسجيل المجال
 feat_edepend=لم يتم العثور على حساب مسجل يتم استخدامه لإنشاء المجال

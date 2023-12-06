@@ -1,6 +1,6 @@
 feat_name=Reġistrazzjoni tad-Dominju
 feat_losing=Id-dominju se jiġi dereġistrat
-feat_disabling=Id-dominju DNS se jkun diżattivat temporanjament
+feat_disabling=Id-dominju se jkun diżattivat temporanjament
 feat_label=Irreġistra dominju?
 feat_label2=Irreġistra dominju
 feat_edepend=L-ebda kont tar-reġistratur li jintuża biex jinħoloq id-dominju ma nstab

@@ -1,6 +1,6 @@
 feat_name=Pendaftaran Domain
 feat_losing=Domain akan dibatalkan pendaftarannya
-feat_disabling=Domain DNS akan dilumpuhkan buat sementara waktu
+feat_disabling=Domain akan dilumpuhkan buat sementara waktu
 feat_label=Daftar domain?
 feat_label2=Daftar domain
 feat_edepend=Tidak ditemukan akaun pendaftar yang digunakan untuk membuat domain

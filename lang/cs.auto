@@ -1,6 +1,6 @@
 feat_name=Registrace domény
 feat_losing=Doména bude odregistrována
-feat_disabling=Doména DNS bude dočasně deaktivována
+feat_disabling=Doména bude dočasně deaktivována
 feat_label=Registrovat doménu?
 feat_label2=Zaregistrujte doménu
 feat_edepend=Nebyl nalezen žádný účet registrátora, který by byl použit k vytvoření domény

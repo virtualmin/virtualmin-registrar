@@ -1,6 +1,6 @@
 feat_name=ドメイン登録
 feat_losing=ドメインの登録が解除されます
-feat_disabling=DNSドメインは一時的に無効になります
+feat_disabling=ドメインは一時的に無効になります
 feat_label=ドメインを登録しますか?
 feat_label2=ドメインを登録する
 feat_edepend=ドメインの作成に使用されるレジストラアカウントが見つかりませんでした

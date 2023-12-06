@@ -1,6 +1,6 @@
 feat_name=Verkkotunnuksen rekisteröinti
 feat_losing=Verkkotunnuksen rekisteröinti poistetaan
-feat_disabling=DNS-verkkotunnus poistetaan väliaikaisesti
+feat_disabling=Verkkotunnus poistetaan väliaikaisesti käytöstä
 feat_label=Rekisteröi verkkotunnus?
 feat_label2=Rekisteröi verkkotunnus
 feat_edepend=Verkkotunnuksen luomiseen käytettyä rekisteröintitiliä ei löytynyt

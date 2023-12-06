@@ -1,6 +1,6 @@
 feat_name=도메인 등록
 feat_losing=도메인 등록이 취소됩니다
-feat_disabling=DNS 도메인이 일시적으로 비활성화됩니다
+feat_disabling=도메인이 일시적으로 비활성화됩니다
 feat_label=도메인을 등록하시겠습니까?
 feat_label2=도메인 등록
 feat_edepend=도메인을 만드는 데 사용되는 등록자 계정이 없습니다.

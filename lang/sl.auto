@@ -1,6 +1,6 @@
 feat_name=Registracija domene
 feat_losing=Domena bo odjavljena
-feat_disabling=Domena DNS bo začasno onemogočena
+feat_disabling=Domena bo začasno onemogočena
 feat_label=Registrirati domeno?
 feat_label2=Registriraj domeno
 feat_edepend=Nobenega računa registrarja, ki se uporablja za ustvarjanje domene, ni bilo mogoče najti

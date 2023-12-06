@@ -1,6 +1,6 @@
 feat_name=Alan Adı Tescili
 feat_losing=Alan adının kaydı silinecek
-feat_disabling=DNS etki alanı geçici olarak devre dışı bırakılacak
+feat_disabling=Alan adı geçici olarak devre dışı bırakılacak
 feat_label=Alan adı kaydedilsin mi?
 feat_label2=Alan adını kaydedin
 feat_edepend=Alan adını oluşturmak için kullanılan kayıt şirketi hesabı bulunamadı

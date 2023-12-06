@@ -1,5 +1,6 @@
 feat_name=Enregistrement de domaines
 feat_losing=Le domaine sera radié
+feat_disabling=Le domaine sera temporairement désactivé
 feat_label=Enregistrer un domaine ?
 feat_label2=Enregistrer un domaine
 feat_edepend2=Seuls les vrais noms de domaine comme <i>foo.com</i> peuvent être enregistrés

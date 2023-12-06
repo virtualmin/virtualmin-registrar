@@ -1,6 +1,6 @@
 feat_name=Domēna reģistrācija
 feat_losing=Domēns tiks dereģistrēts
-feat_disabling=DNS domēns tiks īslaicīgi atspējots
+feat_disabling=Domēns tiks īslaicīgi atspējots
 feat_label=Reģistrēt domēnu?
 feat_label2=Reģistrēt domēnu
 feat_edepend=Netika atrasts reģistrētāja konts, kas tiktu izmantots domēna izveidošanai

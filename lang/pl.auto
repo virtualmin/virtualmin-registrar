@@ -1,6 +1,6 @@
 feat_name=Rejestracja domeny
 feat_losing=Domena zostanie wyrejestrowana
-feat_disabling=Domena DNS zostanie tymczasowo wyłączona
+feat_disabling=Domena zostanie tymczasowo wyłączona
 feat_label=Zarejestruj domenę?
 feat_label2=Zarejestruj domenę
 feat_edepend=Nie znaleziono konta rejestratora używanego do utworzenia domeny

@@ -1,6 +1,6 @@
 feat_name=Domeinregistrasie
 feat_losing=Die domein sal gederegistreer word
-feat_disabling=Die DNS-domein sal tydelik gedeaktiveer word
+feat_disabling=Die domein sal tydelik gedeaktiveer word
 feat_label=Registreer domein?
 feat_label2=Registreer domein
 feat_edepend=Geen registrateurrekening wat gebruik word om die domein te skep, is gevind nie

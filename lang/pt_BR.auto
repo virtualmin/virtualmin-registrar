@@ -1,6 +1,6 @@
 feat_name=Registro do Domínio
 feat_losing=O domínio será cancelado
-feat_disabling=O domínio DNS será desativado temporariamente
+feat_disabling=O domínio será temporariamente desativado
 feat_label=Registrar domínio?
 feat_label2=Registrar domínio
 feat_edepend=Nenhuma conta de registrador usada para criar o domínio foi encontrada

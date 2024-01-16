@@ -57,19 +57,29 @@ sub type_namecheap_edit_inputs
 {
 my ($account, $new) = @_;
 my $rv;
+
 $rv .= &ui_table_row($text{'namecheap_user'},
 	&ui_textbox("namecheap_user", $account->{'namecheap_user'}, 30));
+
 $rv .= &ui_table_row($text{'namecheap_apikey'},
 	&ui_textbox("namecheap_apikey", $account->{'namecheap_apikey'}, 40));
+
 $rv .= &ui_table_row($text{'namecheap_srcdom'},
 	&ui_opt_textbox("namecheap_srcdom", $account->{'namecheap_srcdom'}, 30,
 			$text{'namecheap_srcdom_def'}));
+
 $rv .= &ui_table_row($text{'rcom_years'},
 	&ui_opt_textbox("namecheap_years", $account->{'namecheap_years'},
 			4, $text{'rcom_yearsdef'}));
+
+$rv .= &ui_table_row($text{'namecheap_ip'},
+	&ui_opt_textbox("namecheap_ip", $account->{'namecheap_ip'},
+			20, $text{'namecheap_ipdef'}));
+
 $rv .= &ui_table_row($text{'rcom_test'},
 	&ui_radio("namecheap_test", int($account->{'namecheap_test'}),
 		  [ [ 1, $text{'rcom_test1'} ], [ 0, $text{'rcom_test0'} ] ]));
+
 return $rv;
 }
 
@@ -97,6 +107,14 @@ else {
 	$in->{'namecheap_years'} =~ /^\d+$/ && $in->{'namecheap_years'} > 0 &&
 	  $in->{'namecheap_years'} <= 10 || return $text{'rcom_eyears'};
 	$account->{'namecheap_years'} = $in->{'namecheap_years'};
+	}
+if ($in->{'namecheap_ip_def'}) {
+	delete($account->{'namecheap_ip'});
+	}
+else {
+	&check_ipaddress($in->{'namecheap_ip'}) ||
+		return $text{'namecheap_eip'};
+	$account->{'namecheap_ip'} = $in->{'namecheap_ip'};
 	}
 $account->{'namecheap_test'} = $in->{'namecheap_test'};
 return undef;

@@ -48,10 +48,7 @@ if ($account) {
 		return map { ".".$_->{'Name'} } @{$xml->{'Tlds'}->{'Tld'}};
 		}
 	}
-return ( ".com", ".net", ".org", ".info", ".co.uk", ".us", ".me",
-	 ".co", ".ca", ".mobi", ".biz", ".xxx", ".de". ".tv",
-	 ".eu", ".in", ".org.uk", ".me.uk", ".cc", ".asia", ".ws",
-	 ".bz", ".cm", ".nu" );
+return ( ".com", ".net", ".org", ".io", ".co", ".ai", ".co.uk", ".ca", ".dev", ".me", ".de", ".app", ".in", ".is", ".eu", ".gg", ".to", ".ph", ".nl", ".id", ".inc", ".website", ".xyz", ".club", ".online", ".info", ".store", ".best", ".live", ".us", ".tech", ".pw", ".pro", ".uk", ".tv", ".cx", ".mx", ".fm", ".cc", ".world", ".space", ".vip", ".life", ".shop", ".host", ".fun", ".biz", ".icu", ".design", ".art" );
 }
 
 # type_namecheap_edit_inputs(&account, new?)
@@ -308,8 +305,8 @@ return (1, $xml->{'DomainRenewResult'}->{'OrderID'});
 sub type_namecheap_add_instructions
 {
 return &text('namecheap_instructions',
-	     'https://www.namecheap.com/myaccount/signup.aspx',
-	     'http://developer.namecheap.com/docs/');
+	     'https://www.namecheap.com/myaccount/signup/',
+	     'https://www.namecheap.com/support/api/intro/');
 }
 
 # type_namecheap_transfer_domain(&account, &domain, key)

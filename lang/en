@@ -216,6 +216,7 @@ namecheap_euser=Missing or invalid-looking Namecheap username
 namecheap_apikey=Namecheap API key
 namecheap_eapikey=Missing or invalid-looking Namecheap API key
 namecheap_srcdom=Copy contacts from domain
+namecheap_srcdom_def=Use account default contacts
 namecheap_esrcdom=Missing or invalid-looking domain to copy contacts from
 namecheap_esrcdom2=Domain to copy contacts from is not associated with this account
 namecheap_esrcdom3=Failed to check domain to copy contacts from : $1

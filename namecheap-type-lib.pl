@@ -60,9 +60,10 @@ my $rv;
 $rv .= &ui_table_row($text{'namecheap_user'},
 	&ui_textbox("namecheap_user", $account->{'namecheap_user'}, 30));
 $rv .= &ui_table_row($text{'namecheap_apikey'},
-	&ui_textbox("namecheap_apikey", $account->{'namecheap_apikey'}, 30));
+	&ui_textbox("namecheap_apikey", $account->{'namecheap_apikey'}, 40));
 $rv .= &ui_table_row($text{'namecheap_srcdom'},
-	&ui_textbox("namecheap_srcdom", $account->{'namecheap_srcdom'}, 30));
+	&ui_opt_textbox("namecheap_srcdom", $account->{'namecheap_srcdom'}, 30,
+			$text{'namecheap_srcdom_def'}));
 $rv .= &ui_table_row($text{'rcom_years'},
 	&ui_opt_textbox("namecheap_years", $account->{'namecheap_years'},
 			4, $text{'rcom_yearsdef'}));
@@ -82,8 +83,13 @@ $in->{'namecheap_user'} =~ /^\S+$/ || return $text{'namecheap_euser'};
 $account->{'namecheap_user'} = $in->{'namecheap_user'};
 $in->{'namecheap_apikey'} =~ /^\S+$/ || return $text{'namecheap_eapikey'};
 $account->{'namecheap_apikey'} = $in->{'namecheap_apikey'};
-$in->{'namecheap_srcdom'} =~ /^\S+$/ || return $text{'namecheap_esrcdom'};
-$account->{'namecheap_srcdom'} = $in->{'namecheap_srcdom'};
+if ($in->{'namecheap_srcdom_def'}) {
+	delete($account->{'namecheap_srcdom'});
+	}
+else {
+	$in->{'namecheap_srcdom'} =~ /^\S+$/ || return $text{'namecheap_esrcdom'};
+	$account->{'namecheap_srcdom'} = $in->{'namecheap_srcdom'};
+	}
 if ($in->{'namecheap_years_def'}) {
 	delete($account->{'namecheap_years'});
 	}
@@ -114,6 +120,9 @@ my ($ok, $xml) = &call_namecheap_api($account,
 			"namecheap.domains.getList");
 if ($ok) {
 	# Connected OK .. but does the source domain exist?
+	if (!$account->{'namecheap_srcdom'}) {
+		return undef;
+		}
 	my ($ok, $xml) = &call_namecheap_api($account,
 			"namecheap.domains.getContacts",
 			{ 'DomainName' => $account->{'namecheap_srcdom'} });

@@ -1,23 +1,23 @@
-feat_name=Pendaftaran Domain DNS
-feat_losing=Domain DNS akan dibatalkan pendaftarannya
-feat_disabling=Domain DNS akan dilumpuhkan buat sementara waktu
-feat_label=Daftar domain DNS?
-feat_label2=Daftar domain DNS
+feat_name=Pendaftaran Domain
+feat_losing=Domain akan dibatalkan pendaftarannya
+feat_disabling=Domain akan dilumpuhkan buat sementara waktu
+feat_label=Daftar domain?
+feat_label2=Daftar domain
 feat_edepend=Tidak ditemukan akaun pendaftar yang digunakan untuk membuat domain
-feat_edepend2=Hanya nama domain DNS sebenar seperti <i>foo.com</i> yang boleh didaftarkan
+feat_edepend2=Hanya nama domain sebenar seperti <i>foo.com</i> boleh didaftarkan
 feat_eclash=Domain $1 tidak dapat didaftarkan : $2 
 feat_edns=Domain tidak dapat didaftarkan melainkan ciri DNS diaktifkan
-feat_setup=Mendaftarkan domain DNS dengan $1 ..
+feat_setup=Mendaftar domain dengan $1 ..
 feat_failed=.. gagal : $1 
 feat_setupdone=.. selesai. ID pendaftar untuk domain ini adalah $1.
 feat_modifydons=.. selesai. ID pendaftar baru untuk domain ini adalah $1 
-feat_delete=Nyah pendaftaran domain DNS dengan $1 ..
-feat_delete2=Nyah daftar domain DNS ..
-feat_modify1=Nyah pendaftaran domain DNS lama $1 dengan $2 ..
-feat_modify2=Mendaftar semula domain DNS baru $1 dengan $2 ..
+feat_delete=Nyahdaftar domain dengan $1 ..
+feat_delete2=Nyahdaftar domain ..
+feat_modify1=Nyahdaftar domain lama $1 dengan $2 ..
+feat_modify2=Mendaftar semula domain baharu $1 dengan $2 ..
 feat_noderegister=.. nyah pendaftaran telah dilumpuhkan dalam konfigurasi pemalam
-feat_modify=Menukar domain DNS yang didaftarkan dari $1 ke $2 dengan $3 ..
-feat_noaccount=Tiada maklumat akaun pendaftaran DNS dijumpai!
+feat_modify=Menukar domain berdaftar daripada $1 kepada $2 dengan $3 ..
+feat_noaccount=Tiada maklumat akaun daftar ditemui!
 feat_copy=Menyalin kenalan domain dari $1 ..
 feat_ecopy=.. gagal mengambil kenalan : $1 
 feat_nocopy=.. tidak ada yang dapat disalin
@@ -27,6 +27,7 @@ feat_perioddef=Lalai pendaftar
 feat_periodyears=tahun
 feat_eperiod=Tempoh pendaftaran hilang atau tidak sah selama bertahun-tahun
 feat_setupalready=.. pendaftaran sedia ada dijumpai
+
 links_contact=Edit Kenalan Domain
 links_ns=Edit Pelayan Nama
 links_contactv=Lihat Kenalan Domain
@@ -34,7 +35,8 @@ links_rereg=Hapus kaitkan Domain
 links_import=Domain Bersekutu
 links_renew=Perbaharui Domain
 links_transfer=Pindahkan Domain
-index_title=Pendaftar Domain DNS
+
+index_title=Pendaftar Domain
 index_registrar=Pendaftar
 index_desc=Penerangan akaun
 index_enabled=Diaktifkan?
@@ -57,14 +59,15 @@ index_actvirts=Senaraikan pelayan maya
 index_msg=Pelayan maya menggunakan akaun pendaftar $1 ..
 index_nonemsg=Tidak dijumpai pelayan maya yang menggunakan akaun pendaftar $1.
 index_listall=Senaraikan semua domain yang didaftarkan.
+
 type_rcom=Daftar.com
-type_gandi=Gandi.net (API Lama)
-type_newgandi=Gandi.net (API Baru)
+type_gandi=Ganda.net
 type_distribute=Sebarkan.IT
 type_namecheap=Peta Nama
+
 edit_title1=Tambah Akaun Pendaftar
 edit_title2=Edit Akaun Pendaftar
-edit_header=Perincian akaun pendaftar DNS
+edit_header=Butiran akaun pendaftar
 edit_header2=Pilihan domain peringkat teratas
 edit_header3=Arahan akaun baru
 edit_egone=Akaun tidak lagi wujud!
@@ -82,6 +85,7 @@ edit_all=Semua domain
 edit_suffixes=TLD yang disenaraikan
 edit_delete=Keluarkan
 edit_ecannot=Anda tidak dibenarkan mengedit akaun pendaftar
+
 save_err=Gagal menyimpan akaun
 save_err2=Gagal membuang akaun
 save_edoms=Ini digunakan oleh domain Virtualmin berikut : $1 
@@ -95,6 +99,7 @@ save_ens=Gagal mencari alamat IP untuk nameserver '$1'
 save_ensip=Pelayan nama '$1' mesti dimasukkan sebagai nama hos, bukan alamat IP
 save_enss=Tidak ada pelayan nama yang dimasukkan
 save_transfer=Akaun ini digunakan untuk membuat domain $1. <br> Pilih akaun pendaftar yang dapat digunakan untuk mengelola domain ini sebagai gantinya :
+
 rcom_account=ID log masuk akaun
 rcom_pass=Kata laluan akaun
 rcom_eaccount=ID log masuk tidak ada atau tidak sah
@@ -163,6 +168,7 @@ rcom_eccaddress=Alamat pengebilan kad kredit tiada
 rcom_ecczip=Poskod pengebilan kad kredit tiada
 rcom_instructions=Untuk mendaftar akaun dengan Register.com dengan akses ke API mereka, pergi ke <a href='$1' target=_new'>halaman akaun rakan kongsi baru</a> mereka dan lengkapkan borang di sana. Setelah membuat akaun dan log masuk ke laman web mereka, anda perlu menambahkan dana kepadanya menggunakan kad kredit sebelum dapat digunakan untuk mendaftarkan domain apa pun.
 rcom_createinfo=Sebelum akaun ini dapat digunakan, hal berikut harus terjadi: <br><ul> <li>Alamat IP sistem anda mesti disenaraikan oleh Register.com, yang mungkin memakan masa beberapa jam.<br> <li>Kredit mesti ditambahkan ke akaun anda, yang boleh dilakukan di<a href=http://www.rcomexpress.com/> http://www.rcomexpress.com/ </a>dengan log masuk dengan nama pengguna dan kata laluan yang anda pilih.<br > </ul>
+
 gandi_account=Log masuk akaun (seperti <tt>XX5555-GANDI</tt>)
 gandi_pass=Kata laluan akaun
 gandi_contact=ID kenalan untuk domain baru
@@ -186,6 +192,7 @@ gandi_apikey=Kunci API
 gandi_etries=Operasi Gandi API gagal diselesaikan setelah $2 saat - status akhir adalah $1 
 gandi_ecreate=Ralat status pembuatan : $1 
 gandi_eassoc=Kenalan $1 tidak dapat dikaitkan dengan domain ini
+
 distribute_account=Nombor akaun
 distribute_user=Nama pengguna akaun
 distribute_pass=Kata laluan akaun
@@ -203,6 +210,7 @@ distribute_edom=Nama domain sedia ada tidak ada atau tidak kelihatan untuk dihub
 distribute_edom2=Gagal mendapatkan perincian domain yang ada : $1 
 distribute_ebase=Gagal mendapatkan maklumat untuk domain $1 
 distribute_eowner=Gagal mendapatkan ID kenalan pemilik untuk domain $1 
+
 namecheap_user=Nama pengguna
 namecheap_euser=Nama pengguna Namecheap tiada atau tidak kelihatan
 namecheap_apikey=Kunci API Namecheap
@@ -219,6 +227,7 @@ namecheap_enstwo=Namecheap menghendaki setiap domain mempunyai sekurang-kurangny
 namecheap_instructions=Untuk mendaftar akaun dengan Namecheap, pergi ke laman web mereka dan <a href='$1' target=_new'>mendaftar untuk akaun</a>. Anda perlu mengaktifkan akses API pada akaun anda, seperti yang didokumentasikan di <a href='$2' target=_new>halaman API Namecheap</a>.
 namecheap_etransfer=Pemindahan gagal diselesaikan selepas 5 minit : $1 
 namecheap_etransfer2=Pemindahan gagal diselesaikan setelah 5 minit, dan tidak ada maklumat status yang tersedia
+
 delete_err1=Gagal mematikan akaun
 delete_err2=Gagal mengaktifkan akaun
 delete_err3=Gagal membuang akaun
@@ -227,14 +236,16 @@ delete_title=Buang Akaun
 delete_rusure=Adakah anda pasti mahu membuang $1 akaun yang dipilih? Mereka masih ada dengan pendaftar, tetapi tidak lagi dapat digunakan oleh Virtualmin.
 delete_ok=Ya, Buang Mereka
 delete_edoms=Akaun $1 masih digunakan oleh domain Virtualmin berikut : $2 
+
 list_title=Domain Berdaftar
 list_dom=Nama domain
 list_registrar=Nama pendaftar
 list_account=Akaun pendaftar
 list_id=ID dengan pendaftar
-list_none=Domain Virtualmin belum didaftarkan dengan pendaftar DNS mana pun.
-list_none2=Belum ada domain Virtualmin yang didaftarkan dengan pendaftar DNS ini.
+list_none=Tiada domain Virtualmin telah didaftarkan dengan mana-mana pendaftar lagi.
+list_none2=Tiada domain Virtualmin telah didaftarkan dengan pendaftar ini lagi.
 list_expiry=Tarikh luput
+
 contact_err=Gagal mengedit maklumat kenalan
 contact_ecannot=Anda tidak dibenarkan mengedit kenalan untuk domain ini
 contact_edom=Tidak dijumpai pelayan Virtualmin untuk $1 
@@ -284,6 +295,7 @@ contact_esave=Gagal mengemas kini pendaftar : $1
 contact_createtab=Buat kenalan
 contact_selecttab=Pilih kenalan
 contact_efind=Tidak dijumpai hubungan dengan ID $1 
+
 import_title=Pendaftaran Domain Bersekutu
 import_header=Perincian pendaftar domain yang ada
 import_ecannot=Anda tidak dibenarkan mengaitkan domain
@@ -303,6 +315,7 @@ import_transfer=Pindah dari pendaftar lain?
 import_transferyes=Ya, dengan kunci
 import_renew=Memperbaharui juga semasa memindahkan?
 import_renewyes=Ya, untuk
+
 transfer_title=Pindahkan Pendaftaran Domain
 transfer_header=Perincian permintaan pemindahan
 transfer_account=Pindahkan ke akaun
@@ -313,12 +326,14 @@ transfer_ecannot=Anda tidak dibenarkan memindahkan domain
 transfer_transferring=Memindahkan dari pendaftar semasa ..
 transfer_done=.. selesai. ID pendaftar adalah $1.
 transfer_done2=Langkah lain mungkin diperlukan di pendaftar asal sebelum pemindahan selesai, dan domain ini dapat <a href='$1'>diimport ke Virtualmin</a>.
+
 dereg_err=Gagal memutuskan hubungan domain
 dereg_ealready=Domain ini tidak dikaitkan dengan pendaftar mana pun
 dereg_title=Pendaftaran Domain Bersekutu
 dereg_rusure=Adakah anda pasti mahu membuang perkaitan antara domain Virtualmin ini dan pendaftarannya dengan $1 ? Sekiranya ia dihapus di Virtualmin, domain tersebut tidak akan dikeluarkan dari pendaftar.
 dereg_ok=Hapus Kira-kira Domain
 dereg_doing=Menolak kaitan pendaftaran domain dengan akaun $1 ..
+
 renew_title=Perbaharui Pendaftaran Domain
 renew_err=Pembaharuan gagal
 renew_ecannot=Anda tidak dibenarkan memperbaharui pendaftaran
@@ -333,6 +348,7 @@ renew_doing=Memperbaharui domain $1 dengan $2 untuk $3 tahun ..
 renew_failed=.. pembaharuan gagal : $1 
 renew_done=.. pembaharuan selesai - kod dari pendaftar adalah $1 
 renew_account=Memperbaharui dengan akaun
+
 create_title=Buat Akaun Pendaftar
 create_header=Butiran akaun pendaftar baru
 create_ecannot=Anda tidak dibenarkan membuat akaun baru
@@ -341,6 +357,7 @@ create_doing=Membuat akaun baru dengan $1 ..
 create_done=.. berjaya dibuat! ID akaun anda dengan pendaftar adalah $1 
 create_warn=.. dibuat, tetapi dengan amaran: $2. ID akaun anda dengan pendaftar adalah $1 
 create_failed=.. penciptaan gagal : $1 
+
 auto_err=Gagal menyimpan pembaharuan automatik
 auto_ecannot=Anda tidak dibenarkan menguruskan pembaharuan automatik
 auto_title=Pembaharuan Domain Automatik
@@ -362,14 +379,15 @@ auto_eyears=Tahun hilang atau bukan angka untuk diperbaharui untuk
 auto_eget=Gagal tamat tempoh : $1 
 auto_done=Diperbaharui untuk $1 tahun
 auto_failed=Gagal : $1 
-auto_results=Pelayan maya berikut telah memperbaharui domain DNS mereka secara automatik oleh Virtualmin :
+auto_results=Pelayan maya berikut telah memperbaharui domain mereka secara automatik oleh Virtualmin  :
 auto_raccount=Akaun pendaftar
 auto_rdom=Nama domain
 auto_rmsg=Status pembaharuan
 auto_subject=Pembaharuan domain automatik Virtualmin
 auto_warnmsg=Akan tamat dalam $1 hari
 auto_wsubject=Pemberitahuan tamat tempoh domain Virtualmin
-auto_wresults=Pelayan maya berikut akan menyebabkan domain DNS mereka akan segera tamat :
+auto_wresults=Pelayan maya berikut akan tamat tempoh domainnya tidak lama lagi :
+
 ns_err=Gagal mengedit pelayan nama
 ns_ecannot=Anda tidak dibenarkan mengedit kenalan untuk domain ini
 ns_title=Edit Pelayan Nama
@@ -385,7 +403,8 @@ ns_eip=Nameserver '$1' adalah alamat IP, bukan nama hos
 ns_ens=Server nama '$1' tidak dapat diselesaikan ke alamat IP
 ns_reg=Mengemas kini pelayan nama dengan pendaftar ..
 ns_failed=.. gagal : $1 
-ns_syncing=Mengemas kini pelayan nama dalam domain DNS ..
+ns_syncing=Mengemas kini pelayan nama dalam domain ..
+
 contacts_eaccount=Akaun tidak dijumpai!
 contacts_id=ID Kenalan
 contacts_name=Nama kenalan
@@ -393,6 +412,7 @@ contacts_add=Tambahkan kenalan $1 baru.
 contacts_none=Tidak ada kenalan yang dikaitkan dengan akaun pendaftar ini.
 contacts_elist=Gagal menyenaraikan kenalan : $1 
 contacts_title=Kenalan Pendaftar
+
 onecontact_header=Maklumat hubungan pendaftar untuk $1 
 onecontact_err=Gagal menyimpan kenalan
 onecontact_edelete=Pemadaman gagal : $1 

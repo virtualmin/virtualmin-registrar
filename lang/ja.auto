@@ -1,23 +1,23 @@
-feat_name=DNSドメイン登録
-feat_losing=DNSドメインは登録解除されます
-feat_disabling=DNSドメインは一時的に無効になります
-feat_label=DNSドメインを登録しますか？
-feat_label2=DNSドメインを登録する
+feat_name=ドメイン登録
+feat_losing=ドメインの登録が解除されます
+feat_disabling=ドメインは一時的に無効になります
+feat_label=ドメインを登録しますか?
+feat_label2=ドメインを登録する
 feat_edepend=ドメインの作成に使用されるレジストラアカウントが見つかりませんでした
-feat_edepend2=<i>foo.com</i>のような実際のDNSドメイン名のみ登録できます
+feat_edepend2=<i>foo.com</i> のような実際のドメイン名のみを登録できます
 feat_eclash=ドメイン $1を登録できません： $2
 feat_edns=DNS機能が有効になっていないと、ドメインを登録できません
-feat_setup=DNSドメインを $1に登録しています ..
+feat_setup=$1 にドメインを登録しています ..
 feat_failed=..失敗しました： $1
 feat_setupdone=..完了。このドメインのレジストラのIDは $1です。
 feat_modifydons=..完了。このドメインの新しいレジストラのIDは $1です
-feat_delete=$1..でDNSドメインの登録を解除しています
-feat_delete2=DNSドメインの登録を解除しています ..
-feat_modify1=古いDNSドメイン $1を $2に登録解除しています. ..
-feat_modify2=新しいDNSドメイン $1を $2に再登録しています ..
+feat_delete=$1 でドメインの登録を解除しています ..
+feat_delete2=ドメインの登録を解除しています ..
+feat_modify1=古いドメイン $1 を $2 から登録解除しています ..
+feat_modify2=新しいドメイン $1 を $2 に再登録しています。
 feat_noderegister=..プラグイン構成で登録解除が無効化されました
-feat_modify=$3を使用して、登録済みDNSドメインを $1から $2に変更しています. ..
-feat_noaccount=DNS登録アカウント情報が見つかりませんでした！
+feat_modify=$3 を使用して、登録済みドメインを $1 から $2 に変更しています。
+feat_noaccount=登録アカウント情報が見つかりませんでした。
 feat_copy=$1からドメインの連絡先をコピーしています. ..
 feat_ecopy=..連絡先を取得できませんでした： $1
 feat_nocopy=..コピーするものが見つかりません
@@ -27,6 +27,7 @@ feat_perioddef=レジストラーのデフォルト
 feat_periodyears=年
 feat_eperiod=登録期間がない、または無効な年数
 feat_setupalready=..見つかった既存の登録
+
 links_contact=ドメインの連絡先を編集
 links_ns=ネームサーバーを編集する
 links_contactv=ドメインの連絡先を表示
@@ -34,7 +35,8 @@ links_rereg=ドメインの関連付けを解除
 links_import=ドメインを関連付ける
 links_renew=ドメインを更新
 links_transfer=ドメインの移管
-index_title=DNSドメインレジストラー
+
+index_title=ドメインレジストラ
 index_registrar=レジストラ
 index_desc=アカウントの説明
 index_enabled=有効ですか？
@@ -57,14 +59,15 @@ index_actvirts=仮想サーバーの一覧表示
 index_msg=レジストラアカウント $1を使用する仮想サーバー ..
 index_nonemsg=レジストラアカウント $1を使用している仮想サーバーが見つかりませんでした。
 index_listall=すべての登録済みドメインをリストします。
+
 type_rcom=Register.com
-type_gandi=Gandi.net（古いAPI）
-type_newgandi=Gandi.net（新しいAPI）
+type_gandi=Gandi.net
 type_distribute=Distribute.IT
 type_namecheap=Namecheap
+
 edit_title1=レジストラーアカウントを追加
 edit_title2=レジストラーアカウントの編集
-edit_header=DNSレジストラーアカウントの詳細
+edit_header=レジストラアカウントの詳細
 edit_header2=トップレベルドメインオプション
 edit_header3=新しいアカウントの説明
 edit_egone=アカウントは存在しません！
@@ -82,6 +85,7 @@ edit_all=すべてのドメイン
 edit_suffixes=リストされたTLD
 edit_delete=削除する
 edit_ecannot=レジストラアカウントの編集は許可されていません
+
 save_err=アカウントを保存できませんでした
 save_err2=アカウントを削除できませんでした
 save_edoms=次のVirtualminドメインで使用されています： $1
@@ -95,6 +99,7 @@ save_ens=ネームサーバー '$1'のIPアドレスの検索に失敗しまし�
 save_ensip=ネームサーバー '$1'は、IPアドレスではなく、ホスト名として入力する必要があります
 save_enss=ネームサーバーが入力されていません
 save_transfer=このアカウントは $1ドメインの作成に使用されました。<br>これらのドメインの管理に使用できるレジストラアカウントを選択してください：
+
 rcom_account=アカウントのログインID
 rcom_pass=アカウントパスワード
 rcom_eaccount=ログインIDがないか無効です
@@ -163,6 +168,7 @@ rcom_eccaddress=クレジットカードの請求先住所がありません
 rcom_ecczip=クレジットカード請求郵便番号がありません
 rcom_instructions=APIにアクセスできるRegister.comのアカウントにサインアップするには、アカウントの<a href='$1' target=_new'>新しいパートナーアカウントページ</a>にアクセスし、そこでフォームに入力します。アカウントを作成してウェブサイトにログインした後、ドメインの登録に使用する前に、クレジットカードを使用してアカウントに資金を追加する必要があります。
 rcom_createinfo=このアカウントを使用するには、次のことが必要です。<br><ul> <li>システムのIPアドレスがRegister.comによってホワイトリストに登録されている必要があります。これには数時間かかる場合があります。<br> <li>にクレジットを追加する必要がありますアカウント。これは、<a href=http://www.rcomexpress.com/> http://www.rcomexpress.com/ </a>で、選択したユーザー名とパスワードでログインして実行できます。<br > </ul>
+
 gandi_account=アカウントログイン（<tt>XX5555-GANDI</tt>など）
 gandi_pass=アカウントパスワード
 gandi_contact=新しいドメインの連絡先ID
@@ -186,6 +192,7 @@ gandi_apikey=APIキー
 gandi_etries=Gandi API操作は $2秒後に完了できませんでした-最終ステータスは $1でした
 gandi_ecreate=作成ステータスエラー： $1
 gandi_eassoc=連絡先 $1をこのドメインに関連付けることはできません
+
 distribute_account=口座番号
 distribute_user=アカウントのユーザー名
 distribute_pass=アカウントパスワード
@@ -203,6 +210,7 @@ distribute_edom=リンクする既存のドメイン名がないか、無効に�
 distribute_edom2=既存のドメインの詳細を取得できませんでした： $1
 distribute_ebase=ドメイン $1の詳細を取得できませんでした
 distribute_eowner=ドメイン $1の所有者の連絡先IDを取得できませんでした
+
 namecheap_user=Namecheapのユーザー名
 namecheap_euser=Namecheapのユーザー名が見つからないか無効に見える
 namecheap_apikey=Namecheap APIキー
@@ -219,6 +227,7 @@ namecheap_enstwo=Namecheapでは、各ドメインに少なくとも $1のネー
 namecheap_instructions=Namecheapでアカウントにサインアップするには、そのWebサイトにアクセスして、<a href='$1' target=_new'>アカウントにサインアップ</a>します。 <a href='$2' target=_new>Namecheap APIページ</a>に記載されているように、アカウントでAPIアクセスを有効にする必要があります。
 namecheap_etransfer=5分後に転送を完了できませんでした： $1
 namecheap_etransfer2=5分後に転送が完了せず、ステータス情報がありません
+
 delete_err1=アカウントを無効にできませんでした
 delete_err2=アカウントを有効にできませんでした
 delete_err3=アカウントを削除できませんでした
@@ -227,14 +236,16 @@ delete_title=アカウントを削除
 delete_rusure=選択した $1アカウントを削除してもよろしいですか？それらは引き続きレジストラに存在しますが、Virtualminでは使用できなくなります。
 delete_ok=はい、削除します
 delete_edoms=アカウント $1は次のVirtualminドメインでまだ使用中です： $2
+
 list_title=登録済みドメイン
 list_dom=ドメイン名
 list_registrar=レジストラ名
 list_account=レジストラーアカウント
 list_id=レジストラのID
-list_none=VirtualminドメインはまだDNSレジストラに登録されていません。
-list_none2=VirtualminドメインはまだこのDNSレジストラに登録されていません。
+list_none=Virtualmin ドメインはまだどのレジストラにも登録されていません。
+list_none2=このレジストラには Virtualmin ドメインがまだ登録されていません。
 list_expiry=有効期限
+
 contact_err=連絡先の詳細を編集できませんでした
 contact_ecannot=このドメインの連絡先を編集することはできません
 contact_edom=$1のVirtualminサーバーが見つかりませんでした
@@ -284,6 +295,7 @@ contact_esave=レジストラの更新に失敗しました： $1
 contact_createtab=連絡先を作成する
 contact_selecttab=連絡先を選択
 contact_efind=ID $1の連絡先は見つかりませんでした
+
 import_title=ドメイン登録の関連付け
 import_header=既存のドメイン登録事業者の詳細
 import_ecannot=ドメインの関連付けは許可されていません
@@ -303,6 +315,7 @@ import_transfer=別のレジストラから移管しますか？
 import_transferyes=はい、キー付き
 import_renew=転送時にも更新しますか？
 import_renewyes=はい、
+
 transfer_title=ドメイン登録の移管
 transfer_header=振込依頼内容
 transfer_account=アカウントに転送
@@ -313,12 +326,14 @@ transfer_ecannot=ドメインの移管は許可されていません
 transfer_transferring=現在の登録事業者からの移管 ..
 transfer_done=..完了。レジストラのIDは $1です。
 transfer_done2=移管が完了する前に、元のレジストラで他の手順が必要になる場合があります。このドメインは、<a href='$1'>Virtualminにインポート</a>できます。
+
 dereg_err=ドメインの関連付けを解除できませんでした
 dereg_ealready=このドメインはどのレジストラにも関連付けられていません
 dereg_title=ドメイン登録の関連付けを解除
 dereg_rusure=このVirtualminドメインと $1への登録との間のこの関連付けを削除してもよろしいですか？ Virtualminで削除された場合、ドメインはレジストラから削除されません。
 dereg_ok=ドメインの関連付けを解除
 dereg_doing=ドメイン登録とアカウント $1との関連付けを解除しています。
+
 renew_title=ドメイン登録を更新
 renew_err=更新できませんでした
 renew_ecannot=登録を更新することはできません
@@ -333,6 +348,7 @@ renew_doing=ドメイン $1を $2で $3年間更新しています. ..
 renew_failed=..更新に失敗しました： $1
 renew_done=..更新が完了しました-レジストラからのコードは $1でした
 renew_account=アカウントで更新
+
 create_title=レジストラーアカウントの作成
 create_header=新しいレジストラアカウントの詳細
 create_ecannot=新しいアカウントを作成することはできません
@@ -341,6 +357,7 @@ create_doing=$1で新しいアカウントを作成しています ..
 create_done=..正常に作成されました！レジストラのアカウントIDは $1です
 create_warn=..作成されましたが、警告があります： $2。レジストラのアカウントIDは $1です
 create_failed=..作成に失敗しました： $1
+
 auto_err=自動更新を保存できませんでした
 auto_ecannot=自動更新を管理することはできません
 auto_title=自動ドメイン更新
@@ -362,14 +379,15 @@ auto_eyears=更新する年がないか、数値ではない年
 auto_eget=有効期限の取得に失敗しました： $1
 auto_done=$1年間更新
 auto_failed=失敗しました： $1
-auto_results=次の仮想サーバーのDNSドメインはVirtualminによって自動的に更新されています。
+auto_results=次の仮想サーバーのドメインは Virtualmin によって自動的に更新されました。
 auto_raccount=レジストラーアカウント
 auto_rdom=ドメイン名
 auto_rmsg=更新ステータス
 auto_subject=Virtualmin自動ドメイン更新
 auto_warnmsg=$1日後に期限切れになります
 auto_wsubject=Virtualminドメインの有効期限通知
-auto_wresults=次の仮想サーバーのDNSドメインは間もなく期限切れになります。
+auto_wresults=次の仮想サーバーのドメインはまもなく期限切れになります。
+
 ns_err=ネームサーバーの編集に失敗しました
 ns_ecannot=このドメインの連絡先を編集することはできません
 ns_title=ネームサーバーを編集する
@@ -385,7 +403,8 @@ ns_eip=ネームサーバー '$1'はホスト名ではなくIPアドレスです
 ns_ens=ネームサーバー '$1'をIPアドレスに解決できませんでした
 ns_reg=レジストラでネームサーバーを更新しています ..
 ns_failed=..失敗しました： $1
-ns_syncing=DNSドメインのネームサーバーを更新しています. ..
+ns_syncing=ドメイン内のネームサーバーを更新しています ..
+
 contacts_eaccount=アカウントが見つかりません！
 contacts_id=連絡先ID
 contacts_name=連絡先
@@ -393,6 +412,7 @@ contacts_add=新しい $1連絡先を追加します。
 contacts_none=このレジストラアカウントに関連付けられている連絡先はありません。
 contacts_elist=連絡先のリストに失敗しました： $1
 contacts_title=レジストラの連絡先
+
 onecontact_header=$1のレジストラ連絡先の詳細
 onecontact_err=連絡先を保存できませんでした
 onecontact_edelete=削除に失敗しました： $1

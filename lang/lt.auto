@@ -1,23 +1,23 @@
-feat_name=DNS domenų registracija
-feat_losing=DNS domenas bus išregistruotas
-feat_disabling=DNS domenas bus laikinai išjungtas
-feat_label=Registruoti DNS domeną?
-feat_label2=Užregistruokite DNS domeną
+feat_name=Domeno registracija
+feat_losing=Domenas bus išregistruotas
+feat_disabling=Domenas bus laikinai išjungtas
+feat_label=Užregistruoti domeną?
+feat_label2=Užregistruoti domeną
 feat_edepend=Nerasta registratoriaus paskyros, kuri būtų naudojama domenui sukurti
-feat_edepend2=Galima registruoti tik tikrus DNS domenų vardus, tokius kaip <i>foo.com</i>
+feat_edepend2=Galima registruoti tik tikrus domenų vardus, pvz., <i>foo.com</i>
 feat_eclash=Domeno $1 negalima užregistruoti : $2 
 feat_edns=Domeno negalima registruoti, jei neįgalinta DNS funkcija
-feat_setup=DNS domeno registravimas naudojant $1.
+feat_setup=Registruojamas domenas su $1 ..
 feat_failed=.. nepavyko : $1 
 feat_setupdone=.. padaryta. Šio domeno registratoriaus ID yra $1.
 feat_modifydons=.. padaryta. Naujo šio domeno registratoriaus ID yra $1 
-feat_delete=Išregistruoti DNS domeną iš $1.
-feat_delete2=Išregistruoti DNS domeną ..
-feat_modify1=Išregistruoti seną DNS domeną $1 iš $2.
-feat_modify2=Perregistruoti naują DNS domeną $1 su $2.
+feat_delete=Išregistruojamas domenas su $1 ..
+feat_delete2=Išregistruojamas domenas ..
+feat_modify1=Išregistruojamas senas domenas $1 su $2 ..
+feat_modify2=Perregistruojamas naujas domenas $1 su $2 ..
 feat_noderegister=.. išregistravimas buvo išjungtas naudojant įskiepio konfigūraciją
-feat_modify=Pakeiskite registruotą DNS domeną iš $1 į $2 su $3.
-feat_noaccount=Nerasta jokios DNS registracijos paskyros informacijos!
+feat_modify=Keičiamas registruotas domenas iš $1 į $2 su $3 ..
+feat_noaccount=Registro sąskaitos informacijos nerasta!
 feat_copy=Kopijuojami domeno kontaktai iš $1.
 feat_ecopy=.. nepavyko gauti kontaktų : $1 
 feat_nocopy=.. nė vieno nerasta kopijuoti
@@ -27,6 +27,7 @@ feat_perioddef=Registratoriaus numatytasis nustatymas
 feat_periodyears=metų
 feat_eperiod=Trūksta arba netinkamas registracijos laikotarpis metais
 feat_setupalready=.. rasta esama registracija
+
 links_contact=Redaguoti domeno kontaktus
 links_ns=Redaguoti vardų serverius
 links_contactv=Peržiūrėti domeno kontaktus
@@ -34,7 +35,8 @@ links_rereg=Atsieti domeną
 links_import=Susijęs domenas
 links_renew=Atnaujinti domeną
 links_transfer=Perduoti domeną
-index_title=DNS domenų registratoriai
+
+index_title=Domeno registratoriai
 index_registrar=Teismo kancleris
 index_desc=Sąskaitos aprašymas
 index_enabled=Įjungtas?
@@ -57,14 +59,15 @@ index_actvirts=Išvardykite virtualius serverius
 index_msg=Virtualūs serveriai, naudojantys registratoriaus sąskaitą $1.
 index_nonemsg=Nerasta virtualių serverių, naudojančių registratoriaus sąskaitą $1.
 index_listall=Išvardykite visus registruotus domenus.
+
 type_rcom=Registruotis.com
-type_gandi=„Gandi.net“ (senoji API)
-type_newgandi=„Gandi.net“ (nauja API)
+type_gandi=Gandi.net
 type_distribute=Platinti.IT
 type_namecheap=Vardas čekas
+
 edit_title1=Pridėti registratoriaus sąskaitą
 edit_title2=Redaguoti registratoriaus sąskaitą
-edit_header=DNS registratoriaus sąskaitos duomenys
+edit_header=Registratoriaus sąskaitos duomenys
 edit_header2=Aukščiausio lygio domeno parinktys
 edit_header3=Naujos sąskaitos instrukcijos
 edit_egone=Paskyros nebeegzistuoja!
@@ -82,6 +85,7 @@ edit_all=Visi domenai
 edit_suffixes=Įtraukti į sąrašą TLD
 edit_delete=Pašalinti
 edit_ecannot=Jums neleidžiama redaguoti registratorių paskyrų
+
 save_err=Nepavyko išsaugoti paskyros
 save_err2=Nepavyko pašalinti paskyros
 save_edoms=Jį naudoja šie „Virtualmin“ domenai : $1 
@@ -95,6 +99,7 @@ save_ens=Nepavyko ieškoti vardų serverio „$1“ IP adreso
 save_ensip=Vardų serveris „$1“ turi būti įvestas kaip pagrindinio kompiuterio vardas, o ne IP adresas
 save_enss=Neįvesta vardų serverių
 save_transfer=Ši sąskaita buvo naudojama kuriant $1 domenus. <br> Pasirinkite registratoriaus abonementą, kuris gali būti naudojamas šiems domenams valdyti :
+
 rcom_account=Sąskaitos prisijungimo ID
 rcom_pass=Paskyros slaptažodis
 rcom_eaccount=Trūksta arba netinkamas prisijungimo ID
@@ -163,6 +168,7 @@ rcom_eccaddress=Trūksta kredito kortelės atsiskaitymo adreso
 rcom_ecczip=Nėra kredito kortelės atsiskaitymo pašto kodo
 rcom_instructions=Norėdami prisiregistruoti prie paskyros Registruotis.com svetainėje, turėdami prieigą prie jų API, eikite į <a href='$1' target=_new'>naujo partnerio paskyros puslapį</a> ir užpildykite ten esančią formą. Sukūrę sąskaitą ir prisijungę prie jų svetainės, turėsite į ją įnešti lėšų naudodami kreditinę kortelę, kad ją būtų galima naudoti bet kuriems domenams registruoti.
 rcom_createinfo=Prieš naudojant šią sąskaitą, turi įvykti: <br><ul> <li>Jūsų sistemos IP adresas turi būti įtrauktas į baltąjį sąrašą, kurį gali užregistruoti Register.com. Tai gali užtrukti kelias valandas.<br> <li>Kreditas turi būti pridėtas prie savo paskyrą, kurią galite padaryti apsilankę<a href=http://www.rcomexpress.com/> http://www.rcomexpress.com/ </a>prisijungę prie jūsų pasirinkto vartotojo vardo ir slaptažodžio. ></ul>
+
 gandi_account=Prisijungimas prie paskyros (pvz., <tt>XX5555-GANDI</tt>)
 gandi_pass=Paskyros slaptažodis
 gandi_contact=Naujų domenų kontaktinis ID
@@ -186,6 +192,7 @@ gandi_apikey=API raktas
 gandi_etries=„Gandi“ API operacijos nepavyko baigti po $2 sekundžių - galutinė būsena buvo $1 
 gandi_ecreate=Kūrimo būsenos klaida : $1 
 gandi_eassoc=Kontaktas $1 negali būti susietas su šiuo domenu
+
 distribute_account=Paskyros numeris
 distribute_user=Sąskaitos vartotojo vardas
 distribute_pass=Paskyros slaptažodis
@@ -203,6 +210,7 @@ distribute_edom=Trūksta arba netinkamai atrodo esamas domeno vardas, su kuriuo 
 distribute_edom2=Nepavyko gauti informacijos apie esamą domeną : $1 
 distribute_ebase=Nepavyko gauti informacijos apie domeną $1 
 distribute_eowner=Nepavyko gauti savininko kontaktinio ID domenui $1 
+
 namecheap_user=„Namecheap“ vartotojo vardas
 namecheap_euser=Trūksta arba netinkamai atrodo „Namecheap“ vartotojo vardas
 namecheap_apikey=„Namecheap“ API raktas
@@ -219,6 +227,7 @@ namecheap_enstwo=„Namecheap“ reikalauja, kad kiekviename domene būtų bent 
 namecheap_instructions=Norėdami prisiregistruoti prie „Namecheap“ paskyros, eikite į jų svetainę ir <a href='$1' target=_new'>prisiregistruokite prie paskyros</a>. Savo paskyroje turėsite įgalinti API prieigą, kaip nustatyta <a href='$2' target=_new>„Namecheap“ API puslapyje</a>.
 namecheap_etransfer=Nepavyko perduoti per 5 minutes : $1 
 namecheap_etransfer2=Perduoti nepavyko po 5 minučių, o informacijos apie būseną nėra
+
 delete_err1=Nepavyko išjungti paskyrų
 delete_err2=Nepavyko įgalinti paskyrų
 delete_err3=Nepavyko pašalinti paskyrų
@@ -227,14 +236,16 @@ delete_title=Pašalinkite paskyras
 delete_rusure=Ar tikrai norite pašalinti $1 pasirinktas paskyras? Jie vis tiek egzistuos kartu su registratoriais, tačiau Virtualmin jais nebebus galima naudotis.
 delete_ok=Taip, pašalinkite juos
 delete_edoms=Paskyrą $1 vis dar naudoja šie „Virtualmin“ domenai : $2 
+
 list_title=Užregistruoti domenai
 list_dom=Domeno vardas
 list_registrar=Registratoriaus vardas
 list_account=Registratoriaus sąskaita
 list_id=ID su registratoriumi
-list_none=Jokio DNS registratoriaus dar nėra įregistruoti „Virtualmin“ domenai.
-list_none2=Šiuo DNS registratoriumi dar neužregistruoti jokie „Virtualmin“ domenai.
+list_none=Dar nė vienas „Virtualmin“ domenas nebuvo užregistruotas jokiame registratoriuje.
+list_none2=Šiame registratoriuje dar neužregistruotas joks „Virtualmin“ domenas.
 list_expiry=Galiojimo laikas
+
 contact_err=Nepavyko redaguoti kontaktinės informacijos
 contact_ecannot=Jums neleidžiama redaguoti šio domeno kontaktų
 contact_edom=Nerasta jokio „Virtualmin“ serverio, skirto $1 
@@ -284,6 +295,7 @@ contact_esave=Nepavyko atnaujinti registratoriaus : $1
 contact_createtab=Sukurkite kontaktus
 contact_selecttab=Pasirinkite adresatus
 contact_efind=Nerasta jokio kontakto su ID $1 
+
 import_title=Susijęs domenų registravimas
 import_header=Informacija apie esamą domenų registratorių
 import_ecannot=Jums neleidžiama susieti domenų
@@ -303,6 +315,7 @@ import_transfer=Perkėlimas iš kito registratoriaus?
 import_transferyes=Taip, su raktu
 import_renew=Taip pat atnaujinti perkeliant?
 import_renewyes=Taip, už
+
 transfer_title=Perduoti domeno registraciją
 transfer_header=Informacija apie prašymą perduoti
 transfer_account=Pervedimas į sąskaitą
@@ -313,12 +326,14 @@ transfer_ecannot=Jums neleidžiama perduoti domenų
 transfer_transferring=Perkėlimas iš dabartinio registratoriaus ..
 transfer_done=.. padaryta. Registratoriaus ID yra $1.
 transfer_done2=Pradėjus registratorių gali prireikti atlikti kitus veiksmus, kol perkėlimas nebus baigtas, ir šį domeną galima <a href='$1'>importuoti į „Virtualmin“</a>.
+
 dereg_err=Nepavyko atsieti domeno
 dereg_ealready=Šis domenas nėra susijęs su jokiu registratoriumi
 dereg_title=Atsietas domenų registravimas
 dereg_rusure=Ar tikrai norite pašalinti šią sąsają tarp šio „Virtualmin“ domeno ir jo registracijos $1 ? Jei jis bus ištrintas iš „Virtualmin“, domenas nebus pašalintas iš registratoriaus.
 dereg_ok=Atsietasis domenas
 dereg_doing=Domeno registracijos atsiejimas nuo paskyros $1.
+
 renew_title=Atnaujinti domenų registraciją
 renew_err=Atnaujinti nepavyko
 renew_ecannot=Jums neleidžiama atnaujinti registracijos
@@ -333,6 +348,7 @@ renew_doing=Atnaujinamas $1 domenas su $2 $3 metus ..
 renew_failed=.. atnaujinti nepavyko : $1 
 renew_done=.. atnaujinimas baigtas - registratoriaus kodas buvo $1 
 renew_account=Atsinaujina su sąskaita
+
 create_title=Sukurkite registratoriaus sąskaitą
 create_header=Nauja registratoriaus sąskaitos informacija
 create_ecannot=Jums neleidžiama kurti naujų paskyrų
@@ -341,6 +357,7 @@ create_doing=Sukuriama nauja sąskaita su $1.
 create_done=.. sėkmingai sukurta! Jūsų sąskaitos ID registratoriuje yra $1 
 create_warn=.. sukurta, tačiau su perspėjimais: $2. Jūsų sąskaitos ID registratoriuje yra $1 
 create_failed=.. sukurti nepavyko : $1 
+
 auto_err=Nepavyko išsaugoti automatinio atnaujinimo
 auto_ecannot=Jums neleidžiama valdyti automatinio atnaujinimo
 auto_title=Automatinis domenų atnaujinimas
@@ -362,14 +379,15 @@ auto_eyears=Trūksta arba neskaitomi metai, kuriuos reikia atnaujinti
 auto_eget=Nepavyko gauti galiojimo laiko : $1 
 auto_done=Atnaujinta $1 metų
 auto_failed=Nepavyko : $1 
-auto_results=Šių virtualių serverių „DNSmin“ domenus automatiškai atnaujino „Virtualmin“ :
+auto_results=„Virtualmin“ automatiškai atnaujino šių virtualių serverių domenus :
 auto_raccount=Registratoriaus sąskaita
 auto_rdom=Domeno vardas
 auto_rmsg=Atnaujinimo būsena
 auto_subject=Automatinis domenų atnaujinimas „Virtualmin“
 auto_warnmsg=Galiojimas baigsis po 1 dienos
 auto_wsubject=„Virtualmin“ domeno galiojimo pabaigos pranešimas
-auto_wresults=Šių virtualių serverių DNS domenų galiojimas greitai baigsis :
+auto_wresults=Netrukus nustos galioti šių virtualių serverių domenai :
+
 ns_err=Nepavyko redaguoti vardų serverių
 ns_ecannot=Jums neleidžiama redaguoti šio domeno kontaktų
 ns_title=Redaguoti vardų serverius
@@ -385,7 +403,8 @@ ns_eip=Vardų serveris „$1“ yra IP adresas, o ne pagrindinis kompiuterio var
 ns_ens=„$1“ vardų serverio nepavyko išspręsti IP adresu
 ns_reg=Vardų serverių atnaujinimas naudojant registratorių.
 ns_failed=.. nepavyko : $1 
-ns_syncing=DNS domeno vardų serverių atnaujinimas ..
+ns_syncing=Atnaujinami vardų serveriai domene ..
+
 contacts_eaccount=Paskyra nerasta!
 contacts_id=Kontaktinis ID
 contacts_name=Kontaktinis vardas
@@ -393,6 +412,7 @@ contacts_add=Pridėkite naują $1 kontaktą.
 contacts_none=Su šia registratoriaus paskyra nesusiję jokie kontaktai.
 contacts_elist=Nepavyko surašyti adresatų : $1 
 contacts_title=Registratoriaus kontaktai
+
 onecontact_header=Registratoriaus kontaktinė informacija apie $1 
 onecontact_err=Nepavyko išsaugoti kontakto
 onecontact_edelete=Ištrinti nepavyko : $1 

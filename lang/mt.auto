@@ -1,23 +1,23 @@
-feat_name=Reġistrazzjoni tad-Dominju DNS
-feat_losing=Id-dominju DNS se jkun irreġistrat
-feat_disabling=Id-dominju DNS se jkun diżattivat temporanjament
-feat_label=Reġistru tad-dominju DNS?
-feat_label2=Reġistru tad-DNS tad-dominju
+feat_name=Reġistrazzjoni tad-Dominju
+feat_losing=Id-dominju se jiġi dereġistrat
+feat_disabling=Id-dominju se jkun diżattivat temporanjament
+feat_label=Irreġistra dominju?
+feat_label2=Irreġistra dominju
 feat_edepend=L-ebda kont tar-reġistratur li jintuża biex jinħoloq id-dominju ma nstab
-feat_edepend2=L-ismijiet tad-dominju DNS reali bħal <i>foo.com</i> biss jistgħu jiġu rreġistrati
+feat_edepend2=Ismijiet ta' dominju reali biss bħal <i>foo.com</i> jistgħu jiġu rreġistrati
 feat_eclash=Id-dominju $1 ma jistax jiġi rreġistrat : $2 
 feat_edns=Dominju ma jistax jiġi rreġistrat sakemm il-karatteristika DNS ma tkunx attivata
-feat_setup=Ir-reġistrazzjoni tad-dominju DNS ma ' $1 ..
+feat_setup=Reġistrazzjoni tad-dominju ma ' $1 ..
 feat_failed=.. Falla : $1 
 feat_setupdone=.. sar. L-ID tar-reġistratur għal dan id-dominju huwa $1.
 feat_modifydons=.. sar. L-ID tar-reġistratur il-ġdid għal dan id-dominju huwa $1 
-feat_delete=Tirreġistra d-dominju DNS ma ' $1 ..
-feat_delete2=Tirreġistra d-dominju DNS ..
-feat_modify1=Tirreġistra d-dominju antik tad-DNS $1 ma ' $2 ..
-feat_modify2=Reġistrazzjoni ta 'dominju DNS ġdid $1 ma' $2 ..
+feat_delete=Tneħħija tar-reġistrazzjoni tad-dominju ma' $1 ..
+feat_delete2=Tneħħija tar-reġistrazzjoni tad-dominju ..
+feat_modify1=Tneħħija tar-reġistrazzjoni tad-dominju antik $1 b' $2 ..
+feat_modify2=Reġistrazzjoni ġdida ta' dominju $1 ma' $2 ..
 feat_noderegister=.. ir-reġistrazzjoni ġiet diżattivata fil-konfigurazzjoni tal-plugin
-feat_modify=Nibdlu dominju DNS reġistrat minn $1 sa $2 ma ' $3 ..
-feat_noaccount=L-ebda informazzjoni dwar il-kont tar-reġistru DNS ma nstab!
+feat_modify=Nibdlu dominju reġistrat minn $1 għal $2 b'$3 ..
+feat_noaccount=Ma nstabet l-ebda informazzjoni dwar il-kont tar-reġistru!
 feat_copy=Ikkopja kuntatti tad-dominju minn $1 ..
 feat_ecopy=.. naqas milli jikseb il-kuntatti : $1 
 feat_nocopy=.. l-ebda wieħed sab li jikkopja
@@ -27,6 +27,7 @@ feat_perioddef=Default tar-Reġistratur
 feat_periodyears=snin
 feat_eperiod=Perjodu ta 'reġistrazzjoni nieqes jew invalidu fis-snin
 feat_setupalready=.. instab reġistrazzjoni eżistenti
+
 links_contact=Edit Kuntatti tad-Dominju
 links_ns=Editja l-Ismijiet ta 'l-Ismijiet
 links_contactv=Ara l-Kuntatti tad-Dominju
@@ -34,7 +35,8 @@ links_rereg=Dominju tad-Dis-assoċjat
 links_import=Dominju Assoċjat
 links_renew=Ġedded id-Dominju
 links_transfer=Trasferiment tad-Dominju
-index_title=Reġistraturi tad-Dominju DNS
+
+index_title=Reġistraturi tad-Dominju
 index_registrar=Reġistratur
 index_desc=Deskrizzjoni tal-kont
 index_enabled=Abilitata?
@@ -57,14 +59,15 @@ index_actvirts=Elenka servers virtwali
 index_msg=Servers virtwali jużaw kont tar-reġistratur $1 ..
 index_nonemsg=Ma nstabu ebda server virtwali li jużaw kont tar-reġistratur $1.
 index_listall=Elenka d-dominji reġistrati kollha.
+
 type_rcom=Register.com
-type_gandi=Gandi.net (API Qadima)
-type_newgandi=Gandi.net (API Ġdida)
+type_gandi=Gandi.net
 type_distribute=Distribute.IT
 type_namecheap=Namecheap
+
 edit_title1=Żid il-Kont tar-Reġistratur
 edit_title2=Editja r-Reġistratur tal-Kont
-edit_header=Dettalji tal-kont tar-reġistratur DNS
+edit_header=Dettalji tal-kont tar-Reġistratur
 edit_header2=Għażliet ta 'dominju fl-ogħla livell
 edit_header3=Istruzzjonijiet tal - kont ġdid
 edit_egone=Kont m'għadux jeżisti!
@@ -82,6 +85,7 @@ edit_all=L-oqsma kollha
 edit_suffixes=TLD elenkati
 edit_delete=Neħħi
 edit_ecannot=M'għandekx permess teditja l-kontijiet tar-reġistratur
+
 save_err=Ma rnexxielux isalva l-kont
 save_err2=Naqas milli jitneħħa l-kont
 save_edoms=Jintuża mid-dominji Virtualmin li ġejjin : $1 
@@ -95,6 +99,7 @@ save_ens=Naqsu milli tfittex l-indirizz IP għal server server '$1'
 save_ensip=Is-server tal-ismijiet "$1" irid jiddaħħal bħala hostname, mhux bħala indirizz IP
 save_enss=Ma daħal l-ebda nameservers
 save_transfer=Dan il-kont intuża biex joħloq dominji $1. <br> Agħżel il-kont tar-reġistratur li jista 'jintuża biex jimmaniġġja dawn id-domains minflok :
+
 rcom_account=ID tal-login tal-kont
 rcom_pass=Password tal-kont
 rcom_eaccount=ID tal-login nieqes jew invalidu
@@ -163,6 +168,7 @@ rcom_eccaddress=Indirizz ta 'kont tal-karta tal-kreditu nieqes
 rcom_ecczip=Kodiċi postali ta 'kontijiet bil-karta ta' kreditu nieqsa
 rcom_instructions=Biex tirreġistra għal kont ma 'Register.com b'aċċess għall-API tagħhom, mur <a href='$1' target=_new'>paġna ta' kont sieħeb ġdid</a> u imla l-formola hemmhekk. Wara l-ħolqien tal-kont u d-dħul fil-websajt tagħhom, ser ikollok bżonn iżżid fondi miegħu permezz ta 'karta ta' kreditu qabel ma tkun tista 'tintuża biex tirreġistra kwalunkwe dominju.
 rcom_createinfo=Qabel ma jkun jista 'jintuża dan il-kont, għandu jseħħ dan li ġej: <br><ul> <li>L-indirizz IP tas-sistema tiegħek għandu jkun elenkat minn Register.com, li jista' jieħu diversi sigħat.<br> <li>Kreditu għandu jkun miżjud ma ' il-kont tiegħek, li jista 'jsir fuq<a href=http://www.rcomexpress.com/> http://www.rcomexpress.com/ </a>billi tilloggja bl-username u l-password li għażilt.<br > </ul>
+
 gandi_account=Id-dħul tal-kont (bħal <tt>XX5555-GANDI</tt>)
 gandi_pass=Password tal-kont
 gandi_contact=Kuntatt ID għal oqsma ġodda
@@ -186,6 +192,7 @@ gandi_apikey=Ċavetta API
 gandi_etries=L-operazzjoni API Gandi naqset wara li tlestiet $2 sekondi - l-istat finali kien $1 
 gandi_ecreate=Żball fl-istat tal-ħolqien : $1 
 gandi_eassoc=Kuntatt $1 ma jistax ikun assoċjat ma 'dan id-dominju
+
 distribute_account=Numru tal-kont
 distribute_user=Username tal-Kont
 distribute_pass=Password tal-kont
@@ -203,6 +210,7 @@ distribute_edom=Hemm isem tad-dominju eżistenti li jkun nieqes jew li jħares m
 distribute_edom2=Ma rnexxielux jikseb dettalji tad-dominju eżistenti : $1 
 distribute_ebase=Ma rnexxielux jikseb dettalji għad-dominju $1 
 distribute_eowner=Ma rnexxielux jikseb ID ta ’kuntatt tas-sid għad-dominju $1 
+
 namecheap_user=Username us namecheap
 namecheap_euser=Kunjom tal-utent ta 'Namecheap li jidher jew nieqes
 namecheap_apikey=Namecheap API ewlenija
@@ -219,6 +227,7 @@ namecheap_enstwo=Namecheap teħtieġ li kull dominju jkollu mill-inqas $1 namese
 namecheap_instructions=Biex tirreġistra għal kont ma 'Namecheap, mur fuq il-websajt tagħhom u <a href='$1' target=_new'>tiffirma għall-kont</a>. Ikollok bżonn tippermetti l-aċċess għall-API fuq il-kont tiegħek, kif iddokumentat fuq <a href='$2' target=_new>paġna tal-API Namecheap</a>.
 namecheap_etransfer=Trasferiment naqas milli jitlesta wara 5 minuti : $1 
 namecheap_etransfer2=It-trasferiment ma rnexxilux jitlesta wara 5 minuti, u l-ebda informazzjoni dwar l-istat hija disponibbli
+
 delete_err1=Naqset milli tiddiżattiva l-kontijiet
 delete_err2=Naqas milli jippermetti l-kontijiet
 delete_err3=Naqset milli tneħħi l-kontijiet
@@ -227,14 +236,16 @@ delete_title=Neħħi l-Kontijiet
 delete_rusure=Int żgur li trid tneħħi l-kontijiet magħżula $1 ? Huma jibqgħu jeżistu mar-reġistraturi, iżda mhux se jibqgħu jintużaw minn Virtualmin.
 delete_ok=Iva, Neħħihom
 delete_edoms=Il-kont $1 għadu jintuża mid-dominji Virtualmin li ġejjin : $2 
+
 list_title=Dominji Reġistrati
 list_dom=Isem tad-domain
 list_registrar=Isem tar-Reġistratur
 list_account=Kont tar-Reġistratur
 list_id=ID mar-reġistratur
-list_none=L-ebda domains Virtualmin ma ġew irreġistrati ma 'kwalunkwe reġistratur DNS s'issa.
-list_none2=L-ebda dominju ta 'Virtualmin ma ġie rreġistrat ma' dan ir-reġistratur DNS.
+list_none=L-ebda dominju Virtualmin għadu ma ġie rreġistrat ma' xi reġistratur.
+list_none2=S'issa ma ġew irreġistrati l-ebda dominji Virtualmin ma' dan ir-reġistratur.
 list_expiry=Data ta 'skadenza
+
 contact_err=Ma rnexxielux jeditja d-dettalji tal-kuntatt
 contact_ecannot=M’intix permess li teditja l-kuntatti għal dan id-dominju
 contact_edom=L-ebda server ta 'Virtualmin għal $1 ma nstab
@@ -284,6 +295,7 @@ contact_esave=Ma rnexxiex taġġorna r-reġistratur : $1
 contact_createtab=Oħloq kuntatti
 contact_selecttab=Agħżel il-kuntatti
 contact_efind=Ma nstab l-ebda kuntatt ma ’ID $1 
+
 import_title=Reġistrazzjoni tad-Dominju Assoċjat
 import_header=Dettalji tar-reġistratur tad-dominju eżistenti
 import_ecannot=M'għandekx permess tassoċja oqsma
@@ -303,6 +315,7 @@ import_transfer=Trasferiment minn reġistratur ieħor?
 import_transferyes=Iva, bil-qofol
 import_renew=Iġġedded ukoll meta tittrasferixxi?
 import_renewyes=Iva, għal
+
 transfer_title=Reġistrazzjoni tad-Dominju tat-Trasferiment
 transfer_header=Dettalji tat-talba għat-trasferiment
 transfer_account=Trasferiment għall-kont
@@ -313,12 +326,14 @@ transfer_ecannot=M'intix permess li tittrasferixxi oqsma
 transfer_transferring=Trasferiment minn reġistratur kurrenti ..
 transfer_done=.. sar. L-ID tar-reġistratur huwa $1.
 transfer_done2=Passi oħra jistgħu jkunu meħtieġa fir-reġistratur oriġinali qabel it-trasferiment ikun komplut, u dan id-dominju jista 'jiġi <a href='$1'>importat fil-Virtualmin</a>.
+
 dereg_err=Naqset milli tiddiżassoċja dominju
 dereg_ealready=Dan id-dominju mhuwiex assoċjat ma 'l-ebda reġistratur
 dereg_title=Dis-Associate Domain Registration
 dereg_rusure=Int żgur li trid tneħħi din l-assoċjazzjoni bejn dan id-dominju Virtualmin u r-reġistrazzjoni tagħha ma ' $1 ? Jekk jitħassar f'Virtualmin, id-dominju mhux se jitneħħa mir-reġistratur.
 dereg_ok=Dominju Assoċjat
 dereg_doing=Tassoċja r-reġistrazzjoni tad-dominju mal-kont $1 ..
+
 renew_title=Ġedded ir-Reġistrazzjoni tad-Dominju
 renew_err=It-tiġdid falla
 renew_ecannot=M'għandekx permess iġġedded ir-reġistrazzjonijiet
@@ -333,6 +348,7 @@ renew_doing=Dominju li jġedded $1 b' $2 għal $3 snin.
 renew_failed=.. it-tiġdid falla : $1 
 renew_done=.. it-tiġdid komplut - kodiċi mir-reġistratur kien $1 
 renew_account=Tiġdid bil-kont
+
 create_title=Oħloq Kont Reġistratur
 create_header=Dettalji ġodda tal-kont tar-reġistratur
 create_ecannot=M'għandekx permess toħloq kontijiet ġodda
@@ -341,6 +357,7 @@ create_doing=Ħolqien ta 'kont ġdid ma' $1 ..
 create_done=.. maħluqa b'suċċess! L-ID tal-kont tiegħek mar-reġistratur huwa $1 
 create_warn=.. maħluqa, iżda bi twissijiet: $2. L-ID tal-kont tiegħek mar-reġistratur huwa $1 
 create_failed=.. Il-ħolqien falla : $1 
+
 auto_err=Ma rnexxielux isalva tiġdid awtomatiku
 auto_ecannot=M'għandekx permess timmaniġġja tiġdid awtomatiku
 auto_title=Tiġdid tad-Dominju Awtomatiku
@@ -362,14 +379,15 @@ auto_eyears=Is-snin nieqsa jew mhux numerużi li jiġġeddu għal
 auto_eget=Ma rnexxiex nikseb skadenza : $1 
 auto_done=Mġedded għal $1 snin
 auto_failed=Naqas : $1 
-auto_results=Is-servers virtwali li ġejjin kellhom id-dominji DNS tagħhom awtomatikament imġedda minn Virtualmin :
+auto_results=Is-servers virtwali li ġejjin kellhom id-dominji tagħhom imġedda awtomatikament minn Virtualmin :
 auto_raccount=Kont tar-Reġistratur
 auto_rdom=Isem tad-domain
 auto_rmsg=Status ta 'tiġdid
 auto_subject=Tiġdid awtomatiku tad-dominju Virtualmin
 auto_warnmsg=Se jiskadi fi $1 ijiem
 auto_wsubject=Notifika ta 'skadenza tad-dominju Virtualmin
-auto_wresults=Is-servers virtwali li ġejjin se jkollhom id-dominji DNS tagħhom jiskadu dalwaqt :
+auto_wresults=Is-servers virtwali li ġejjin se jkollhom id-dominji tagħhom jiskadu dalwaqt :
+
 ns_err=Naqsu milli jeditjaw is-nameservers
 ns_ecannot=M’intix permess li teditja l-kuntatti għal dan id-dominju
 ns_title=Editja l-Ismijiet ta 'l-Ismijiet
@@ -385,7 +403,8 @@ ns_eip=Is-server tal-ismijiet "$1" huwa indirizz IP, mhux isem tal-host
 ns_ens=Is-server tal-ismijiet "$1" ma jistax jiġi solvut għal indirizz IP
 ns_reg=Aġġornament ta 'nameservers ma' reġistratur ..
 ns_failed=.. Falla : $1 
-ns_syncing=Aġġornament ta 'nameservers fid-dominju DNS ..
+ns_syncing=Aġġornament ta' nameservers fid-dominju ..
+
 contacts_eaccount=Ma nstabx kont!
 contacts_id=ID tal-Kuntatt
 contacts_name=Isem tal-Kuntatt
@@ -393,6 +412,7 @@ contacts_add=Żid kuntatt ġdid ta ' $1.
 contacts_none=L-ebda kuntatti ma huma assoċjati ma 'dan il-kont tar-reġistratur.
 contacts_elist=Naqset milli telenka l-kuntatti : $1 
 contacts_title=Kuntatti tar-Reġistratur
+
 onecontact_header=Dettalji ta 'kuntatt tar - reġistratur għal $1 
 onecontact_err=Ma rnexxielux isalva l-kuntatt
 onecontact_edelete=It-tħassir falla : $1 

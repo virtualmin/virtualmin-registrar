@@ -1,23 +1,23 @@
-feat_name=DNS-domänregistrering
-feat_losing=DNS-domänen kommer att avregistreras
-feat_disabling=DNS-domänen kommer att tillfälligt inaktiveras
-feat_label=Registrera DNS-domän?
-feat_label2=Registrera DNS-domän
+feat_name=Domänregistrering
+feat_losing=Domänen kommer att avregistreras
+feat_disabling=Domänen kommer att inaktiveras tillfälligt
+feat_label=Registrera domän?
+feat_label2=Registrera domän
 feat_edepend=Inget registratorkonto som användes för att skapa domänen hittades
-feat_edepend2=Endast verkliga DNS-domännamn som <i>foo.com</i> kan registreras
+feat_edepend2=Endast riktiga domännamn som <i>foo.com</i> kan registreras
 feat_eclash=Domänen $1 kan inte registreras : $2 
 feat_edns=En domän kan inte registreras om inte DNS-funktionen är aktiverad
-feat_setup=Registrerar DNS-domän med $1 ..
+feat_setup=Registrerar domän med $1 ..
 feat_failed=.. misslyckades : $1 
 feat_setupdone=.. Gjort. Registrarens ID för denna domän är $1.
 feat_modifydons=.. Gjort. Den nya registratorns ID för denna domän är $1 
-feat_delete=Avregistrering av DNS-domän med $1 ..
-feat_delete2=Avregistrering av DNS-domän ..
-feat_modify1=Avregistrering av gammal DNS-domän $1 med $2.
-feat_modify2=Registrera ny DNS-domän $1 med $2 igen.
+feat_delete=Avregistrerar domän med $1 ..
+feat_delete2=Avregistrerar domän ..
+feat_modify1=Avregistrerar gammal domän $1 med $2 ..
+feat_modify2=Omregistrerar ny domän $1 med $2 ..
 feat_noderegister=.. avregistrering har inaktiverats i plugin-konfigurationen
-feat_modify=Ändrar registrerad DNS-domän från $1 till $2 med $3.
-feat_noaccount=Ingen DNS-registerkontoinformation hittades!
+feat_modify=Ändra registrerad domän från $1 till $2 med $3 ..
+feat_noaccount=Ingen registerkontoinformation hittades!
 feat_copy=Kopierar domänkontakter från $1 ..
 feat_ecopy=.. kunde inte hämta kontakter : $1 
 feat_nocopy=.. ingen hittade att kopiera
@@ -27,6 +27,7 @@ feat_perioddef=Registrarinställning
 feat_periodyears=år
 feat_eperiod=Saknad eller ogiltig registreringsperiod i år
 feat_setupalready=.. befintlig registrering hittades
+
 links_contact=Redigera domänkontakter
 links_ns=Redigera namnservrar
 links_contactv=Visa domänkontakter
@@ -34,7 +35,8 @@ links_rereg=Skiljedomän
 links_import=Associerad domän
 links_renew=Förnya domänen
 links_transfer=Överför domän
-index_title=DNS-domänregistratorer
+
+index_title=Domänregistratorer
 index_registrar=Registrator
 index_desc=Kontobeskrivning
 index_enabled=Aktiverad?
@@ -57,14 +59,15 @@ index_actvirts=Lista virtuella servrar
 index_msg=Virtuella servrar med registratorkonto $1 ..
 index_nonemsg=Inga virtuella servrar med registratorkonto $1 hittades.
 index_listall=Lista alla registrerade domäner.
+
 type_rcom=Register.com
-type_gandi=Gandi.net (Old API)
-type_newgandi=Gandi.net (Nytt API)
+type_gandi=Gandi.net
 type_distribute=Distribute.IT
 type_namecheap=Namecheap
+
 edit_title1=Lägg till Registrar konto
 edit_title2=Redigera Registrar konto
-edit_header=DNS-registrar kontoinformation
+edit_header=Registrarkontouppgifter
 edit_header2=Domänalternativ på toppnivå
 edit_header3=Nya kontoinstruktioner
 edit_egone=Kontot finns inte längre!
@@ -82,6 +85,7 @@ edit_all=Alla domäner
 edit_suffixes=Listade TLD: er
 edit_delete=Avlägsna
 edit_ecannot=Du får inte redigera registrarkonton
+
 save_err=Det gick inte att spara konto
 save_err2=Det gick inte att ta bort kontot
 save_edoms=Det används av följande Virtualmin-domäner : $1 
@@ -95,6 +99,7 @@ save_ens=Det gick inte att leta upp IP-adress för namnserver '$1'
 save_ensip=Namnservern '$1' måste anges som ett värdnamn, inte som en IP-adress
 save_enss=Inga namnservrar angivna
 save_transfer=Det här kontot användes för att skapa $1 -domäner. <br> Välj registratorkontot som kan användas för att hantera dessa domäner istället :
+
 rcom_account=Konto-inloggnings-ID
 rcom_pass=Kontolösenord
 rcom_eaccount=Saknad eller ogiltigt inloggnings-ID
@@ -163,6 +168,7 @@ rcom_eccaddress=Faktureringsadress för kreditkort saknas
 rcom_ecczip=Saknad kreditkortsfaktureringskod
 rcom_instructions=För att registrera dig för ett konto hos Register.com med åtkomst till deras API, gå till deras <a href='$1' target=_new'>sida om nya partnerskonto</a> och fyll i formuläret där. När du har skapat kontot och loggat in på deras webbplats måste du lägga till medel till det med ett kreditkort innan det kan användas för att registrera några domäner.
 rcom_createinfo=Innan det här kontot kan användas måste följande hända: <br><ul> <li>Ditt systems IP-adress måste vara listad av Register.com, vilket kan ta flera timmar.<br> <li>Kredit måste läggas till ditt konto, vilket kan göras på<a href=http://www.rcomexpress.com/> http://www.rcomexpress.com/ </a>genom att logga in med det användarnamn och lösenord du valt.<br > </ul>
+
 gandi_account=Kontoinloggning (som <tt>XX5555-GANDI</tt>)
 gandi_pass=Kontolösenord
 gandi_contact=Kontakt-ID för nya domäner
@@ -186,6 +192,7 @@ gandi_apikey=API-nyckel
 gandi_etries=Gandi API-operationen kunde inte slutföras efter $2 sekunder - slutstatus var $1 
 gandi_ecreate=Skapningsstatusfel : $1 
 gandi_eassoc=Kontakt $1 kan inte kopplas till den här domänen
+
 distribute_account=Kontonummer
 distribute_user=Konto användarnamn
 distribute_pass=Kontolösenord
@@ -203,6 +210,7 @@ distribute_edom=Befintligt domännamn saknas eller ogiltigt ser att länka till
 distribute_edom2=Det gick inte att få information om befintlig domän : $1 
 distribute_ebase=Det gick inte att få information för domän $1 
 distribute_eowner=Det gick inte att få ägarkontakt-ID för domän $1 
+
 namecheap_user=Namnskapa användarnamn
 namecheap_euser=Namecheap-användarnamn saknas eller ogiltigt
 namecheap_apikey=Namecheap API-nyckel
@@ -219,6 +227,7 @@ namecheap_enstwo=Namecheap kräver att varje domän har minst $1 namnservrar, me
 namecheap_instructions=För att registrera dig för ett konto hos Namecheap, gå till deras webbplats och <a href='$1' target=_new'>registrera dig för ett konto</a>. Du måste aktivera API-åtkomst på ditt konto, som dokumenterat på <a href='$2' target=_new>Namecheap API-sida</a>.
 namecheap_etransfer=Överföringen kunde inte slutföras efter 5 minuter : $1 
 namecheap_etransfer2=Överföringen kunde inte slutföras efter 5 minuter, och ingen statusinformation finns tillgänglig
+
 delete_err1=Det gick inte att inaktivera konton
 delete_err2=Det gick inte att aktivera konton
 delete_err3=Det gick inte att ta bort konton
@@ -227,14 +236,16 @@ delete_title=Ta bort konton
 delete_rusure=Är du säker på att du vill ta bort de $1 valda kontona? De kommer fortfarande att finnas med registratorerna, men kommer inte längre att användas av Virtualmin.
 delete_ok=Ja, ta bort dem
 delete_edoms=Kontot $1 används fortfarande av följande Virtualmin-domäner : $2 
+
 list_title=Registrerade domäner
 list_dom=Domän namn
 list_registrar=Registrarnamn
 list_account=Registrarekonto
 list_id=ID med registrator
-list_none=Inga Virtualmin-domäner har registrerats hos någon DNS-registrator än.
-list_none2=Inga Virtualmin-domäner har registrerats med denna DNS-registrator än.
+list_none=Inga Virtualmin-domäner har registrerats hos någon registrar ännu.
+list_none2=Inga Virtualmin-domäner har registrerats hos denna registrar ännu.
 list_expiry=Utgångsdatum
+
 contact_err=Det gick inte att redigera kontaktinformationen
 contact_ecannot=Du får inte redigera kontakter för den här domänen
 contact_edom=Ingen Virtualmin-server för $1 hittades
@@ -284,6 +295,7 @@ contact_esave=Det gick inte att uppdatera registratorn : $1
 contact_createtab=Skapa kontakter
 contact_selecttab=Välj kontakter
 contact_efind=Ingen kontakt med ID $1 hittades
+
 import_title=Associerad domänregistrering
 import_header=Detaljer om befintlig domänregistrator
 import_ecannot=Du får inte koppla domäner
@@ -303,6 +315,7 @@ import_transfer=Överföra från en annan registrator?
 import_transferyes=Ja, med nyckel
 import_renew=Förnya också vid överföring?
 import_renewyes=Ja, för
+
 transfer_title=Överför domänregistrering
 transfer_header=Detaljer om överföringsbegäran
 transfer_account=Överför till konto
@@ -313,12 +326,14 @@ transfer_ecannot=Du får inte överföra domäner
 transfer_transferring=Överföring från nuvarande registrator ..
 transfer_done=.. Gjort. Registrarens ID är $1.
 transfer_done2=Andra steg kan behövas hos den ursprungliga registratören innan överföringen är klar, och denna domän kan <a href='$1'>importeras till Virtualmin</a>.
+
 dereg_err=Det gick inte att associera domänen
 dereg_ealready=Den här domänen är inte kopplad till någon registrator
 dereg_title=Registrering av dominerad domän
 dereg_rusure=Är du säker på att du vill ta bort denna koppling mellan den här Virtualmin-domänen och dess registrering med $1 ? Om det raderas i Virtualmin tas inte domänen bort från registratorn.
 dereg_ok=Dis-Associated Domain
 dereg_doing=Avkoppling av domänregistrering med konto $1 ..
+
 renew_title=Förnya domänregistrering
 renew_err=Förnyelse misslyckades
 renew_ecannot=Du får inte förnya registreringen
@@ -333,6 +348,7 @@ renew_doing=Förnya domän $1 med $2 i $3 år ..
 renew_failed=.. förnyelse misslyckades : $1 
 renew_done=.. förnyelse komplett - kod från registrar var $1 
 renew_account=Förnya med konto
+
 create_title=Skapa Registrar konto
 create_header=Nya registrarekontouppgifter
 create_ecannot=Du får inte skapa nya konton
@@ -341,6 +357,7 @@ create_doing=Skapar nytt konto med $1 ..
 create_done=.. skapad framgångsrikt! Ditt konto-ID med registratorn är $1 
 create_warn=.. skapad, men med varningar: $2. Ditt konto-ID med registratorn är $1 
 create_failed=.. skapelsen misslyckades : $1 
+
 auto_err=Det gick inte att spara automatisk förnyelse
 auto_ecannot=Du får inte hantera automatisk förnyelse
 auto_title=Automatisk förnyelse av domäner
@@ -362,14 +379,15 @@ auto_eyears=Saknade eller icke-numeriska år att förnya för
 auto_eget=Det gick inte att löpa ut : $1 
 auto_done=Förnyas i $1 år
 auto_failed=Misslyckades : $1 
-auto_results=Följande virtuella servrar har automatiskt förnyat sina DNS-domäner av Virtualmin :
+auto_results=Följande virtuella servrar har fått sina domäner automatiskt förnyade av Virtualmin :
 auto_raccount=Registrarekonto
 auto_rdom=Domän namn
 auto_rmsg=Förnyelsestatus
 auto_subject=Virtualmin automatisk domänförnyelse
 auto_warnmsg=Förfaller om $1 dagar
 auto_wsubject=Virtualmin-domänens utgångsmeddelande
-auto_wresults=Följande virtuella servrar kommer att löpa ut sina DNS-domäner snart :
+auto_wresults=Följande virtuella servrar kommer att få sina domäner att löpa ut snart :
+
 ns_err=Det gick inte att redigera namnservrar
 ns_ecannot=Du får inte redigera kontakter för den här domänen
 ns_title=Redigera namnservrar
@@ -385,7 +403,8 @@ ns_eip=Namnserver '$1' är en IP-adress, inte ett värdnamn
 ns_ens=Namnservern "$1" kunde inte lösas till en IP-adress
 ns_reg=Uppdaterar namnservrar med registrar ..
 ns_failed=.. misslyckades : $1 
-ns_syncing=Uppdaterar namnservrar i DNS-domän ..
+ns_syncing=Uppdatera namnservrar i domän ..
+
 contacts_eaccount=Konto inte funnet!
 contacts_id=Kontakt-ID
 contacts_name=Kontaktnamn
@@ -393,6 +412,7 @@ contacts_add=Lägg till en ny $1 -kontakt.
 contacts_none=Inga kontakter är associerade med detta registrarkonto.
 contacts_elist=Det gick inte att lista kontakter : $1 
 contacts_title=Registrarekontakter
+
 onecontact_header=Registrarens kontaktuppgifter för $1 
 onecontact_err=Det gick inte att spara kontakten
 onecontact_edelete=Radering misslyckades : $1 

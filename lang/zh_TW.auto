@@ -1,23 +1,23 @@
-feat_name=DNS域註冊
-feat_losing=DNS域將被註銷
-feat_disabling=DNS域將被暫時禁用
-feat_label=註冊DNS域？
-feat_label2=註冊DNS域
+feat_name=域名註冊
+feat_losing=該網域將被取消註冊
+feat_disabling=該網域將會暫時禁用
+feat_label=註冊域名？
+feat_label2=註冊域名
 feat_edepend=找不到用於創建域的註冊商帳戶
-feat_edepend2=只能註冊真實的DNS域名，例如<i>foo.com</i>
+feat_edepend2=只能註冊<i>foo.com</i>等真實域名
 feat_eclash=域 $1無法註冊： $2
 feat_edns=除非啟用DNS功能，否則無法註冊域
-feat_setup=向 $1..註冊DNS域。
+feat_setup=正在向 $1 註冊網域 ..
 feat_failed=..失敗： $1
 feat_setupdone=..完成。該域的註冊商ID為 $1。
 feat_modifydons=..完成。該域的新註冊商ID為 $1
-feat_delete=用 $1..註銷DNS域。
-feat_delete2=註銷DNS域 ..
-feat_modify1=用 $2..註銷舊的DNS域 $1。
-feat_modify2=用 $2..重新註冊新的DNS域 $1。
+feat_delete=正在取消註冊域 $1 ..
+feat_delete2=註銷域名 ..
+feat_modify1=正在取消註冊舊網域 $1 與 $2 ..
+feat_modify2=正在向 $2 重新註冊新網域 $1 ..
 feat_noderegister=..取消註冊已在插件配置中禁用
-feat_modify=使用 $3..將註冊的DNS域從 $1更改為 $2。
-feat_noaccount=找不到DNS註冊帳戶信息！
+feat_modify=正在將註冊網域從 $1 變更為 $2，並使用 $3 ..
+feat_noaccount=沒有找到註冊帳號資訊！
 feat_copy=從 $1..複製域聯繫人
 feat_ecopy=..無法獲取聯繫人： $1
 feat_nocopy=..找不到要復制的
@@ -27,6 +27,7 @@ feat_perioddef=註冊服務商默認
 feat_periodyears=年份
 feat_eperiod=缺少註冊年份或年份無效
 feat_setupalready=..找到現有註冊
+
 links_contact=編輯域聯繫人
 links_ns=編輯名稱服務器
 links_contactv=查看域聯繫人
@@ -34,7 +35,8 @@ links_rereg=解除關聯域
 links_import=關聯域
 links_renew=續訂網域
 links_transfer=轉移域
-index_title=DNS域註冊商
+
+index_title=網域註冊商
 index_registrar=登記員
 index_desc=帳戶說明
 index_enabled=已啟用？
@@ -57,14 +59,15 @@ index_actvirts=列出虛擬服務器
 index_msg=使用註冊帳戶 $1..的虛擬服務器
 index_nonemsg=找不到使用註冊器帳戶 $1的虛擬服務器。
 index_listall=列出所有註冊的域。
+
 type_rcom=Register.com
-type_gandi=Gandi.net（舊API）
-type_newgandi=Gandi.net（新API）
+type_gandi=甘地網
 type_distribute=發行IT
 type_namecheap=便宜貨
+
 edit_title1=添加註冊商帳戶
 edit_title2=編輯註冊商帳戶
-edit_header=DNS註冊商帳戶詳細信息
+edit_header=註冊商帳戶詳細信息
 edit_header2=頂級域選項
 edit_header3=新帳戶說明
 edit_egone=帳戶已不存在！
@@ -82,6 +85,7 @@ edit_all=所有領域
 edit_suffixes=列出的頂級域名
 edit_delete=去掉
 edit_ecannot=您無權編輯註冊商帳戶
+
 save_err=無法保存帳戶
 save_err2=無法刪除帳戶
 save_edoms=以下Virtualmin域正在使用它： $1
@@ -95,6 +99,7 @@ save_ens=查找名稱服務器“$1”的IP地址失敗
 save_ensip=名稱服務器'$1'必須作為主機名而不是IP地址輸入
 save_enss=沒有輸入名稱服務器
 save_transfer=該帳戶用於創建 $1個域。<br>請選擇可用於管理這些域的註冊商帳戶：
+
 rcom_account=帳戶登錄ID
 rcom_pass=戶口密碼
 rcom_eaccount=缺少或無效的登錄ID
@@ -163,6 +168,7 @@ rcom_eccaddress=信用卡帳單地址遺失
 rcom_ecczip=信用卡帳單郵遞區號遺失
 rcom_instructions=要在Register.com上註冊可訪問其API的帳戶，請轉到其<a href='$1' target=_new'>新合作夥伴帳戶頁面</a>，並在此處填寫表格。創建帳戶並登錄其網站後，您需要使用信用卡向其添加資金，然後才能用於註冊任何域。
 rcom_createinfo=在使用此帳戶之前，必須先進行以下操作：<br><ul> <li>您的系統的IP地址必須由Register.com列入白名單，這可能需要幾個小時。<br> <li>必須將信用額添加到您的帳戶，可以使用您選擇的用戶名和密碼登錄<a href=http://www.rcomexpress.com/> http://www.rcomexpress.com/ </a>。<br > </ul>
+
 gandi_account=帳戶登錄（例如<tt>XX5555-GANDI</tt>）
 gandi_pass=戶口密碼
 gandi_contact=新域的聯繫人ID
@@ -186,6 +192,7 @@ gandi_apikey=API密鑰
 gandi_etries=$2秒後，Gandi API操作無法完成-最終狀態為 $1
 gandi_ecreate=創建狀態錯誤： $1
 gandi_eassoc=聯繫人 $1不能與此域關聯
+
 distribute_account=賬號
 distribute_user=帳號用戶名
 distribute_pass=戶口密碼
@@ -203,6 +210,7 @@ distribute_edom=與之鍊接的現有域名缺失或外觀無效
 distribute_edom2=無法獲取現有域的詳細信息： $1
 distribute_ebase=無法獲取域 $1的詳細信息
 distribute_eowner=無法獲得域 $1的所有者聯繫人ID
+
 namecheap_user=Namecheap用戶名
 namecheap_euser=Namecheap用戶名缺失或外觀無效
 namecheap_apikey=Namecheap API密鑰
@@ -219,6 +227,7 @@ namecheap_enstwo=Namecheap要求每個域至少有 $1個域名服務器，但您
 namecheap_instructions=要使用Namecheap註冊帳戶，請訪問其網站並<a href='$1' target=_new'>註冊帳戶</a>。您需要根據<a href='$2' target=_new>Namecheap API頁面</a>中的說明，啟用帳戶的API訪問權限。
 namecheap_etransfer=5分鐘後傳輸失敗： $1
 namecheap_etransfer2=5分鐘後傳輸無法完成，並且沒有可用的狀態信息
+
 delete_err1=無法禁用帳戶
 delete_err2=無法啟用帳戶
 delete_err3=無法刪除帳戶
@@ -227,14 +236,16 @@ delete_title=刪除帳號
 delete_rusure=您確定要刪除 $1個所選帳戶嗎？它們仍將與註冊服務商一起存在，但Virtualmin將不再可用。
 delete_ok=是的，刪除它們
 delete_edoms=以下Virtualmin域仍在使用帳戶 $1 : $2
+
 list_title=註冊域名
 list_dom=域名
 list_registrar=註冊商名稱
 list_account=註冊商帳戶
 list_id=註冊商ID
-list_none=尚未在任何DNS註冊機構中註冊Virtualmin域。
-list_none2=尚未向該DNS註冊服務商註冊Virtualmin域。
+list_none=尚未向任何註冊商註冊任何 Virtualmin 網域。
+list_none2=尚未向該註冊商註冊任何 Virtualmin 網域。
 list_expiry=到期日
+
 contact_err=無法編輯聯繫方式
 contact_ecannot=您無權編輯此域的聯繫人
 contact_edom=找不到 $1的Virtualmin服務器
@@ -284,6 +295,7 @@ contact_esave=無法更新註冊商： $1
 contact_createtab=建立聯絡人
 contact_selecttab=選擇聯繫人
 contact_efind=找不到ID為 $1的聯繫人
+
 import_title=關聯域名註冊
 import_header=現有域名註冊商的詳細信息
 import_ecannot=您無權關聯域
@@ -303,6 +315,7 @@ import_transfer=從其他註冊商轉移？
 import_transferyes=是的，帶鑰匙
 import_renew=轉讓時還續約嗎？
 import_renewyes=是的，因為
+
 transfer_title=轉移域名註冊
 transfer_header=轉移請求的詳細信息
 transfer_account=轉入帳戶
@@ -313,12 +326,14 @@ transfer_ecannot=您不得轉讓域名
 transfer_transferring=從當前註冊商轉移
 transfer_done=..完成。註冊服務商的ID為 $1。
 transfer_done2=轉移完成之前，原始註冊商可能需要其他步驟，並且可以將該域<a href='$1'>導入Virtualmin</a>。
+
 dereg_err=解除關聯域失敗
 dereg_ealready=此域未與任何註冊商相關聯
 dereg_title=解除關聯域名註冊
 dereg_rusure=您確定要刪除此Virtualmin域與其在 $1中的註冊之間的關聯嗎？如果在Virtualmin中將其刪除，則不會從註冊商中刪除該域。
 dereg_ok=解除關聯域
 dereg_doing=取消域註冊與帳戶 $1..的關聯
+
 renew_title=續訂域名註冊
 renew_err=續訂失敗
 renew_ecannot=您不可以續訂註冊
@@ -333,6 +348,7 @@ renew_doing=將 $1與 $2續訂 $3年 ..
 renew_failed=..續訂失敗： $1
 renew_done=..更新完成-來自註冊服務商的代碼為 $1
 renew_account=用帳戶續訂
+
 create_title=創建註冊商帳戶
 create_header=新註冊商帳戶詳細信息
 create_ecannot=您無權創建新帳戶
@@ -341,6 +357,7 @@ create_doing=用 $1..創建一個新帳戶
 create_done=..創建成功！您在註冊商處的帳戶ID為 $1
 create_warn=..創建，但帶有警告： $2。您在註冊商處的帳戶ID為 $1
 create_failed=..創建失敗： $1
+
 auto_err=保存自動續訂失敗
 auto_ecannot=您無權管理自動續訂
 auto_title=自動域名續訂
@@ -362,14 +379,15 @@ auto_eyears=續約的年份或非數字年份
 auto_eget=無法過期： $1
 auto_done=續約 $1年
 auto_failed=失敗： $1
-auto_results=以下虛擬服務器已由Virtualmin自動續訂其DNS域：
+auto_results=以下虛擬伺服器的網域已由 Virtualmin 自動續訂：
 auto_raccount=註冊商帳戶
 auto_rdom=域名
 auto_rmsg=續約狀態
 auto_subject=Virtualmin自動域更新
 auto_warnmsg=將在 $1天內過期
 auto_wsubject=Virtualmin域到期通知
-auto_wresults=以下虛擬服務器的DNS域將很快過期：
+auto_wresults=以下虛擬伺服器的網域即將過期：
+
 ns_err=無法編輯名稱服務器
 ns_ecannot=您無權編輯此域的聯繫人
 ns_title=編輯名稱服務器
@@ -385,7 +403,8 @@ ns_eip=名稱服務器“$1”是一個IP地址，而不是主機名
 ns_ens=名稱服務器'$1'無法解析為IP地址
 ns_reg=使用註冊商..更新名稱服務器
 ns_failed=..失敗： $1
-ns_syncing=正在DNS域中更新名稱服務器。
+ns_syncing=更新網域中的名稱伺服器 ..
+
 contacts_eaccount=找不到帳戶！
 contacts_id=聯絡人編號
 contacts_name=聯繫人姓名
@@ -393,6 +412,7 @@ contacts_add=添加一個新的 $1聯繫人。
 contacts_none=沒有聯繫人與此註冊商帳戶相關聯。
 contacts_elist=無法列出聯繫人： $1
 contacts_title=註冊商聯繫人
+
 onecontact_header=$1的註冊商聯繫方式
 onecontact_err=無法保存聯繫人
 onecontact_edelete=刪除失敗： $1

@@ -1,23 +1,23 @@
-feat_name=Registracija domene DNS
-feat_losing=Domena DNS bo odstranjena
-feat_disabling=Domena DNS bo začasno onemogočena
-feat_label=Želite registrirati domeno DNS?
-feat_label2=Registrirajte domeno DNS
+feat_name=Registracija domene
+feat_losing=Domena bo odjavljena
+feat_disabling=Domena bo začasno onemogočena
+feat_label=Registrirati domeno?
+feat_label2=Registriraj domeno
 feat_edepend=Nobenega računa registrarja, ki se uporablja za ustvarjanje domene, ni bilo mogoče najti
-feat_edepend2=Registrirati je mogoče samo resnična imena domen DNS, kot je <i>foo.com</i>
+feat_edepend2=Registrirati je mogoče le prava imena domen, kot je <i>foo.com</i>
 feat_eclash=Domene $1 ni mogoče registrirati : $2 
 feat_edns=Domene ni mogoče registrirati, če ni omogočena funkcija DNS
-feat_setup=Registracija domene DNS s $1 ..
+feat_setup=Registracija domene z $1 ..
 feat_failed=.. ni uspelo : $1 
 feat_setupdone=.. Končano. ID registrarja za to domeno je $1.
 feat_modifydons=.. Končano. ID novega registrarja za to domeno je $1 
-feat_delete=Odjava domene DNS z $1.
-feat_delete2=Preklic registracije domene DNS ..
-feat_modify1=Odjava stare DNS domene $1 z $2 ..
-feat_modify2=Ponovno registriranje nove domene DNS $1 z $2 ..
+feat_delete=Odjava domene z $1 ..
+feat_delete2=Odjava domene ..
+feat_modify1=Odjava stare domene $1 z $2 ..
+feat_modify2=Ponovna registracija nove domene $1 z $2 ..
 feat_noderegister=.. odjava je bila onemogočena v konfiguraciji vtičnika
-feat_modify=Spreminjanje registrirane domene DNS iz $1 v $2 z $3 ..
-feat_noaccount=Podatkov o računu registra DNS ni bilo mogoče najti!
+feat_modify=Spreminjanje registrirane domene iz $1 v $2 z $3 ..
+feat_noaccount=Podatkov o registrskem računu ni bilo mogoče najti!
 feat_copy=Kopiranje domenskih stikov iz $1 ..
 feat_ecopy=.. stikov ni bilo mogoče najti : $1 
 feat_nocopy=.. nobenega ni bilo mogoče kopirati
@@ -27,6 +27,7 @@ feat_perioddef=Privzeti registrar
 feat_periodyears=let
 feat_eperiod=Manjkajoče ali neveljavno obdobje registracije v letih
 feat_setupalready=.. najdena obstoječa registracija
+
 links_contact=Urejanje domenskih stikov
 links_ns=Uredi strežnike imen
 links_contactv=Ogled domenskih stikov
@@ -34,7 +35,8 @@ links_rereg=Odklopi domeno
 links_import=Pridruži domeno
 links_renew=Obnovi domeno
 links_transfer=Prenos domene
-index_title=Registratorji domene DNS
+
+index_title=Registrarji domen
 index_registrar=Registrar
 index_desc=Opis računa
 index_enabled=Omogočeno?
@@ -57,14 +59,15 @@ index_actvirts=Seznam virtualnih strežnikov
 index_msg=Virtualni strežniki z registrskim računom $1 ..
 index_nonemsg=Najdenih ni bilo virtualnih strežnikov z registrskim računom $1.
 index_listall=Seznam vseh registriranih domen.
+
 type_rcom=Register.com
-type_gandi=Gandi.net (stari API)
-type_newgandi=Gandi.net (nov API)
+type_gandi=Gandi.net
 type_distribute=Distribui.IT
 type_namecheap=Imenik
+
 edit_title1=Dodaj račun Registrarja
 edit_title2=Urejanje Registrar računa
-edit_header=Podrobnosti računa registra DNS
+edit_header=Podrobnosti o računu registrarja
 edit_header2=Možnosti domene najvišje ravni
 edit_header3=Nova navodila za račun
 edit_egone=Račun ne obstaja več!
@@ -82,6 +85,7 @@ edit_all=Vse domene
 edit_suffixes=Navedeni TLD
 edit_delete=Odstrani
 edit_ecannot=Nimate dovoljenja za urejanje registrskih računov
+
 save_err=Računa ni bilo mogoče shraniti
 save_err2=Računa ni bilo mogoče odstraniti
 save_edoms=Uporabljajo ga naslednje virtualne domene : $1 
@@ -95,6 +99,7 @@ save_ens=IP-naslova ni bilo mogoče najti za nameserver '$1'
 save_ensip=Nameserver '$1' mora biti vpisan kot ime gostitelja in ne IP naslov
 save_enss=Nobenih strežnikov imen ni vnesenih
 save_transfer=Ta račun je bil uporabljen za ustvarjanje domen $1. <br> Izberite registrski račun, s katerim lahko upravljate te domene :
+
 rcom_account=ID za prijavo na račun
 rcom_pass=Geslo računa
 rcom_eaccount=Manjka ali neveljaven ID za prijavo
@@ -163,6 +168,7 @@ rcom_eccaddress=Manjka naslov za izstavitev kreditne kartice
 rcom_ecczip=Poštna številka za obračun kreditne kartice manjka
 rcom_instructions=Če se želite prijaviti za račun pri Register.com z dostopom do njihovega API-ja, pojdite na njihovo <a href='$1' target=_new'>novo stran partnerskega računa</a> in tam izpolnite obrazec. Ko ustvarite račun in se prijavite na njihovo spletno mesto, mu boste morali dodati sredstva s kreditno kartico, preden ga boste lahko uporabili za registracijo poljubnih domen.
 rcom_createinfo=Pred uporabo tega računa se mora zgoditi naslednje: <br><ul> <li>IP-naslov vašega sistema mora na beli listi registrirati Register.com, kar lahko traja nekaj ur.<br> <li>Kredit je treba dodati svoj račun, kar lahko storite na<a href=http://www.rcomexpress.com/> http://www.rcomexpress.com/ </a>tako, da se prijavite z izbranim uporabniškim imenom in geslom.<br > </ul>
+
 gandi_account=Prijava računa (npr. <tt>XX5555-GANDI</tt>)
 gandi_pass=Geslo računa
 gandi_contact=ID za stike za nove domene
@@ -186,6 +192,7 @@ gandi_apikey=Ključ API
 gandi_etries=Operacije Gandi API ni uspelo dokončati po $2 sekundi - končni status je bil $1 
 gandi_ecreate=Napaka stanja ustvarjanja : $1 
 gandi_eassoc=Stika $1 ni mogoče povezati s to domeno
+
 distribute_account=Številka računa
 distribute_user=Uporabniško ime računa
 distribute_pass=Geslo računa
@@ -203,6 +210,7 @@ distribute_edom=Manjkajoče ali neveljavno obstoječe ime domene za povezavo
 distribute_edom2=Ni bilo mogoče dobiti podrobnosti o obstoječi domeni : $1 
 distribute_ebase=Ni bilo mogoče dobiti podrobnosti za domeno $1 
 distribute_eowner=Pridobitve ID-ja lastnika za domeno $1 ni bilo mogoče
+
 namecheap_user=Uporabniško ime
 namecheap_euser=Manjkajoče ali neveljavno uporabniško ime Namecheap
 namecheap_apikey=Ključ API-ja za ime
@@ -219,6 +227,7 @@ namecheap_enstwo=Imenski potek zahteva, da ima vsaka domena vsaj $1 strežnikov 
 namecheap_instructions=Če se želite prijaviti za račun pri Namecheap, pojdite na njihovo spletno mesto in <a href='$1' target=_new'>se prijavite za račun</a>. V svojem računu boste morali omogočiti dostop do API-ja, kot je dokumentirano na <a href='$2' target=_new>strani API-ja za imensko kopijo</a>.
 namecheap_etransfer=Po 5 minutah prenosa ni bilo mogoče dokončati : $1 
 namecheap_etransfer2=Prenos ni uspel dokončati po 5 minutah in podatkov o statusu ni na voljo
+
 delete_err1=Onemogočanje računov ni uspelo
 delete_err2=Računov ni bilo mogoče omogočiti
 delete_err3=Računov ni bilo mogoče odstraniti
@@ -227,14 +236,16 @@ delete_title=Odstranite račune
 delete_rusure=Ali ste prepričani, da želite odstraniti $1 izbrane račune? Še vedno bodo obstajali pri registratorjih, vendar Virtualmin ne bo več uporaben.
 delete_ok=Da, odstrani jih
 delete_edoms=Račun $1 še vedno uporabljajo naslednje virtualne domene : $2 
+
 list_title=Registrirane domene
 list_dom=Domena
 list_registrar=Ime sodnega tajnika
 list_account=Račun registrarja
 list_id=ID z registrarjem
-list_none=V nobenem registrarju DNS še ni bila registrirana nobena virtualna domena.
-list_none2=V tem registratorju DNS še niso bile registrirane nobene virtualne domene.
+list_none=Nobena domena Virtualmin še ni bila registrirana pri nobenem registrarju.
+list_none2=Pri tem registrarju še ni bila registrirana nobena domena Virtualmin.
 list_expiry=Rok uporabnosti
+
 contact_err=Podrobnosti o stikih ni bilo mogoče urediti
 contact_ecannot=Ni dovoljeno urejati stikov za to domeno
 contact_edom=Virtualmin strežnika za $1 ni bil najden
@@ -284,6 +295,7 @@ contact_esave=Posvetovalnika ni bilo mogoče posodobiti : $1
 contact_createtab=Ustvari stike
 contact_selecttab=Izberite stike
 contact_efind=Stika z ID% $1 ni bilo mogoče najti
+
 import_title=Pridružite registracijo domen
 import_header=Podrobnosti o obstoječem registratorju domen
 import_ecannot=Nimate dovoljenja za povezovanje domen
@@ -303,6 +315,7 @@ import_transfer=Prenos od drugega registrarja?
 import_transferyes=Da, s ključem
 import_renew=Tudi obnovi pri prenosu?
 import_renewyes=Da, za
+
 transfer_title=Prenos registracije domen
 transfer_header=Podrobnosti o zahtevi za prenos
 transfer_account=Prenos na račun
@@ -313,12 +326,14 @@ transfer_ecannot=Prenos domen vam ni dovoljen
 transfer_transferring=Prenos s trenutnega registrarja ..
 transfer_done=.. Končano. ID registrarja je $1.
 transfer_done2=Pred zaključkom prenosa bodo morda potrebni dodatni koraki pri prvotnem registrarju in to domeno je mogoče <a href='$1'>uvesti v Virtualmin</a>.
+
 dereg_err=Prekinitev povezave z domeno ni bilo mogoče
 dereg_ealready=Ta domena ni povezana z nobenim registrarjem
 dereg_title=Registracija domen prepovejte
 dereg_rusure=Ali ste prepričani, da želite odstraniti to povezavo med to virtualno domeno in njeno registracijo z $1 ? Če je izbrisan v Virtualmin, domena ne bo odstranjena iz registrarja.
 dereg_ok=Izključi domeno
 dereg_doing=Razvezana registracija domene z računom $1 ..
+
 renew_title=Obnovite registracijo domene
 renew_err=Obnova ni uspela
 renew_ecannot=Ni vam dovoljeno obnavljati registracij
@@ -333,6 +348,7 @@ renew_doing=Obnovitev domene $1 z $2 za $3 leta ..
 renew_failed=.. obnova ni uspela : $1 
 renew_done=.. popolna obnova - koda registrarja je bila $1 
 renew_account=Obnavljanje z računom
+
 create_title=Ustvari registrski račun
 create_header=Nove podrobnosti računa registrarja
 create_ecannot=Ne smete ustvarjati novih računov
@@ -341,6 +357,7 @@ create_doing=Ustvarjanje novega računa z $1.
 create_done=.. ustvarjeno uspešno! ID vašega računa pri registrarju je $1 
 create_warn=.. ustvarjeno, vendar z opozorili: $2. ID vašega računa pri registrarju je $1 
 create_failed=.. ustvarjanje ni uspelo : $1 
+
 auto_err=Samodejne obnove ni bilo mogoče shraniti
 auto_ecannot=Samodejnega obnavljanja vam ni dovoljeno upravljati
 auto_title=Samodejno podaljšanje domene
@@ -362,14 +379,15 @@ auto_eyears=Manjkajoča ali neštevilčna leta, ki jih je treba obnoviti
 auto_eget=Izteka ni bilo mogoče : $1 
 auto_done=Obnovljeno za $1 leto
 auto_failed=Ni uspelo : $1 
-auto_results=Naslednji virtualni strežniki so svoje domene DNS samodejno obnovili Virtualmin :
+auto_results=Naslednjim virtualnim strežnikom je Virtualmin samodejno obnovil domene :
 auto_raccount=Račun registrarja
 auto_rdom=Domena
 auto_rmsg=Status obnovitve
 auto_subject=Virtualmin samodejna obnova domene
 auto_warnmsg=Izteče v $1 dneh
 auto_wsubject=Obvestilo o izteku virtualne domene
-auto_wresults=Naslednjim navideznim strežnikom bodo kmalu potekle njihove domene DNS :
+auto_wresults=Naslednjim virtualnim strežnikom bodo domene kmalu potekle :
+
 ns_err=Iger ni bilo mogoče urediti
 ns_ecannot=Ni dovoljeno urejati stikov za to domeno
 ns_title=Uredi strežnike imen
@@ -385,7 +403,8 @@ ns_eip=Nameserver '$1' je naslov IP in ne ime gostitelja
 ns_ens=Nameserverja »$1« ni bilo mogoče razrešiti na naslovu IP
 ns_reg=Posodobitev strežnikov imen s registrarjem ..
 ns_failed=.. ni uspelo : $1 
-ns_syncing=Posodobitev strežnikov imen v domeni DNS ..
+ns_syncing=Posodabljanje imenskih strežnikov v domeni ..
+
 contacts_eaccount=Računa ni mogoče najti!
 contacts_id=ID za stik
 contacts_name=Kontaktno ime
@@ -393,6 +412,7 @@ contacts_add=Dodajte nov $1 stik.
 contacts_none=S tem registrskim računom niso povezani stiki.
 contacts_elist=Stikov ni bilo mogoče navesti : $1 
 contacts_title=Imenik tajnika
+
 onecontact_header=Podatki za stik tajnika $1 
 onecontact_err=Stika ni bilo mogoče shraniti
 onecontact_edelete=Brisanje ni uspelo : $1 

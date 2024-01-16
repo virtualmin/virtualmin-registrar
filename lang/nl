@@ -1,21 +1,9 @@
-feat_name=DNS Domein Registratie
-feat_losing=De registratie van het DNS domein zal worden verwijdert
-feat_disabling=Het DNS domein zal tijdelijk worden uitgeschakeld
-feat_label=Registreer DNS domein?
 feat_edepend=Er is geen registratie account dat gebruikt kan worden om een domein te maken
-feat_edepend2=Alleen echter DNS domein namen zoals <i>zoiets.com</i> kunnen worden geregistreerd
 feat_eclash=Het domein $1 kan niet worden geregistreerd : $2
 feat_edns=Een domein kan niet worden geregistreerd totdat de DNS optie is aangezet
-feat_setup=Registreren van DNS domein met $1 ..
 feat_failed=.. mislukt : $1
 feat_setupdone=.. klaar. Het registratie ID voor dit domein is $1.
 feat_modifydons=.. klaar. Het nieuwe registratie ID voor dit domein is $1
-feat_delete=De-registratie van domein met $1 ..
-feat_delete2=De-registreren van DNS Domein ..
-feat_modify1=De-registratie van oude DNS domein $1 met $2 ..
-feat_modify2=De-registratie van nieuwe DNS domein $1 met $2 ..
-feat_modify=Veranderen van registratie DNS domein van $1 tot $2 met $3 ..
-feat_noaccount=Er is geen DNS registratie account informatie gevonden!
 feat_copy=Domein contacten kopieeren van $1 ..
 feat_ecopy=.. mislukt om contacten te verkrijgen : $1
 feat_nocopy=.. niets gevonden om te kopi&#235;ren
@@ -25,6 +13,7 @@ feat_perioddef=Registratie standaard
 feat_periodyears=jaren
 feat_eperiod=Ontbrekende of ongeldig registratie periode in jaren
 feat_setupalready=.. bestaande registratie gevonden
+
 links_contact=Bewerk Domein Contacten
 links_ns=Bewerk Naam servers
 links_contactv=Bekijk Domein Contacten
@@ -32,7 +21,7 @@ links_rereg=De-associeer Domein
 links_import=Associeer Domein
 links_renew=Vernieuw Domein
 links_transfer=Overdragen Domein
-index_title=DNS Domein Registrators
+
 index_registrar=Registrator
 index_desc=Account omschrijving
 index_enabled=Aangezet?
@@ -55,14 +44,13 @@ index_actvirts=Lijst van virtuele servers
 index_msg=Virtuele servers gebruiken registratie account $1 ..
 index_nonemsg=Er zijn geen Virtuele servers gevonden die het registratie account $1 gebruiken
 index_listall=Lijst van alle geregistreerde domeinen
+
 type_rcom=Register.com
-type_gandi=Gandi.net (Oude API)
-type_newgandi=Gandi.net (Nieuwe API)
 type_distribute=Distribute.IT
 type_namecheap=Namecheap
+
 edit_title1=Registratie Account Toevoegen
 edit_title2=Bewerk Registratie Account
-edit_header=DNS registrator account details
 edit_header2=Top-niveau domein opties
 edit_header3=Nieuwe account instructies
 edit_egone=Account bestaat niet langer!
@@ -80,6 +68,7 @@ edit_all=Alle domeinen
 edit_suffixes=TLD's in lijst
 edit_delete=Verwijder
 edit_ecannot=U bent niet bevoegd om registratie accounts te bewerken
+
 save_err=Mislukt om account op te slaan
 save_err2=Mislukt om account te verwijderen
 save_edoms=Het is in gebruik door de volgende Virtualmin domeinen : $1
@@ -93,6 +82,7 @@ save_ens=Mislukt om het IP adres te vinden voor nameserver '$1'
 save_ensip=Naam server '$1' moet worden ingevuld als hostname, en niet als IP adres
 save_enss=Geen nameservers ingevuld
 save_transfer=Dit account werd gebruikt om $1 domeinen aan te maken.<br> Selecteert u in plaats hiervan het account om deze domeinen te beheren :
+
 rcom_account=Account login ID
 rcom_pass=Account wachtwoord
 rcom_eaccount=Ontbrekende of ongeldige login ID
@@ -161,6 +151,7 @@ rcom_eccaddress=Ontbrekende credit card rekening adres
 rcom_ecczip=Ontbrekende credit card postcode om rekening naar toe te sturen
 rcom_instructions=Om te registreren voor een account bij Register.com met toegang tot hun API, moet u gaan naar hun <a href='$1' target=_new'>nieuwe partner account pagina</a> en het daar het formulier volledig invullen. Nadat u het account heeft gemaakt kunt u inloggen op hun website, vervolgens moet u geld met uw credit card storten voordat U een domein kunt registreren.
 rcom_createinfo=Voordat dit account kan worden gebruikt moet het volgende worden gedaan :<br><ul><li>Uw systeem's IP adres moet op de whitelist komen bij Register.com, wat een aantal uren kan duren.<br><li>U moet zorgen voor voldoende saldo op uw account, wat gedaan kan worden op <a href=http://www.rcomexpress.com/>http://www.rcomexpress.com/</a> door in te loggen met uw wachtwoord en gebruikersnaam.<br></ul>
+
 gandi_account=Account login (zoals <tt>XX5555-GANDI</tt>)
 gandi_pass=Account wachtwoord
 gandi_contact=Contact ID voor nieuwe domeinen
@@ -184,6 +175,7 @@ gandi_apikey=API sleutel
 gandi_etries=Domein aanmaken mislukte na $2 seconden - laatste status was $1
 gandi_ecreate=Aanmaak status fout : $1
 gandi_eassoc=Contact $1 kan niet worden geassocieerd met dit domein
+
 distribute_account=Account nummer
 distribute_user=Account gebruikersnaam
 distribute_pass=Account wachtwoord
@@ -201,6 +193,7 @@ distribute_edom=Ontbrekende of ongeldig lijkend bestaande domein naam om mee te 
 distribute_edom2=Mislukt om details te verkrijgen van het bestaande domein $1
 distribute_ebase=Mislukt om details te krijgen van domein $1
 distribute_eowner=Mislukt om eigenaars contact ID te krijgen voor domein $1
+
 namecheap_user=Namecheap gebruikersnaam
 namecheap_euser=Ontbrekend of ongeldig lijkende Namecheap gebruikersnaam
 namecheap_apikey=Namecheap API sleutel
@@ -217,6 +210,7 @@ namecheap_enstwo=Het is nodig bij Namecheap dat ieder domein op zijn minst $1 na
 namecheap_instructions=Om een account te registreren met Namecheap gaat u naar hun website en <a href='$1' target=_new'>registreerd u daar een account</a>. U moet wel API toegang aan zetten voor uw account, zoals word beschreven op de <a href='$2' target=_new>Namecheap API pagina</a>.
 namecheap_etransfer=Volledige overdracht mislukte na 5 minuten : $1
 namecheap_etransfer2=Volledige overdracht mislukte na 5 minuten en er is geen status informatie beschikbaar.
+
 delete_err1=Mislukt om accounts uit te schakelen
 delete_err2=Mislukt om accounts aan te zetten
 delete_err3=Mislukt om accounts te verwijderen
@@ -225,14 +219,14 @@ delete_title=Verwijder Accounts
 delete_rusure=Weet u zeker dat u de $1 geselecteerde accounts wilt verwijderen? Ze zullen blijven bestaan voor de registraties, maar kunnen niet langer gebruikt worden door Virtualmin.
 delete_ok=Ja, Verwijder Ze
 delete_edoms=Het account $1 is nog steeds in gebruik door de volgende Virtualmin domeinen : $2
+
 list_title=Geregistreerde Domeinen
 list_dom=Domein naam
 list_registrar=Registrator naam
 list_account=Registratie account
 list_id=ID met registratie
-list_none=Er zijn nog geen Virtualmin domeinen geregistreerd met een DNS registratie.
-list_none2=Er zijn nog geen Virtualmin domeinen geregistreerd met deze DNS registratie.
 list_expiry=Expiratie datum
+
 contact_err=Mislukt om contact details te bewerken
 contact_ecannot=U bent niet bevoegd om contacten te bewerken voor dit domein
 contact_edom=Geen Virtualmin server voor $1 gevonden
@@ -282,6 +276,7 @@ contact_esave=Mislukt om de registratie te updaten : $1
 contact_createtab=Contacten aanmaken
 contact_selecttab=Selecteer contacten
 contact_efind=Er is geen contact met ID $1 gevonden
+
 import_title=Associeer Domein Registratie
 import_header=Details van bestaande domein registratie
 import_ecannot=U bent niet bevoegd om domeinen te associ&#235;ren
@@ -301,6 +296,7 @@ import_transfer=Overdragen van een andere eigenaar?
 import_transferyes=Ja, met sleutel
 import_renew=Ook vernieuwen bij overdragen?
 import_renewyes=Ja, voor
+
 transfer_title=Overdracht Domein Registratie
 transfer_header=Details van de overdracht aanvraag
 transfer_account=Overdragen naar account
@@ -311,12 +307,14 @@ transfer_ecannot=U bent niet bevoegd om domeinen te overdragen
 transfer_transferring=Overdragen van de huidige registrator ..
 transfer_done=.. klaar. Het registratie ID is $1.
 transfer_done2=Andere stappen kunnen nodig zijn van de originele registrator voordat de overdracht kompleet is, en dit domein kan worden <a href='$1'>ge&#239;mporteerd in Virtualmin</a>.
+
 dereg_err=Mislukt om associatie te verwijderen van domein
 dereg_ealready=Dit domein heeft geen associatie met een registratie
 dereg_title=Verwijder Associatie van Domein Registratie
 dereg_rusure=Weet u zeker dat u de associatie wilt verwijderen tussen dit Virtualmin domein en zijn registratie met $1? Wanneer het is verwijdert in Virtualmin zal het domein niet worden verwijdert van de registrator.
 dereg_ok=Verwijder Associatie van Domein
 dereg_doing=Verwijder associatie van domein registratie met account $1 ..
+
 renew_title=Vernieuw Domein Registratie
 renew_err=Vernieuwing mislukte
 renew_ecannot=U bent niet bevoegd om registraties te vernieuwen
@@ -331,6 +329,7 @@ renew_doing=Vernieuw domein $1 met $2 voor $3 jaren ..
 renew_failed=.. vernieuwen mislukte : $1
 renew_done=.. vernieuwing kompleet - de code van de registratie was $1
 renew_account=Vernieuwen met account
+
 create_title=Maak Registratie Account
 create_header=Nieuwe registratie account details
 create_ecannot=U bent niet bevoegd om nieuwe accounts aan te maken
@@ -339,6 +338,7 @@ create_doing=Maak een nieuw account met $1 ..
 create_done=.. succesvol aangemaakt ! Uw account ID met registratie is $1
 create_warn=.. aangemaakt, maar met waarschuwingen : $2. Uw account ID met de registratie is $1
 create_failed=.. aanmaken mislukte : $1
+
 auto_err=Mislukt om automatische vernieuwing op te slaan
 auto_ecannot=U bent niet bevoegd om de automatische vernieuwing te beheren
 auto_title=Automatisch Domein Vernieuwing
@@ -360,14 +360,13 @@ auto_eyears=Ontbrekende of niet-numerieke aantal jaren om te vernieuwen voor
 auto_eget=Expiratie verkrijgen mislukt : $1
 auto_done=Vernieuwen voor $1 jaar
 auto_failed=Mislukt : $1
-auto_results=De volgende virtuele servers hebben hun DNS domeinen automatisch vernieuwd door Virtualmin :
 auto_raccount=Registratie account
 auto_rdom=Domein naam
 auto_rmsg=Vernieuwing status
 auto_subject=Virtualmin automatisch domein vernieuwing
 auto_warnmsg=Zal eindigen in $1 dagen
 auto_wsubject=Virtualmin domein expiratie bericht
-auto_wresults=Bij de volgende virtuele servers zal binnenkort het DNS domein eindigen :
+
 ns_err=Mislukt om naam server te bewerken
 ns_ecannot=U bent niet bevoegd de contacten te bewerken voor dit domein
 ns_title=Bewerk Naam Servers
@@ -383,7 +382,7 @@ ns_eip=Naam server '$1' is een IP adres, en geen hostnaam
 ns_ens=Naam server '$1' kon niet worden omgezet naar een IP adres
 ns_reg=Updaten van naam servers met registrator ..
 ns_failed=.. mislukt : $1
-ns_syncing=Updaten van naam servers in DNS domein ..
+
 contacts_eaccount=Account niet gevonden!
 contacts_id=Contact ID
 contacts_name=Contact naam
@@ -391,6 +390,7 @@ contacts_add=Voeg een nieuw $1 contact toe
 contacts_none=Er zijn geen contacten geassocieerd met dit geregistreerde account.
 contacts_elist=Contacten lijst maken mislukte : $1
 contacts_title=Registratie Contacten
+
 onecontact_header=Registratie contact details van $1
 onecontact_err=Mislukt om contact op te slaan
 onecontact_edelete=Verwijderen mislukte : $1

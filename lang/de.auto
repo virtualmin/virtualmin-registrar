@@ -1,23 +1,23 @@
-feat_name=DNS-Domänenregistrierung
-feat_losing=Die DNS-Domain wird abgemeldet
-feat_disabling=Die DNS-Domäne wird vorübergehend deaktiviert
-feat_label=DNS-Domain registrieren?
-feat_label2=Registrieren Sie die DNS-Domain
+feat_name=Domain Registrierung
+feat_losing=Die Domain wird deregistriert
+feat_disabling=Die Domain wird vorübergehend deaktiviert
+feat_label=Domain registrieren?
+feat_label2=Domain registrieren
 feat_edepend=Es wurde kein Registrar-Konto gefunden, mit dem die Domain erstellt wurde
-feat_edepend2=Es können nur echte DNS-Domainnamen wie <i>foo.com</i> registriert werden
+feat_edepend2=Es können nur echte Domainnamen wie <i>foo.com</i> registriert werden
 feat_eclash=Die Domain $1 kann nicht registriert werden : $2 
 feat_edns=Eine Domain kann nur registriert werden, wenn die DNS-Funktion aktiviert ist
-feat_setup=Registrieren der DNS-Domain mit $1 ..
+feat_setup=Domäne wird bei $1 registriert ..
 feat_failed=.. fehlgeschlagen : $1 
 feat_setupdone=.. erledigt. Die Registrar-ID für diese Domain lautet $1.
 feat_modifydons=.. erledigt. Die ID des neuen Registrars für diese Domain lautet $1 
-feat_delete=DNS-Domain mit $1 abmelden ..
-feat_delete2=DNS-Domain abmelden ..
-feat_modify1=Abmelden der alten DNS-Domäne $1 mit $2 ..
-feat_modify2=Neue DNS-Domäne $1 mit $2 neu registrieren.
+feat_delete=Domain wird mit $1 abgemeldet ..
+feat_delete2=Domain wird abgemeldet ..
+feat_modify1=Alte Domain $1 wird bei $2 abgemeldet ..
+feat_modify2=Neuregistrierung der neuen Domäne $1 bei $2 ..
 feat_noderegister=.. Die Abmeldung wurde in der Plugin-Konfiguration deaktiviert
-feat_modify=Ändern der registrierten DNS-Domäne von $1 auf $2 mit $3 ..
-feat_noaccount=Es wurden keine DNS-Registrierungskontoinformationen gefunden!
+feat_modify=Registrierte Domäne von $1 zu $2 mit $3 ändern ..
+feat_noaccount=Es wurden keine Registrierungskontoinformationen gefunden!
 feat_copy=Kopieren von Domain-Kontakten von $1 ..
 feat_ecopy=.. konnte keine Kontakte abrufen : $1 
 feat_nocopy=.. keine gefunden, um zu kopieren
@@ -27,6 +27,7 @@ feat_perioddef=Registrar Standard
 feat_periodyears=Jahre
 feat_eperiod=Fehlende oder ungültige Registrierungsfrist in Jahren
 feat_setupalready=.. vorhandene Registrierung gefunden
+
 links_contact=Domain-Kontakte bearbeiten
 links_ns=Nameserver bearbeiten
 links_contactv=Domänenkontakte anzeigen
@@ -34,7 +35,8 @@ links_rereg=Domain aufheben
 links_import=Domain zuordnen
 links_renew=Domain erneuern
 links_transfer=Domain übertragen
-index_title=DNS-Domain-Registrare
+
+index_title=Domain-Registrare
 index_registrar=Registrator
 index_desc=Account Beschreibung
 index_enabled=Aktiviert?
@@ -57,14 +59,15 @@ index_actvirts=Virtuelle Server auflisten
 index_msg=Virtuelle Server mit Registrar-Konto $1 ..
 index_nonemsg=Es wurden keine virtuellen Server mit dem Registrar-Konto $1 gefunden.
 index_listall=Listen Sie alle registrierten Domains auf.
+
 type_rcom=Register.com
-type_gandi=Gandi.net (alte API)
-type_newgandi=Gandi.net (Neue API)
+type_gandi=Gandi.net
 type_distribute=Distribute.IT
 type_namecheap=Namecheap
+
 edit_title1=Registrar-Konto hinzufügen
 edit_title2=Registrar Account bearbeiten
-edit_header=Kontodetails des DNS-Registrars
+edit_header=Kontodaten des Registrators
 edit_header2=Top-Level-Domain-Optionen
 edit_header3=Anweisungen für neue Konten
 edit_egone=Konto existiert nicht mehr!
@@ -82,6 +85,7 @@ edit_all=Alle Domains
 edit_suffixes=Gelistete TLDs
 edit_delete=Entfernen
 edit_ecannot=Sie dürfen keine Registrar-Konten bearbeiten
+
 save_err=Konto konnte nicht gespeichert werden
 save_err2=Konto konnte nicht entfernt werden
 save_edoms=Es wird von den folgenden Virtualmin-Domänen verwendet : $1 
@@ -95,6 +99,7 @@ save_ens=IP-Adresse für Nameserver '$1' konnte nicht gesucht werden
 save_ensip=Der Nameserver '$1' muss als Hostname und nicht als IP-Adresse eingegeben werden
 save_enss=Es wurden keine Nameserver eingegeben
 save_transfer=Dieses Konto wurde zum Erstellen von $1 -Domains verwendet. <br> Wählen Sie stattdessen das Registrar-Konto aus, mit dem diese Domains verwaltet werden können :
+
 rcom_account=Konto-Login-ID
 rcom_pass=Konto Passwort
 rcom_eaccount=Fehlende oder ungültige Login-ID
@@ -163,6 +168,7 @@ rcom_eccaddress=Fehlende Rechnungsadresse der Kreditkarte
 rcom_ecczip=Fehlende Postleitzahl der Kreditkartenabrechnung
 rcom_instructions=Um sich für ein Konto bei Register.com mit Zugriff auf deren API anzumelden, rufen Sie die Seite <a href='$1' target=_new'>neuer Partnerkonten</a> auf und füllen Sie dort das Formular aus. Nachdem Sie das Konto erstellt und sich auf der Website angemeldet haben, müssen Sie mit einer Kreditkarte Geld hinzufügen, bevor Sie Domains registrieren können.
 rcom_createinfo=Bevor dieses Konto verwendet werden kann, muss Folgendes geschehen: <br><ul> <li>Die IP-Adresse Ihres Systems muss von Register.com auf die Whitelist gesetzt werden. Dies kann mehrere Stunden dauern.<br> <li>Guthaben muss hinzugefügt werden Ihr Konto kann unter<a href=http://www.rcomexpress.com/> http://www.rcomexpress.com/ </a>erstellt werden, indem Sie sich mit dem von Ihnen ausgewählten Benutzernamen und Passwort anmelden.<br > </ul>
+
 gandi_account=Konto-Login (wie <tt>XX5555-GANDI</tt>)
 gandi_pass=Konto Passwort
 gandi_contact=Kontakt-ID für neue Domains
@@ -186,6 +192,7 @@ gandi_apikey=API-Schlüssel
 gandi_etries=Der Gandi-API-Vorgang konnte nach $2 Sekunden nicht abgeschlossen werden - der endgültige Status war $1 
 gandi_ecreate=Erstellungsstatusfehler : $1 
 gandi_eassoc=Kontakt $1 kann dieser Domain nicht zugeordnet werden
+
 distribute_account=Accountnummer
 distribute_user=Benutzername
 distribute_pass=Konto Passwort
@@ -203,6 +210,7 @@ distribute_edom=Fehlender oder ungültig aussehender vorhandener Domainname zum 
 distribute_edom2=Fehler beim Abrufen der Details der vorhandenen Domain : $1 
 distribute_ebase=Details für Domain $1 konnten nicht abgerufen werden
 distribute_eowner=Eigentümer-Kontakt-ID für Domain $1 konnte nicht abgerufen werden
+
 namecheap_user=Namecheap Benutzername
 namecheap_euser=Fehlender oder ungültig aussehender Namecheap-Benutzername
 namecheap_apikey=Namecheap API-Schlüssel
@@ -219,6 +227,7 @@ namecheap_enstwo=Für Namecheap muss jede Domain mindestens $1 -Nameserver haben
 namecheap_instructions=Um sich für ein Konto bei Namecheap anzumelden, gehen Sie zu deren Website und <a href='$1' target=_new'>für ein Konto</a>. Sie müssen den API-Zugriff für Ihr Konto aktivieren, wie auf der <a href='$2' target=_new>Namecheap-API-Seite</a> dokumentiert.
 namecheap_etransfer=Die Übertragung konnte nach 5 Minuten nicht abgeschlossen werden : $1 
 namecheap_etransfer2=Die Übertragung konnte nach 5 Minuten nicht abgeschlossen werden, und es sind keine Statusinformationen verfügbar
+
 delete_err1=Konten konnten nicht deaktiviert werden
 delete_err2=Konten konnten nicht aktiviert werden
 delete_err3=Konten konnten nicht entfernt werden
@@ -227,14 +236,16 @@ delete_title=Konten entfernen
 delete_rusure=Möchten Sie die ausgewählten $1 -Konten wirklich entfernen? Sie existieren weiterhin bei den Registraren, können jedoch von Virtualmin nicht mehr verwendet werden.
 delete_ok=Ja, entfernen Sie sie
 delete_edoms=Das Konto $1 wird weiterhin von den folgenden Virtualmin-Domänen verwendet : $2 
+
 list_title=Registrierte Domains
 list_dom=Domainname
 list_registrar=Name des Registrars
 list_account=Registrar-Konto
 list_id=ID mit Registrar
-list_none=Es wurden noch keine Virtualmin-Domains bei einem DNS-Registrar registriert.
-list_none2=Bei diesem DNS-Registrar wurden noch keine Virtualmin-Domains registriert.
+list_none=Es wurden noch keine Virtualmin-Domains bei einem Registrar registriert.
+list_none2=Bei diesem Registrar wurden noch keine Virtualmin-Domains registriert.
 list_expiry=Verfallsdatum
+
 contact_err=Kontaktdaten konnten nicht bearbeitet werden
 contact_ecannot=Sie dürfen keine Kontakte für diese Domain bearbeiten
 contact_edom=Es wurde kein Virtualmin-Server für $1 gefunden
@@ -284,6 +295,7 @@ contact_esave=Registrar konnte nicht aktualisiert werden : $1
 contact_createtab=Kontakte erstellen
 contact_selecttab=Wählen Sie Kontakte aus
 contact_efind=Kein Kontakt mit ID $1 gefunden
+
 import_title=Assoziierte Domain-Registrierung
 import_header=Details zum bestehenden Domain-Registrar
 import_ecannot=Sie dürfen keine Domains zuordnen
@@ -303,6 +315,7 @@ import_transfer=Übertragung von einem anderen Registrar?
 import_transferyes=Ja, mit Schlüssel
 import_renew=Auch beim Übertragen verlängern?
 import_renewyes=Ja für
+
 transfer_title=Domain-Registrierung übertragen
 transfer_header=Details der Überweisungsanforderung
 transfer_account=Überweisung auf Konto
@@ -313,12 +326,14 @@ transfer_ecannot=Sie dürfen keine Domains übertragen
 transfer_transferring=Übertragung vom aktuellen Registrar ..
 transfer_done=.. erledigt. Die ID des Registrars lautet $1.
 transfer_done2=Möglicherweise sind weitere Schritte beim ursprünglichen Registrar erforderlich, bevor die Übertragung abgeschlossen ist, und diese Domain kann <a href='$1'>in Virtualmin</a> importiert werden.
+
 dereg_err=Fehler beim Aufheben der Zuordnung der Domain
 dereg_ealready=Diese Domain ist keinem Registrar zugeordnet
 dereg_title=Domain-Registrierung aufheben
 dereg_rusure=Möchten Sie diese Zuordnung zwischen dieser Virtualmin-Domäne und ihrer Registrierung bei $1 wirklich entfernen? Wenn es in Virtualmin gelöscht wird, wird die Domain nicht aus dem Registrar entfernt.
 dereg_ok=Domain aufheben
 dereg_doing=Aufheben der Zuordnung der Domainregistrierung zum Konto $1 ..
+
 renew_title=Domain-Registrierung erneuern
 renew_err=Erneuerung fehlgeschlagen
 renew_ecannot=Sie dürfen Registrierungen nicht erneuern
@@ -333,6 +348,7 @@ renew_doing=Erneuerung der Domain $1 mit $2 für $3 Jahre.
 renew_failed=.. Erneuerung fehlgeschlagen : $1 
 renew_done=.. Erneuerung abgeschlossen - Code vom Registrar war $1 
 renew_account=Erneuerung mit Konto
+
 create_title=Registrar-Konto erstellen
 create_header=Neue Registrar-Kontodaten
 create_ecannot=Sie dürfen keine neuen Konten erstellen
@@ -341,6 +357,7 @@ create_doing=Neues Konto mit $1 erstellen ..
 create_done=.. erfolgreich erstellt! Ihre Konto-ID beim Registrar lautet $1 
 create_warn=.. erstellt, aber mit Warnungen: $2. Ihre Konto-ID beim Registrar lautet $1 
 create_failed=.. Erstellung fehlgeschlagen : $1 
+
 auto_err=Automatische Verlängerung konnte nicht gespeichert werden
 auto_ecannot=Sie dürfen die automatische Verlängerung nicht verwalten
 auto_title=Automatische Domain-Erneuerung
@@ -362,14 +379,15 @@ auto_eyears=Fehlende oder nicht numerische Jahre, die verlängert werden müssen
 auto_eget=Ablauf konnte nicht erreicht werden : $1 
 auto_done=Erneuert um $1 Jahre
 auto_failed=Fehlgeschlagen : $1 
-auto_results=Bei den folgenden virtuellen Servern wurden die DNS-Domänen von Virtualmin automatisch erneuert :
+auto_results=Die Domänen der folgenden virtuellen Server wurden von Virtualmin automatisch erneuert :
 auto_raccount=Registrar-Konto
 auto_rdom=Domainname
 auto_rmsg=Verlängerungsstatus
 auto_subject=Automatische Domain-Erneuerung von Virtualmin
 auto_warnmsg=Läuft in $1 Tagen ab
 auto_wsubject=Benachrichtigung über das Ablaufen der Virtualmin-Domain
-auto_wresults=Bei den folgenden virtuellen Servern laufen die DNS-Domänen bald ab :
+auto_wresults=Die Domänen der folgenden virtuellen Server laufen bald ab :
+
 ns_err=Nameserver konnten nicht bearbeitet werden
 ns_ecannot=Sie dürfen keine Kontakte für diese Domain bearbeiten
 ns_title=Nameserver bearbeiten
@@ -385,7 +403,8 @@ ns_eip=Der Nameserver '$1' ist eine IP-Adresse, kein Hostname
 ns_ens=Der Nameserver '$1' konnte nicht in eine IP-Adresse aufgelöst werden
 ns_reg=Nameserver mit Registrar aktualisieren ..
 ns_failed=.. fehlgeschlagen : $1 
-ns_syncing=Aktualisieren von Nameservern in der DNS-Domäne.
+ns_syncing=Nameserver in der Domäne aktualisieren ..
+
 contacts_eaccount=Konto nicht gefunden!
 contacts_id=Kontakt-ID
 contacts_name=Kontaktname
@@ -393,6 +412,7 @@ contacts_add=Fügen Sie einen neuen $1 -Kontakt hinzu.
 contacts_none=Diesem Registrar-Konto sind keine Kontakte zugeordnet.
 contacts_elist=Kontakte konnten nicht aufgelistet werden : $1 
 contacts_title=Registrar Kontakte
+
 onecontact_header=Registrar Kontaktdaten für $1 
 onecontact_err=Kontakt konnte nicht gespeichert werden
 onecontact_edelete=Löschen fehlgeschlagen : $1 

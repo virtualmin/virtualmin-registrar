@@ -1,23 +1,23 @@
-feat_name=DNS-domæneregistrering
-feat_losing=DNS-domænet vil blive afregistreret
-feat_disabling=DNS-domænet vil være midlertidigt deaktiveret
-feat_label=Registrer DNS-domæne?
-feat_label2=Registrer DNS-domæne
+feat_name=Domæneregistrering
+feat_losing=Domænet vil blive afregistreret
+feat_disabling=Domænet vil blive midlertidigt deaktiveret
+feat_label=Registrere domæne?
+feat_label2=Registrer domæne
 feat_edepend=Der blev ikke fundet nogen registrorkonto, der blev brugt til at oprette domænet
-feat_edepend2=Kun ægte DNS-domænenavne som <i>foo.com</i> kan registreres
+feat_edepend2=Kun rigtige domænenavne som <i>foo.com</i> kan registreres
 feat_eclash=Domænet $1 kan ikke registreres : $2 
 feat_edns=Et domæne kan ikke registreres, medmindre DNS-funktionen er aktiveret
-feat_setup=Registrering af DNS-domæne med $1 ..
+feat_setup=Registrerer domæne med $1 ..
 feat_failed=.. mislykkedes : $1 
 feat_setupdone=.. Færdig. Registrar-ID for dette domæne er $1.
 feat_modifydons=.. Færdig. Den nye registrator's ID for dette domæne er $1 
-feat_delete=Afregistrering af DNS-domæne med $1.
-feat_delete2=Afregistrering af DNS-domæne ..
-feat_modify1=Afregistrering af gammelt DNS-domæne $1 med $2.
-feat_modify2=Genregistrering af nyt DNS-domæne $1 med $2.
+feat_delete=Afregistrerer domæne med $1 ..
+feat_delete2=Afregistrerer domæne ..
+feat_modify1=Afregistrerer gammelt domæne $1 med $2 ..
+feat_modify2=Omregistrerer nyt domæne $1 med $2 ..
 feat_noderegister=.. afregistrering er deaktiveret i plugin-konfigurationen
-feat_modify=Ændring af registreret DNS-domæne fra $1 til $2 med $3.
-feat_noaccount=Der blev ikke fundet nogen DNS-registerkontooplysninger!
+feat_modify=Ændrer registreret domæne fra $1 til $2 med $3 ..
+feat_noaccount=Ingen registerkontooplysninger blev fundet!
 feat_copy=Kopiering af domænekontakter fra $1 ..
 feat_ecopy=.. kunne ikke hente kontakter : $1 
 feat_nocopy=.. ingen fundet at kopiere
@@ -27,6 +27,7 @@ feat_perioddef=Registrar standard
 feat_periodyears=flere år
 feat_eperiod=Manglende eller ugyldig registreringsperiode i år
 feat_setupalready=.. eksisterende registrering fundet
+
 links_contact=Rediger domænekontakter
 links_ns=Rediger navneservere
 links_contactv=Se domænekontakter
@@ -34,7 +35,8 @@ links_rereg=Dis-associeret domæne
 links_import=Associeret domæne
 links_renew=Forny domæne
 links_transfer=Overfør domæne
-index_title=DNS-domæneregistratorer
+
+index_title=Domæneregistratorer
 index_registrar=registrator
 index_desc=Kontobeskrivelse
 index_enabled=Aktiveret?
@@ -57,14 +59,15 @@ index_actvirts=Vis virtuelle servere
 index_msg=Virtuelle servere, der bruger registrorkonto $1 ..
 index_nonemsg=Der blev ikke fundet nogen virtuelle servere, der bruger registrorkonto $1 
 index_listall=Liste over alle registrerede domæner.
+
 type_rcom=Register.com
-type_gandi=Gandi.net (Old API)
-type_newgandi=Gandi.net (Ny API)
+type_gandi=Gandi.net
 type_distribute=Distribute.IT
 type_namecheap=NameCheap
+
 edit_title1=Tilføj registrator-konto
 edit_title2=Rediger Registrator-konto
-edit_header=Oplysninger om DNS-registrator
+edit_header=Registrator kontooplysninger
 edit_header2=Topniveau domæneindstillinger
 edit_header3=Ny kontoinstruktioner
 edit_egone=Konto findes ikke længere!
@@ -82,6 +85,7 @@ edit_all=Alle domæner
 edit_suffixes=Listede TLD'er
 edit_delete=Fjerne
 edit_ecannot=Du har ikke tilladelse til at redigere registratorkonti
+
 save_err=Kunne ikke gemme konto
 save_err2=Kunne ikke fjerne konto
 save_edoms=Det bruges af følgende Virtualmin-domæner : $1 
@@ -95,6 +99,7 @@ save_ens=Kunne ikke søge IP-adresse til navneserver '$1'
 save_ensip=Navneserveren '$1' skal indtastes som et værtsnavn, ikke som en IP-adresse
 save_enss=Ingen navneservere indtastet
 save_transfer=Denne konto blev brugt til at oprette $1 -domæner. <br> Vælg den registratorkonto, der kan bruges til at administrere disse domæner i stedet :
+
 rcom_account=Konto-login-id
 rcom_pass=Konto adgangskode
 rcom_eaccount=Manglende eller ugyldig login-id
@@ -163,6 +168,7 @@ rcom_eccaddress=Manglende faktureringsadresse med kreditkort
 rcom_ecczip=Manglende postkort med fakturering med kreditkort
 rcom_instructions=Hvis du vil tilmelde dig en konto hos Register.com med adgang til deres API, skal du gå til deres <a href='$1' target=_new'>side om ny partnerkonto</a> og udfyld formularen der. Når du har oprettet kontoen og logget ind på deres websted, skal du tilføje midler til den ved hjælp af et kreditkort, før den kan bruges til at registrere nogen domæner.
 rcom_createinfo=Inden denne konto kan bruges, skal følgende ske: <br><ul> <li>Dit systems IP-adresse skal hvidlistes af Register.com, hvilket kan tage flere timer.<br> <li>Kredit skal tilføjes til din konto, som kan udføres på<a href=http://www.rcomexpress.com/> http://www.rcomexpress.com/ </a>ved at logge ind med det brugernavn og den adgangskode, du har valgt.<br > </ul>
+
 gandi_account=Konto-login (som <tt>XX5555-GANDI</tt>)
 gandi_pass=Konto adgangskode
 gandi_contact=Kontakt-ID for nye domæner
@@ -186,6 +192,7 @@ gandi_apikey=API-nøgle
 gandi_etries=Gandi API-operation kunne ikke afsluttes efter $2 sekunder - den endelige status var $1 
 gandi_ecreate=Oprettelsesstatusfejl : $1 
 gandi_eassoc=Kontakt $1 kan ikke tilknyttes dette domæne
+
 distribute_account=Kontonummer
 distribute_user=Konto brugernavn
 distribute_pass=Konto adgangskode
@@ -203,6 +210,7 @@ distribute_edom=Manglende eller ugyldigt udseende eksisterende domænenavn at li
 distribute_edom2=Kunne ikke få detaljer om det eksisterende domæne : $1 
 distribute_ebase=Kunne ikke få oplysninger om domæne $1 
 distribute_eowner=Kunne ikke få ejerkontakt-id til domæne $1 
+
 namecheap_user=Navneap-brugernavn
 namecheap_euser=Manglende eller ugyldigt udseende Namecheap brugernavn
 namecheap_apikey=Namecheap API-nøgle
@@ -219,6 +227,7 @@ namecheap_enstwo=Namecheap kræver, at hvert domæne har mindst $1 navneservere,
 namecheap_instructions=For at tilmelde dig en konto hos Namecheap, skal du gå til deres websted og <a href='$1' target=_new'>tilmelde dig en konto</a>. Du skal aktivere API-adgang på din konto, som dokumenteret på <a href='$2' target=_new>Namecheap API-side</a>.
 namecheap_etransfer=Overførslen kunne ikke afsluttes efter 5 minutter : $1 
 namecheap_etransfer2=Overførslen kunne ikke gennemføres efter 5 minutter, og der er ingen statusoplysninger tilgængelige
+
 delete_err1=Kunne ikke deaktivere konti
 delete_err2=Kunne ikke aktivere konti
 delete_err3=Kunne ikke fjerne konti
@@ -227,14 +236,16 @@ delete_title=Fjern konti
 delete_rusure=Er du sikker på, at du vil fjerne de $1 valgte konti? De vil stadig findes med registratorerne, men de kan ikke længere bruges af Virtualmin.
 delete_ok=Ja, fjern dem
 delete_edoms=Kontoen $1 bruges stadig af følgende Virtualmin-domæner : $2 
+
 list_title=Registrerede domæner
 list_dom=Domænenavn
 list_registrar=Registrar navn
 list_account=Registrar konto
 list_id=ID med registrator
-list_none=Der er endnu ikke registreret nogen Virtualmin-domæner hos nogen DNS-registrator.
-list_none2=Der er endnu ikke registreret nogen Virtualmin-domæner hos denne DNS-registrator.
+list_none=Ingen Virtualmin-domæner er blevet registreret hos nogen registrator endnu.
+list_none2=Ingen Virtualmin-domæner er blevet registreret hos denne registrator endnu.
 list_expiry=Udløbsdato
+
 contact_err=Kunne ikke redigere kontaktoplysninger
 contact_ecannot=Du har ikke tilladelse til at redigere kontakter for dette domæne
 contact_edom=Ingen Virtualmin-server for $1 blev fundet
@@ -284,6 +295,7 @@ contact_esave=Kunne ikke opdatere registrator : $1
 contact_createtab=Opret kontakter
 contact_selecttab=Vælg kontakter
 contact_efind=Der blev ikke fundet nogen kontakt med ID $1 
+
 import_title=Tilknyttet domæneregistrering
 import_header=Detaljer om eksisterende domæneregistrator
 import_ecannot=Du må ikke tilknytte domæner
@@ -303,6 +315,7 @@ import_transfer=Overføre fra en anden registrator?
 import_transferyes=Ja, med nøgle
 import_renew=Forny også, når du overfører?
 import_renewyes=Ja, for
+
 transfer_title=Overfør domæneregistrering
 transfer_header=Detaljer om overførselsanmodning
 transfer_account=Overfør til konto
@@ -313,12 +326,14 @@ transfer_ecannot=Du har ikke tilladelse til at overføre domæner
 transfer_transferring=Overfører fra nuværende registrator ..
 transfer_done=.. Færdig. Registrar-ID er $1.
 transfer_done2=Andre trin kan være nødvendige hos den originale registrator, før overførslen er gennemført, og dette domæne kan <a href='$1'>importeres til Virtualmin</a>.
+
 dereg_err=Kunne ikke tilknytte domænet
 dereg_ealready=Dette domæne er ikke tilknyttet nogen registrator
 dereg_title=Registrering af tilknyttet domæne
 dereg_rusure=Er du sikker på, at du vil fjerne denne tilknytning mellem dette Virtualmin-domæne og dets registrering med $1 ? Hvis det slettes i Virtualmin, fjernes domænet ikke fra registratoren.
 dereg_ok=Dis-associeret domæne
 dereg_doing=Dis-associerer domæneregistrering med konto $1.
+
 renew_title=Forny domæneregistrering
 renew_err=Fornyelse mislykkedes
 renew_ecannot=Du har ikke tilladelse til at fornye registreringer
@@ -333,6 +348,7 @@ renew_doing=Forny domæne $1 med $2 i $3 år ..
 renew_failed=.. fornyelse mislykkedes : $1 
 renew_done=.. fornyelse komplet - kode fra registrator var $1 
 renew_account=Fornyelse med konto
+
 create_title=Opret registrator-konto
 create_header=Nye registrator-kontooplysninger
 create_ecannot=Du har ikke lov til at oprette nye konti
@@ -341,6 +357,7 @@ create_doing=Opretter en ny konto med $1 ..
 create_done=.. oprettet med succes! Dit konto-id hos registratoren er $1 
 create_warn=.. oprettet, men med advarsler: $2. Dit konto-id hos registratoren er $1 
 create_failed=.. oprettelse mislykkedes : $1 
+
 auto_err=Kunne ikke gemme automatisk fornyelse
 auto_ecannot=Du har ikke lov til at administrere automatisk fornyelse
 auto_title=Automatisk domænefornyelse
@@ -362,14 +379,15 @@ auto_eyears=Manglende eller ikke-numeriske år at forny for
 auto_eget=Udløbet mislykkedes : $1 
 auto_done=Fornyet i $1 år
 auto_failed=Mislykkedes : $1 
-auto_results=Følgende virtuelle servere har deres DNS-domæner automatisk fornyet af Virtualmin :
+auto_results=Følgende virtuelle servere har fået deres domæner automatisk fornyet af Virtualmin :
 auto_raccount=Registrar konto
 auto_rdom=Domænenavn
 auto_rmsg=Fornyelsesstatus
 auto_subject=Virtualmin automatisk domænefornyelse
 auto_warnmsg=Udløber om $1 dage
 auto_wsubject=Meddelelse om udløbsdato for virtualmin domæne
-auto_wresults=Følgende virtuelle servere udløber snart deres DNS-domæner :
+auto_wresults=Følgende virtuelle servere udløber snart deres domæner :
+
 ns_err=Kunne ikke redigere navneservere
 ns_ecannot=Du har ikke tilladelse til at redigere kontakter for dette domæne
 ns_title=Rediger navneservere
@@ -385,7 +403,8 @@ ns_eip=Navneserver '$1' er en IP-adresse, ikke et værtsnavn
 ns_ens=Navneserveren '$1' kunne ikke løses til en IP-adresse
 ns_reg=Opdaterer navneservere med registrator ..
 ns_failed=.. mislykkedes : $1 
-ns_syncing=Opdatering af navneservere i DNS-domæne ..
+ns_syncing=Opdatering af navneservere i domæne ..
+
 contacts_eaccount=Konto ikke fundet!
 contacts_id=Kontakt-ID
 contacts_name=Kontakt navn
@@ -393,6 +412,7 @@ contacts_add=Tilføj en ny $1 -kontakt.
 contacts_none=Ingen kontakter er knyttet til denne registrorkonto.
 contacts_elist=Kunne ikke vise kontaktpersoner : $1 
 contacts_title=Registrator-kontakter
+
 onecontact_header=Registrar kontaktoplysninger for $1 
 onecontact_err=Kunne ikke gemme kontakten
 onecontact_edelete=Sletning mislykkedes : $1 

@@ -1,23 +1,23 @@
-feat_name=DNS domain regisztráció
-feat_losing=A DNS-domain törlésre kerül
-feat_disabling=A DNS domain ideiglenesen le lesz tiltva
-feat_label=Regisztrálja a DNS domaint?
-feat_label2=Regisztrálja a DNS-domént
+feat_name=Domain regisztráció
+feat_losing=A domain regisztrációja törlődik
+feat_disabling=A domain ideiglenesen le lesz tiltva
+feat_label=Domain regisztrálása?
+feat_label2=Regisztráljon domaint
 feat_edepend=Nem található a domain létrehozásához használt regisztráló fiók
-feat_edepend2=Csak a valódi DNS-tartománynevek, például a <i>foo.com</i> regisztrálhatók
+feat_edepend2=Csak valódi domain nevek regisztrálhatók, például a <i>foo.com</i>
 feat_eclash=A (z) $1 domain nem regisztrálható : $2 
 feat_edns=A domain nem regisztrálható, ha a DNS szolgáltatás nincs engedélyezve
-feat_setup=DNS domain regisztrálása a (z) $1 alatt.
+feat_setup=Domain regisztrálása itt: $1 ..
 feat_failed=.. sikertelen : $1 
 feat_setupdone=.. Kész. A domain regisztrátorának azonosítója $1.
 feat_modifydons=.. Kész. A domain új regisztrátorának azonosítója $1 
-feat_delete=A (z) $1 DNS-domain regisztrációja
-feat_delete2=DNS-domain törlése ..
-feat_modify1=$1 régi DNS-domain törlése
-feat_modify2=Új $1 domain DNS újraregisztrálása a $2 -sel.
+feat_delete=Domain regisztrációjának törlése a következővel: $1 ..
+feat_delete2=Domain regisztrációjának törlése. ..
+feat_modify1=A régi tartomány $1 regisztrációjának törlése a következővel: $2 ..
+feat_modify2=Új domain $1 újraregisztrálása a következővel: $2 ..
 feat_noderegister=.. a regisztráció törlése le van tiltva a plugin konfigurációjában
-feat_modify=A regisztrált DNS-tartomány megváltoztatása $1 -ről $2 -re $3 -ra.
-feat_noaccount=Nem található DNS-regisztrációs számlainformáció!
+feat_modify=Regisztrált domain módosítása $1-ről $2-re a következővel: $3 ..
+feat_noaccount=Nem található regisztrációs fiók információ!
 feat_copy=Domain névjegyek másolása a (z) $1 -ből.
 feat_ecopy=.. nem sikerült letölteni a kapcsolatokat : $1 
 feat_nocopy=.. senki sem másolta
@@ -27,6 +27,7 @@ feat_perioddef=Regisztrátor alapértelmezett
 feat_periodyears=évek
 feat_eperiod=Hiányzó vagy érvénytelen regisztrációs időszak években
 feat_setupalready=.. meglévő regisztráció található
+
 links_contact=Domain névjegyek szerkesztése
 links_ns=A névszerverek szerkesztése
 links_contactv=Domain névjegyek megtekintése
@@ -34,7 +35,8 @@ links_rereg=Társult tartomány
 links_import=Társult domain
 links_renew=Domain megújítása
 links_transfer=Domain átvitele
-index_title=DNS domain regisztrátorok
+
+index_title=Domain regisztrátorok
 index_registrar=Anyakönyvvezető
 index_desc=Fiók leírása
 index_enabled=Engedélyezve van?
@@ -57,14 +59,15 @@ index_actvirts=Sorolja fel a virtuális kiszolgálókat
 index_msg=Virtuális szerverek, $1 regisztráló fiókot használnak.
 index_nonemsg=Nem található a (z) $1 regisztráló fiókot használó virtuális szerver.
 index_listall=Az összes regisztrált domain felsorolása.
+
 type_rcom=Register.com
-type_gandi=Gandi.net (régi API)
-type_newgandi=Gandi.net (új API)
+type_gandi=Gandi.net
 type_distribute=Distribute.IT
 type_namecheap=Namecheap
+
 edit_title1=Adja hozzá a regisztráló fiókot
 edit_title2=Regisztrátor fiók szerkesztése
-edit_header=DNS regisztráló fiók adatai
+edit_header=Regisztrátor fiók adatai
 edit_header2=Felső szintű domain beállítások
 edit_header3=Új fiókkezelési utasítások
 edit_egone=Fiók már nem létezik!
@@ -82,6 +85,7 @@ edit_all=Minden domain
 edit_suffixes=Felsorolt TLD-k
 edit_delete=Vegye ki
 edit_ecannot=Nem engedélyezi a regisztrátor fiókok szerkesztését
+
 save_err=Nem sikerült menteni a fiókot
 save_err2=Nem sikerült eltávolítani a fiókot
 save_edoms=A következő Virtualmin domainek használják : $1 
@@ -95,6 +99,7 @@ save_ens=Nem sikerült megkeresni az '$1' névkiszolgáló IP-címét
 save_ensip=A '$1' névszervert host névként kell megadni, nem IP-címet
 save_enss=Nincs megadva névszerver
 save_transfer=Ezt a fiókot $1 domain létrehozására használták. <br> Válassza ki azt a regisztráló fiókot, amely helyett az alábbi tartományokat kezeli :
+
 rcom_account=Fiók bejelentkezési azonosítója
 rcom_pass=Fiók jelszava
 rcom_eaccount=Hiányzó vagy érvénytelen bejelentkezési azonosító
@@ -163,6 +168,7 @@ rcom_eccaddress=Hiányzik a hitelkártya számlázási címe
 rcom_ecczip=Hiányzik a hitelkártya számlázási irányítószám
 rcom_instructions=Ha regisztrálni szeretne egy regisztrációval a Register.com webhelyen az API-val való hozzáféréssel, lépjen a <a href='$1' target=_new'>új partnerfiók oldalukra</a>, és töltse ki az űrlapot. A fiók létrehozása és a webhelyre történő bejelentkezés után hitelkártyával kell pénzt hozzáadnia ahhoz, hogy bármilyen domain regisztrálható legyen.
 rcom_createinfo=Mielőtt ezt a fiókot felhasználni lehet, a következőknek kell történnie: <br><ul> <li>A rendszer IP-címét engedélyezni kell a Register.com engedélyezési listájára, ami több órát is igénybe vehet.<br> <li>A jóváírást hozzá kell adni a következőhöz: fiókját, amelyet a<a href=http://www.rcomexpress.com/> http://www.rcomexpress.com/ </a>címen lehet megtenni, ha bejelentkezik a kiválasztott felhasználónévvel és jelszóval. ></ul>
+
 gandi_account=Fiókba való bejelentkezés (például <tt>XX5555-GANDI</tt>)
 gandi_pass=Fiók jelszava
 gandi_contact=Új domain névjegy-azonosítója
@@ -186,6 +192,7 @@ gandi_apikey=API kulcs
 gandi_etries=A Gandi API művelet $2 másodperc után nem fejeződött be - a végleges állapot $1 volt
 gandi_ecreate=Létrehozási állapot hiba : $1 
 gandi_eassoc=A (z) $1 kapcsolattartót nem lehet társítani ehhez a domainhez
+
 distribute_account=Számlaszám
 distribute_user=Fiók felhasználóneve
 distribute_pass=Fiók jelszava
@@ -203,6 +210,7 @@ distribute_edom=Hiányzó vagy érvénytelen megjelenésű meglévő domain név
 distribute_edom2=A meglévő domain adatainak beolvasása nem sikerült : $1 
 distribute_ebase=A (z) $1 domain adatainak beolvasása nem sikerült
 distribute_eowner=A (z) $1 domain tulajdonosának elérhetőségi azonosítója nem sikerült
+
 namecheap_user=Névbiztos felhasználónév
 namecheap_euser=Hiányzó vagy érvénytelen névnév felhasználónév
 namecheap_apikey=Namecheap API kulcs
@@ -219,6 +227,7 @@ namecheap_enstwo=A Namecheap megköveteli, hogy minden domainnek legyen legaláb
 namecheap_instructions=A Namecheap fiókra való feliratkozáshoz lépjen a webhelyükre, és <a href='$1' target=_new'>regisztráljon fiókot</a>. Engedélyeznie kell az API-hozzáférést fiókjában, ahogyan azt a <a href='$2' target=_new> Namecheap API oldalon dokumentálják.
 namecheap_etransfer=Az átvitel nem fejeződött be 5 perc után : $1 
 namecheap_etransfer2=Az átvitel 5 perc után nem fejeződött be, és állapotinformáció nem áll rendelkezésre
+
 delete_err1=Nem sikerült letiltani a fiókokat
 delete_err2=Nem sikerült engedélyezni a fiókokat
 delete_err3=A fiókok eltávolítása nem sikerült
@@ -227,14 +236,16 @@ delete_title=Fiókok eltávolítása
 delete_rusure=Biztos benne, hogy el akarja távolítani a kiválasztott $1 fiókot? Ezek továbbra is fennállnak a regisztrátoroknál, de a Virtualmin már nem használhatja őket.
 delete_ok=Igen, távolítsa el őket
 delete_edoms=A (z) $1 fiókot továbbra is a következő Virtualmin domainek használják : $2 
+
 list_title=Regisztrált domainek
 list_dom=Domain név
 list_registrar=Hivatalvezető neve
 list_account=Regisztrátor fiók
 list_id=Azonosító a regisztrátorral
-list_none=A Virtualmin domaineket még nem regisztrálták egyetlen DNS-regisztrálóval sem.
-list_none2=A DNS-regisztrálóval még nem regisztráltak virtuális domaineket.
+list_none=Még nincs Virtualmin domain regisztrálva egyetlen regisztrátornál sem.
+list_none2=Még nincs Virtualmin domain regisztrálva ennél a regisztrátornál.
 list_expiry=Lejárati dátum
+
 contact_err=A kapcsolattartók adatainak szerkesztése nem sikerült
 contact_ecannot=A domain névjegyei nem szerkeszthetők
 contact_edom=Nem található a (z) $1 Virtualmin szervere
@@ -284,6 +295,7 @@ contact_esave=A regisztrátor frissítése nem sikerült : $1
 contact_createtab=Hozzon létre névjegyeket
 contact_selecttab=Válassza ki a névjegyeket
 contact_efind=Nem található kapcsolat a (z) $1 azonosítóval
+
 import_title=Társult domain regisztráció
 import_header=A meglévő domain regisztrátor részletei
 import_ecannot=Nem engedélyezik a domainek társítását
@@ -303,6 +315,7 @@ import_transfer=Átutalás másik regisztrátorról?
 import_transferyes=Igen, kulcsmal
 import_renew=Megújíthatja áthelyezéskor is?
 import_renewyes=Igen, azért
+
 transfer_title=Domain regisztráció átadása
 transfer_header=Az átutalási igény részletei
 transfer_account=Átutalás a számlára
@@ -313,12 +326,14 @@ transfer_ecannot=Nem adhat át domaineket
 transfer_transferring=Áthelyezés a jelenlegi regisztrátorból ..
 transfer_done=.. Kész. A regisztrátor azonosítója $1.
 transfer_done2=Az átadás befejezése előtt további lépésekre lehet szükség az eredeti regisztrátornál, és ez a domain <a href='$1'>importálható a Virtualminba</a>.
+
 dereg_err=A domain leválasztása nem sikerült
 dereg_ealready=Ez a domain nincs társítva egyetlen regisztrátorral sem
 dereg_title=A társított domain regisztráció
 dereg_rusure=Biztosan el akarja távolítani ezt a társítást a Virtualmin domain és a $1 regisztrációja között? Ha törli a Virtualminból, akkor a domain nem kerül eltávolításra a regisztrátorból.
 dereg_ok=Társult tartomány
 dereg_doing=A domain regisztráció leválasztása a (z) $1 számláról.
+
 renew_title=Domain regisztráció megújítása
 renew_err=A megújítás sikertelen
 renew_ecannot=Nem engedélyezi a regisztráció megújítását
@@ -333,6 +348,7 @@ renew_doing=$1 domain megújítása $2 évvel $3 évre ..
 renew_failed=.. megújítás sikertelen : $1 
 renew_done=.. megújítás teljes - a regisztrátor kódja $1 volt
 renew_account=Megújítás fiókkal
+
 create_title=Hozzon létre regisztrátor fiókot
 create_header=Új regisztrátor fiók részletei
 create_ecannot=Nem hozhat létre új fiókokat
@@ -341,6 +357,7 @@ create_doing=Új fiók létrehozása a következővel: $1.
 create_done=.. sikeresen létrehozva! A regisztrátornál a számla azonosítója $1 
 create_warn=.. létrehozva, de figyelmeztetésekkel: $2. A regisztrátornál a számla azonosítója $1 
 create_failed=.. a létrehozás sikertelen : $1 
+
 auto_err=Nem sikerült menteni az automatikus megújítást
 auto_ecannot=Nem engedélyezi az automatikus megújítást
 auto_title=Automatikus domain megújítás
@@ -362,14 +379,15 @@ auto_eyears=Hiányzó vagy nem numerikus év, amelyet meg kellene újítani
 auto_eget=Nem sikerült elérni a lejáratot : $1 
 auto_done=$1 évre megújítva
 auto_failed=Sikertelen : $1 
-auto_results=A következő virtuális szerverek DNS-domaineit a Virtualmin automatikusan megújította :
+auto_results=A következő virtuális szerverek domainjét a Virtualmin automatikusan megújította :
 auto_raccount=Regisztrátor fiók
 auto_rdom=Domain név
 auto_rmsg=Megújítási állapot
 auto_subject=A Virtualmin automatikus domain megújítása
 auto_warnmsg=$1 nap alatt jár le
 auto_wsubject=A Virtualmin domain lejárati értesítése
-auto_wresults=A következő virtuális szerverek DNS-domainjei hamarosan lejárnak :
+auto_wresults=A következő virtuális szerverek domainje hamarosan lejár :
+
 ns_err=Nem sikerült szerkeszteni a névszervereket
 ns_ecannot=A domain névjegyei nem szerkeszthetők
 ns_title=A névszerverek szerkesztése
@@ -385,7 +403,8 @@ ns_eip=A '$1' névszerver egy IP-cím, nem gazdagépnév
 ns_ens=A (z) '$1' névszervert nem sikerült IP-címre feloldani
 ns_reg=A névkiszolgálók frissítése a nyilvántartóval.
 ns_failed=.. sikertelen : $1 
-ns_syncing=A DNS-domain névszervereinek frissítése ..
+ns_syncing=Névszerverek frissítése a domainben. ..
+
 contacts_eaccount=Fiók nem található!
 contacts_id=Kapcsolattartó azonosítója
 contacts_name=Kapcsolattartó neve
@@ -393,6 +412,7 @@ contacts_add=Adjon hozzá egy új $1 névjegyet.
 contacts_none=Nincs regisztrált kapcsolat a regisztrátor fiókkal.
 contacts_elist=Nem sikerült felsorolni a névjegyeket : $1 
 contacts_title=Regisztrátor névjegyek
+
 onecontact_header=A (z) $1 regisztrátorának elérhetőségei
 onecontact_err=A név mentése nem sikerült
 onecontact_edelete=A törlés sikertelen : $1 

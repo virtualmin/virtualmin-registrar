@@ -1,23 +1,23 @@
-feat_name=DNS domeinuen erregistroa
-feat_losing=DNS domeinua berriro erregistratuko da
-feat_disabling=DNS domeinua aldi baterako desgaituta egongo da
-feat_label=DNS domeinua erregistratu?
-feat_label2=Izena eman DNS domeinua
+feat_name=Domeinu-erregistroa
+feat_losing=Domeinua kenduko da
+feat_disabling=Domeinua aldi baterako desgaitu egingo da
+feat_label=Domeinua erregistratu?
+feat_label2=Erregistratu domeinua
 feat_edepend=Ez da domeinua sortzeko erabili beharreko erregistratzaile kontua aurkitu
-feat_edepend2=<i>foo.com</i> bezalako DNS domeinu izenak soilik erregistratu daitezke
+feat_edepend2=<i>foo.com</i> bezalako benetako domeinu-izenak soilik erregistra daitezke
 feat_eclash=$1 domeinua ezin da erregistratu : $2 
 feat_edns=Ezin da domeinurik erregistratu DNS funtzioa gaituta ez badago
-feat_setup=DNS domeinua erregistratzea $1 ..
+feat_setup=$1 domeinua erregistratzen ..
 feat_failed=.. huts egin du : $1 
 feat_setupdone=.. egin. Domeinu honen erregistroaren IDa $1 da.
 feat_modifydons=.. egin. Domeinu honen erregistro ID berria $1 da
-feat_delete=DNS domeinua $1 -rekin erregistratzea.
-feat_delete2=DNS domeinua erregistratzea ..
-feat_modify1=$1 DNS domeinu zaharra erregistratu $2 -rekin.
-feat_modify2=$1 DNS domeinu berria berriro erregistratu $2 -rekin.
+feat_delete=$1 domeinua kentzen ari da ..
+feat_delete2=Domeinua kentzen ari da ..
+feat_modify1=$1 domeinu zaharra $2 -rekin erregistratzen ..
+feat_modify2=$1 domeinu berria $2 rekin berriro erregistratzen ..
 feat_noderegister=.. erregistroa desaktibatu da plugin konfigurazioan
-feat_modify=Erregistratutako DNS domeinua aldatu da $1 etik $2 ra $3 rekin.
-feat_noaccount=Ez da DNS erregistroko kontuaren informazioa aurkitu!
+feat_modify=Erregistratutako domeinua $1etik $2ra aldatzen $3rekin ..
+feat_noaccount=Ez da erregistratu kontuaren informaziorik aurkitu!
 feat_copy=$1 domeinuaren kontaktuak kopiatzea.
 feat_ecopy=.. huts egin du kontaktuak eskuratzeko : $1 
 feat_nocopy=.. kopiatzerik ez da aurkitu
@@ -27,6 +27,7 @@ feat_perioddef=Erregistratzaile lehenetsia
 feat_periodyears=urte
 feat_eperiod=Urteetan erregistratzeko epea falta edo baliogabea da
 feat_setupalready=.. Existitzen den erregistroa aurkitu da
+
 links_contact=Editatu Domeinuaren kontaktuak
 links_ns=Editatu izen-izenak
 links_contactv=Ikusi Domeinu-kontaktuak
@@ -34,7 +35,8 @@ links_rereg=Dis-lotutako domeinua
 links_import=Elkartutako domeinua
 links_renew=Domeinua berritu
 links_transfer=Transferitu domeinua
-index_title=DNS domeinu erregistratzaileak
+
+index_title=Domeinu-erregistratzaileak
 index_registrar=Erregistratzailearen
 index_desc=Kontuaren deskribapena
 index_enabled=Gaituta?
@@ -57,14 +59,15 @@ index_actvirts=Zerrendatu zerbitzari birtualak
 index_msg=Zerbitzari birtualak erregistratzaile kontua $1 erabiltzen dute.
 index_nonemsg=Ez da $1 erregistratzaile kontua erabiltzen duten zerbitzari birtualik aurkitu.
 index_listall=Zerrendan erregistratutako domeinu guztiak
+
 type_rcom=Register.com
-type_gandi=Gandi.net (API zaharra)
-type_newgandi=Gandi.net (API berria)
+type_gandi=Gandi.net
 type_distribute=Distribute.IT
 type_namecheap=NameCheap
+
 edit_title1=Gehitu Erregistratzaile kontua
 edit_title2=Editatu kontua erregistratzailea
-edit_header=DNS erregistratzailearen kontuaren xehetasunak
+edit_header=Erregistratzailearen kontuaren xehetasunak
 edit_header2=Goi mailako domeinu aukerak
 edit_header3=Kontuko argibide berriak
 edit_egone=Kontua ez da existitzen!
@@ -82,6 +85,7 @@ edit_all=Domeinu guztiak
 edit_suffixes=Zerrendatutako TLDak
 edit_delete=Kendu
 edit_ecannot=Ezin duzu erregistratzaile kontuak editatu
+
 save_err=Ezin izan da kontua gorde
 save_err2=Ezin izan da kontua kendu
 save_edoms=Virtualmin domeinu hauek erabiltzen dute : $1 
@@ -95,6 +99,7 @@ save_ens=Ezin izan da '$1' izen-zerbitzariaren bilaketa IP helbidean bilatu
 save_ensip='$1' izen-zerbitzaria ostalari izen gisa sartu behar da, ez IP helbide gisa
 save_enss=Ez zen izen izenik sartu
 save_transfer=Kontu hau $1 domeinuak sortzeko erabili zen. <br> Aukeratu domeinu horiek kudeatzeko erabil daitekeen erregistratzaile kontua :
+
 rcom_account=Kontuaren IDa
 rcom_pass=Kontuaren pasahitza
 rcom_eaccount=Saioa identifikatzeko falta edo baliogabea
@@ -163,6 +168,7 @@ rcom_eccaddress=Kreditu txartelen fakturazioaren helbidea falta da
 rcom_ecczip=Kreditu txartelen falta posta-kodea
 rcom_instructions=Izena emateko API.com-eko kontu bat erregistratzeko bere APIrako sarbidea izateko, joan <a href='$1' target=_new'>bazkide kontu berriaren orria</a> eta bete formularioa bertan. Kontua sortu eta bere webgunean saioa hasi ondoren, kreditu-txartel bat erabiliz funtsak gehitu beharko dituzu domeinu guztiak erregistratzeko erabili aurretik.
 rcom_createinfo=Kontu hau erabili aurretik, hau gertatu behar da: <br><ul> <li>Zure sistemaren IP helbidea erregistratu egin behar da Register.com-en. Zenbait ordu iraun ditzake. zure kontua<a href=http://www.rcomexpress.com/> http://www.rcomexpress.com/ </a>helbidean egin daiteke zuk aukeratutako erabiltzaile-pasahitzarekin eta pasahitzarekin saioa.<br > </ul>
+
 gandi_account=Kontuko saioa (<tt>XX5555-GANDI</tt> bezalakoa)
 gandi_pass=Kontuaren pasahitza
 gandi_contact=Domeinu berrien kontaktu IDa
@@ -186,6 +192,7 @@ gandi_apikey=API gakoa
 gandi_etries=Gandi API operazioak ezin izan du $2 segundoren buruan amaitu, azken egoera $1 zen
 gandi_ecreate=Sortze-egoeraren errorea : $1 
 gandi_eassoc=Ezin da $1 harremana domeinu honekin lotu
+
 distribute_account=Kontu zenbakia
 distribute_user=Kontuaren erabiltzaile izena
 distribute_pass=Kontuaren pasahitza
@@ -203,6 +210,7 @@ distribute_edom=Lotzeko lehendik dagoen domeinu izen falta edo baliogabea
 distribute_edom2=Huts egin du lehendik dagoen domeinuaren xehetasunak lortzeko : $1 
 distribute_ebase=Ezin izan da $1 domeinuaren xehetasunak eskuratu
 distribute_eowner=Ezin izan da $1 domeinuaren jabearen kontaktu IDa eskuratu
+
 namecheap_user=Namecheap erabiltzaile izena
 namecheap_euser=Namecheap erabiltzaile-izena falta da edo baliogabea
 namecheap_apikey=Namecheap API gakoa
@@ -219,6 +227,7 @@ namecheap_enstwo=Namecheap-ek domeinu bakoitzak gutxienez $1 izen-izen izan beha
 namecheap_instructions=Namecheap-eko kontu bat erregistratzeko, zoaz bere webgunera eta <a href='$1' target=_new'>erregistratu kontu bat</a>. Zure kontuan API sarbidea gaitu beharko duzu, <a href='$2' target=_new>Namecheap API orrian</a> dokumentatuta dagoen moduan.
 namecheap_etransfer=Transferentzia huts egin da 5 minuturen buruan : $1 
 namecheap_etransfer2=Transferentzia ezin izan da burutu 5 minutu igaro ondoren eta ez da egoera informaziorik eskuragarri
+
 delete_err1=Ezin izan da kontuak desgaitu
 delete_err2=Ezin izan da kontuak gaitu
 delete_err3=Ezin izan dira kontuak kendu
@@ -227,14 +236,16 @@ delete_title=Kendu kontuak
 delete_rusure=Ziur hautatutako $1 kontuak kendu nahi dituzula? Erregistratzaileekin egongo dira oraindik, baina Virtualmin-ek ez ditu gehiago erabiliko.
 delete_ok=Bai, kendu itzazu
 delete_edoms=$1 kontua oraindik erabiltzen ari da Virtualmin domeinu hauek : $2 
+
 list_title=Erregistratutako domeinuak
 list_dom=Domeinu izena
 list_registrar=Erregistratzailearen izena
 list_account=Erregistratzaile kontua
 list_id=IDa erregistratzailearekin
-list_none=Oraindik ez da Virtualmin domeinurik erregistratu DNS erregistratzaileekin.
-list_none2=Oraindik ez da Virtualmin domeinurik erregistratu DNS erregistratzaile honekin.
+list_none=Oraindik ez da Virtualmin domeinurik erregistratu inongo erregistratzailetan.
+list_none2=Oraindik ez da Virtualmin domeinurik erregistratu erregistratzaile honetan.
 list_expiry=Iraungitze data
+
 contact_err=Ezin izan da harremanetarako datuak editatu
 contact_ecannot=Ezin duzu domeinuko kontaktuak editatu
 contact_edom=Ez da $1 zerbitzariaren Virtualmin zerbitzaririk aurkitu
@@ -284,6 +295,7 @@ contact_esave=Ezin izan da erregistratzailea eguneratu : $1
 contact_createtab=Kontaktuak sortu
 contact_selecttab=Hautatu kontaktuak
 contact_efind=Ez da inolako harremanik aurkitu $1 IDarekin
+
 import_title=Elkartutako Domeinuen Erregistroa
 import_header=Dagoeneko domeinu erregistratzailearen xehetasunak
 import_ecannot=Ezin duzu domeinurik lotu
@@ -303,6 +315,7 @@ import_transfer=Transferitu beste erregistratzaile batetik?
 import_transferyes=Bai, giltzarekin
 import_renew=Berritu ere egin transferentzian?
 import_renewyes=Bai, izan ere
+
 transfer_title=Transferitu domeinuen erregistroa
 transfer_header=Transferitzeko eskaeraren xehetasunak
 transfer_account=Transferitu kontua
@@ -313,12 +326,14 @@ transfer_ecannot=Ezin duzu domeinurik transferitu
 transfer_transferring=Uneko erregistratzailearen eskualdaketa
 transfer_done=.. egin. Erregistratzailearen IDa $1 da.
 transfer_done2=Litekeena da beste pauso batzuk jatorrizko erregistratzailean transferentzia amaitu aurretik eta domeinu hau <a href='$1'>inportatu daiteke Virtualmin</a> en.
+
 dereg_err=Ezin izan da domeinua desegin
 dereg_ealready=Domeinu hau ez dago erregistratzaileekin lotuta
 dereg_title=Domeinuen erregistroa desegin
 dereg_rusure=Ziur Virtualmin domeinuaren eta haren erregistroa $1 -rekin kendu nahi duzula? Virtualmin-en ezabatzen bada, domeinua ez da erregistratzailearengandik kenduko.
 dereg_ok=Ezabatu domeinua
 dereg_doing=Domeinuen erregistroa $1 kontuarekin bereiztea
+
 renew_title=Berritu Domeinuen Erregistroa
 renew_err=Berritzeak huts egin du
 renew_ecannot=Ezin duzu erregistroak berritu
@@ -333,6 +348,7 @@ renew_doing=$1 domeinua berritzea $2 rekin $3 urtez.
 renew_failed=.. berritzea huts egin du : $1 
 renew_done=.. berritze osoa - erregistratzailearen kodea $1 izan da
 renew_account=Kontua berritzea
+
 create_title=Sortu Erregistratzaile kontua
 create_header=Erregistratzaile kontu berriaren xehetasunak
 create_ecannot=Ezin duzu kontu berriak sortu baimendu
@@ -341,6 +357,7 @@ create_doing=Kontu berria sortzen $1 ..
 create_done=.. arrakastaz sortu da! Erregistratzailearekin duzun kontu IDa $1 da
 create_warn=.. sortu da, baina abisuekin: $2. Erregistratzailearekin duzun kontu IDa $1 da
 create_failed=sorrerak huts egin du : $1 
+
 auto_err=Huts egin du berritze automatikoa gordetzean
 auto_ecannot=Ezin duzu berritze automatikoa kudeatu
 auto_title=Domeinu berritze automatikoa
@@ -362,14 +379,15 @@ auto_eyears=Urteak falta edo ez diren zenbakiak berritzeko
 auto_eget=Ezin izan da iraungitzean lortu : $1 
 auto_done=$1 urte berrituta
 auto_failed=Huts egin du : $1 
-auto_results=Hurrengo zerbitzari birtualek DNS domeinuak automatikoki berritu dituzte Virtualmin-ek :
+auto_results=Zerbitzari birtual hauei domeinuak automatikoki berritu dizkie Virtualmin-ek :
 auto_raccount=Erregistratzaile kontua
 auto_rdom=Domeinu izena
 auto_rmsg=Berritze egoera
 auto_subject=Virtualmin domeinu berritze automatikoa
 auto_warnmsg=$1 egun iraungita egongo da
 auto_wsubject=Virtualmin domeinuaren iraungipenen jakinarazpena
-auto_wresults=Hurrengo zerbitzari birtualek laster izango dute iraungitzeko laster DNS domeinuak :
+auto_wresults=Zerbitzari birtualek laster iraungiko dituzte domeinuak :
+
 ns_err=Ezin izan da izen-administratzaileak editatu
 ns_ecannot=Ezin duzu domeinuko kontaktuak editatu
 ns_title=Editatu izen-izenak
@@ -385,7 +403,8 @@ ns_eip='$1' izen-zerbitzaria IP helbidea da, ez ostalariaren izena
 ns_ens=Izen-zerbitzariaren "$1" ezin da IP helbide batera ebatzi
 ns_reg=Izena-egileak erregistratzailea eguneratzea ..
 ns_failed=.. huts egin du : $1 
-ns_syncing=Izen-hartzaile berriak eguneratzea DNS domeinuan ..
+ns_syncing=Domeinuko izen-zerbitzariak eguneratzen. ..
+
 contacts_eaccount=Kontua ez da aurkitu!
 contacts_id=Harremanetarako IDa
 contacts_name=Harremanetarako Izena
@@ -393,6 +412,7 @@ contacts_add=Gehitu $1 kontaktu berria.
 contacts_none=Ez dago harremanik erregistratzaile-kontu honekin.
 contacts_elist=Ezin izan da kontaktuak zerrendatu : $1 
 contacts_title=Erregistratzailearen Kontaktuak
+
 onecontact_header=Erregistratzaileentzako kontaktu datuak $1 erako
 onecontact_err=Huts egin du kontaktua gordetzean
 onecontact_edelete=Ezabatzeak huts egin du : $1 

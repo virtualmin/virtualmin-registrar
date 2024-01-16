@@ -1,23 +1,23 @@
-feat_name=Registre de domini DNS
-feat_losing=El domini DNS quedarà registrat
-feat_disabling=El domini DNS quedarà desactivat temporalment
-feat_label=Registrar el domini DNS?
-feat_label2=Registre el domini DNS
+feat_name=Registre de domini
+feat_losing=El domini es donarà de baixa
+feat_disabling=El domini es desactivarà temporalment
+feat_label=Registreu el domini?
+feat_label2=Registre domini
 feat_edepend=No s'ha trobat cap compte de registre que s'utilitzi per crear el domini
-feat_edepend2=Només es poden registrar noms de domini DNS reals com <i>foo.com</i>
+feat_edepend2=Només es poden registrar noms de domini reals com <i>foo.com</i>
 feat_eclash=El domini $1 no es pot registrar : $2 
 feat_edns=No es pot registrar un domini a menys que la funció DNS estigui habilitada
-feat_setup=Registre el domini DNS amb $1 ..
+feat_setup=S'està registrant el domini amb $1 ..
 feat_failed=.. fallat : $1 
 feat_setupdone=.. fet. L'identificador de registre per a aquest domini és $1.
 feat_modifydons=.. fet. L'identificador de registre nou per a aquest domini és $1 
-feat_delete=Registre el domini DNS amb $1.
-feat_delete2=El registre del domini DNS.
-feat_modify1=Registre el domini DNS antic $1 amb $2.
-feat_modify2=Torneu a registrar el nou domini DNS $1 amb $2.
+feat_delete=S'està cancel·lant el registre del domini amb $1 ..
+feat_delete2=S'està cancel·lant el registre del domini ..
+feat_modify1=S'està cancel·lant el registre del domini antic $1 amb $2 ..
+feat_modify2=S'està tornant a registrar el nou domini $1 amb $2 ..
 feat_noderegister=.. s'ha desactivat el registre de la configuració del complement
-feat_modify=Canviant el domini DNS registrat de $1 a $2 amb $3.
-feat_noaccount=No s'ha trobat cap informació del compte de registre DNS.
+feat_modify=Canviant el domini registrat de $1 a $2 amb $3 ..
+feat_noaccount=No s'ha trobat cap informació del compte de registre!
 feat_copy=Copiant contactes de domini des de $1 ..
 feat_ecopy=.. no han pogut obtenir contactes : $1 
 feat_nocopy=.. No s'ha trobat cap copiat
@@ -27,6 +27,7 @@ feat_perioddef=Predeterminat del registre
 feat_periodyears=anys
 feat_eperiod=Perdó o període de registre invàlid en anys
 feat_setupalready=.. S'ha trobat el registre existent
+
 links_contact=Edita contactes de domini
 links_ns=Edita els servidors de noms
 links_contactv=Mostra els contactes del domini
@@ -34,7 +35,8 @@ links_rereg=Distribuir el domini
 links_import=Domini associat
 links_renew=Renova el domini
 links_transfer=Transferència de domini
-index_title=Registradors de domini DNS
+
+index_title=Registres de dominis
 index_registrar=Registrador
 index_desc=Descripció del compte
 index_enabled=Està activat?
@@ -57,14 +59,15 @@ index_actvirts=Llista els servidors virtuals
 index_msg=Servidors virtuals que utilitzen el compte de registre $1.
 index_nonemsg=No s'ha trobat servidors virtuals que utilitzin el compte de registre $1.
 index_listall=Llista tots els dominis registrats.
+
 type_rcom=Registrar-se.com
-type_gandi=Gandi.net (API antiga)
-type_newgandi=Gandi.net (nova API)
+type_gandi=Gandi.net
 type_distribute=Distribuir.IT
 type_namecheap=Namecheap
+
 edit_title1=Afegeix un compte de registre
 edit_title2=Edita el compte de registre
-edit_header=Detalls del compte registrador DNS
+edit_header=Dades del compte de registre
 edit_header2=Opcions de domini de primer nivell
 edit_header3=Noves instruccions del compte
 edit_egone=El compte ja no existeix.
@@ -82,6 +85,7 @@ edit_all=Tots els dominis
 edit_suffixes=Llistats de TLD
 edit_delete=Elimina
 edit_ecannot=No teniu permís per editar comptes de registre
+
 save_err=No s'ha pogut desar el compte
 save_err2=No s'ha pogut eliminar el compte
 save_edoms=Els dominis Virtualmin els utilitza els següents : $1 
@@ -95,6 +99,7 @@ save_ens=No s'ha pogut buscar l'adreça IP de cerca del servidor de noms "$1"
 save_ensip=El servidor de noms "$1" s'ha d'introduir com a nom d'amfitrió, no com a adreça IP
 save_enss=No s'ha introduït cap servidor de noms
 save_transfer=Aquest compte es va utilitzar per crear dominis $1. <br> Seleccioneu el compte de registre que es pot utilitzar per gestionar aquests dominis en lloc de :
+
 rcom_account=ID d’inici de sessió del compte
 rcom_pass=Contrasenya del compte
 rcom_eaccount=Falta o identificador d’inici de sessió no vàlid
@@ -163,6 +168,7 @@ rcom_eccaddress=Falta l’adreça de facturació de la targeta de crèdit
 rcom_ecczip=Falta el codi postal de facturació de la targeta de crèdit
 rcom_instructions=Per registrar-vos a un compte amb Register.com amb accés a la seva API, aneu a la seva <a href='$1' target=_new'>nova pàgina de comptes de socis</a> i completeu el formulari que hi hagi. Després de crear el compte i iniciar la sessió al seu lloc web, haureu d’afegir-li fons amb una targeta de crèdit abans que es pugui fer servir per registrar els dominis.
 rcom_createinfo=Per poder utilitzar aquest compte, ha de passar el següent: <br><ul> <li>L’adreça IP del sistema ha de ser llista blanca per Register.com, que pot trigar diverses hores.<br> <li>Cal afegir crèdit a el vostre compte, que es pot fer a<a href=http://www.rcomexpress.com/> http://www.rcomexpress.com/ </a>inicia la sessió amb el nom d’usuari i la contrasenya que heu seleccionat.<br > </ul>
+
 gandi_account=Inici de sessió del compte (com <tt>XX5555-GANDI</tt>)
 gandi_pass=Contrasenya del compte
 gandi_contact=Identificador de contacte per a dominis nous
@@ -186,6 +192,7 @@ gandi_apikey=Clau API
 gandi_etries=L'operació de l'API de Gandi no s'ha completat després de $2 segons: l'estat final era $1 
 gandi_ecreate=Error d’estat de creació : $1 
 gandi_eassoc=El contacte $1 no es pot associar amb aquest domini
+
 distribute_account=Número de compte
 distribute_user=Nom d'usuari del compte
 distribute_pass=Contrasenya del compte
@@ -203,6 +210,7 @@ distribute_edom=El nom de domini existent que falta o que té aspecte no vàlid 
 distribute_edom2=No s'ha pogut obtenir els detalls del domini existent : $1 
 distribute_ebase=No s'ha pogut obtenir els detalls del domini $1 
 distribute_eowner=No s'ha pogut obtenir l'ID de contacte del propietari del domini $1 
+
 namecheap_user=Nom d'usuari de Namecheap
 namecheap_euser=Nom d'usuari de Namecheap que falta o no té aspecte vàlid
 namecheap_apikey=Clau de l'API de Namecheap
@@ -219,6 +227,7 @@ namecheap_enstwo=Namecheap requereix que cada domini tingui almenys $1 nameserve
 namecheap_instructions=Per registrar-vos en un compte amb Namecheap, aneu al seu lloc web i <a href='$1' target=_new'>registreu-vos en un compte</a>. Haureu d’activar l’accés de l’API al vostre compte, tal com es documenta a la <a href='$2' target=_new>pàgina de l’API Namecheap</a>.
 namecheap_etransfer=La transferència no s'ha completat després de 5 minuts : $1 
 namecheap_etransfer2=La transferència no s'ha completat al cap de cinc minuts i no hi ha informació d'estat disponible
+
 delete_err1=No s'ha pogut desactivar els comptes
 delete_err2=No s'ha pogut activar els comptes
 delete_err3=No s'ha pogut eliminar els comptes
@@ -227,14 +236,16 @@ delete_title=Elimina els comptes
 delete_rusure=Confirmeu que voleu eliminar els comptes seleccionats $1 ? Encara existiran amb els registradors, però deixarà de ser utilitzat per Virtualmin.
 delete_ok=Sí, Elimineu-los
 delete_edoms=El compte $1 segueix utilitzant els dominis de Virtualmin següents : $2 
+
 list_title=Dominis registrats
 list_dom=Nom de domini
 list_registrar=Nom del registre
 list_account=Compte de registre
 list_id=Identificador amb registre
-list_none=Encara no s'han registrat dominis Virtualmin amb cap registrador DNS.
-list_none2=Encara no s'han registrat dominis Virtualmin amb aquest registre DNS.
+list_none=Encara no s'ha registrat cap domini de Virtualmin amb cap registrador.
+list_none2=Encara no s'ha registrat cap domini de Virtualmin amb aquest registrador.
 list_expiry=Data de caducitat
+
 contact_err=No s'ha pogut editar les dades de contacte
 contact_ecannot=No teniu permís per editar contactes d'aquest domini
 contact_edom=No s'ha trobat cap servidor Virtualmin per a $1 
@@ -284,6 +295,7 @@ contact_esave=No s'ha pogut actualitzar el registre : $1
 contact_createtab=Crea contactes
 contact_selecttab=Seleccioneu els contactes
 contact_efind=No s'ha trobat cap contacte amb l'ID $1 
+
 import_title=Registre de domini associat
 import_header=Detalls del registre de dominis existent
 import_ecannot=No teniu permès associar dominis
@@ -303,6 +315,7 @@ import_transfer=Transferència d’un altre registre?
 import_transferyes=Sí, amb clau
 import_renew=També es pot renovar en transferir?
 import_renewyes=Sí, per
+
 transfer_title=Registre de dominis de transferència
 transfer_header=Detalls de la sol·licitud de transferència
 transfer_account=Transferència al compte
@@ -313,12 +326,14 @@ transfer_ecannot=No teniu permís de transferir dominis
 transfer_transferring=Transferència del registre actual.
 transfer_done=.. fet. L'identificador del registre és $1.
 transfer_done2=Es poden necessitar altres passos al registrador original abans que la transferència s'hagi completat i aquest domini es pot importar <a href='$1'>a Virtualmin</a>.
+
 dereg_err=No s'ha pogut dissociar el domini
 dereg_ealready=Aquest domini no està associat a cap registre
 dereg_title=Distingiu el registre del domini
 dereg_rusure=Esteu segur que voleu eliminar aquesta associació entre aquest domini Virtualmin i el seu registre amb $1 ? Si s’elimina a Virtualmin, el domini no s’eliminarà del registre.
 dereg_ok=Distribuir el domini
 dereg_doing=Associar el registre del domini amb el compte $1.
+
 renew_title=Renova el registre del domini
 renew_err=La renovació ha fallat
 renew_ecannot=No teniu permís de renovar els registres
@@ -333,6 +348,7 @@ renew_doing=Renovació del domini $1 amb $2 durant $3 anys.
 renew_failed=La fallida de la renovació : $1 
 renew_done=.. renovació completa: el codi del registre era $1 
 renew_account=Renovació amb el compte
+
 create_title=Crea un compte de registre
 create_header=Detalls del compte de registre nou
 create_ecannot=No teniu permís per crear nous comptes
@@ -341,6 +357,7 @@ create_doing=Creació d'un compte nou amb $1 ..
 create_done=.. Creat amb èxit! El vostre identificador de compte amb el registrador és de $1 
 create_warn=.. creat, però amb avisos: $2. El vostre identificador de compte amb el registrador és de $1 
 create_failed=la creació ha fallat : $1 
+
 auto_err=No s'ha pogut desar la renovació automàtica
 auto_ecannot=No teniu permís de gestionar la renovació automàtica
 auto_title=Renovació automàtica del domini
@@ -362,14 +379,15 @@ auto_eyears=Falta anys o no numèrics per renovar
 auto_eget=No s'ha pogut expirar : $1 
 auto_done=Renovat per $1 anys
 auto_failed=Error : $1 
-auto_results=Els següents servidors virtuals han renovat automàticament els seus dominis DNS per Virtualmin :
+auto_results=Els següents servidors virtuals han renovat automàticament els seus dominis per Virtualmin :
 auto_raccount=Compte de registre
 auto_rdom=Nom de domini
 auto_rmsg=Estat de renovació
 auto_subject=Renovació automàtica del domini virtualmin
 auto_warnmsg=Caducarà en $1 dies
 auto_wsubject=Notificació de caducitat del domini virtualmin
-auto_wresults=Els servidors virtuals següents faran que els seus dominis DNS caducin aviat :
+auto_wresults=Els següents servidors virtuals caducaran aviat els seus dominis :
+
 ns_err=No s'ha pogut editar els servidors de noms
 ns_ecannot=No teniu permís per editar contactes d'aquest domini
 ns_title=Edita els servidors de noms
@@ -385,7 +403,8 @@ ns_eip=El servidor de noms "$1" és una adreça IP, no un nom d'amfitrió
 ns_ens=El servidor de noms "$1" no s'ha pogut resoldre amb una adreça IP
 ns_reg=Actualització de servidors de noms amb el registre ..
 ns_failed=.. fallat : $1 
-ns_syncing=Actualització de servidors de noms en el domini DNS.
+ns_syncing=S'estan actualitzant els servidors de noms del domini. ..
+
 contacts_eaccount=Compte no trobat!
 contacts_id=Identificador de contacte
 contacts_name=Nom de contacte
@@ -393,6 +412,7 @@ contacts_add=Afegiu un contacte $1 nou.
 contacts_none=No hi ha contactes associats amb aquest compte de registre.
 contacts_elist=Ha fallat la llista de contactes : $1 
 contacts_title=Contactes de registre
+
 onecontact_header=Dades de contacte del registre per a $1 
 onecontact_err=No s'ha pogut desar el contacte
 onecontact_edelete=Ha fallat l'eliminació : $1 

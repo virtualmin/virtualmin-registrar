@@ -1,23 +1,23 @@
-feat_name=DNS 도메인 등록
-feat_losing=DNS 도메인이 등록 해제됩니다
-feat_disabling=DNS 도메인이 일시적으로 비활성화됩니다
-feat_label=DNS 도메인을 등록 하시겠습니까?
-feat_label2=DNS 도메인 등록
+feat_name=도메인 등록
+feat_losing=도메인 등록이 취소됩니다
+feat_disabling=도메인이 일시적으로 비활성화됩니다
+feat_label=도메인을 등록하시겠습니까?
+feat_label2=도메인 등록
 feat_edepend=도메인을 만드는 데 사용되는 등록자 계정이 없습니다.
-feat_edepend2=<i>foo.com</i>과 같은 실제 DNS 도메인 이름 만 등록 할 수 있습니다
+feat_edepend2=<i>foo.com</i>과 같은 실제 도메인 이름만 등록할 수 있습니다
 feat_eclash=$1 도메인을 등록 할 수 없습니다  : $2 
 feat_edns=DNS 기능이 활성화되어 있지 않으면 도메인을 등록 할 수 없습니다
-feat_setup=$1 에 DNS 도메인 등록 ..
+feat_setup=$1에 도메인을 등록하는 중입니다 ..
 feat_failed=.. 실패  : $1 
 feat_setupdone=.. 완료. 이 도메인의 레지스트라 ID는 $1 입니다.
 feat_modifydons=.. 완료. 이 도메인의 새로운 등록 기관 ID는 $1 입니다.
-feat_delete=$1 으로 DNS 도메인 등록 해제 ..
-feat_delete2=DNS 도메인 등록 해제 ..
-feat_modify1=이전 DNS 도메인 $1 을 (를) $2 에 등록 취소 중입니다 ..
-feat_modify2=$2 에 새 DNS 도메인 $1 을 (를) 다시 등록하는 중입니다.
+feat_delete=$1 도메인 등록을 취소하는 중입니다 ..
+feat_delete2=도메인 등록 취소 중 ..
+feat_modify1=이전 도메인 $1을(를) $2(으)로 등록 취소하는 중입니다 ..
+feat_modify2=새 도메인 $1을(를) $2에 다시 등록하는 중입니다 ..
 feat_noderegister=플러그인 구성에서 등록 해제가 비활성화되었습니다.
-feat_modify=$3 을 사용하여 등록 된 DNS 도메인을 $1 에서 $2 (으)로 변경 중입니다.
-feat_noaccount=DNS 등록 계정 정보가 없습니다!
+feat_modify=$3을(를) 사용하여 등록된 도메인을 $1에서 $2(으)로 변경 중입니다 ..
+feat_noaccount=등록된 계정 정보를 찾을 수 없습니다!
 feat_copy=$1 에서 도메인 연락처를 복사하는 중입니다.
 feat_ecopy=.. 연락처를 가져 오지 못했습니다  : $1 
 feat_nocopy=.. 복사 할 것이 없습니다.
@@ -27,6 +27,7 @@ feat_perioddef=레지스트라 기본값
 feat_periodyears=연령
 feat_eperiod=몇 년 내에 누락되거나 유효하지 않은 등록 기간
 feat_setupalready=.. 기존 등록 발견
+
 links_contact=도메인 연락처 편집
 links_ns=네임 서버 편집
 links_contactv=도메인 연락처보기
@@ -34,7 +35,8 @@ links_rereg=연결 해제 도메인
 links_import=준회원 도메인
 links_renew=도메인 갱신
 links_transfer=이전 도메인
-index_title=DNS 도메인 등록 기관
+
+index_title=도메인 등록기관
 index_registrar=등록 사무관
 index_desc=계정 설명
 index_enabled=활성화 되었습니까?
@@ -57,14 +59,15 @@ index_actvirts=가상 서버 목록
 index_msg=등록자 계정 $1 을 (를) 사용하는 가상 서버.
 index_nonemsg=등록자 계정 $1 을 (를) 사용하는 가상 서버가 없습니다.
 index_listall=등록 된 모든 도메인을 나열하십시오.
+
 type_rcom=Register.com
-type_gandi=Gandi.net (구 API)
-type_newgandi=Gandi.net (새 API)
+type_gandi=간디넷
 type_distribute=배포.IT
 type_namecheap=Namecheap
+
 edit_title1=등록자 계정 추가
 edit_title2=레지스트라 계정 편집
-edit_header=DNS 등록 기관 계정 세부 사항
+edit_header=등록기관 계정 세부정보
 edit_header2=최상위 도메인 옵션
 edit_header3=새로운 계정 안내
 edit_egone=계정이 더 이상 존재하지 않습니다!
@@ -82,6 +85,7 @@ edit_all=모든 도메인
 edit_suffixes=상장 된 TLD
 edit_delete=없애다
 edit_ecannot=등록 기관 계정을 편집 할 수 없습니다
+
 save_err=계정을 저장하지 못했습니다
 save_err2=계정을 제거하지 못했습니다
 save_edoms=다음 Virtualmin 도메인에서 사용 중입니다  : $1 
@@ -95,6 +99,7 @@ save_ens=이름 서버 '$1'의 IP 주소를 찾지 못했습니다.
 save_ensip=이름 서버 '$1'은 (는) IP 주소가 아닌 호스트 이름으로 입력해야합니다
 save_enss=네임 서버가 입력되지 않았습니다
 save_transfer=이 계정은 $1 도메인을 만드는 데 사용되었습니다. <br> 대신 이러한 도메인을 관리하는 데 사용할 등록자 계정을 선택하십시오.
+
 rcom_account=계정 로그인 ID
 rcom_pass=계정 암호
 rcom_eaccount=로그인 ID가 없거나 잘못되었습니다
@@ -163,6 +168,7 @@ rcom_eccaddress=신용 카드 청구 지 주소 누락
 rcom_ecczip=신용 카드 청구 우편 번호 누락
 rcom_instructions=API에 액세스하여 Register.com에 계정을 등록하려면 <a href='$1' target=_new'>새 파트너 계정 페이지</a>로 이동하여 양식을 작성하십시오. 계정을 만들고 웹 사이트에 로그인 한 후에는 도메인 등록에 사용하기 전에 신용 카드를 사용하여 계정에 자금을 추가해야합니다.
 rcom_createinfo=이 계정을 사용하려면 다음과 같은 상황이 발생해야합니다. <br><ul> <li>시스템의 IP 주소는 Register.com에서 화이트리스트에 등록해야하며 몇 시간이 걸릴 수 있습니다.<br> <li>크레딧을 추가해야합니다.<a href=http://www.rcomexpress.com/> http://www.rcomexpress.com/ </a>에서 선택한 사용자 이름과 비밀번호로 로그인하여 계정을 만들 수 있습니다.<br > </ul>
+
 gandi_account=계정 로그인 (예 : <tt>XX5555-GANDI</tt>)
 gandi_pass=계정 암호
 gandi_contact=새 도메인의 연락처 ID
@@ -186,6 +192,7 @@ gandi_apikey=API 키
 gandi_etries=$2 초 후에 Gandi API 작업을 완료하지 못했습니다. 최종 상태는 $1 입니다.
 gandi_ecreate=작성 상태 오류  : $1 
 gandi_eassoc=연락처 $1 을 (를)이 도메인과 연결할 수 없습니다
+
 distribute_account=계좌 번호
 distribute_user=계정 사용자 이름
 distribute_pass=계정 암호
@@ -203,6 +210,7 @@ distribute_edom=연결할 기존 도메인 이름이 없거나 잘못되었습�
 distribute_edom2=기존 도메인의 세부 정보를 가져 오지 못했습니다  : $1 
 distribute_ebase=도메인 $1 에 대한 세부 정보를 가져 오지 못했습니다.
 distribute_eowner=도메인 $1 의 소유자 연락처 ID를 가져 오지 못했습니다.
+
 namecheap_user=Namecheap 사용자 이름
 namecheap_euser=누락되거나 잘못된 Namecheap 사용자 이름
 namecheap_apikey=Namecheap API 키
@@ -219,6 +227,7 @@ namecheap_enstwo=Namecheap을 사용하려면 각 도메인에 최소한 $1 개�
 namecheap_instructions=Namecheap으로 계정에 가입하려면 해당 웹 사이트로 이동하여 <a href='$1' target=_new'>계정에 가입</a>하십시오. <a href='$2' target=_new>Namecheap API 페이지</a>에 설명 된대로 계정에서 API 액세스를 활성화해야합니다.
 namecheap_etransfer=5 분 후에 전송을 완료하지 못했습니다  : $1 
 namecheap_etransfer2=5 분 후에 전송이 완료되지 않았으며 상태 정보가 없습니다.
+
 delete_err1=계정을 비활성화하지 못했습니다.
 delete_err2=계정을 활성화하지 못했습니다
 delete_err3=계정을 제거하지 못했습니다
@@ -227,14 +236,16 @@ delete_title=계정 제거
 delete_rusure=선택한 $1 개의 계정을 삭제 하시겠습니까? 이들은 여전히 레지스트라와 함께 존재하지만 더 이상 Virtualmin에서 사용할 수 없습니다.
 delete_ok=예, 제거
 delete_edoms=$1 계정이 여전히 다음 Virtualmin 도메인에서 사용되고 있습니다  : $2 
+
 list_title=등록 된 도메인
 list_dom=도메인 이름
 list_registrar=레지스트라 이름
 list_account=레지스트라 계정
 list_id=등록자가있는 ID
-list_none=아직 DNS 등록 기관에 등록 된 Virtualmin 도메인이 없습니다.
-list_none2=아직이 DNS 등록 기관에 등록 된 Virtualmin 도메인이 없습니다.
+list_none=아직 등록기관에 등록된 Virtualmin 도메인이 없습니다.
+list_none2=아직 이 등록기관에 등록된 Virtualmin 도메인이 없습니다.
 list_expiry=만료일
+
 contact_err=연락처 세부 사항을 편집하지 못했습니다.
 contact_ecannot=이 도메인의 연락처를 편집 할 수 없습니다
 contact_edom=$1 에 대한 Virtualmin 서버를 찾을 수 없습니다
@@ -284,6 +295,7 @@ contact_esave=등록자를 업데이트하지 못했습니다  : $1
 contact_createtab=연락처 만들기
 contact_selecttab=연락처 선택
 contact_efind=ID가 $1 인 연락처를 찾을 수 없습니다
+
 import_title=준회원 도메인 등록
 import_header=기존 도메인 등록 기관의 세부 사항
 import_ecannot=도메인을 연결할 수 없습니다
@@ -303,6 +315,7 @@ import_transfer=다른 등록 기관에서 이전 하시겠습니까?
 import_transferyes=그렇습니다, 열쇠로
 import_renew=전송할 때도 갱신 하시겠습니까?
 import_renewyes=예,
+
 transfer_title=이전 도메인 등록
 transfer_header=전송 요청의 세부 사항
 transfer_account=계정으로 이체
@@ -313,12 +326,14 @@ transfer_ecannot=도메인을 양도 할 수 없습니다
 transfer_transferring=현재 등록 기관에서 전송 ..
 transfer_done=.. 완료. 등록 기관의 ID는 $1 입니다.
 transfer_done2=이전이 완료되기 전에 원래 등록 기관에서 다른 단계가 필요할 수 있으며이 도메인을 <a href='$1'>Virtualmin으로 가져 오기</a> 할 수 있습니다.
+
 dereg_err=도메인 연결을 해제하지 못했습니다.
 dereg_ealready=이 도메인은 등록 기관과 관련이 없습니다
 dereg_title=분리 도메인 등록
 dereg_rusure=이 Virtualmin 도메인과 $1 의 등록간에이 연결을 제거 하시겠습니까? Virtualmin에서 삭제 된 도메인은 등록 기관에서 제거되지 않습니다.
 dereg_ok=연결 해제 도메인
 dereg_doing=$1 계정과 도메인 등록 연결 해제
+
 renew_title=도메인 등록 갱신
 renew_err=갱신 실패
 renew_ecannot=등록을 갱신 할 수 없습니다
@@ -333,6 +348,7 @@ renew_doing=$3 년 동안 $2 의 도메인 $1 을 (를) 갱신합니다.
 renew_failed=.. 갱신 실패  : $1 
 renew_done=.. 갱신 완료-등록 기관의 코드는 $1 입니다.
 renew_account=계정으로 갱신
+
 create_title=레지스트라 계정 만들기
 create_header=신규 등록 기관 계정 세부 사항
 create_ecannot=새 계정을 만들 수 없습니다
@@ -341,6 +357,7 @@ create_doing=$1 (으)로 새 계정을 만드는 중입니다.
 create_done=.. 성공적으로 생성되었습니다! 등록 기관의 계정 ID는 $1 입니다.
 create_warn=.. 작성되었지만 경고 : $2. 등록 기관의 계정 ID는 $1 입니다.
 create_failed=.. 작성 실패  : $1 
+
 auto_err=자동 갱신을 저장하지 못했습니다
 auto_ecannot=자동 갱신을 관리 할 수 없습니다
 auto_title=자동 도메인 갱신
@@ -362,14 +379,15 @@ auto_eyears=갱신 할 누락되거나 숫자가 아닌 연도
 auto_eget=만료하지 못했습니다  : $1 
 auto_done=$1 년 동안 갱신
 auto_failed=실패  : $1 
-auto_results=다음 가상 서버는 Virtualmin에 의해 DNS 도메인이 자동으로 갱신되었습니다.
+auto_results=다음 가상 서버는 Virtualmin에 의해 도메인이 자동으로 갱신되었습니다
 auto_raccount=레지스트라 계정
 auto_rdom=도메인 이름
 auto_rmsg=갱신 상태
 auto_subject=Virtualmin 자동 도메인 갱신
 auto_warnmsg=$1 일 후에 만료됩니다
 auto_wsubject=Virtualmin 도메인 만료 알림
-auto_wresults=다음 가상 서버는 DNS 도메인이 곧 만료됩니다.
+auto_wresults=다음 가상 서버의 도메인이 곧 만료됩니다
+
 ns_err=네임 서버를 편집하지 못했습니다
 ns_ecannot=이 도메인의 연락처를 편집 할 수 없습니다
 ns_title=네임 서버 편집
@@ -385,7 +403,8 @@ ns_eip=이름 서버 '$1'은 (는) 호스트 이름이 아닌 IP 주소입니다
 ns_ens=이름 서버 '$1'을 (를) IP 주소로 확인할 수 없습니다
 ns_reg=등록 기관으로 네임 서버 업데이트하기 ..
 ns_failed=.. 실패  : $1 
-ns_syncing=DNS 도메인에서 네임 서버 업데이트하기 ..
+ns_syncing=도메인의 네임서버 업데이트 중 ..
+
 contacts_eaccount=계정을 찾지 못했습니다!
 contacts_id=연락 ID
 contacts_name=담당자 이름
@@ -393,6 +412,7 @@ contacts_add=새로운 $1 연락처를 추가하십시오.
 contacts_none=이 등록자 계정과 연결된 연락처가 없습니다.
 contacts_elist=연락처를 나열하지 못했습니다  : $1 
 contacts_title=등록 기관 연락처
+
 onecontact_header=$1 의 레지스트라 연락처
 onecontact_err=연락처를 저장하지 못했습니다
 onecontact_edelete=삭제 실패  : $1 

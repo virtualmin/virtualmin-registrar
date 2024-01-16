@@ -4,11 +4,12 @@
 use strict;
 no strict 'refs';
 use warnings;
+no warnings 'uninitialized';
 our (%text, %config);
 our $module_name;
 our $module_config_directory;
 our $module_root_directory;
-
+use lib "$ENV{'DOCUMENT_ROOT'}/virtualmin-registrar/vendor_perl";
 BEGIN { push(@INC, ".."); };
 eval "use WebminCore;";
 &init_config();
@@ -24,12 +25,9 @@ our @registrar_types = (
 	{ 'name' => 'rcom',
 	  'disabled' => 0,
 	  'desc' => $text{'type_rcom'} },
-	{ 'name' => 'gandi',
-	  'disabled' => 0,
-	  'desc' => $text{'type_gandi'} },
 	{ 'name' => 'newgandi',
 	  'disabled' => 0,
-	  'desc' => $text{'type_newgandi'} },
+	  'desc' => $text{'type_gandi'} },
 	{ 'name' => 'distribute',
 	  'disabled' => 1,
 	  'desc' => $text{'type_distribute'} },

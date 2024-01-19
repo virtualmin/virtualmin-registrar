@@ -528,7 +528,7 @@ $page .= "?APIUser=".&urlize($account->{'namecheap_user'}).
 		       &virtual_server::get_dns_ip() ||
 		       &virtual_server::get_default_ip()).
 	 "&Command=".&urlize($cmd);
-my $data;
+my $data = "";
 if ($params) {
 	foreach my $p (keys %$params) {
 		my $v = $params->{$p};
@@ -543,7 +543,7 @@ if ($params) {
 	}
 $data =~ s/^\&//;
 my ($out, $err);
-&http_post_download($host, $port, $page, \$out, \$err, $data, $ssl);
+&http_post($host, $port, $page, $data, \$out, \$err, undef, $ssl);
 return (0, $err) if ($err);
 return (0, "Invalid response : $out") if ($out !~ /^\s*</);
 my $xml;
@@ -554,24 +554,6 @@ return (0, "Invalid response XML : $@") if ($@);
 return (0, "API command failed : $xml->{'Errors'}->{'Error'}->{'content'}")
 	if ($xml->{'Status'} ne 'OK');
 return (1, $xml->{'CommandResponse'});
-}
-
-# http_post_download(host, port, page, &out, &err, post-data, ssl)
-sub http_post_download
-{
-my ($host, $port, $page, $out, $err, $data, $ssl) = @_;
-my $h = &make_http_connection($host, $port, $ssl, "POST", $page);
-if (!ref($h)) {
-	$$err = $h;
-	return 0;
-	}
-&write_http_connection($h, "Host: $host\r\n");
-&write_http_connection($h, "User-agent: Webmin\r\n");
-&write_http_connection($h, "Content-type: application/x-www-form-urlencoded\r\n");
-&write_http_connection($h, "Content-length: ".(length($data)+2)."\r\n");
-&write_http_connection($h, "\r\n");
-&write_http_connection($h, "$data\r\n");
-&complete_http_download($h, $out, $err, undef, 0, $host, $port, undef, $ssl, 1);
 }
 
 1;

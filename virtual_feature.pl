@@ -44,8 +44,6 @@ return "label";
 sub feature_depends
 {
 my ($d, $oldd) = @_;
-# Is DNS enabled?
-$d->{'dns'} || return $text{'feat_edns'};
 if (!$oldd || !$oldd->{$module_name}) {
 	# Can we find an account for the domain?
 	my $account = &find_registrar_account($d->{'dom'});
@@ -127,13 +125,13 @@ my $rfunc = "type_".$reg."_create_domain";
 my ($ok, $msg) = &$rfunc($account, $d);
 if (!$ok) {
 	&$virtual_server::second_print(&text('feat_failed', $msg));
-	&error(&text('feat_failed', $msg));
+	return 0;
 	}
 $d->{'registrar_account'} = $account->{'id'};
 $d->{'registrar_id'} = $msg;
 &$virtual_server::second_print(&text('feat_setupdone', $msg));
 
-# Copy contacts from the user's main domain to this new one
+# Copy contacts from any parent domain to this new one
 my $gcfunc = "type_".$reg."_get_contact";
 my $parent;
 if ($d->{'parent'} && ($parent = &virtual_server::get_domain($d->{'parent'})) &&

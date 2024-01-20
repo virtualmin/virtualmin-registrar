@@ -171,29 +171,29 @@ if ($account && $account->{'ns'}) {
 	# Account-specific override given .. use it
 	return [ split(/\s+/, $account->{'ns'}) ];
 	}
-
-my $z = &virtual_server::get_bind_zone($d->{'dom'});
-if (!$z) {
-	return $text{'rcom_ezone'};
-	}
-my $file = &bind8::find("file", $z->{'members'});
-my @recs = &bind8::read_zone_file($file->{'values'}->[0], $d->{'dom'});
-if (!@recs) {
-	return &text('rcom_ezonefile', $file->{'values'}->[0]);
-	}
 my @ns;
-foreach my $r (@recs) {
-	if ($r->{'type'} eq 'NS' &&
-	    $r->{'name'} eq $d->{'dom'}.".") {
-		my $ns = $r->{'values'}->[0];
-		if ($ns !~ /\.$/) {
-			$ns .= ".".$d->{'dom'};
+if ($d->{'dns'}) {
+	# Get nameservers from the actual NS records
+	my @recs = &virtual_server::get_domain_dns_records($d);
+	foreach my $r (@recs) {
+		if ($r->{'type'} eq 'NS' &&
+		    $r->{'name'} eq $d->{'dom'}.".") {
+			my $ns = $r->{'values'}->[0];
+			if ($ns !~ /\.$/) {
+				$ns .= ".".$d->{'dom'};
+				}
+			else {
+				$ns =~ s/\.$//;
+				}
+			push(@ns, $ns);
 			}
-		else {
-			$ns =~ s/\.$//;
-			}
-		push(@ns, $ns);
 		}
+	}
+if (!@ns) {
+	# Fall back to default nameservers
+	my $tmpl = &virtual_server::get_template($d->{'template'});
+	push(@ns, &virtual_server::get_master_nameserver($tmpl, $d));
+	push(@ns, &virtual_server::get_slave_nameservers($d));
 	}
 return \@ns;
 }

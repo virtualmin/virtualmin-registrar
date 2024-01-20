@@ -218,11 +218,15 @@ elsif (@$nss < 2) {
 	return (0, &text('namecheap_enstwo', 2, $nss->[0]));
 	}
 
-# Get the domain to copy contacts from
-my ($ok, $xml) = &call_namecheap_api($account,
-		"namecheap.domains.getContacts",
-		{ 'DomainName' => $account->{'namecheap_srcdom'} });
-$ok || return (0, &text('namecheap_error', $xml));
+# Get the domain to copy contacts from, if we need it
+my $srcxml;
+if ($account->{'namecheap_srcdom'}) {
+	my ($ok, $xml) = &call_namecheap_api($account,
+			"namecheap.domains.getContacts",
+			{ 'DomainName' => $account->{'namecheap_srcdom'} });
+	$ok || return (0, &text('namecheap_error', $xml));
+	$srcxml = $xml;
+	}
 
 # Build list of params
 my %params = ( 'Nameservers' => join(",", @$nss),
@@ -230,16 +234,18 @@ my %params = ( 'Nameservers' => join(",", @$nss),
 		  'Years' => $d->{'registrar_years'} ||
                              $account->{'namecheap_years'} || 1,
 		);
-foreach my $t (keys %{$xml->{'DomainContactsResult'}}) {
-	my $con = $xml->{'DomainContactsResult'}->{$t};
-	next if (!$con->{'FirstName'});
-	foreach my $ck (keys %$con) {
-		$params{$t.$ck} = $con->{$ck};
+if ($srcxml) {
+	foreach my $t (keys %{$srcxml->{'DomainContactsResult'}}) {
+		my $con = $srcxml->{'DomainContactsResult'}->{$t};
+		next if (!$con->{'FirstName'});
+		foreach my $ck (keys %$con) {
+			$params{$t.$ck} = $con->{$ck};
+			}
 		}
 	}
 
 # Call to create
-($ok, $xml) = &call_namecheap_api($account,
+my ($ok, $xml) = &call_namecheap_api($account,
 	"namecheap.domains.create", \%params);
 return (0, &text('namecheap_error', $xml)) if (!$ok);
 

@@ -229,11 +229,15 @@ if ($account->{'namecheap_srcdom'}) {
 	}
 
 # Build list of params
-my %params = ( 'Nameservers' => join(",", @$nss),
-		  'DomainName' => $d->{'dom'},
-		  'Years' => $d->{'registrar_years'} ||
-                             $account->{'namecheap_years'} || 1,
-		);
+my %params = ( 'DomainName' => $d->{'dom'},
+	       'Years' => $d->{'registrar_years'} ||
+                          $account->{'namecheap_years'} || 1,
+	     );
+if (!$d->{'dns_cloud'} || $d->{'dns_cloud'} ne 'namecheap') {
+	# Don't set nameservers if we're going to use namecheap for hosting
+	# DNS for this domain
+	$params{'Nameservers'} = join(",", @$nss);
+	}
 if ($srcxml) {
 	foreach my $t (keys %{$srcxml->{'DomainContactsResult'}}) {
 		my $con = $srcxml->{'DomainContactsResult'}->{$t};

@@ -1,5 +1,5 @@
 desc=Virtualmin Domain Registration
 category=net
 depends=virtual-server/3.47 1.420
-version=2.12
+version=3.0
 feedback=jcameron@webmin.com

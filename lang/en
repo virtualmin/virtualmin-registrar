@@ -62,6 +62,7 @@ index_listall=List all registered domains.
 
 type_rcom=Register.com
 type_gandi=Gandi.net
+type_newgandi=Gandi.net
 type_distribute=Distribute.IT
 type_namecheap=Namecheap
 

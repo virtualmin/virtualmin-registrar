@@ -173,8 +173,20 @@ if ($account && $account->{'ns'}) {
 	}
 my @ns;
 if ($d->{'dns'}) {
-	# Get nameservers from the actual NS records
-	my @recs = &virtual_server::get_domain_dns_records($d);
+	# First try the new function that will return cloud-specific nameservers
+	my @recs;
+	if ($d->{'dns_cloud'} &&
+	    defined(&virtual_server::get_domain_cloud_ns_records)) {
+		my $cns = &virtual_server::get_domain_cloud_ns_records($d);
+		return $cns if (!ref($cns));
+		@recs = @$cns;
+		}
+	else {
+		# Get nameservers from the actual NS records
+		@recs = &virtual_server::get_domain_dns_records($d);
+		}
+
+	# Extract nameserver hostnames
 	foreach my $r (@recs) {
 		if ($r->{'type'} eq 'NS' &&
 		    $r->{'name'} eq $d->{'dom'}.".") {

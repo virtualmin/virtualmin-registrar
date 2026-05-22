@@ -1,4 +1,4 @@
-name: "virtualmin.dev: virtualmin/virtualmin-registrar"
+name: Build
 
 on:
   push:
